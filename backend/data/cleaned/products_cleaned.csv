@@ -1,0 +1,7 @@
+product_id,name,brand,category,subcategory,supplier_id,cost_price,price,launch_date,status
+AA-10,T-Shirt,Nike,apparel,Topwear,SUP1,10,20.0,2024-01-31,active
+BB-20,Jeans,Levis,apparel,Bottomwear,SUP2,25,50.0,2024-03-31,active
+CC-30,Sneakers,Adidas,footwear,Footwear,SUP3,30,60.0,2024-05-31,active
+DD-40,Jacket,Zara,apparel,Outerwear,SUP4,40,80.0,2024-07-31,active
+EE-50,Cap,Puma,accessories,Headwear,SUP5,5,10.0,2024-09-30,inactive
+FF-60,Socks,Uniqlo,apparel,Innerwear,SUP6,3,5.0,2024-11-30,active

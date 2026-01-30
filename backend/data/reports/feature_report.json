@@ -1,0 +1,28 @@
+{
+  "input_dir": "/Users/kaniztaiba/Desktop/Data-Scientist-Agent/backend/data/cleaned",
+  "output_dir": "/Users/kaniztaiba/Desktop/Data-Scientist-Agent/backend/data/featured_data",
+  "written": [
+    "/Users/kaniztaiba/Desktop/Data-Scientist-Agent/backend/data/featured_data/customers_features.csv",
+    "/Users/kaniztaiba/Desktop/Data-Scientist-Agent/backend/data/featured_data/products_features.csv",
+    "/Users/kaniztaiba/Desktop/Data-Scientist-Agent/backend/data/featured_data/transactions_features.csv"
+  ],
+  "loaded_tables": [
+    "customers",
+    "inventory",
+    "products",
+    "transactions",
+    "web_analytics"
+  ],
+  "rows": {
+    "customers_features.csv": 100,
+    "products_features.csv": 6,
+    "transactions_features.csv": 281
+  },
+  "cols": {
+    "customers_features.csv": 18,
+    "products_features.csv": 16,
+    "transactions_features.csv": 28
+  },
+  "note": "Reads ALL cleaned CSVs, uses joins via transactions<->customers/products, and enriches with web_analytics + inventory when present.",
+  "ontology_path": null
+}

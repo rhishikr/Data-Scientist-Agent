@@ -1,0 +1,2 @@
+timestamp,store_id,transaction_id,product_id,quantity,price_per_unit,discount,payment_type,customer_id
+2025-01-01,CA01,ORD-1,AA12,1,19.99,0,visa,C001
