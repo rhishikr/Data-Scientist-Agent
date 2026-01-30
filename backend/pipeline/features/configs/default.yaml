@@ -1,0 +1,20 @@
+dataset_path: data/raw/retail_panel_300.csv
+date_col: date
+key_cols:
+- store
+- sku
+target_col: qty
+horizon_days: 1
+packs:
+  time: true
+  seasonality: true
+  price_promo: true
+  inventory: true
+cv:
+  n_splits: 3
+model:
+  type: HistGradientBoostingRegressor
+  params:
+    random_state: 42
+metric: rmse
+output_dir: outputs

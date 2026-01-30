@@ -1,12 +1,12 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from pipeline.customer_insights import run_customer_insights
-from chat.customer_chat import answer_customer_question
+# ✅ ONLY import your hypothesis runner
+from pipeline.hypothesis.runner import run_hypothesis_agent
 
-app = FastAPI(title="AI Data Scientist Backend (MVP)")
+app = FastAPI(title="Hypothesis Testing Backend Only")
 
-# Allow React dev server to call backend
+# ✅ optional: keep CORS so you can call it from React later
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -20,13 +20,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api/customer-insights")
-def customer_insights(days: int = Query(30, ge=7, le=365)):
-    return run_customer_insights(days=days)
+@app.get("/api/hypothesis/run")
+def run_hypothesis():
+    """
+    Run hypothesis tests using:
+    - backend/data/cleaned_data/*.csv
+    - backend/data/featured_data/*.csv
 
-@app.post("/api/customer-insights/chat")
-def customer_chat(payload: dict):
+    Saves to:
+    - backend/data/hypothesis_outputs/hypothesis_results.json
+    - backend/data/hypothesis_outputs/hypothesis_results.csv
     """
-    payload = { "message": "...", "days": 30 }
-    """
-    return answer_customer_question(payload)
+    return run_hypothesis_agent(alpha=0.05)
