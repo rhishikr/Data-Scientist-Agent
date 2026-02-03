@@ -1,5 +1,10 @@
 from pipeline.customer_insights import run_customer_insights
 
+'''
+TODO
+UNFUCK THIS
+'''
+
 def answer_customer_question(payload: dict):
     message = (payload.get("message") or "").strip().lower()
     days = int(payload.get("days") or 30)
