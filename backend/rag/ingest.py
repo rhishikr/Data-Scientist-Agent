@@ -16,8 +16,8 @@ def rebuild_index(base_dir: Path) -> Dict[str, Any]:
 
     docs = build_documents_from_csv_dir(
         data_dir=cfg.data_dir,
-        max_sample_rows=100,   # tune for speed
-        max_cols_per_row=20
+        max_sample_rows=10000,   # tune for speed
+        max_cols_per_row=2000
     )
 
     store = FaissStore(cfg)

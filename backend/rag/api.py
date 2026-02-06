@@ -4,7 +4,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from .ingest import rebuild_index
-from .service import answer_question
+from .service import answer_question, schema_help
 
 router = APIRouter(prefix="/rag", tags=["rag"])
 
@@ -29,3 +29,8 @@ class ChatReq(BaseModel):
 @router.post("/chat")
 def chat(req: ChatReq):
     return answer_question(BASE_DIR, req.message)
+
+@router.post("/schema")
+def schema(req: ChatReq):
+    return schema_help(BASE_DIR, req.message)
+
