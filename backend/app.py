@@ -1,8 +1,12 @@
+from pathlib import Path
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pipeline.hypothesis.runner import run_hypothesis_agent
 
-app = FastAPI(title="Hypothesis Testing Backend Only")
+from pipeline.hypothesis.runner import run_hypothesis_agent
+from pipeline.insights.runner import run_insights  # <-- add this
+
+app = FastAPI(title="Hypothesis + Insights Backend")
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,6 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/api/hypothesis/run")
 def run_hypothesis():
     """
@@ -29,3 +34,19 @@ def run_hypothesis():
     - backend/data/hypothesis_outputs/hypothesis_results.csv
     """
     return run_hypothesis_agent(alpha=0.05)
+
+
+@app.get("/api/insights/run")
+def run_insights_endpoint():
+    """
+    Run insight generation using:
+    - backend/data/featured_data/*.csv
+    - backend/data/hypothesis_outputs/hypothesis_results.json (preferred) or .csv
+
+    Saves to:
+    - backend/data/insight_outputs/insights.json
+    - backend/data/insight_outputs/insights.csv
+    """
+    project_root = Path(__file__).resolve().parent  # backend/
+    bundle = run_insights(project_root)
+    return bundle.to_dict()
