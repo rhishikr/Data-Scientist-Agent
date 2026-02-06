@@ -1,12 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-# ✅ ONLY import your hypothesis runner
 from pipeline.hypothesis.runner import run_hypothesis_agent
 
 app = FastAPI(title="Hypothesis Testing Backend Only")
 
-# ✅ optional: keep CORS so you can call it from React later
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
