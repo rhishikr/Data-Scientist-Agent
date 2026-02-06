@@ -5,6 +5,7 @@ numpy
 scikit-learn
 scipy
 python-dateutil
+langchain
+langchain-core
 
 
-#OPENAI_API_KEY = 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
