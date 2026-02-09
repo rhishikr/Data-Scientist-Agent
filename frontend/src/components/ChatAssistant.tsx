@@ -1,9 +1,15 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { Send, Sparkles, TrendingUp, AlertCircle } from "lucide-react";
+import { Send, Sparkles, TrendingUp } from "lucide-react";
 
 interface Message {
   id: number;
@@ -17,6 +23,14 @@ interface ChatAssistantProps {
   context?: string;
 }
 
+type RagChatResponse = {
+  answer: string;
+  mode?: string;
+  metric?: string;
+  table_used?: string;
+  evidence?: any[];
+};
+
 export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -26,7 +40,9 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
       timestamp: new Date(),
     },
   ]);
+
   const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const getContextPrompts = () => {
     switch (context) {
@@ -51,58 +67,61 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
     }
   };
 
-  const handleSend = (text?: string) => {
-    const messageText = text || inputValue;
-    if (!messageText.trim()) return;
+  const handleSend = async (text?: string) => {
+    const messageText = (text ?? inputValue).trim();
+    if (!messageText || isLoading) return;
 
     const userMessage: Message = {
-      id: messages.length + 1,
+      id: Date.now(), // simple unique id
       text: messageText,
       sender: "user",
       timestamp: new Date(),
     };
 
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
+    setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      let responseText = "";
-      let hasChart = false;
+    try {
+      const res = await fetch("http://127.0.0.1:8000/rag/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // Change `message` to whatever your backend expects (query/text/prompt/etc.)
+        body: JSON.stringify({ message: messageText, context }),
+      });
 
-      if (context === "customer-insights") {
-        if (messageText.toLowerCase().includes("churn")) {
-          responseText = "Based on the current analysis, 234 customers show high churn probability (>70%). Key indicators:\n\n• 62+ days since last purchase\n• Purchase frequency dropped by 40%\n• Low engagement with recent campaigns\n\nRecommended action: Launch targeted re-engagement campaign with personalized offers for the at-risk segment.";
-        } else if (messageText.toLowerCase().includes("retention")) {
-          responseText = "Your retention rate is 87.3%, which is strong. Top factors driving retention:\n\n• Personalized product recommendations (+15% engagement)\n• Fast shipping (2-day delivery)\n• Loyalty program participation\n\nThe 'Top Buyer' segment shows 94% retention vs 78% for 'At-Risk' customers.";
-        } else if (messageText.toLowerCase().includes("segment")) {
-          responseText = "High-value segments identified:\n\n• **Top Buyers** (1,247 customers): $24K+ average value, purchase 40+ times/year\n• **Weekend Browsers** (892 customers): 3.2x higher conversion with evening promotions\n\nConsider creating targeted campaigns for these segments.";
-          hasChart = true;
-        }
-      } else if (context === "inventory-sales") {
-        if (messageText.toLowerCase().includes("restock")) {
-          responseText = "Priority restock recommendations for next 7 days:\n\n**High Priority (3 SKUs)**\n• Wireless Headphones Pro - 2-3 days to stock-out\n• Smart Watch Series 5 - 2 days to stock-out\n• Designer Sunglasses - 3 days to stock-out\n\n**Medium Priority (5 SKUs)**\nCheck the inventory table for details. Estimated reorder cost: $47K";
-        } else if (messageText.toLowerCase().includes("sales drop")) {
-          responseText = "Sales decreased by 8.2% last month. Key factors:\n\n• Seasonal trend (historically lower in Feb)\n• Out-of-stock for 2 top SKUs (12 days)\n• Competitor promotion (-15% average)\n\nForecast shows recovery in the next 2 weeks with restocking and planned promotions.";
-        } else if (messageText.toLowerCase().includes("trend")) {
-          responseText = "Top trending products (30-day growth):\n\n1. Wireless Headphones Pro (+127%)\n2. Yoga Mat Premium (+89%)\n3. Smart Watch Series 5 (+76%)\n\nElectronics category shows strongest momentum overall (+45% vs last month).";
-          hasChart = true;
-        }
+      if (!res.ok) {
+        const errText = await res.text().catch(() => "");
+        throw new Error(`Request failed (${res.status}). ${errText}`);
       }
 
-      if (!responseText) {
-        responseText = "I've analyzed your data and found several key insights. Based on the current metrics, I recommend focusing on the high-priority items highlighted in the dashboard. Would you like me to explain any specific metric in detail?";
-      }
+      const data = (await res.json()) as RagChatResponse;
 
       const aiMessage: Message = {
-        id: messages.length + 2,
-        text: responseText,
+        id: Date.now() + 1,
+        text: data?.answer ?? "(No answer returned)",
         sender: "ai",
         timestamp: new Date(),
-        hasChart,
+        // optional: show chart placeholder if backend says it's analytics
+        hasChart: data?.mode === "analytics",
       };
+
       setMessages((prev) => [...prev, aiMessage]);
-    }, 1000);
+    } catch (err: any) {
+      const aiError: Message = {
+        id: Date.now() + 2,
+        sender: "ai",
+        timestamp: new Date(),
+        text:
+          "⚠️ Couldn’t reach the backend.\n\n" +
+          (err?.message ?? "Unknown error") +
+          "\n\nIf your frontend is on a different port, make sure your FastAPI has CORS enabled.",
+      };
+
+      setMessages((prev) => [...prev, aiError]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -114,7 +133,9 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
           </div>
           <div>
             <CardTitle className="text-base">AI Data Scientist</CardTitle>
-            <CardDescription className="text-xs">Ask me anything</CardDescription>
+            <CardDescription className="text-xs">
+              {isLoading ? "Thinking..." : "Ask me anything"}
+            </CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -123,11 +144,15 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
         {/* Context Tags */}
         <div className="flex flex-wrap gap-2 pb-2 border-b">
           <Badge variant="outline" className="text-xs">
-            {context === "customer-insights" ? "Customer Data" :
-             context === "inventory-sales" ? "Inventory Data" :
-             "All Data"}
+            {context === "customer-insights"
+              ? "Customer Data"
+              : context === "inventory-sales"
+                ? "Inventory Data"
+                : "All Data"}
           </Badge>
-          <Badge variant="outline" className="text-xs">Last 30 days</Badge>
+          <Badge variant="outline" className="text-xs">
+            Last 30 days
+          </Badge>
         </div>
 
         {/* Quick Prompts */}
@@ -138,7 +163,8 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
               <button
                 key={index}
                 onClick={() => handleSend(prompt)}
-                className="text-xs px-3 py-1.5 rounded-full border border-teal-200 bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors"
+                disabled={isLoading}
+                className="text-xs px-3 py-1.5 rounded-full border border-teal-200 bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors disabled:opacity-60"
               >
                 {prompt}
               </button>
@@ -168,6 +194,7 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
                   <Sparkles className="size-3.5 text-white" />
                 )}
               </div>
+
               <div className="flex-1 space-y-2">
                 <div
                   className={`rounded-lg px-3 py-2 ${
@@ -178,6 +205,7 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
                 >
                   <p className="text-sm whitespace-pre-line">{message.text}</p>
                 </div>
+
                 {message.hasChart && message.sender === "ai" && (
                   <div className="mr-4 rounded-lg border bg-white p-3">
                     <div className="flex items-center gap-2 mb-2">
@@ -185,7 +213,9 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
                       <p className="text-xs">Related Chart</p>
                     </div>
                     <div className="h-24 bg-gradient-to-r from-teal-50 to-blue-50 rounded flex items-center justify-center">
-                      <p className="text-xs text-muted-foreground">Chart visualization</p>
+                      <p className="text-xs text-muted-foreground">
+                        Chart visualization
+                      </p>
                     </div>
                   </div>
                 )}
@@ -199,11 +229,19 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
           <Input
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSend()}
-            placeholder="Ask a question..."
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            placeholder={
+              isLoading ? "Waiting for response..." : "Ask a question..."
+            }
             className="text-sm"
+            disabled={isLoading}
           />
-          <Button onClick={() => handleSend()} size="icon" className="shrink-0 bg-teal-600 hover:bg-teal-700">
+          <Button
+            onClick={() => handleSend()}
+            size="icon"
+            className="shrink-0 bg-teal-600 hover:bg-teal-700"
+            disabled={isLoading}
+          >
             <Send className="size-4" />
           </Button>
         </div>
