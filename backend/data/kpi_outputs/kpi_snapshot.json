@@ -1,0 +1,2462 @@
+{
+  "meta": {
+    "generated_at": "2026-02-06T06:02:03.852340Z",
+    "version": "kpi_v1"
+  },
+  "definitions": {
+    "active_customer_rule": "recency_days <= active_threshold_recency_days (derived from distribution among buyers)",
+    "active_threshold_recency_days": 162.0,
+    "at_risk_threshold_recency_days": 269.0,
+    "churn_threshold_recency_days": 424.0,
+    "top_buyer_threshold_total_spend": 1716.56,
+    "retention_rate_rule": "repeat_buyers / buyers, where repeat_buyers = total_orders > 1",
+    "high_demand_threshold_times_purchased": 8.0,
+    "low_stock_threshold": 497.0,
+    "high_discount_threshold_percent": 0.0,
+    "low_rating_threshold": 3.86,
+    "discount_underperformance_threshold_revenue_per_purchase": 25.086250000000064
+  },
+  "cards": {
+    "active_customers": 212,
+    "churn_risk_customers": 144,
+    "avg_customer_lifetime_value": 1099.0584815618222,
+    "avg_order_value": 422.10476807664503,
+    "retention_rate": 0.754880694143167
+  },
+  "segments": [
+    {
+      "name": "Non-Buyers",
+      "count": 39,
+      "revenue_share": 0.0
+    },
+    {
+      "name": "Top Buyers",
+      "count": 86,
+      "revenue_share": 0.40783931882852376
+    },
+    {
+      "name": "Moderate",
+      "count": 231,
+      "revenue_share": 0.37965153609293195
+    },
+    {
+      "name": "At-Risk",
+      "count": 82,
+      "revenue_share": 0.1367309933353328
+    },
+    {
+      "name": "Churn Candidates",
+      "count": 62,
+      "revenue_share": 0.07577815174321165
+    }
+  ],
+  "trends": {
+    "weekly": {
+      "series": [
+        {
+          "period_start": "2024-01-07T00:00:00",
+          "revenue": 5049.4,
+          "orders": 14,
+          "unique_customers": 14,
+          "avg_order_value": 360.6714285714285,
+          "revenue_per_customer": 360.6714285714285
+        },
+        {
+          "period_start": "2024-01-14T00:00:00",
+          "revenue": 6820.27,
+          "orders": 15,
+          "unique_customers": 15,
+          "avg_order_value": 454.6846666666667,
+          "revenue_per_customer": 454.6846666666667
+        },
+        {
+          "period_start": "2024-01-21T00:00:00",
+          "revenue": 7244.89,
+          "orders": 13,
+          "unique_customers": 13,
+          "avg_order_value": 557.2992307692308,
+          "revenue_per_customer": 557.2992307692308
+        },
+        {
+          "period_start": "2024-01-28T00:00:00",
+          "revenue": 6478.7300000000005,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 539.8941666666667,
+          "revenue_per_customer": 539.8941666666667
+        },
+        {
+          "period_start": "2024-02-04T00:00:00",
+          "revenue": 2333.51,
+          "orders": 9,
+          "unique_customers": 9,
+          "avg_order_value": 259.2788888888889,
+          "revenue_per_customer": 259.2788888888889
+        },
+        {
+          "period_start": "2024-02-11T00:00:00",
+          "revenue": 8869.94,
+          "orders": 17,
+          "unique_customers": 17,
+          "avg_order_value": 521.7611764705882,
+          "revenue_per_customer": 521.7611764705882
+        },
+        {
+          "period_start": "2024-02-18T00:00:00",
+          "revenue": 4400.31,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 366.69250000000005,
+          "revenue_per_customer": 366.69250000000005
+        },
+        {
+          "period_start": "2024-02-25T00:00:00",
+          "revenue": 4742.61,
+          "orders": 11,
+          "unique_customers": 11,
+          "avg_order_value": 431.1463636363636,
+          "revenue_per_customer": 431.1463636363636
+        },
+        {
+          "period_start": "2024-03-03T00:00:00",
+          "revenue": 7210.57,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 600.8808333333333,
+          "revenue_per_customer": 600.8808333333333
+        },
+        {
+          "period_start": "2024-03-10T00:00:00",
+          "revenue": 5210.46,
+          "orders": 13,
+          "unique_customers": 13,
+          "avg_order_value": 400.8046153846154,
+          "revenue_per_customer": 400.8046153846154
+        },
+        {
+          "period_start": "2024-03-17T00:00:00",
+          "revenue": 4587.41,
+          "orders": 15,
+          "unique_customers": 15,
+          "avg_order_value": 305.82733333333334,
+          "revenue_per_customer": 305.82733333333334
+        },
+        {
+          "period_start": "2024-03-24T00:00:00",
+          "revenue": 8624.79,
+          "orders": 15,
+          "unique_customers": 15,
+          "avg_order_value": 574.9860000000001,
+          "revenue_per_customer": 574.9860000000001
+        },
+        {
+          "period_start": "2024-03-31T00:00:00",
+          "revenue": 3175.7999999999997,
+          "orders": 9,
+          "unique_customers": 9,
+          "avg_order_value": 352.8666666666666,
+          "revenue_per_customer": 352.8666666666666
+        },
+        {
+          "period_start": "2024-04-07T00:00:00",
+          "revenue": 4669.43,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 389.1191666666667,
+          "revenue_per_customer": 389.1191666666667
+        },
+        {
+          "period_start": "2024-04-14T00:00:00",
+          "revenue": 4995.36,
+          "orders": 10,
+          "unique_customers": 10,
+          "avg_order_value": 499.53599999999994,
+          "revenue_per_customer": 499.53599999999994
+        },
+        {
+          "period_start": "2024-04-21T00:00:00",
+          "revenue": 3614.1,
+          "orders": 7,
+          "unique_customers": 7,
+          "avg_order_value": 516.3,
+          "revenue_per_customer": 516.3
+        },
+        {
+          "period_start": "2024-04-28T00:00:00",
+          "revenue": 6977.77,
+          "orders": 15,
+          "unique_customers": 15,
+          "avg_order_value": 465.1846666666667,
+          "revenue_per_customer": 465.1846666666667
+        },
+        {
+          "period_start": "2024-05-05T00:00:00",
+          "revenue": 3903.46,
+          "orders": 11,
+          "unique_customers": 11,
+          "avg_order_value": 354.86,
+          "revenue_per_customer": 354.86
+        },
+        {
+          "period_start": "2024-05-12T00:00:00",
+          "revenue": 4058.07,
+          "orders": 13,
+          "unique_customers": 13,
+          "avg_order_value": 312.15923076923076,
+          "revenue_per_customer": 312.15923076923076
+        },
+        {
+          "period_start": "2024-05-19T00:00:00",
+          "revenue": 5679.87,
+          "orders": 15,
+          "unique_customers": 15,
+          "avg_order_value": 378.658,
+          "revenue_per_customer": 378.658
+        },
+        {
+          "period_start": "2024-05-26T00:00:00",
+          "revenue": 4999.08,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 416.59,
+          "revenue_per_customer": 416.59
+        },
+        {
+          "period_start": "2024-06-02T00:00:00",
+          "revenue": 2749.67,
+          "orders": 8,
+          "unique_customers": 8,
+          "avg_order_value": 343.70875,
+          "revenue_per_customer": 343.70875
+        },
+        {
+          "period_start": "2024-06-09T00:00:00",
+          "revenue": 4326.7300000000005,
+          "orders": 9,
+          "unique_customers": 9,
+          "avg_order_value": 480.74777777777786,
+          "revenue_per_customer": 480.74777777777786
+        },
+        {
+          "period_start": "2024-06-16T00:00:00",
+          "revenue": 3687.0299999999997,
+          "orders": 10,
+          "unique_customers": 10,
+          "avg_order_value": 368.703,
+          "revenue_per_customer": 368.703
+        },
+        {
+          "period_start": "2024-06-23T00:00:00",
+          "revenue": 6313.83,
+          "orders": 13,
+          "unique_customers": 13,
+          "avg_order_value": 485.67923076923074,
+          "revenue_per_customer": 485.67923076923074
+        },
+        {
+          "period_start": "2024-06-30T00:00:00",
+          "revenue": 4948.79,
+          "orders": 16,
+          "unique_customers": 15,
+          "avg_order_value": 309.299375,
+          "revenue_per_customer": 329.9193333333333
+        },
+        {
+          "period_start": "2024-07-07T00:00:00",
+          "revenue": 5846.54,
+          "orders": 13,
+          "unique_customers": 13,
+          "avg_order_value": 449.7338461538462,
+          "revenue_per_customer": 449.7338461538462
+        },
+        {
+          "period_start": "2024-07-14T00:00:00",
+          "revenue": 10915.39,
+          "orders": 20,
+          "unique_customers": 20,
+          "avg_order_value": 545.7695,
+          "revenue_per_customer": 545.7695
+        },
+        {
+          "period_start": "2024-07-21T00:00:00",
+          "revenue": 3863.41,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 321.9508333333333,
+          "revenue_per_customer": 321.9508333333333
+        },
+        {
+          "period_start": "2024-07-28T00:00:00",
+          "revenue": 3932.1,
+          "orders": 11,
+          "unique_customers": 11,
+          "avg_order_value": 357.46363636363634,
+          "revenue_per_customer": 357.46363636363634
+        },
+        {
+          "period_start": "2024-08-04T00:00:00",
+          "revenue": 4604.42,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 383.70166666666665,
+          "revenue_per_customer": 383.70166666666665
+        },
+        {
+          "period_start": "2024-08-11T00:00:00",
+          "revenue": 4817.25,
+          "orders": 8,
+          "unique_customers": 8,
+          "avg_order_value": 602.15625,
+          "revenue_per_customer": 602.15625
+        },
+        {
+          "period_start": "2024-08-18T00:00:00",
+          "revenue": 5526.28,
+          "orders": 14,
+          "unique_customers": 14,
+          "avg_order_value": 394.7342857142857,
+          "revenue_per_customer": 394.7342857142857
+        },
+        {
+          "period_start": "2024-08-25T00:00:00",
+          "revenue": 3140.5699999999997,
+          "orders": 9,
+          "unique_customers": 9,
+          "avg_order_value": 348.9522222222222,
+          "revenue_per_customer": 348.9522222222222
+        },
+        {
+          "period_start": "2024-09-01T00:00:00",
+          "revenue": 6444.51,
+          "orders": 17,
+          "unique_customers": 17,
+          "avg_order_value": 379.0888235294118,
+          "revenue_per_customer": 379.0888235294118
+        },
+        {
+          "period_start": "2024-09-08T00:00:00",
+          "revenue": 2875.0,
+          "orders": 6,
+          "unique_customers": 6,
+          "avg_order_value": 479.1666666666667,
+          "revenue_per_customer": 479.1666666666667
+        },
+        {
+          "period_start": "2024-09-15T00:00:00",
+          "revenue": 7995.15,
+          "orders": 18,
+          "unique_customers": 18,
+          "avg_order_value": 444.17499999999995,
+          "revenue_per_customer": 444.17499999999995
+        },
+        {
+          "period_start": "2024-09-22T00:00:00",
+          "revenue": 2823.79,
+          "orders": 11,
+          "unique_customers": 11,
+          "avg_order_value": 256.7081818181818,
+          "revenue_per_customer": 256.7081818181818
+        },
+        {
+          "period_start": "2024-09-29T00:00:00",
+          "revenue": 6439.43,
+          "orders": 13,
+          "unique_customers": 13,
+          "avg_order_value": 495.34076923076924,
+          "revenue_per_customer": 495.34076923076924
+        },
+        {
+          "period_start": "2024-10-06T00:00:00",
+          "revenue": 4496.07,
+          "orders": 14,
+          "unique_customers": 14,
+          "avg_order_value": 321.1478571428571,
+          "revenue_per_customer": 321.1478571428571
+        },
+        {
+          "period_start": "2024-10-13T00:00:00",
+          "revenue": 4321.59,
+          "orders": 9,
+          "unique_customers": 9,
+          "avg_order_value": 480.1766666666667,
+          "revenue_per_customer": 480.1766666666667
+        },
+        {
+          "period_start": "2024-10-20T00:00:00",
+          "revenue": 6998.68,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 583.2233333333334,
+          "revenue_per_customer": 583.2233333333334
+        },
+        {
+          "period_start": "2024-10-27T00:00:00",
+          "revenue": 6375.47,
+          "orders": 16,
+          "unique_customers": 16,
+          "avg_order_value": 398.466875,
+          "revenue_per_customer": 398.466875
+        },
+        {
+          "period_start": "2024-11-03T00:00:00",
+          "revenue": 6110.03,
+          "orders": 11,
+          "unique_customers": 11,
+          "avg_order_value": 555.4572727272727,
+          "revenue_per_customer": 555.4572727272727
+        },
+        {
+          "period_start": "2024-11-10T00:00:00",
+          "revenue": 3975.4900000000002,
+          "orders": 8,
+          "unique_customers": 8,
+          "avg_order_value": 496.93625000000003,
+          "revenue_per_customer": 496.93625000000003
+        },
+        {
+          "period_start": "2024-11-17T00:00:00",
+          "revenue": 4236.52,
+          "orders": 10,
+          "unique_customers": 10,
+          "avg_order_value": 423.65200000000004,
+          "revenue_per_customer": 423.65200000000004
+        },
+        {
+          "period_start": "2024-11-24T00:00:00",
+          "revenue": 5147.35,
+          "orders": 14,
+          "unique_customers": 13,
+          "avg_order_value": 367.66785714285714,
+          "revenue_per_customer": 395.95000000000005
+        },
+        {
+          "period_start": "2024-12-01T00:00:00",
+          "revenue": 5459.95,
+          "orders": 14,
+          "unique_customers": 14,
+          "avg_order_value": 389.99642857142857,
+          "revenue_per_customer": 389.99642857142857
+        },
+        {
+          "period_start": "2024-12-08T00:00:00",
+          "revenue": 11339.58,
+          "orders": 20,
+          "unique_customers": 20,
+          "avg_order_value": 566.979,
+          "revenue_per_customer": 566.979
+        },
+        {
+          "period_start": "2024-12-15T00:00:00",
+          "revenue": 5906.4400000000005,
+          "orders": 15,
+          "unique_customers": 14,
+          "avg_order_value": 393.7626666666667,
+          "revenue_per_customer": 421.8885714285715
+        },
+        {
+          "period_start": "2024-12-22T00:00:00",
+          "revenue": 5084.93,
+          "orders": 13,
+          "unique_customers": 13,
+          "avg_order_value": 391.14846153846156,
+          "revenue_per_customer": 391.14846153846156
+        },
+        {
+          "period_start": "2024-12-29T00:00:00",
+          "revenue": 6868.93,
+          "orders": 15,
+          "unique_customers": 15,
+          "avg_order_value": 457.9286666666667,
+          "revenue_per_customer": 457.9286666666667
+        },
+        {
+          "period_start": "2025-01-05T00:00:00",
+          "revenue": 4443.58,
+          "orders": 9,
+          "unique_customers": 9,
+          "avg_order_value": 493.7311111111111,
+          "revenue_per_customer": 493.7311111111111
+        },
+        {
+          "period_start": "2025-01-12T00:00:00",
+          "revenue": 2646.83,
+          "orders": 10,
+          "unique_customers": 10,
+          "avg_order_value": 264.683,
+          "revenue_per_customer": 264.683
+        },
+        {
+          "period_start": "2025-01-19T00:00:00",
+          "revenue": 4773.31,
+          "orders": 9,
+          "unique_customers": 9,
+          "avg_order_value": 530.3677777777779,
+          "revenue_per_customer": 530.3677777777779
+        },
+        {
+          "period_start": "2025-01-26T00:00:00",
+          "revenue": 4431.34,
+          "orders": 12,
+          "unique_customers": 11,
+          "avg_order_value": 369.27833333333336,
+          "revenue_per_customer": 402.84909090909093
+        },
+        {
+          "period_start": "2025-02-02T00:00:00",
+          "revenue": 6599.68,
+          "orders": 13,
+          "unique_customers": 13,
+          "avg_order_value": 507.66769230769233,
+          "revenue_per_customer": 507.66769230769233
+        },
+        {
+          "period_start": "2025-02-09T00:00:00",
+          "revenue": 7374.07,
+          "orders": 15,
+          "unique_customers": 14,
+          "avg_order_value": 491.6046666666667,
+          "revenue_per_customer": 526.7192857142857
+        },
+        {
+          "period_start": "2025-02-16T00:00:00",
+          "revenue": 5178.96,
+          "orders": 14,
+          "unique_customers": 13,
+          "avg_order_value": 369.92571428571426,
+          "revenue_per_customer": 398.38153846153847
+        },
+        {
+          "period_start": "2025-02-23T00:00:00",
+          "revenue": 5742.76,
+          "orders": 11,
+          "unique_customers": 11,
+          "avg_order_value": 522.069090909091,
+          "revenue_per_customer": 522.069090909091
+        },
+        {
+          "period_start": "2025-03-02T00:00:00",
+          "revenue": 7629.42,
+          "orders": 18,
+          "unique_customers": 17,
+          "avg_order_value": 423.8566666666667,
+          "revenue_per_customer": 448.7894117647059
+        },
+        {
+          "period_start": "2025-03-09T00:00:00",
+          "revenue": 2302.15,
+          "orders": 9,
+          "unique_customers": 9,
+          "avg_order_value": 255.79444444444445,
+          "revenue_per_customer": 255.79444444444445
+        },
+        {
+          "period_start": "2025-03-16T00:00:00",
+          "revenue": 5716.08,
+          "orders": 11,
+          "unique_customers": 11,
+          "avg_order_value": 519.6436363636363,
+          "revenue_per_customer": 519.6436363636363
+        },
+        {
+          "period_start": "2025-03-23T00:00:00",
+          "revenue": 6493.98,
+          "orders": 17,
+          "unique_customers": 17,
+          "avg_order_value": 381.99882352941177,
+          "revenue_per_customer": 381.99882352941177
+        },
+        {
+          "period_start": "2025-03-30T00:00:00",
+          "revenue": 6473.570000000001,
+          "orders": 18,
+          "unique_customers": 18,
+          "avg_order_value": 359.64277777777784,
+          "revenue_per_customer": 359.64277777777784
+        },
+        {
+          "period_start": "2025-04-06T00:00:00",
+          "revenue": 4239.85,
+          "orders": 10,
+          "unique_customers": 10,
+          "avg_order_value": 423.985,
+          "revenue_per_customer": 423.985
+        },
+        {
+          "period_start": "2025-04-13T00:00:00",
+          "revenue": 8144.5,
+          "orders": 15,
+          "unique_customers": 15,
+          "avg_order_value": 542.9666666666667,
+          "revenue_per_customer": 542.9666666666667
+        },
+        {
+          "period_start": "2025-04-20T00:00:00",
+          "revenue": 5242.92,
+          "orders": 15,
+          "unique_customers": 15,
+          "avg_order_value": 349.528,
+          "revenue_per_customer": 349.528
+        },
+        {
+          "period_start": "2025-04-27T00:00:00",
+          "revenue": 5906.0199999999995,
+          "orders": 14,
+          "unique_customers": 14,
+          "avg_order_value": 421.8585714285714,
+          "revenue_per_customer": 421.8585714285714
+        },
+        {
+          "period_start": "2025-05-04T00:00:00",
+          "revenue": 9012.61,
+          "orders": 22,
+          "unique_customers": 21,
+          "avg_order_value": 409.66409090909093,
+          "revenue_per_customer": 429.1719047619048
+        },
+        {
+          "period_start": "2025-05-11T00:00:00",
+          "revenue": 4390.02,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 365.83500000000004,
+          "revenue_per_customer": 365.83500000000004
+        },
+        {
+          "period_start": "2025-05-18T00:00:00",
+          "revenue": 6952.94,
+          "orders": 16,
+          "unique_customers": 16,
+          "avg_order_value": 434.55875,
+          "revenue_per_customer": 434.55875
+        },
+        {
+          "period_start": "2025-05-25T00:00:00",
+          "revenue": 3072.4300000000003,
+          "orders": 9,
+          "unique_customers": 9,
+          "avg_order_value": 341.3811111111111,
+          "revenue_per_customer": 341.3811111111111
+        },
+        {
+          "period_start": "2025-06-01T00:00:00",
+          "revenue": 4033.31,
+          "orders": 10,
+          "unique_customers": 10,
+          "avg_order_value": 403.331,
+          "revenue_per_customer": 403.331
+        },
+        {
+          "period_start": "2025-06-08T00:00:00",
+          "revenue": 4208.7,
+          "orders": 10,
+          "unique_customers": 10,
+          "avg_order_value": 420.87,
+          "revenue_per_customer": 420.87
+        },
+        {
+          "period_start": "2025-06-15T00:00:00",
+          "revenue": 3317.79,
+          "orders": 8,
+          "unique_customers": 8,
+          "avg_order_value": 414.72375,
+          "revenue_per_customer": 414.72375
+        },
+        {
+          "period_start": "2025-06-22T00:00:00",
+          "revenue": 8461.93,
+          "orders": 16,
+          "unique_customers": 15,
+          "avg_order_value": 528.870625,
+          "revenue_per_customer": 564.1286666666667
+        },
+        {
+          "period_start": "2025-06-29T00:00:00",
+          "revenue": 3979.02,
+          "orders": 13,
+          "unique_customers": 13,
+          "avg_order_value": 306.0784615384615,
+          "revenue_per_customer": 306.0784615384615
+        },
+        {
+          "period_start": "2025-07-06T00:00:00",
+          "revenue": 4127.9400000000005,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 343.99500000000006,
+          "revenue_per_customer": 343.99500000000006
+        },
+        {
+          "period_start": "2025-07-13T00:00:00",
+          "revenue": 1790.1299999999999,
+          "orders": 6,
+          "unique_customers": 6,
+          "avg_order_value": 298.35499999999996,
+          "revenue_per_customer": 298.35499999999996
+        },
+        {
+          "period_start": "2025-07-20T00:00:00",
+          "revenue": 2615.5,
+          "orders": 7,
+          "unique_customers": 7,
+          "avg_order_value": 373.64285714285717,
+          "revenue_per_customer": 373.64285714285717
+        },
+        {
+          "period_start": "2025-07-27T00:00:00",
+          "revenue": 8161.78,
+          "orders": 19,
+          "unique_customers": 19,
+          "avg_order_value": 429.5673684210526,
+          "revenue_per_customer": 429.5673684210526
+        },
+        {
+          "period_start": "2025-08-03T00:00:00",
+          "revenue": 5476.18,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 456.34833333333336,
+          "revenue_per_customer": 456.34833333333336
+        },
+        {
+          "period_start": "2025-08-10T00:00:00",
+          "revenue": 5874.33,
+          "orders": 14,
+          "unique_customers": 14,
+          "avg_order_value": 419.59499999999997,
+          "revenue_per_customer": 419.59499999999997
+        },
+        {
+          "period_start": "2025-08-17T00:00:00",
+          "revenue": 3903.86,
+          "orders": 15,
+          "unique_customers": 14,
+          "avg_order_value": 260.25733333333335,
+          "revenue_per_customer": 278.84714285714284
+        },
+        {
+          "period_start": "2025-08-24T00:00:00",
+          "revenue": 3449.2799999999997,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 287.44,
+          "revenue_per_customer": 287.44
+        },
+        {
+          "period_start": "2025-08-31T00:00:00",
+          "revenue": 6293.44,
+          "orders": 17,
+          "unique_customers": 16,
+          "avg_order_value": 370.20235294117646,
+          "revenue_per_customer": 393.34
+        },
+        {
+          "period_start": "2025-09-07T00:00:00",
+          "revenue": 4670.15,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 389.1791666666666,
+          "revenue_per_customer": 389.1791666666666
+        },
+        {
+          "period_start": "2025-09-14T00:00:00",
+          "revenue": 3969.06,
+          "orders": 10,
+          "unique_customers": 10,
+          "avg_order_value": 396.906,
+          "revenue_per_customer": 396.906
+        },
+        {
+          "period_start": "2025-09-21T00:00:00",
+          "revenue": 6285.29,
+          "orders": 13,
+          "unique_customers": 12,
+          "avg_order_value": 483.4838461538462,
+          "revenue_per_customer": 523.7741666666667
+        },
+        {
+          "period_start": "2025-09-28T00:00:00",
+          "revenue": 2789.44,
+          "orders": 10,
+          "unique_customers": 10,
+          "avg_order_value": 278.944,
+          "revenue_per_customer": 278.944
+        },
+        {
+          "period_start": "2025-10-05T00:00:00",
+          "revenue": 5215.74,
+          "orders": 10,
+          "unique_customers": 9,
+          "avg_order_value": 521.574,
+          "revenue_per_customer": 579.5266666666666
+        },
+        {
+          "period_start": "2025-10-12T00:00:00",
+          "revenue": 9304.57,
+          "orders": 13,
+          "unique_customers": 13,
+          "avg_order_value": 715.7361538461538,
+          "revenue_per_customer": 715.7361538461538
+        },
+        {
+          "period_start": "2025-10-19T00:00:00",
+          "revenue": 4934.17,
+          "orders": 12,
+          "unique_customers": 12,
+          "avg_order_value": 411.18083333333334,
+          "revenue_per_customer": 411.18083333333334
+        },
+        {
+          "period_start": "2025-10-26T00:00:00",
+          "revenue": 3342.12,
+          "orders": 7,
+          "unique_customers": 7,
+          "avg_order_value": 477.44571428571425,
+          "revenue_per_customer": 477.44571428571425
+        },
+        {
+          "period_start": "2025-11-02T00:00:00",
+          "revenue": 2478.46,
+          "orders": 10,
+          "unique_customers": 10,
+          "avg_order_value": 247.846,
+          "revenue_per_customer": 247.846
+        }
+      ]
+    },
+    "monthly": {
+      "series": [
+        {
+          "period_start": "2024-01-31T00:00:00",
+          "revenue": 25749.27,
+          "orders": 56,
+          "unique_customers": 54,
+          "avg_order_value": 459.80839285714285,
+          "revenue_per_customer": 476.83833333333337
+        },
+        {
+          "period_start": "2024-02-29T00:00:00",
+          "revenue": 22776.94,
+          "orders": 51,
+          "unique_customers": 47,
+          "avg_order_value": 446.6066666666666,
+          "revenue_per_customer": 484.61574468085104
+        },
+        {
+          "period_start": "2024-03-31T00:00:00",
+          "revenue": 26222.48,
+          "orders": 60,
+          "unique_customers": 57,
+          "avg_order_value": 437.04133333333334,
+          "revenue_per_customer": 460.0435087719298
+        },
+        {
+          "period_start": "2024-04-30T00:00:00",
+          "revenue": 21061.64,
+          "orders": 47,
+          "unique_customers": 44,
+          "avg_order_value": 448.12,
+          "revenue_per_customer": 478.6736363636364
+        },
+        {
+          "period_start": "2024-05-31T00:00:00",
+          "revenue": 20118.48,
+          "orders": 54,
+          "unique_customers": 52,
+          "avg_order_value": 372.56444444444446,
+          "revenue_per_customer": 386.89384615384614
+        },
+        {
+          "period_start": "2024-06-30T00:00:00",
+          "revenue": 19743.07,
+          "orders": 50,
+          "unique_customers": 49,
+          "avg_order_value": 394.8614,
+          "revenue_per_customer": 402.91979591836736
+        },
+        {
+          "period_start": "2024-07-31T00:00:00",
+          "revenue": 26656.52,
+          "orders": 63,
+          "unique_customers": 60,
+          "avg_order_value": 423.1193650793651,
+          "revenue_per_customer": 444.2753333333333
+        },
+        {
+          "period_start": "2024-08-31T00:00:00",
+          "revenue": 21680.09,
+          "orders": 52,
+          "unique_customers": 50,
+          "avg_order_value": 416.9248076923077,
+          "revenue_per_customer": 433.6018
+        },
+        {
+          "period_start": "2024-09-30T00:00:00",
+          "revenue": 21521.22,
+          "orders": 51,
+          "unique_customers": 48,
+          "avg_order_value": 421.98470588235296,
+          "revenue_per_customer": 448.35875000000004
+        },
+        {
+          "period_start": "2024-10-31T00:00:00",
+          "revenue": 26244.54,
+          "orders": 56,
+          "unique_customers": 55,
+          "avg_order_value": 468.65250000000003,
+          "revenue_per_customer": 477.17345454545455
+        },
+        {
+          "period_start": "2024-11-30T00:00:00",
+          "revenue": 19504.9,
+          "orders": 47,
+          "unique_customers": 45,
+          "avg_order_value": 414.99787234042554,
+          "revenue_per_customer": 433.44222222222226
+        },
+        {
+          "period_start": "2024-12-31T00:00:00",
+          "revenue": 30385.74,
+          "orders": 67,
+          "unique_customers": 63,
+          "avg_order_value": 453.5185074626866,
+          "revenue_per_customer": 482.31333333333333
+        },
+        {
+          "period_start": "2025-01-31T00:00:00",
+          "revenue": 21225.71,
+          "orders": 49,
+          "unique_customers": 48,
+          "avg_order_value": 433.1777551020408,
+          "revenue_per_customer": 442.20229166666667
+        },
+        {
+          "period_start": "2025-02-28T00:00:00",
+          "revenue": 25221.489999999998,
+          "orders": 56,
+          "unique_customers": 52,
+          "avg_order_value": 450.38374999999996,
+          "revenue_per_customer": 485.0286538461538
+        },
+        {
+          "period_start": "2025-03-31T00:00:00",
+          "revenue": 23473.36,
+          "orders": 62,
+          "unique_customers": 58,
+          "avg_order_value": 378.6025806451613,
+          "revenue_per_customer": 404.7131034482759
+        },
+        {
+          "period_start": "2025-04-30T00:00:00",
+          "revenue": 27177.47,
+          "orders": 60,
+          "unique_customers": 60,
+          "avg_order_value": 452.9578333333333,
+          "revenue_per_customer": 452.9578333333333
+        },
+        {
+          "period_start": "2025-05-31T00:00:00",
+          "revenue": 23254.16,
+          "orders": 61,
+          "unique_customers": 57,
+          "avg_order_value": 381.215737704918,
+          "revenue_per_customer": 407.9677192982456
+        },
+        {
+          "period_start": "2025-06-30T00:00:00",
+          "revenue": 20087.39,
+          "orders": 48,
+          "unique_customers": 46,
+          "avg_order_value": 418.48729166666664,
+          "revenue_per_customer": 436.6823913043478
+        },
+        {
+          "period_start": "2025-07-31T00:00:00",
+          "revenue": 19290.73,
+          "orders": 51,
+          "unique_customers": 50,
+          "avg_order_value": 378.24960784313726,
+          "revenue_per_customer": 385.8146
+        },
+        {
+          "period_start": "2025-08-31T00:00:00",
+          "revenue": 22281.760000000002,
+          "orders": 62,
+          "unique_customers": 57,
+          "avg_order_value": 359.38322580645166,
+          "revenue_per_customer": 390.90807017543864
+        },
+        {
+          "period_start": "2025-09-30T00:00:00",
+          "revenue": 17962.61,
+          "orders": 46,
+          "unique_customers": 43,
+          "avg_order_value": 390.49152173913046,
+          "revenue_per_customer": 417.73511627906976
+        },
+        {
+          "period_start": "2025-10-31T00:00:00",
+          "revenue": 25026.39,
+          "orders": 51,
+          "unique_customers": 49,
+          "avg_order_value": 490.7135294117647,
+          "revenue_per_customer": 510.7426530612245
+        }
+      ]
+    }
+  },
+  "tables": {
+    "top_customers": [
+      {
+        "customer_id": "CUST1441",
+        "name": "Customer 441",
+        "location": "Toronto, Canada",
+        "device_type": "mobile",
+        "recency_days": 170.0,
+        "total_orders": 3.0,
+        "total_spend": 4001.3,
+        "avg_order_value": 1333.7666666666669,
+        "churn_risk_score": 0.4891304347826087
+      },
+      {
+        "customer_id": "CUST1097",
+        "name": "Customer 97",
+        "location": "Mumbai, India",
+        "device_type": "tablet",
+        "recency_days": 37.0,
+        "total_orders": 7.0,
+        "total_spend": 3984.73,
+        "avg_order_value": 569.2471428571429,
+        "churn_risk_score": 0.11956521739130435
+      },
+      {
+        "customer_id": "CUST1232",
+        "name": "Customer 232",
+        "location": "Berlin, Germany",
+        "device_type": "mobile",
+        "recency_days": 224.0,
+        "total_orders": 8.0,
+        "total_spend": 3873.37,
+        "avg_order_value": 484.17125,
+        "churn_risk_score": 0.6195652173913043
+      },
+      {
+        "customer_id": "CUST1127",
+        "name": "Customer 127",
+        "location": "Toronto, Canada",
+        "device_type": "desktop",
+        "recency_days": 148.0,
+        "total_orders": 4.0,
+        "total_spend": 3715.19,
+        "avg_order_value": 928.7975,
+        "churn_risk_score": 0.4391304347826087
+      },
+      {
+        "customer_id": "CUST1299",
+        "name": "Customer 299",
+        "location": "Toronto, Canada",
+        "device_type": "mobile",
+        "recency_days": 215.0,
+        "total_orders": 5.0,
+        "total_spend": 3606.23,
+        "avg_order_value": 721.246,
+        "churn_risk_score": 0.5934782608695652
+      },
+      {
+        "customer_id": "CUST1259",
+        "name": "Customer 259",
+        "location": "London, UK",
+        "device_type": "mobile",
+        "recency_days": 132.0,
+        "total_orders": 7.0,
+        "total_spend": 3513.02,
+        "avg_order_value": 501.86,
+        "churn_risk_score": 0.40217391304347827
+      },
+      {
+        "customer_id": "CUST1348",
+        "name": "Customer 348",
+        "location": "Tokyo, Japan",
+        "device_type": "desktop",
+        "recency_days": 187.0,
+        "total_orders": 3.0,
+        "total_spend": 3471.13,
+        "avg_order_value": 1157.0433333333333,
+        "churn_risk_score": 0.5391304347826087
+      },
+      {
+        "customer_id": "CUST1022",
+        "name": "Customer 22",
+        "location": "Toronto, Canada",
+        "device_type": "mobile",
+        "recency_days": 100.0,
+        "total_orders": 4.0,
+        "total_spend": 3409.23,
+        "avg_order_value": 852.3075,
+        "churn_risk_score": 0.32173913043478264
+      },
+      {
+        "customer_id": "CUST1283",
+        "name": "Customer 283",
+        "location": "New York, USA",
+        "device_type": "mobile",
+        "recency_days": 131.0,
+        "total_orders": 6.0,
+        "total_spend": 3043.86,
+        "avg_order_value": 507.31,
+        "churn_risk_score": 0.4
+      },
+      {
+        "customer_id": "CUST1158",
+        "name": "Customer 158",
+        "location": "Sydney, Australia",
+        "device_type": "mobile",
+        "recency_days": 17.0,
+        "total_orders": 6.0,
+        "total_spend": 2989.56,
+        "avg_order_value": 498.26,
+        "churn_risk_score": 0.05
+      },
+      {
+        "customer_id": "CUST1248",
+        "name": "Customer 248",
+        "location": "Toronto, Canada",
+        "device_type": "tablet",
+        "recency_days": 61.0,
+        "total_orders": 6.0,
+        "total_spend": 2979.27,
+        "avg_order_value": 496.545,
+        "churn_risk_score": 0.18695652173913044
+      },
+      {
+        "customer_id": "CUST1174",
+        "name": "Customer 174",
+        "location": "New York, USA",
+        "device_type": "mobile",
+        "recency_days": 23.0,
+        "total_orders": 6.0,
+        "total_spend": 2968.55,
+        "avg_order_value": 494.75833333333327,
+        "churn_risk_score": 0.07391304347826087
+      },
+      {
+        "customer_id": "CUST1026",
+        "name": "Customer 26",
+        "location": "Toronto, Canada",
+        "device_type": "mobile",
+        "recency_days": 89.0,
+        "total_orders": 5.0,
+        "total_spend": 2962.6,
+        "avg_order_value": 592.52,
+        "churn_risk_score": 0.2847826086956522
+      },
+      {
+        "customer_id": "CUST1347",
+        "name": "Customer 347",
+        "location": "São Paulo, Brazil",
+        "device_type": "mobile",
+        "recency_days": 125.0,
+        "total_orders": 3.0,
+        "total_spend": 2918.91,
+        "avg_order_value": 972.97,
+        "churn_risk_score": 0.3782608695652174
+      },
+      {
+        "customer_id": "CUST1119",
+        "name": "Customer 119",
+        "location": "Mumbai, India",
+        "device_type": "desktop",
+        "recency_days": 469.0,
+        "total_orders": 4.0,
+        "total_spend": 2862.09,
+        "avg_order_value": 715.5225,
+        "churn_risk_score": 0.8978260869565218
+      },
+      {
+        "customer_id": "CUST1004",
+        "name": "Customer 4",
+        "location": "New York, USA",
+        "device_type": "mobile",
+        "recency_days": 24.0,
+        "total_orders": 4.0,
+        "total_spend": 2825.94,
+        "avg_order_value": 706.485,
+        "churn_risk_score": 0.08043478260869566
+      },
+      {
+        "customer_id": "CUST1402",
+        "name": "Customer 402",
+        "location": "New York, USA",
+        "device_type": "desktop",
+        "recency_days": 163.0,
+        "total_orders": 4.0,
+        "total_spend": 2815.42,
+        "avg_order_value": 703.855,
+        "churn_risk_score": 0.4608695652173913
+      },
+      {
+        "customer_id": "CUST1398",
+        "name": "Customer 398",
+        "location": "Sydney, Australia",
+        "device_type": "desktop",
+        "recency_days": 53.0,
+        "total_orders": 6.0,
+        "total_spend": 2769.53,
+        "avg_order_value": 461.5883333333333,
+        "churn_risk_score": 0.16086956521739132
+      },
+      {
+        "customer_id": "CUST1079",
+        "name": "Customer 79",
+        "location": "New York, USA",
+        "device_type": "mobile",
+        "recency_days": 10.0,
+        "total_orders": 5.0,
+        "total_spend": 2723.8900000000003,
+        "avg_order_value": 544.778,
+        "churn_risk_score": 0.02826086956521739
+      },
+      {
+        "customer_id": "CUST1043",
+        "name": "Customer 43",
+        "location": "New York, USA",
+        "device_type": "desktop",
+        "recency_days": 184.0,
+        "total_orders": 4.0,
+        "total_spend": 2714.42,
+        "avg_order_value": 678.605,
+        "churn_risk_score": 0.5282608695652175
+      },
+      {
+        "customer_id": "CUST1142",
+        "name": "Customer 142",
+        "location": "Tokyo, Japan",
+        "device_type": "desktop",
+        "recency_days": 101.0,
+        "total_orders": 5.0,
+        "total_spend": 2701.98,
+        "avg_order_value": 540.396,
+        "churn_risk_score": 0.32608695652173914
+      },
+      {
+        "customer_id": "CUST1333",
+        "name": "Customer 333",
+        "location": "Tokyo, Japan",
+        "device_type": "desktop",
+        "recency_days": 39.0,
+        "total_orders": 3.0,
+        "total_spend": 2698.61,
+        "avg_order_value": 899.5366666666665,
+        "churn_risk_score": 0.12391304347826088
+      },
+      {
+        "customer_id": "CUST1424",
+        "name": "Customer 424",
+        "location": "Tokyo, Japan",
+        "device_type": "desktop",
+        "recency_days": 134.0,
+        "total_orders": 4.0,
+        "total_spend": 2691.77,
+        "avg_order_value": 672.9425,
+        "churn_risk_score": 0.4152173913043478
+      },
+      {
+        "customer_id": "CUST1305",
+        "name": "Customer 305",
+        "location": "São Paulo, Brazil",
+        "device_type": "mobile",
+        "recency_days": 20.0,
+        "total_orders": 3.0,
+        "total_spend": 2668.01,
+        "avg_order_value": 889.3366666666666,
+        "churn_risk_score": 0.06521739130434782
+      },
+      {
+        "customer_id": "CUST1400",
+        "name": "Customer 400",
+        "location": "London, UK",
+        "device_type": "desktop",
+        "recency_days": 451.0,
+        "total_orders": 3.0,
+        "total_spend": 2661.66,
+        "avg_order_value": 887.2199999999999,
+        "churn_risk_score": 0.8826086956521739
+      }
+    ],
+    "at_risk_customers": [
+      {
+        "customer_id": "CUST1119",
+        "name": "Customer 119",
+        "location": "Mumbai, India",
+        "device_type": "desktop",
+        "recency_days": 469.0,
+        "total_orders": 4.0,
+        "total_spend": 2862.09,
+        "avg_order_value": 715.5225,
+        "churn_risk_score": 0.8978260869565218
+      },
+      {
+        "customer_id": "CUST1400",
+        "name": "Customer 400",
+        "location": "London, UK",
+        "device_type": "desktop",
+        "recency_days": 451.0,
+        "total_orders": 3.0,
+        "total_spend": 2661.66,
+        "avg_order_value": 887.2199999999999,
+        "churn_risk_score": 0.8826086956521739
+      },
+      {
+        "customer_id": "CUST1410",
+        "name": "Customer 410",
+        "location": "Sydney, Australia",
+        "device_type": "desktop",
+        "recency_days": 336.0,
+        "total_orders": 3.0,
+        "total_spend": 2387.3100000000004,
+        "avg_order_value": 795.7700000000001,
+        "churn_risk_score": 0.7760869565217391
+      },
+      {
+        "customer_id": "CUST1038",
+        "name": "Customer 38",
+        "location": "New York, USA",
+        "device_type": "mobile",
+        "recency_days": 276.0,
+        "total_orders": 3.0,
+        "total_spend": 2288.42,
+        "avg_order_value": 762.8066666666667,
+        "churn_risk_score": 0.6956521739130435
+      },
+      {
+        "customer_id": "CUST1436",
+        "name": "Customer 436",
+        "location": "Mumbai, India",
+        "device_type": "desktop",
+        "recency_days": 333.0,
+        "total_orders": 4.0,
+        "total_spend": 2281.64,
+        "avg_order_value": 570.41,
+        "churn_risk_score": 0.7673913043478261
+      },
+      {
+        "customer_id": "CUST1072",
+        "name": "Customer 72",
+        "location": "Toronto, Canada",
+        "device_type": "mobile",
+        "recency_days": 327.0,
+        "total_orders": 3.0,
+        "total_spend": 2165.95,
+        "avg_order_value": 721.9833333333332,
+        "churn_risk_score": 0.7543478260869565
+      },
+      {
+        "customer_id": "CUST1361",
+        "name": "Customer 361",
+        "location": "Mumbai, India",
+        "device_type": "mobile",
+        "recency_days": 319.0,
+        "total_orders": 2.0,
+        "total_spend": 2147.04,
+        "avg_order_value": 1073.52,
+        "churn_risk_score": 0.7391304347826088
+      },
+      {
+        "customer_id": "CUST1304",
+        "name": "Customer 304",
+        "location": "Toronto, Canada",
+        "device_type": "tablet",
+        "recency_days": 279.0,
+        "total_orders": 4.0,
+        "total_spend": 2093.97,
+        "avg_order_value": 523.4925,
+        "churn_risk_score": 0.7
+      },
+      {
+        "customer_id": "CUST1108",
+        "name": "Customer 108",
+        "location": "Mumbai, India",
+        "device_type": "mobile",
+        "recency_days": 293.0,
+        "total_orders": 4.0,
+        "total_spend": 2035.06,
+        "avg_order_value": 508.765,
+        "churn_risk_score": 0.7108695652173913
+      },
+      {
+        "customer_id": "CUST1457",
+        "name": "Customer 457",
+        "location": "Sydney, Australia",
+        "device_type": "mobile",
+        "recency_days": 422.0,
+        "total_orders": 2.0,
+        "total_spend": 1971.22,
+        "avg_order_value": 985.61,
+        "churn_risk_score": 0.8652173913043478
+      },
+      {
+        "customer_id": "CUST1351",
+        "name": "Customer 351",
+        "location": "Tokyo, Japan",
+        "device_type": "tablet",
+        "recency_days": 280.0,
+        "total_orders": 3.0,
+        "total_spend": 1843.33,
+        "avg_order_value": 614.4433333333334,
+        "churn_risk_score": 0.7043478260869566
+      },
+      {
+        "customer_id": "CUST1176",
+        "name": "Customer 176",
+        "location": "São Paulo, Brazil",
+        "device_type": "mobile",
+        "recency_days": 311.0,
+        "total_orders": 2.0,
+        "total_spend": 1817.36,
+        "avg_order_value": 908.68,
+        "churn_risk_score": 0.7239130434782609
+      },
+      {
+        "customer_id": "CUST1378",
+        "name": "Customer 378",
+        "location": "Mumbai, India",
+        "device_type": "mobile",
+        "recency_days": 550.0,
+        "total_orders": 2.0,
+        "total_spend": 1790.42,
+        "avg_order_value": 895.21,
+        "churn_risk_score": 0.9478260869565217
+      },
+      {
+        "customer_id": "CUST1293",
+        "name": "Customer 293",
+        "location": "New York, USA",
+        "device_type": "desktop",
+        "recency_days": 448.0,
+        "total_orders": 3.0,
+        "total_spend": 1774.49,
+        "avg_order_value": 591.4966666666667,
+        "churn_risk_score": 0.8760869565217392
+      },
+      {
+        "customer_id": "CUST1264",
+        "name": "Customer 264",
+        "location": "Mumbai, India",
+        "device_type": "desktop",
+        "recency_days": 384.0,
+        "total_orders": 1.0,
+        "total_spend": 1681.16,
+        "avg_order_value": 1681.16,
+        "churn_risk_score": 0.8282608695652174
+      },
+      {
+        "customer_id": "CUST1335",
+        "name": "Customer 335",
+        "location": "Mumbai, India",
+        "device_type": "mobile",
+        "recency_days": 449.0,
+        "total_orders": 3.0,
+        "total_spend": 1606.64,
+        "avg_order_value": 535.5466666666667,
+        "churn_risk_score": 0.8782608695652174
+      },
+      {
+        "customer_id": "CUST1168",
+        "name": "Customer 168",
+        "location": "London, UK",
+        "device_type": "desktop",
+        "recency_days": 479.0,
+        "total_orders": 2.0,
+        "total_spend": 1571.75,
+        "avg_order_value": 785.875,
+        "churn_risk_score": 0.9043478260869565
+      },
+      {
+        "customer_id": "CUST1166",
+        "name": "Customer 166",
+        "location": "Berlin, Germany",
+        "device_type": "mobile",
+        "recency_days": 318.0,
+        "total_orders": 2.0,
+        "total_spend": 1564.8000000000002,
+        "avg_order_value": 782.4000000000001,
+        "churn_risk_score": 0.7369565217391304
+      },
+      {
+        "customer_id": "CUST1210",
+        "name": "Customer 210",
+        "location": "New York, USA",
+        "device_type": "mobile",
+        "recency_days": 609.0,
+        "total_orders": 2.0,
+        "total_spend": 1548.52,
+        "avg_order_value": 774.26,
+        "churn_risk_score": 0.9717391304347827
+      },
+      {
+        "customer_id": "CUST1365",
+        "name": "Customer 365",
+        "location": "Mumbai, India",
+        "device_type": "mobile",
+        "recency_days": 397.0,
+        "total_orders": 3.0,
+        "total_spend": 1524.75,
+        "avg_order_value": 508.25,
+        "churn_risk_score": 0.841304347826087
+      },
+      {
+        "customer_id": "CUST1010",
+        "name": "Customer 10",
+        "location": "Berlin, Germany",
+        "device_type": "mobile",
+        "recency_days": 321.0,
+        "total_orders": 3.0,
+        "total_spend": 1497.26,
+        "avg_order_value": 499.0866666666666,
+        "churn_risk_score": 0.7456521739130435
+      },
+      {
+        "customer_id": "CUST1282",
+        "name": "Customer 282",
+        "location": "New York, USA",
+        "device_type": "mobile",
+        "recency_days": 443.0,
+        "total_orders": 2.0,
+        "total_spend": 1465.06,
+        "avg_order_value": 732.53,
+        "churn_risk_score": 0.8739130434782609
+      },
+      {
+        "customer_id": "CUST1107",
+        "name": "Customer 107",
+        "location": "Mumbai, India",
+        "device_type": "mobile",
+        "recency_days": 366.0,
+        "total_orders": 3.0,
+        "total_spend": 1366.61,
+        "avg_order_value": 455.5366666666666,
+        "churn_risk_score": 0.808695652173913
+      },
+      {
+        "customer_id": "CUST1076",
+        "name": "Customer 76",
+        "location": "Mumbai, India",
+        "device_type": "mobile",
+        "recency_days": 633.0,
+        "total_orders": 1.0,
+        "total_spend": 1345.74,
+        "avg_order_value": 1345.74,
+        "churn_risk_score": 0.9804347826086957
+      },
+      {
+        "customer_id": "CUST1171",
+        "name": "Customer 171",
+        "location": "London, UK",
+        "device_type": "mobile",
+        "recency_days": 320.0,
+        "total_orders": 2.0,
+        "total_spend": 1336.14,
+        "avg_order_value": 668.0699999999999,
+        "churn_risk_score": 0.741304347826087
+      },
+      {
+        "customer_id": "CUST1339",
+        "name": "Customer 339",
+        "location": "Mumbai, India",
+        "device_type": "mobile",
+        "recency_days": 275.0,
+        "total_orders": 2.0,
+        "total_spend": 1310.03,
+        "avg_order_value": 655.015,
+        "churn_risk_score": 0.6934782608695652
+      },
+      {
+        "customer_id": "CUST1114",
+        "name": "Customer 114",
+        "location": "São Paulo, Brazil",
+        "device_type": "mobile",
+        "recency_days": 359.0,
+        "total_orders": 4.0,
+        "total_spend": 1296.78,
+        "avg_order_value": 324.195,
+        "churn_risk_score": 0.8043478260869565
+      },
+      {
+        "customer_id": "CUST1199",
+        "name": "Customer 199",
+        "location": "Berlin, Germany",
+        "device_type": "mobile",
+        "recency_days": 332.0,
+        "total_orders": 3.0,
+        "total_spend": 1271.56,
+        "avg_order_value": 423.8533333333333,
+        "churn_risk_score": 0.7630434782608696
+      },
+      {
+        "customer_id": "CUST1446",
+        "name": "Customer 446",
+        "location": "Tokyo, Japan",
+        "device_type": "tablet",
+        "recency_days": 332.0,
+        "total_orders": 3.0,
+        "total_spend": 1239.14,
+        "avg_order_value": 413.0466666666667,
+        "churn_risk_score": 0.7652173913043478
+      },
+      {
+        "customer_id": "CUST1459",
+        "name": "Customer 459",
+        "location": "London, UK",
+        "device_type": "tablet",
+        "recency_days": 307.0,
+        "total_orders": 2.0,
+        "total_spend": 1226.9,
+        "avg_order_value": 613.45,
+        "churn_risk_score": 0.717391304347826
+      },
+      {
+        "customer_id": "CUST1235",
+        "name": "Customer 235",
+        "location": "Sydney, Australia",
+        "device_type": "mobile",
+        "recency_days": 380.0,
+        "total_orders": 1.0,
+        "total_spend": 1225.87,
+        "avg_order_value": 1225.87,
+        "churn_risk_score": 0.8217391304347826
+      },
+      {
+        "customer_id": "CUST1154",
+        "name": "Customer 154",
+        "location": "Tokyo, Japan",
+        "device_type": "mobile",
+        "recency_days": 354.0,
+        "total_orders": 5.0,
+        "total_spend": 1177.52,
+        "avg_order_value": 235.504,
+        "churn_risk_score": 0.7956521739130434
+      },
+      {
+        "customer_id": "CUST1265",
+        "name": "Customer 265",
+        "location": "London, UK",
+        "device_type": "desktop",
+        "recency_days": 430.0,
+        "total_orders": 3.0,
+        "total_spend": 1171.4,
+        "avg_order_value": 390.4666666666667,
+        "churn_risk_score": 0.8695652173913043
+      },
+      {
+        "customer_id": "CUST1257",
+        "name": "Customer 257",
+        "location": "London, UK",
+        "device_type": "desktop",
+        "recency_days": 451.0,
+        "total_orders": 2.0,
+        "total_spend": 1146.61,
+        "avg_order_value": 573.305,
+        "churn_risk_score": 0.8804347826086957
+      },
+      {
+        "customer_id": "CUST1319",
+        "name": "Customer 319",
+        "location": "London, UK",
+        "device_type": "mobile",
+        "recency_days": 352.0,
+        "total_orders": 3.0,
+        "total_spend": 1093.41,
+        "avg_order_value": 364.47,
+        "churn_risk_score": 0.7913043478260869
+      },
+      {
+        "customer_id": "CUST1115",
+        "name": "Customer 115",
+        "location": "São Paulo, Brazil",
+        "device_type": "mobile",
+        "recency_days": 329.0,
+        "total_orders": 3.0,
+        "total_spend": 1060.63,
+        "avg_order_value": 353.5433333333333,
+        "churn_risk_score": 0.7565217391304347
+      },
+      {
+        "customer_id": "CUST1327",
+        "name": "Customer 327",
+        "location": "Berlin, Germany",
+        "device_type": "desktop",
+        "recency_days": 323.0,
+        "total_orders": 3.0,
+        "total_spend": 1059.77,
+        "avg_order_value": 353.25666666666666,
+        "churn_risk_score": 0.75
+      },
+      {
+        "customer_id": "CUST1411",
+        "name": "Customer 411",
+        "location": "Toronto, Canada",
+        "device_type": "mobile",
+        "recency_days": 286.0,
+        "total_orders": 3.0,
+        "total_spend": 1058.16,
+        "avg_order_value": 352.72,
+        "churn_risk_score": 0.7086956521739131
+      },
+      {
+        "customer_id": "CUST1219",
+        "name": "Customer 219",
+        "location": "London, UK",
+        "device_type": "mobile",
+        "recency_days": 383.0,
+        "total_orders": 3.0,
+        "total_spend": 1034.1,
+        "avg_order_value": 344.7,
+        "churn_risk_score": 0.8260869565217391
+      },
+      {
+        "customer_id": "CUST1475",
+        "name": "Customer 475",
+        "location": "Tokyo, Japan",
+        "device_type": "desktop",
+        "recency_days": 401.0,
+        "total_orders": 2.0,
+        "total_spend": 1011.49,
+        "avg_order_value": 505.745,
+        "churn_risk_score": 0.8478260869565217
+      },
+      {
+        "customer_id": "CUST1139",
+        "name": "Customer 139",
+        "location": "New York, USA",
+        "device_type": "mobile",
+        "recency_days": 398.0,
+        "total_orders": 2.0,
+        "total_spend": 1000.76,
+        "avg_order_value": 500.38,
+        "churn_risk_score": 0.8456521739130435
+      },
+      {
+        "customer_id": "CUST1229",
+        "name": "Customer 229",
+        "location": "London, UK",
+        "device_type": "mobile",
+        "recency_days": 336.0,
+        "total_orders": 2.0,
+        "total_spend": 998.5,
+        "avg_order_value": 499.25,
+        "churn_risk_score": 0.7739130434782608
+      },
+      {
+        "customer_id": "CUST1375",
+        "name": "Customer 375",
+        "location": "Berlin, Germany",
+        "device_type": "mobile",
+        "recency_days": 658.0,
+        "total_orders": 1.0,
+        "total_spend": 921.76,
+        "avg_order_value": 921.76,
+        "churn_risk_score": 0.9934782608695653
+      },
+      {
+        "customer_id": "CUST1061",
+        "name": "Customer 61",
+        "location": "Berlin, Germany",
+        "device_type": "desktop",
+        "recency_days": 475.0,
+        "total_orders": 1.0,
+        "total_spend": 917.08,
+        "avg_order_value": 917.08,
+        "churn_risk_score": 0.9
+      },
+      {
+        "customer_id": "CUST1357",
+        "name": "Customer 357",
+        "location": "London, UK",
+        "device_type": "desktop",
+        "recency_days": 497.0,
+        "total_orders": 4.0,
+        "total_spend": 905.94,
+        "avg_order_value": 226.485,
+        "churn_risk_score": 0.9217391304347826
+      },
+      {
+        "customer_id": "CUST1214",
+        "name": "Customer 214",
+        "location": "Toronto, Canada",
+        "device_type": "mobile",
+        "recency_days": 353.0,
+        "total_orders": 3.0,
+        "total_spend": 889.12,
+        "avg_order_value": 296.37333333333333,
+        "churn_risk_score": 0.7934782608695652
+      },
+      {
+        "customer_id": "CUST1191",
+        "name": "Customer 191",
+        "location": "London, UK",
+        "device_type": "mobile",
+        "recency_days": 480.0,
+        "total_orders": 2.0,
+        "total_spend": 880.0999999999999,
+        "avg_order_value": 440.05,
+        "churn_risk_score": 0.9065217391304348
+      },
+      {
+        "customer_id": "CUST1314",
+        "name": "Customer 314",
+        "location": "Mumbai, India",
+        "device_type": "mobile",
+        "recency_days": 299.0,
+        "total_orders": 2.0,
+        "total_spend": 876.85,
+        "avg_order_value": 438.425,
+        "churn_risk_score": 0.7152173913043478
+      },
+      {
+        "customer_id": "CUST1200",
+        "name": "Customer 200",
+        "location": "Berlin, Germany",
+        "device_type": "desktop",
+        "recency_days": 371.0,
+        "total_orders": 1.0,
+        "total_spend": 874.22,
+        "avg_order_value": 874.22,
+        "churn_risk_score": 0.8130434782608695
+      },
+      {
+        "customer_id": "CUST1234",
+        "name": "Customer 234",
+        "location": "Toronto, Canada",
+        "device_type": "desktop",
+        "recency_days": 355.0,
+        "total_orders": 2.0,
+        "total_spend": 831.01,
+        "avg_order_value": 415.505,
+        "churn_risk_score": 0.7978260869565218
+      }
+    ],
+    "risky_products": [
+      {
+        "product_id": "SKU10189",
+        "name": "Product 189",
+        "category": "Clothing",
+        "brand": "Terra",
+        "average_rating": 3.51,
+        "stock": 373,
+        "times_purchased": 10,
+        "total_revenue": 10011.3,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10189",
+        "name": "Product 189",
+        "category": "Clothing",
+        "brand": "Terra",
+        "average_rating": 3.51,
+        "stock": 373,
+        "times_purchased": 10,
+        "total_revenue": 10011.3,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10144",
+        "name": "Product 144",
+        "category": "Beauty",
+        "brand": "Orion",
+        "average_rating": 4.99,
+        "stock": 169,
+        "times_purchased": 9,
+        "total_revenue": 9868.76,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10031",
+        "name": "Product 31",
+        "category": "Books",
+        "brand": "Acme",
+        "average_rating": 3.86,
+        "stock": 55,
+        "times_purchased": 9,
+        "total_revenue": 9522.43,
+        "discount_percent": 15,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10031",
+        "name": "Product 31",
+        "category": "Books",
+        "brand": "Acme",
+        "average_rating": 3.86,
+        "stock": 55,
+        "times_purchased": 9,
+        "total_revenue": 9522.43,
+        "discount_percent": 15,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10097",
+        "name": "Product 97",
+        "category": "Electronics",
+        "brand": "Helios",
+        "average_rating": 4.5,
+        "stock": 441,
+        "times_purchased": 13,
+        "total_revenue": 8818.029999999999,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10192",
+        "name": "Product 192",
+        "category": "Clothing",
+        "brand": "Orion",
+        "average_rating": 3.7,
+        "stock": 44,
+        "times_purchased": 9,
+        "total_revenue": 8514.66,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10192",
+        "name": "Product 192",
+        "category": "Clothing",
+        "brand": "Orion",
+        "average_rating": 3.7,
+        "stock": 44,
+        "times_purchased": 9,
+        "total_revenue": 8514.66,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10136",
+        "name": "Product 136",
+        "category": "Books",
+        "brand": "Acme",
+        "average_rating": 3.79,
+        "stock": 28,
+        "times_purchased": 7,
+        "total_revenue": 7687.719999999999,
+        "discount_percent": 5,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10184",
+        "name": "Product 184",
+        "category": "Books",
+        "brand": "Terra",
+        "average_rating": 4.84,
+        "stock": 7,
+        "times_purchased": 10,
+        "total_revenue": 7658.0,
+        "discount_percent": 10,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10072",
+        "name": "Product 72",
+        "category": "Books",
+        "brand": "Helios",
+        "average_rating": 4.36,
+        "stock": 38,
+        "times_purchased": 8,
+        "total_revenue": 7626.960000000001,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10080",
+        "name": "Product 80",
+        "category": "Electronics",
+        "brand": "Terra",
+        "average_rating": 3.43,
+        "stock": 158,
+        "times_purchased": 7,
+        "total_revenue": 7455.8,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10060",
+        "name": "Product 60",
+        "category": "Beauty",
+        "brand": "Orion",
+        "average_rating": 3.87,
+        "stock": 433,
+        "times_purchased": 8,
+        "total_revenue": 7290.96,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10186",
+        "name": "Product 186",
+        "category": "Electronics",
+        "brand": "Terra",
+        "average_rating": 3.44,
+        "stock": 97,
+        "times_purchased": 6,
+        "total_revenue": 6740.42,
+        "discount_percent": 15,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10067",
+        "name": "Product 67",
+        "category": "Home & Kitchen",
+        "brand": "Nova",
+        "average_rating": 3.45,
+        "stock": 99,
+        "times_purchased": 11,
+        "total_revenue": 5968.88,
+        "discount_percent": 30,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10067",
+        "name": "Product 67",
+        "category": "Home & Kitchen",
+        "brand": "Nova",
+        "average_rating": 3.45,
+        "stock": 99,
+        "times_purchased": 11,
+        "total_revenue": 5968.88,
+        "discount_percent": 30,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10116",
+        "name": "Product 116",
+        "category": "Home & Kitchen",
+        "brand": "Helios",
+        "average_rating": 3.7,
+        "stock": 354,
+        "times_purchased": 8,
+        "total_revenue": 5618.860000000001,
+        "discount_percent": 10,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10116",
+        "name": "Product 116",
+        "category": "Home & Kitchen",
+        "brand": "Helios",
+        "average_rating": 3.7,
+        "stock": 354,
+        "times_purchased": 8,
+        "total_revenue": 5618.860000000001,
+        "discount_percent": 10,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10010",
+        "name": "Product 10",
+        "category": "Clothing",
+        "brand": "Zenith",
+        "average_rating": 3.6,
+        "stock": 48,
+        "times_purchased": 8,
+        "total_revenue": 5573.04,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10010",
+        "name": "Product 10",
+        "category": "Clothing",
+        "brand": "Zenith",
+        "average_rating": 3.6,
+        "stock": 48,
+        "times_purchased": 8,
+        "total_revenue": 5573.04,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10141",
+        "name": "Product 141",
+        "category": "Books",
+        "brand": "Terra",
+        "average_rating": 5.0,
+        "stock": 142,
+        "times_purchased": 11,
+        "total_revenue": 5452.98,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10079",
+        "name": "Product 79",
+        "category": "Clothing",
+        "brand": "Helios",
+        "average_rating": 4.18,
+        "stock": 187,
+        "times_purchased": 8,
+        "total_revenue": 5431.389999999999,
+        "discount_percent": 15,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10019",
+        "name": "Product 19",
+        "category": "Home & Kitchen",
+        "brand": "Nova",
+        "average_rating": 3.08,
+        "stock": 454,
+        "times_purchased": 7,
+        "total_revenue": 5343.8,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10138",
+        "name": "Product 138",
+        "category": "Electronics",
+        "brand": "Helios",
+        "average_rating": 4.05,
+        "stock": 113,
+        "times_purchased": 13,
+        "total_revenue": 5327.8,
+        "discount_percent": 10,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10033",
+        "name": "Product 33",
+        "category": "Sports",
+        "brand": "Acme",
+        "average_rating": 3.44,
+        "stock": 111,
+        "times_purchased": 5,
+        "total_revenue": 5245.32,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10039",
+        "name": "Product 39",
+        "category": "Books",
+        "brand": "Nova",
+        "average_rating": 3.53,
+        "stock": 79,
+        "times_purchased": 10,
+        "total_revenue": 5222.07,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10039",
+        "name": "Product 39",
+        "category": "Books",
+        "brand": "Nova",
+        "average_rating": 3.53,
+        "stock": 79,
+        "times_purchased": 10,
+        "total_revenue": 5222.07,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10196",
+        "name": "Product 196",
+        "category": "Clothing",
+        "brand": "Orion",
+        "average_rating": 4.86,
+        "stock": 288,
+        "times_purchased": 8,
+        "total_revenue": 5135.95,
+        "discount_percent": 5,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10176",
+        "name": "Product 176",
+        "category": "Clothing",
+        "brand": "Zenith",
+        "average_rating": 3.42,
+        "stock": 460,
+        "times_purchased": 6,
+        "total_revenue": 4903.48,
+        "discount_percent": 15,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10105",
+        "name": "Product 105",
+        "category": "Clothing",
+        "brand": "Helios",
+        "average_rating": 3.28,
+        "stock": 122,
+        "times_purchased": 7,
+        "total_revenue": 4780.21,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10110",
+        "name": "Product 110",
+        "category": "Home & Kitchen",
+        "brand": "Helios",
+        "average_rating": 4.74,
+        "stock": 139,
+        "times_purchased": 8,
+        "total_revenue": 4612.75,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10120",
+        "name": "Product 120",
+        "category": "Clothing",
+        "brand": "Helios",
+        "average_rating": 3.51,
+        "stock": 31,
+        "times_purchased": 6,
+        "total_revenue": 4511.7,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10089",
+        "name": "Product 89",
+        "category": "Sports",
+        "brand": "Helios",
+        "average_rating": 3.55,
+        "stock": 175,
+        "times_purchased": 7,
+        "total_revenue": 4303.32,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10035",
+        "name": "Product 35",
+        "category": "Clothing",
+        "brand": "Zenith",
+        "average_rating": 4.17,
+        "stock": 309,
+        "times_purchased": 8,
+        "total_revenue": 4273.94,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10172",
+        "name": "Product 172",
+        "category": "Clothing",
+        "brand": "Zenith",
+        "average_rating": 3.04,
+        "stock": 111,
+        "times_purchased": 10,
+        "total_revenue": 4148.19,
+        "discount_percent": 20,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10172",
+        "name": "Product 172",
+        "category": "Clothing",
+        "brand": "Zenith",
+        "average_rating": 3.04,
+        "stock": 111,
+        "times_purchased": 10,
+        "total_revenue": 4148.19,
+        "discount_percent": 20,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10155",
+        "name": "Product 155",
+        "category": "Books",
+        "brand": "Acme",
+        "average_rating": 3.61,
+        "stock": 207,
+        "times_purchased": 7,
+        "total_revenue": 4075.61,
+        "discount_percent": 15,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10086",
+        "name": "Product 86",
+        "category": "Books",
+        "brand": "Helios",
+        "average_rating": 3.93,
+        "stock": 100,
+        "times_purchased": 8,
+        "total_revenue": 4019.07,
+        "discount_percent": 20,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10175",
+        "name": "Product 175",
+        "category": "Sports",
+        "brand": "Helios",
+        "average_rating": 4.91,
+        "stock": 485,
+        "times_purchased": 8,
+        "total_revenue": 3935.53,
+        "discount_percent": 15,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10140",
+        "name": "Product 140",
+        "category": "Clothing",
+        "brand": "Nova",
+        "average_rating": 3.41,
+        "stock": 408,
+        "times_purchased": 5,
+        "total_revenue": 3872.26,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10160",
+        "name": "Product 160",
+        "category": "Beauty",
+        "brand": "Nova",
+        "average_rating": 3.69,
+        "stock": 113,
+        "times_purchased": 10,
+        "total_revenue": 3850.230000000001,
+        "discount_percent": 5,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10160",
+        "name": "Product 160",
+        "category": "Beauty",
+        "brand": "Nova",
+        "average_rating": 3.69,
+        "stock": 113,
+        "times_purchased": 10,
+        "total_revenue": 3850.230000000001,
+        "discount_percent": 5,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10104",
+        "name": "Product 104",
+        "category": "Electronics",
+        "brand": "Zenith",
+        "average_rating": 3.02,
+        "stock": 210,
+        "times_purchased": 10,
+        "total_revenue": 3791.82,
+        "discount_percent": 10,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10104",
+        "name": "Product 104",
+        "category": "Electronics",
+        "brand": "Zenith",
+        "average_rating": 3.02,
+        "stock": 210,
+        "times_purchased": 10,
+        "total_revenue": 3791.82,
+        "discount_percent": 10,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10168",
+        "name": "Product 168",
+        "category": "Sports",
+        "brand": "Acme",
+        "average_rating": 4.35,
+        "stock": 441,
+        "times_purchased": 11,
+        "total_revenue": 3789.72,
+        "discount_percent": 5,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10092",
+        "name": "Product 92",
+        "category": "Beauty",
+        "brand": "Acme",
+        "average_rating": 3.68,
+        "stock": 58,
+        "times_purchased": 9,
+        "total_revenue": 3611.92,
+        "discount_percent": 10,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10092",
+        "name": "Product 92",
+        "category": "Beauty",
+        "brand": "Acme",
+        "average_rating": 3.68,
+        "stock": 58,
+        "times_purchased": 9,
+        "total_revenue": 3611.92,
+        "discount_percent": 10,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10143",
+        "name": "Product 143",
+        "category": "Books",
+        "brand": "Zenith",
+        "average_rating": 3.57,
+        "stock": 119,
+        "times_purchased": 7,
+        "total_revenue": 3581.22,
+        "discount_percent": 0,
+        "risk_reason": "Low rating"
+      },
+      {
+        "product_id": "SKU10049",
+        "name": "Product 49",
+        "category": "Beauty",
+        "brand": "Orion",
+        "average_rating": 4.8,
+        "stock": 108,
+        "times_purchased": 8,
+        "total_revenue": 3559.29,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      },
+      {
+        "product_id": "SKU10071",
+        "name": "Product 71",
+        "category": "Home & Kitchen",
+        "brand": "Acme",
+        "average_rating": 3.18,
+        "stock": 46,
+        "times_purchased": 8,
+        "total_revenue": 3413.73,
+        "discount_percent": 0,
+        "risk_reason": "High demand + low stock"
+      }
+    ],
+    "discount_watchlist": [
+      {
+        "product_id": "SKU10038",
+        "name": "Product 38",
+        "category": "Home & Kitchen",
+        "brand": "Helios",
+        "discount_percent": 20,
+        "total_revenue": 83.44,
+        "times_purchased": 6,
+        "revenue_per_purchase": 13.906666666666666
+      },
+      {
+        "product_id": "SKU10173",
+        "name": "Product 173",
+        "category": "Books",
+        "brand": "Orion",
+        "discount_percent": 10,
+        "total_revenue": 200.69,
+        "times_purchased": 8,
+        "revenue_per_purchase": 25.08625
+      }
+    ]
+  }
+}

@@ -4,7 +4,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from pipeline.hypothesis.runner import run_hypothesis_agent
-from pipeline.insights.runner import run_insights  # <-- add this
+from pipeline.insights.runner import run_insights 
+from pipeline.kpi.runner import run_kpi_snapshot
+from pipeline.kpi.io import DataPaths, read_json
 
 app = FastAPI(title="Hypothesis + Insights Backend")
 
@@ -50,3 +52,15 @@ def run_insights_endpoint():
     project_root = Path(__file__).resolve().parent  # backend/
     bundle = run_insights(project_root)
     return bundle.to_dict()
+
+@app.get("/api/kpis/run")
+def run_kpis_endpoint():
+    root = Path(__file__).resolve().parent
+    snap = run_kpi_snapshot(root)
+    return snap.to_dict()
+
+@app.get("/api/kpis/current")
+def get_current_kpis():
+    root = Path(__file__).resolve().parent
+    paths = DataPaths(base_dir=root)
+    return read_json(paths.kpi_dir / "kpi_snapshot.json")
