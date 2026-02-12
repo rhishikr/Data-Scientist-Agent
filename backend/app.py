@@ -7,6 +7,8 @@ from pipeline.hypothesis.runner import run_hypothesis_agent
 from pipeline.insights.runner import run_insights 
 from pipeline.kpi.runner import run_kpi_snapshot
 from pipeline.kpi.io import DataPaths, read_json
+from pipeline.forecast.runner import run_forecasting
+from pipeline.forecast.io import ForecastPaths
 
 app = FastAPI(title="Hypothesis + Insights Backend")
 
@@ -53,14 +55,44 @@ def run_insights_endpoint():
     bundle = run_insights(project_root)
     return bundle.to_dict()
 
-@app.get("/api/kpis/run")
-def run_kpis_endpoint():
-    root = Path(__file__).resolve().parent
-    snap = run_kpi_snapshot(root)
-    return snap.to_dict()
+@app.get("/api/kpi/run")
+def run_kpis():
+    """
+    Computes KPI snapshot and writes outputs to:
+      backend/data/kpi_outputs/*
+    """
+    return run_kpi_snapshot(DataPaths.default())
 
-@app.get("/api/kpis/current")
-def get_current_kpis():
-    root = Path(__file__).resolve().parent
-    paths = DataPaths(base_dir=root)
-    return read_json(paths.kpi_dir / "kpi_snapshot.json")
+
+@app.get("/api/kpi/snapshot")
+def get_kpi_snapshot():
+    """
+    Returns the latest KPI snapshot JSON if it exists.
+    """
+    from pipeline.kpi.io import read_json
+    paths = DataPaths.default()
+    snap_path = Path(paths.out_dir) / "kpi_snapshot.json"
+    payload = read_json(str(snap_path))
+    return payload or {"error": "kpi_snapshot.json not found. Run /api/kpi/run first."}
+
+
+@app.get("/api/forecast/run")
+def run_forecast():
+    """
+    Trains/loads forecasting models and writes outputs to:
+      backend/data/forecast_outputs/*
+    Also saves model artifacts to:
+      backend/models/*
+    """
+    return run_forecasting(ForecastPaths.default())
+
+
+@app.get("/api/forecast/snapshot")
+def get_forecast_snapshot():
+    """
+    Returns latest forecast snapshot JSON if it exists.
+    """
+    paths = ForecastPaths.default()
+    snap_path = Path(paths.out_dir) / "forecast_snapshot.json"
+    payload = read_json(str(snap_path))
+    return payload or {"error": "forecast_snapshot.json not found. Run /api/forecast/run first."}

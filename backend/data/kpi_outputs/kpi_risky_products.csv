@@ -1,51 +1,64 @@
-product_id,name,category,brand,average_rating,stock,times_purchased,total_revenue,discount_percent,risk_reason
-SKU10189,Product 189,Clothing,Terra,3.51,373,10,10011.3,0,High demand + low stock
-SKU10189,Product 189,Clothing,Terra,3.51,373,10,10011.3,0,Low rating
-SKU10144,Product 144,Beauty,Orion,4.99,169,9,9868.76,0,High demand + low stock
-SKU10031,Product 31,Books,Acme,3.86,55,9,9522.43,15,High demand + low stock
-SKU10031,Product 31,Books,Acme,3.86,55,9,9522.43,15,Low rating
-SKU10097,Product 97,Electronics,Helios,4.5,441,13,8818.029999999999,0,High demand + low stock
-SKU10192,Product 192,Clothing,Orion,3.7,44,9,8514.66,0,High demand + low stock
-SKU10192,Product 192,Clothing,Orion,3.7,44,9,8514.66,0,Low rating
-SKU10136,Product 136,Books,Acme,3.79,28,7,7687.719999999999,5,Low rating
-SKU10184,Product 184,Books,Terra,4.84,7,10,7658.0,10,High demand + low stock
-SKU10072,Product 72,Books,Helios,4.36,38,8,7626.960000000001,0,High demand + low stock
-SKU10080,Product 80,Electronics,Terra,3.43,158,7,7455.8,0,Low rating
-SKU10060,Product 60,Beauty,Orion,3.87,433,8,7290.96,0,High demand + low stock
-SKU10186,Product 186,Electronics,Terra,3.44,97,6,6740.42,15,Low rating
-SKU10067,Product 67,Home & Kitchen,Nova,3.45,99,11,5968.88,30,High demand + low stock
-SKU10067,Product 67,Home & Kitchen,Nova,3.45,99,11,5968.88,30,Low rating
-SKU10116,Product 116,Home & Kitchen,Helios,3.7,354,8,5618.860000000001,10,High demand + low stock
-SKU10116,Product 116,Home & Kitchen,Helios,3.7,354,8,5618.860000000001,10,Low rating
-SKU10010,Product 10,Clothing,Zenith,3.6,48,8,5573.04,0,High demand + low stock
-SKU10010,Product 10,Clothing,Zenith,3.6,48,8,5573.04,0,Low rating
-SKU10141,Product 141,Books,Terra,5.0,142,11,5452.98,0,High demand + low stock
-SKU10079,Product 79,Clothing,Helios,4.18,187,8,5431.389999999999,15,High demand + low stock
-SKU10019,Product 19,Home & Kitchen,Nova,3.08,454,7,5343.8,0,Low rating
-SKU10138,Product 138,Electronics,Helios,4.05,113,13,5327.8,10,High demand + low stock
-SKU10033,Product 33,Sports,Acme,3.44,111,5,5245.32,0,Low rating
-SKU10039,Product 39,Books,Nova,3.53,79,10,5222.07,0,High demand + low stock
-SKU10039,Product 39,Books,Nova,3.53,79,10,5222.07,0,Low rating
-SKU10196,Product 196,Clothing,Orion,4.86,288,8,5135.95,5,High demand + low stock
-SKU10176,Product 176,Clothing,Zenith,3.42,460,6,4903.48,15,Low rating
-SKU10105,Product 105,Clothing,Helios,3.28,122,7,4780.21,0,Low rating
-SKU10110,Product 110,Home & Kitchen,Helios,4.74,139,8,4612.75,0,High demand + low stock
-SKU10120,Product 120,Clothing,Helios,3.51,31,6,4511.7,0,Low rating
-SKU10089,Product 89,Sports,Helios,3.55,175,7,4303.32,0,Low rating
-SKU10035,Product 35,Clothing,Zenith,4.17,309,8,4273.94,0,High demand + low stock
-SKU10172,Product 172,Clothing,Zenith,3.04,111,10,4148.19,20,High demand + low stock
-SKU10172,Product 172,Clothing,Zenith,3.04,111,10,4148.19,20,Low rating
-SKU10155,Product 155,Books,Acme,3.61,207,7,4075.61,15,Low rating
-SKU10086,Product 86,Books,Helios,3.93,100,8,4019.07,20,High demand + low stock
-SKU10175,Product 175,Sports,Helios,4.91,485,8,3935.53,15,High demand + low stock
-SKU10140,Product 140,Clothing,Nova,3.41,408,5,3872.26,0,Low rating
-SKU10160,Product 160,Beauty,Nova,3.69,113,10,3850.230000000001,5,High demand + low stock
-SKU10160,Product 160,Beauty,Nova,3.69,113,10,3850.230000000001,5,Low rating
-SKU10104,Product 104,Electronics,Zenith,3.02,210,10,3791.82,10,High demand + low stock
-SKU10104,Product 104,Electronics,Zenith,3.02,210,10,3791.82,10,Low rating
-SKU10168,Product 168,Sports,Acme,4.35,441,11,3789.72,5,High demand + low stock
-SKU10092,Product 92,Beauty,Acme,3.68,58,9,3611.92,10,High demand + low stock
-SKU10092,Product 92,Beauty,Acme,3.68,58,9,3611.92,10,Low rating
-SKU10143,Product 143,Books,Zenith,3.57,119,7,3581.22,0,Low rating
-SKU10049,Product 49,Beauty,Orion,4.8,108,8,3559.29,0,High demand + low stock
-SKU10071,Product 71,Home & Kitchen,Acme,3.18,46,8,3413.73,0,High demand + low stock
+sku,warehouse_location,stock_level,reorder_threshold,supplier,avg_shipping_time_days,return_rate_percent,avg_daily_qty_sold_30d,days_of_inventory_remaining,risk_flag
+SKU10096,WH-LON,1,41,FastTrack Logistics,4.0,10.78,4.0,0.25,True
+SKU10138,WH-NY,1,37,FastTrack Logistics,2.1,3.22,4.0,0.25,True
+SKU10170,WH-LON,8,76,FastTrack Logistics,3.6,1.42,3.0,2.6666666666666665,True
+SKU10131,WH-BER,11,60,UrbanTraders,4.8,11.42,4.0,2.75,True
+SKU10140,WH-LON,25,66,PrimeWholesale,6.4,14.57,4.0,6.25,True
+SKU10183,WH-NY,17,57,PrimeWholesale,4.2,2.87,2.0,8.5,True
+SKU10131,WH-SYD,36,77,UrbanTraders,2.8,14.1,4.0,9.0,True
+SKU10054,WH-TOR,46,49,GlobalSupplyCo,3.2,12.09,4.0,11.5,True
+SKU10055,WH-SYD,26,33,PrimeWholesale,4.2,7.95,2.0,13.0,True
+SKU10079,WH-NY,61,65,PrimeWholesale,3.5,6.5,3.0,20.333333333333332,True
+SKU10066,WH-NY,23,74,GlobalSupplyCo,1.9,10.63,1.0,23.0,True
+SKU10039,WH-NY,51,67,UrbanTraders,2.2,10.65,2.0,25.5,True
+SKU10067,WH-BER,30,72,FastTrack Logistics,4.9,0.6,1.0,30.0,True
+SKU10114,WH-SYD,59,74,GlobalSupplyCo,4.3,4.05,1.0,59.0,True
+SKU10009,WH-TOR,26,56,FastTrack Logistics,2.3,1.01,,,True
+SKU10012,WH-NY,27,44,GlobalSupplyCo,5.1,5.82,,,True
+SKU10016,WH-NY,65,66,UrbanTraders,4.5,1.76,,,True
+SKU10017,WH-NY,50,61,UrbanTraders,3.2,8.19,,,True
+SKU10018,WH-NY,16,34,UrbanTraders,1.0,10.66,,,True
+SKU10021,WH-SYD,52,72,UrbanTraders,4.6,7.71,,,True
+SKU10042,WH-TOR,9,66,PrimeWholesale,5.2,11.17,,,True
+SKU10044,WH-LON,25,76,PrimeWholesale,4.5,12.37,,,True
+SKU10051,WH-TOR,32,40,UrbanTraders,4.3,5.95,,,True
+SKU10051,WH-SYD,56,62,GlobalSupplyCo,6.1,14.83,,,True
+SKU10057,WH-TOR,35,63,UrbanTraders,2.4,1.05,,,True
+SKU10069,WH-SYD,57,57,UrbanTraders,2.5,4.29,,,True
+SKU10070,WH-BER,48,56,PrimeWholesale,2.3,9.77,,,True
+SKU10071,WH-TOR,29,37,UrbanTraders,2.7,6.62,,,True
+SKU10076,WH-BER,2,70,FastTrack Logistics,3.4,0.99,,,True
+SKU10077,WH-NY,15,71,PrimeWholesale,4.7,11.05,,,True
+SKU10078,WH-LON,15,60,UrbanTraders,5.0,4.95,,,True
+SKU10082,WH-BER,63,65,UrbanTraders,4.1,13.83,,,True
+SKU10084,WH-TOR,71,78,GlobalSupplyCo,1.2,9.07,,,True
+SKU10087,WH-TOR,8,25,UrbanTraders,5.2,14.26,,,True
+SKU10089,WH-SYD,12,67,UrbanTraders,4.9,9.1,,,True
+SKU10094,WH-NY,6,71,PrimeWholesale,5.3,5.3,,,True
+SKU10103,WH-TOR,8,34,GlobalSupplyCo,1.6,6.67,,,True
+SKU10103,WH-NY,26,32,GlobalSupplyCo,2.6,4.54,,,True
+SKU10108,WH-TOR,24,27,FastTrack Logistics,3.8,10.01,,,True
+SKU10111,WH-BER,61,65,GlobalSupplyCo,3.6,14.49,,,True
+SKU10113,WH-NY,29,70,FastTrack Logistics,2.3,0.57,,,True
+SKU10118,WH-SYD,2,21,FastTrack Logistics,6.9,12.39,,,True
+SKU10121,WH-TOR,42,63,PrimeWholesale,2.3,13.07,,,True
+SKU10128,WH-SYD,51,66,PrimeWholesale,6.8,13.78,,,True
+SKU10129,WH-TOR,32,47,FastTrack Logistics,3.0,11.41,,,True
+SKU10133,WH-BER,15,65,PrimeWholesale,1.9,8.22,,,True
+SKU10134,WH-BER,42,56,PrimeWholesale,1.6,0.51,,,True
+SKU10141,WH-BER,41,51,FastTrack Logistics,3.5,2.12,,,True
+SKU10144,WH-TOR,38,49,FastTrack Logistics,3.9,11.83,,,True
+SKU10145,WH-SYD,18,56,GlobalSupplyCo,1.4,0.65,,,True
+SKU10146,WH-LON,16,64,FastTrack Logistics,5.7,13.89,,,True
+SKU10148,WH-BER,34,55,GlobalSupplyCo,3.1,9.92,,,True
+SKU10155,WH-SYD,23,56,FastTrack Logistics,3.8,13.67,,,True
+SKU10156,WH-TOR,1,23,FastTrack Logistics,5.1,0.88,,,True
+SKU10159,WH-SYD,27,29,PrimeWholesale,3.0,11.9,,,True
+SKU10161,WH-NY,17,34,PrimeWholesale,4.4,9.05,,,True
+SKU10166,WH-TOR,10,27,UrbanTraders,1.1,4.51,,,True
+SKU10180,WH-TOR,10,79,GlobalSupplyCo,6.0,0.66,,,True
+SKU10182,WH-BER,52,67,GlobalSupplyCo,3.8,9.87,,,True
+SKU10192,WH-LON,40,50,UrbanTraders,2.3,11.13,,,True
+SKU10194,WH-TOR,42,63,UrbanTraders,2.9,2.85,,,True
+SKU10195,WH-LON,28,37,PrimeWholesale,2.4,5.91,,,True
+SKU10196,WH-NY,31,39,GlobalSupplyCo,3.2,3.3,,,True

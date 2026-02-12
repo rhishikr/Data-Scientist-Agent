@@ -1,0 +1,502 @@
+[
+  {
+    "sku": "SKU10172",
+    "name": "Product 172",
+    "category": "Clothing",
+    "brand": "Zenith",
+    "discount_percent": 20,
+    "average_rating": 3.04,
+    "retail_price": 207.41,
+    "cost_price": 163.31
+  },
+  {
+    "sku": "SKU10198",
+    "name": "Product 198",
+    "category": "Books",
+    "brand": "Acme",
+    "discount_percent": 20,
+    "average_rating": 3,
+    "retail_price": 235.58,
+    "cost_price": 136.6
+  },
+  {
+    "sku": "SKU10165",
+    "name": "Product 165",
+    "category": "Clothing",
+    "brand": "Terra",
+    "discount_percent": 15,
+    "average_rating": 3.14,
+    "retail_price": 35.28,
+    "cost_price": 20.91
+  },
+  {
+    "sku": "SKU10174",
+    "name": "Product 174",
+    "category": "Electronics",
+    "brand": "Orion",
+    "discount_percent": 15,
+    "average_rating": 3.07,
+    "retail_price": 164.62,
+    "cost_price": 131.63
+  },
+  {
+    "sku": "SKU10018",
+    "name": "Product 18",
+    "category": "Sports",
+    "brand": "Zenith",
+    "discount_percent": 30,
+    "average_rating": 3.88,
+    "retail_price": 162.38,
+    "cost_price": 110.55
+  },
+  {
+    "sku": "SKU10034",
+    "name": "Product 34",
+    "category": "Books",
+    "brand": "Helios",
+    "discount_percent": 30,
+    "average_rating": 3.21,
+    "retail_price": 47.15,
+    "cost_price": 32.8
+  },
+  {
+    "sku": "SKU10067",
+    "name": "Product 67",
+    "category": "Home & Kitchen",
+    "brand": "Nova",
+    "discount_percent": 30,
+    "average_rating": 3.45,
+    "retail_price": 426.35,
+    "cost_price": 175.49
+  },
+  {
+    "sku": "SKU10068",
+    "name": "Product 68",
+    "category": "Books",
+    "brand": "Zenith",
+    "discount_percent": 30,
+    "average_rating": 3.82,
+    "retail_price": 268.29,
+    "cost_price": 166.97
+  },
+  {
+    "sku": "SKU10077",
+    "name": "Product 77",
+    "category": "Sports",
+    "brand": "Nova",
+    "discount_percent": 30,
+    "average_rating": 4.54,
+    "retail_price": 110.34,
+    "cost_price": 86.9
+  },
+  {
+    "sku": "SKU10133",
+    "name": "Product 133",
+    "category": "Beauty",
+    "brand": "Nova",
+    "discount_percent": 30,
+    "average_rating": 3.38,
+    "retail_price": 329.2,
+    "cost_price": 148.25
+  },
+  {
+    "sku": "SKU10147",
+    "name": "Product 147",
+    "category": "Sports",
+    "brand": "Zenith",
+    "discount_percent": 30,
+    "average_rating": 3.52,
+    "retail_price": 285.23,
+    "cost_price": 173.02
+  },
+  {
+    "sku": "SKU10159",
+    "name": "Product 159",
+    "category": "Books",
+    "brand": "Nova",
+    "discount_percent": 30,
+    "average_rating": 4.03,
+    "retail_price": 113.78,
+    "cost_price": 53.14
+  },
+  {
+    "sku": "SKU10193",
+    "name": "Product 193",
+    "category": "Sports",
+    "brand": "Acme",
+    "discount_percent": 30,
+    "average_rating": 4.67,
+    "retail_price": 127.21,
+    "cost_price": 54.96
+  },
+  {
+    "sku": "SKU10195",
+    "name": "Product 195",
+    "category": "Home & Kitchen",
+    "brand": "Acme",
+    "discount_percent": 30,
+    "average_rating": 4.82,
+    "retail_price": 67.65,
+    "cost_price": 31.93
+  },
+  {
+    "sku": "SKU10013",
+    "name": "Product 13",
+    "category": "Electronics",
+    "brand": "Orion",
+    "discount_percent": 20,
+    "average_rating": 3.61,
+    "retail_price": 328.9,
+    "cost_price": 192.16
+  },
+  {
+    "sku": "SKU10014",
+    "name": "Product 14",
+    "category": "Books",
+    "brand": "Acme",
+    "discount_percent": 20,
+    "average_rating": 4.24,
+    "retail_price": 19.86,
+    "cost_price": 14.5
+  },
+  {
+    "sku": "SKU10029",
+    "name": "Product 29",
+    "category": "Beauty",
+    "brand": "Zenith",
+    "discount_percent": 20,
+    "average_rating": 3.59,
+    "retail_price": 126.11,
+    "cost_price": 52.94
+  },
+  {
+    "sku": "SKU10036",
+    "name": "Product 36",
+    "category": "Sports",
+    "brand": "Terra",
+    "discount_percent": 20,
+    "average_rating": 3.98,
+    "retail_price": 191.23,
+    "cost_price": 113.17
+  },
+  {
+    "sku": "SKU10038",
+    "name": "Product 38",
+    "category": "Home & Kitchen",
+    "brand": "Helios",
+    "discount_percent": 20,
+    "average_rating": 4.33,
+    "retail_price": 7.45,
+    "cost_price": 5.82
+  },
+  {
+    "sku": "SKU10042",
+    "name": "Product 42",
+    "category": "Home & Kitchen",
+    "brand": "Zenith",
+    "discount_percent": 20,
+    "average_rating": 3.26,
+    "retail_price": 161.98,
+    "cost_price": 100.48
+  },
+  {
+    "sku": "SKU10043",
+    "name": "Product 43",
+    "category": "Home & Kitchen",
+    "brand": "Nova",
+    "discount_percent": 20,
+    "average_rating": 4.48,
+    "retail_price": 193.65,
+    "cost_price": 86.01
+  },
+  {
+    "sku": "SKU10045",
+    "name": "Product 45",
+    "category": "Sports",
+    "brand": "Zenith",
+    "discount_percent": 20,
+    "average_rating": 3.63,
+    "retail_price": 112.16,
+    "cost_price": 70.4
+  },
+  {
+    "sku": "SKU10073",
+    "name": "Product 73",
+    "category": "Books",
+    "brand": "Terra",
+    "discount_percent": 20,
+    "average_rating": 4.76,
+    "retail_price": 83.81,
+    "cost_price": 40.27
+  },
+  {
+    "sku": "SKU10084",
+    "name": "Product 84",
+    "category": "Electronics",
+    "brand": "Orion",
+    "discount_percent": 20,
+    "average_rating": 4.65,
+    "retail_price": 61.8,
+    "cost_price": 32.3
+  },
+  {
+    "sku": "SKU10085",
+    "name": "Product 85",
+    "category": "Home & Kitchen",
+    "brand": "Zenith",
+    "discount_percent": 20,
+    "average_rating": 4.72,
+    "retail_price": 124.47,
+    "cost_price": 86.08
+  },
+  {
+    "sku": "SKU10086",
+    "name": "Product 86",
+    "category": "Books",
+    "brand": "Helios",
+    "discount_percent": 20,
+    "average_rating": 3.93,
+    "retail_price": 239.23,
+    "cost_price": 111.97
+  },
+  {
+    "sku": "SKU10112",
+    "name": "Product 112",
+    "category": "Sports",
+    "brand": "Orion",
+    "discount_percent": 20,
+    "average_rating": 4,
+    "retail_price": 256.22,
+    "cost_price": 149.74
+  },
+  {
+    "sku": "SKU10126",
+    "name": "Product 126",
+    "category": "Sports",
+    "brand": "Zenith",
+    "discount_percent": 20,
+    "average_rating": 4.26,
+    "retail_price": 214.87,
+    "cost_price": 86.72
+  },
+  {
+    "sku": "SKU10131",
+    "name": "Product 131",
+    "category": "Beauty",
+    "brand": "Acme",
+    "discount_percent": 20,
+    "average_rating": 4.45,
+    "retail_price": 177.04,
+    "cost_price": 101.77
+  },
+  {
+    "sku": "SKU10137",
+    "name": "Product 137",
+    "category": "Sports",
+    "brand": "Terra",
+    "discount_percent": 20,
+    "average_rating": 3.25,
+    "retail_price": 68.06,
+    "cost_price": 39.01
+  },
+  {
+    "sku": "SKU10142",
+    "name": "Product 142",
+    "category": "Books",
+    "brand": "Nova",
+    "discount_percent": 20,
+    "average_rating": 4.08,
+    "retail_price": 136.54,
+    "cost_price": 84.44
+  },
+  {
+    "sku": "SKU10150",
+    "name": "Product 150",
+    "category": "Clothing",
+    "brand": "Orion",
+    "discount_percent": 20,
+    "average_rating": 4.37,
+    "retail_price": 211.77,
+    "cost_price": 121.4
+  },
+  {
+    "sku": "SKU10156",
+    "name": "Product 156",
+    "category": "Home & Kitchen",
+    "brand": "Helios",
+    "discount_percent": 20,
+    "average_rating": 4.52,
+    "retail_price": 57.09,
+    "cost_price": 40.25
+  },
+  {
+    "sku": "SKU10163",
+    "name": "Product 163",
+    "category": "Electronics",
+    "brand": "Zenith",
+    "discount_percent": 20,
+    "average_rating": 3.64,
+    "retail_price": 164.53,
+    "cost_price": 88.17
+  },
+  {
+    "sku": "SKU10000",
+    "name": "Product 0",
+    "category": "Beauty",
+    "brand": "Terra",
+    "discount_percent": 15,
+    "average_rating": 3.89,
+    "retail_price": 180.45,
+    "cost_price": 82.57
+  },
+  {
+    "sku": "SKU10002",
+    "name": "Product 2",
+    "category": "Books",
+    "brand": "Helios",
+    "discount_percent": 15,
+    "average_rating": 3.9,
+    "retail_price": 159.42,
+    "cost_price": 99.24
+  },
+  {
+    "sku": "SKU10024",
+    "name": "Product 24",
+    "category": "Sports",
+    "brand": "Zenith",
+    "discount_percent": 15,
+    "average_rating": 3.5,
+    "retail_price": 30.12,
+    "cost_price": 20.05
+  },
+  {
+    "sku": "SKU10031",
+    "name": "Product 31",
+    "category": "Books",
+    "brand": "Acme",
+    "discount_percent": 15,
+    "average_rating": 3.86,
+    "retail_price": 430.88,
+    "cost_price": 197.95
+  },
+  {
+    "sku": "SKU10041",
+    "name": "Product 41",
+    "category": "Beauty",
+    "brand": "Nova",
+    "discount_percent": 15,
+    "average_rating": 3.87,
+    "retail_price": 129.62,
+    "cost_price": 85.1
+  },
+  {
+    "sku": "SKU10044",
+    "name": "Product 44",
+    "category": "Books",
+    "brand": "Zenith",
+    "discount_percent": 15,
+    "average_rating": 4.29,
+    "retail_price": 22.64,
+    "cost_price": 9.68
+  },
+  {
+    "sku": "SKU10057",
+    "name": "Product 57",
+    "category": "Beauty",
+    "brand": "Helios",
+    "discount_percent": 15,
+    "average_rating": 4.86,
+    "retail_price": 185.93,
+    "cost_price": 137.12
+  },
+  {
+    "sku": "SKU10058",
+    "name": "Product 58",
+    "category": "Electronics",
+    "brand": "Zenith",
+    "discount_percent": 15,
+    "average_rating": 4.72,
+    "retail_price": 179.28,
+    "cost_price": 111.65
+  },
+  {
+    "sku": "SKU10075",
+    "name": "Product 75",
+    "category": "Sports",
+    "brand": "Zenith",
+    "discount_percent": 15,
+    "average_rating": 4.08,
+    "retail_price": 163.84,
+    "cost_price": 70.17
+  },
+  {
+    "sku": "SKU10079",
+    "name": "Product 79",
+    "category": "Clothing",
+    "brand": "Helios",
+    "discount_percent": 15,
+    "average_rating": 4.18,
+    "retail_price": 304.28,
+    "cost_price": 167.36
+  },
+  {
+    "sku": "SKU10088",
+    "name": "Product 88",
+    "category": "Electronics",
+    "brand": "Helios",
+    "discount_percent": 15,
+    "average_rating": 4.89,
+    "retail_price": 211.12,
+    "cost_price": 106.32
+  },
+  {
+    "sku": "SKU10096",
+    "name": "Product 96",
+    "category": "Books",
+    "brand": "Terra",
+    "discount_percent": 15,
+    "average_rating": 4.63,
+    "retail_price": 371.78,
+    "cost_price": 176.52
+  },
+  {
+    "sku": "SKU10106",
+    "name": "Product 106",
+    "category": "Clothing",
+    "brand": "Acme",
+    "discount_percent": 15,
+    "average_rating": 4.43,
+    "retail_price": 236.92,
+    "cost_price": 117.24
+  },
+  {
+    "sku": "SKU10109",
+    "name": "Product 109",
+    "category": "Home & Kitchen",
+    "brand": "Orion",
+    "discount_percent": 15,
+    "average_rating": 3.99,
+    "retail_price": 273.81,
+    "cost_price": 112.93
+  },
+  {
+    "sku": "SKU10135",
+    "name": "Product 135",
+    "category": "Clothing",
+    "brand": "Nova",
+    "discount_percent": 15,
+    "average_rating": 4.9,
+    "retail_price": 269.79,
+    "cost_price": 119.04
+  },
+  {
+    "sku": "SKU10145",
+    "name": "Product 145",
+    "category": "Sports",
+    "brand": "Terra",
+    "discount_percent": 15,
+    "average_rating": 4.93,
+    "retail_price": 76.42,
+    "cost_price": 43.28
+  }
+]

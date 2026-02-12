@@ -9,23 +9,27 @@ import pandas as pd
 
 
 @dataclass(frozen=True)
-class DataPaths:
+class ForecastPaths:
     root: str
     cleaned_dir: str
     featured_dir: str
     hypothesis_json_path: str
+    insights_json_path: str
     out_dir: str
+    models_dir: str
 
     @staticmethod
-    def default() -> "DataPaths":
-        # backend/pipeline/kpi/io.py -> backend/
+    def default() -> "ForecastPaths":
+        # backend/pipeline/forecast/io.py -> backend/
         root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-        return DataPaths(
+        return ForecastPaths(
             root=root,
             cleaned_dir=os.path.join(root, "data", "cleaned_data"),
             featured_dir=os.path.join(root, "data", "featured_data"),
             hypothesis_json_path=os.path.join(root, "data", "hypothesis_outputs", "hypothesis_results.json"),
-            out_dir=os.path.join(root, "data", "kpi_outputs"),
+            insights_json_path=os.path.join(root, "data", "insight_outputs", "insights.json"),
+            out_dir=os.path.join(root, "data", "forecast_outputs"),
+            models_dir=os.path.join(root, "models"),
         )
 
 
@@ -36,11 +40,7 @@ def _read_csv(path: str) -> pd.DataFrame:
         return pd.read_csv(path, encoding="latin-1")
 
 
-def read_dataset(paths: DataPaths) -> Dict[str, pd.DataFrame]:
-    """
-    Reads known datasets if present. Missing files just return empty DFs.
-    Keys match your filenames (without .csv).
-    """
+def read_datasets(paths: ForecastPaths) -> Dict[str, pd.DataFrame]:
     files = {
         # cleaned
         "customers": os.path.join(paths.cleaned_dir, "customers.csv"),
@@ -58,10 +58,7 @@ def read_dataset(paths: DataPaths) -> Dict[str, pd.DataFrame]:
 
     out: Dict[str, pd.DataFrame] = {}
     for k, p in files.items():
-        if os.path.isfile(p):
-            out[k] = _read_csv(p)
-        else:
-            out[k] = pd.DataFrame()
+        out[k] = _read_csv(p) if os.path.isfile(p) else pd.DataFrame()
     return out
 
 
