@@ -1,19 +1,19 @@
 id,title,value,unit,format,group
 rev_mtd,Total Revenue (MTD),2106.99,USD,currency,Revenue
 rev_qtd,Total Revenue (QTD),2106.99,USD,currency,Revenue
-rev_ytd,Total Revenue (YTD),16296.06,USD,currency,Revenue
+rev_ytd,Total Revenue (YTD),17477.79,USD,currency,Revenue
 rev_growth_30d,Revenue Growth (30d vs prev),1.2449655848445456,,percent,Revenue
-aov,Average Order Value (AOV),371.0630139103555,USD,currency,Revenue
-orders_day,Orders per Day,0.9788199697428139,,number,Revenue
-orders_week,Orders per Week,6.851739788199697,,number,Revenue
+aov,Average Order Value (AOV),363.2347872340425,USD,currency,Revenue
+orders_day,Orders per Day,0.9954614220877458,,number,Revenue
+orders_week,Orders per Week,6.968229954614221,,number,Revenue
 active_customers_30d,Active Customers (30d),5.0,,number,Customers
 new_customers_30d,New Customers (30d),5.0,,number,Customers
 returning_customers_30d,Returning Customers (lifetime),100.0,,number,Customers
-repeat_purchase_rate,Repeat Purchase Rate,0.4029126213592233,,percent,Customers
+repeat_purchase_rate,Repeat Purchase Rate,0.4052757793764988,,percent,Customers
 retention_rate_proxy,Retention Rate (proxy),0.0,,percent,Customers
 churn_rate_proxy,Churn Rate (proxy),1.0,,percent,Customers
-avg_clv,Average CLV,438.0530886850153,USD,currency,Customers
-median_clv,Median CLV,186.03,USD,currency,Customers
+avg_clv,Average CLV,435.0021406727829,USD,currency,Customers
+median_clv,Median CLV,209.73,USD,currency,Customers
 conversion_rate,Conversion Rate,0.0706967213114754,,percent,Funnel
 cart_abandonment_rate,Cart Abandonment Rate,0.29310344827586204,,percent,Funnel
 checkout_completion_rate,Checkout Completion Rate,2.875,,percent,Funnel
@@ -24,6 +24,6 @@ roas,ROAS,35.09175243472714,x,number,Marketing
 campaign_cr,Campaign Conversion Rate,0.08978800018504443,,percent,Marketing
 promo_uplift,Promotion Uplift (proxy),-0.02952177151655458,,percent,Marketing
 avg_margin_pct,Average Product Margin,,,percent,Product
-return_rate_proxy,Return Rate (proxy),0.0849194729136164,,percent,Product
+return_rate_proxy,Return Rate (proxy),0.08789625360230548,,percent,Product
 stock_out_risk_pct,Stock-Out Risk,0.17803030303030304,,percent,Inventory
-inventory_turnover_proxy,Inventory Turnover (proxy),8.266341481284991,,number,Inventory
+inventory_turnover_proxy,Inventory Turnover (proxy),8.300998685563469,,number,Inventory

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Card,
   CardContent,
@@ -23,12 +23,22 @@ interface ChatAssistantProps {
   context?: string;
 }
 
-type RagChatResponse = {
+/**
+ * Matches your FastAPI /query response_model (QueryResponse)
+ */
+type QueryResponse = {
   answer: string;
-  mode?: string;
-  metric?: string;
-  table_used?: string;
-  evidence?: any[];
+  query_type: string;
+  success: boolean;
+  timestamp: string;
+  sources?: any[] | null;
+  data_summary?: string | null;
+};
+
+type QueryRequest = {
+  question: string;
+  session_id?: string | null;
+  include_sources?: boolean;
 };
 
 export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
@@ -43,6 +53,18 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
 
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  // Keep a stable session id for the tab/session so the backend can preserve memory
+  const sessionId = useMemo(() => {
+    const key = "rag_session_id";
+    const existing = window.localStorage.getItem(key);
+    if (existing) return existing;
+    const fresh = `session-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    window.localStorage.setItem(key, fresh);
+    return fresh;
+  }, []);
+
+  const API_URL = "http://127.0.0.1:8002/query"; // <-- make sure this matches your FastAPI port
 
   const getContextPrompts = () => {
     switch (context) {
@@ -72,7 +94,7 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
     if (!messageText || isLoading) return;
 
     const userMessage: Message = {
-      id: Date.now(), // simple unique id
+      id: Date.now(),
       text: messageText,
       sender: "user",
       timestamp: new Date(),
@@ -83,39 +105,53 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
     setIsLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/rag/chat", {
+      const payload: QueryRequest = {
+        question: messageText,
+        session_id: sessionId,
+        include_sources: true,
+      };
+
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // Change `message` to whatever your backend expects (query/text/prompt/etc.)
-        body: JSON.stringify({ message: messageText, context }),
+        body: JSON.stringify(payload),
       });
 
+      // If backend returns an error, show exactly what backend returned (no hardcoded explanation).
       if (!res.ok) {
-        const errText = await res.text().catch(() => "");
-        throw new Error(`Request failed (${res.status}). ${errText}`);
+        const contentType = res.headers.get("content-type") || "";
+        const errPayload = contentType.includes("application/json")
+          ? await res.json().catch(() => null)
+          : await res.text().catch(() => "");
+
+        const backendMsg =
+          (typeof errPayload === "string" && errPayload) ||
+          errPayload?.detail ||
+          errPayload?.error ||
+          "";
+
+        throw new Error(backendMsg || `HTTP ${res.status}`);
       }
 
-      const data = (await res.json()) as RagChatResponse;
+      const data = (await res.json()) as QueryResponse;
 
       const aiMessage: Message = {
         id: Date.now() + 1,
-        text: data?.answer ?? "(No answer returned)",
+        text: data?.answer ?? "",
         sender: "ai",
         timestamp: new Date(),
-        // optional: show chart placeholder if backend says it's analytics
-        hasChart: data?.mode === "analytics",
+        // If you later return structured chart info from backend, wire it here.
+        hasChart: Boolean(data?.data_summary),
       };
 
       setMessages((prev) => [...prev, aiMessage]);
     } catch (err: any) {
+      // For network-level errors, there is no backend message available.
       const aiError: Message = {
         id: Date.now() + 2,
         sender: "ai",
         timestamp: new Date(),
-        text:
-          "⚠️ Couldn’t reach the backend.\n\n" +
-          (err?.message ?? "Unknown error") +
-          "\n\nIf your frontend is on a different port, make sure your FastAPI has CORS enabled.",
+        text: err?.message || "Network error",
       };
 
       setMessages((prev) => [...prev, aiError]);
@@ -147,8 +183,8 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
             {context === "customer-insights"
               ? "Customer Data"
               : context === "inventory-sales"
-                ? "Inventory Data"
-                : "All Data"}
+              ? "Inventory Data"
+              : "All Data"}
           </Badge>
           <Badge variant="outline" className="text-xs">
             Last 30 days
@@ -206,7 +242,7 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
                   <p className="text-sm whitespace-pre-line">{message.text}</p>
                 </div>
 
-                {message.hasChart && message.sender === "ai" && (
+                {/* {message.hasChart && message.sender === "ai" && (
                   <div className="mr-4 rounded-lg border bg-white p-3">
                     <div className="flex items-center gap-2 mb-2">
                       <TrendingUp className="size-4 text-teal-600" />
@@ -218,7 +254,7 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
                       </p>
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           ))}
@@ -230,9 +266,7 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            placeholder={
-              isLoading ? "Waiting for response..." : "Ask a question..."
-            }
+            placeholder={isLoading ? "Waiting for response..." : "Ask a question..."}
             className="text-sm"
             disabled={isLoading}
           />

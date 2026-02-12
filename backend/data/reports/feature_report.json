@@ -1,10 +1,10 @@
 {
-  "input_dir": "C:\\Data Scientist Agent\\backend\\data\\cleaned_data",
-  "output_dir": "C:\\Data Scientist Agent\\backend\\data\\featured_data",
+  "input_dir": "/Users/rafidmohtasim/Desktop/InsightEdge/Data-Scientist-Agent/backend/data/cleaned_data",
+  "output_dir": "/Users/rafidmohtasim/Desktop/InsightEdge/Data-Scientist-Agent/backend/data/featured_data",
   "written": [
-    "C:\\Data Scientist Agent\\backend\\data\\featured_data\\customers_features.csv",
-    "C:\\Data Scientist Agent\\backend\\data\\featured_data\\products_features.csv",
-    "C:\\Data Scientist Agent\\backend\\data\\featured_data\\transactions_features.csv"
+    "/Users/rafidmohtasim/Desktop/InsightEdge/Data-Scientist-Agent/backend/data/featured_data/customers_features.csv",
+    "/Users/rafidmohtasim/Desktop/InsightEdge/Data-Scientist-Agent/backend/data/featured_data/products_features.csv",
+    "/Users/rafidmohtasim/Desktop/InsightEdge/Data-Scientist-Agent/backend/data/featured_data/transactions_features.csv"
   ],
   "loaded_tables": [
     "customers",
@@ -18,7 +18,7 @@
   "rows": {
     "customers_features.csv": 327,
     "products_features.csv": 134,
-    "transactions_features.csv": 683
+    "transactions_features.csv": 694
   },
   "cols": {
     "customers_features.csv": 15,
