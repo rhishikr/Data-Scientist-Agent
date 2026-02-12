@@ -11,8 +11,8 @@ from pipeline.forecast.runner import run_forecasting
 from pipeline.forecast.io import ForecastPaths
 from rag.api import router as rag_router
 
-from pipeline.insights import run_customer_insights
-from chat.customer_chat import answer_customer_question
+# from pipeline.insights import run_customer_insights
+# from chat.customer_chat import answer_customer_question
 
 app = FastAPI(title="AI Data Scientist Backend (MVP)")
 app.include_router(rag_router) # router def
@@ -30,16 +30,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api/customer-insights")
-def customer_insights(days: int = Query(30, ge=7, le=365)):
-    return run_customer_insights(days=days)
+# @app.get("/api/customer-insights")
+# def customer_insights(days: int = Query(30, ge=7, le=365)):
+#     return run_customer_insights(days=days)
 
-@app.post("/api/customer-insights/chat")
-def customer_chat(payload: dict):
-    """
-    payload = { "message": "...", "days": 30 }
-    """
-    return answer_customer_question(payload)
+# @app.post("/api/customer-insights/chat")
+# def customer_chat(payload: dict):
+#     """
+#     payload = { "message": "...", "days": 30 }
+#     """
+#     return answer_customer_question(payload)
 
 @app.get("/api/hypothesis/run")
 def run_hypothesis():
