@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: fct_transactions
+    columns:
+      - name: order_id
+        tests: [not_null]
+      - name: unit_price
+        tests:
+          - not_null
+      - name: quantity
+        tests:
+          - not_null
+
+  - name: dim_products
+    columns:
+      - name: sku
+        tests: [unique, not_null]
+      - name: retail_price
+        tests: []
