@@ -5,7 +5,7 @@
       "task": "forecasting",
       "target": "daily_revenue",
       "training_window": {
-        "end": "2025-10-31T21:34:33.064829",
+        "end": "2025-10-30T15:28:38.947356",
         "notes": "daily revenue from transactions"
       },
       "features_used": [
@@ -26,9 +26,9 @@
         "revenue_roll_std_28"
       ],
       "metrics": {
-        "mae": 650.0221564001747,
-        "mape": 167747902660.73743,
-        "train_rows": 612,
+        "mae": 245.71739888070982,
+        "mape": 198751091594.67023,
+        "train_rows": 605,
         "test_rows": 30
       },
       "caveats": [
@@ -41,7 +41,7 @@
       "task": "classification",
       "target": "churn_30d",
       "training_window": {
-        "end": "2025-10-31T21:34:33.064829",
+        "end": "2025-10-30T15:28:38.947356",
         "notes": "rolling weekly snapshots from transactions"
       },
       "features_used": [
@@ -56,17 +56,17 @@
         "total_quantity",
         "total_spend",
         "avg_order_value",
+        "monetary_value",
         "recency_days_y",
-        "orders_per_active_day",
-        "monetary_value"
+        "orders_per_active_day"
       ],
       "metrics": {
-        "roc_auc": 0.6425904088050315,
-        "avg_precision": 0.939600152047443,
-        "train_rows": 5126,
-        "test_rows": 932,
-        "positive_rate_train": 0.7922356613343737,
-        "positive_rate_test": 0.9098712446351931
+        "roc_auc": 0.9134615384615385,
+        "avg_precision": 0.9934626474207726,
+        "train_rows": 616,
+        "test_rows": 112,
+        "positive_rate_train": 0.8198051948051948,
+        "positive_rate_test": 0.9285714285714286
       },
       "caveats": [
         "Churn is a proxy label based on inactivity window; tune horizon based on business cycle.",
@@ -78,7 +78,7 @@
       "task": "forecasting",
       "target": "daily_cash_proxy",
       "training_window": {
-        "end": "2025-10-31T21:34:33.064829",
+        "end": "2025-10-30T15:28:38.947356",
         "notes": "cashflow proxy from transactions/payments"
       },
       "features_used": [
@@ -99,9 +99,9 @@
         "cash_proxy_roll_std_28"
       ],
       "metrics": {
-        "mae": 600.9994680640149,
-        "train_rows": 514,
-        "test_rows": 24,
+        "mae": 213.81751942636413,
+        "train_rows": 80,
+        "test_rows": 4,
         "note": "cashflow is a proxy (revenue - refunds aligned to order_date), not settlement-timing cash"
       },
       "caveats": [

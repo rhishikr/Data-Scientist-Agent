@@ -1,7 +1,7 @@
 {
-  "input_dir": "/Users/kaniztaiba/Desktop/Data-Scientist-Agent/backend/data/raw",
-  "output_dir": "/Users/kaniztaiba/Desktop/Data-Scientist-Agent/backend/data/cleaned",
-  "config_path": "/Users/kaniztaiba/Desktop/Data-Scientist-Agent/backend/pipeline/cleaning/config/defaults.yaml",
+  "input_dir": "C:\\Data Scientist Agent\\backend\\data\\raw",
+  "output_dir": "C:\\Data Scientist Agent\\backend\\data\\cleaned_data",
+  "config_path": "C:\\Data Scientist Agent\\backend\\pipeline\\cleaning\\config\\defaults.yaml",
   "files": [
     {
       "input_file": "customers_dirty.csv",
@@ -32,7 +32,9 @@
         "avg_session_time_min>=0": 361
       },
       "rule_warnings": {},
-      "pandera_errors": []
+      "pandera_errors": [
+        "{\n    \"SCHEMA\": {\n        \"WRONG_DATATYPE\": [\n            {\n                \"schema\": null,\n                \"column\": \"wishlist_items_count\",\n                \"check\": \"dtype('int64')\",\n                \"error\": \"expected series 'wishlist_items_count' to have type int64, got float64\"\n            }\n   "
+      ]
     },
     {
       "input_file": "inventory_dirty.csv",
@@ -136,7 +138,7 @@
       "table_type": "transactions",
       "output_file": "transactions_dirty_cleaned.csv",
       "rows_before": 1200,
-      "rows_after": 694,
+      "rows_after": 683,
       "duplicates_removed": 38,
       "dtype_coercions": {
         "transaction_id": 0,
@@ -153,12 +155,10 @@
       "outliers_removed": {
         "quantity": 38,
         "price_per_unit": 31,
-        "total_amount": 38
+        "total_amount": 49
       },
       "rule_violations": {},
-      "rule_warnings": {
-        "total\u2248qty*price": 181
-      },
+      "rule_warnings": {},
       "pandera_errors": []
     },
     {

@@ -43,13 +43,13 @@ def read_dataset(paths: DataPaths) -> Dict[str, pd.DataFrame]:
     """
     files = {
         # cleaned
-        "customers": os.path.join(paths.cleaned_dir, "customers.csv"),
-        "inventory": os.path.join(paths.cleaned_dir, "inventory.csv"),
-        "marketing": os.path.join(paths.cleaned_dir, "marketing.csv"),
-        "payments": os.path.join(paths.cleaned_dir, "payments.csv"),
-        "products": os.path.join(paths.cleaned_dir, "products.csv"),
-        "transactions": os.path.join(paths.cleaned_dir, "transactions.csv"),
-        "web_analytics": os.path.join(paths.cleaned_dir, "web_analytics.csv"),
+        "customers": os.path.join(paths.cleaned_dir, "customers_dirty_cleaned.csv"),
+        "inventory": os.path.join(paths.cleaned_dir, "inventory_dirty_cleaned.csv"),
+        "marketing": os.path.join(paths.cleaned_dir, "marketing_dirty_cleaned.csv"),
+        "payments": os.path.join(paths.cleaned_dir, "payments_dirty_cleaned.csv"),
+        "products": os.path.join(paths.cleaned_dir, "products_dirty_cleaned.csv"),
+        "transactions": os.path.join(paths.cleaned_dir, "transactions_dirty_cleaned.csv"),
+        "web_analytics": os.path.join(paths.cleaned_dir, "web_analytics_dirty_cleaned.csv"),
         # featured
         "customers_features": os.path.join(paths.featured_dir, "customers_features.csv"),
         "products_features": os.path.join(paths.featured_dir, "products_features.csv"),

@@ -9,6 +9,13 @@ import pandas as pd
 
 from retail_core import load_config, clean_table, infer_table_type
 
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 
 print("RUNNING FILE:", os.path.abspath(__file__))
 
@@ -103,8 +110,8 @@ def main():
     report_path = reports_dir / "cleaning_report.json"
     report_path.write_text(json.dumps(report, indent=2))
 
-    print(f"✅ Cleaning done. Report written to: {report_path}")
-    print(f"✅ Cleaned files written to: {output_dir}")
+    print(f" Cleaning done. Report written to: {report_path}")
+    print(f" Cleaned files written to: {output_dir}")
 
 
 if __name__ == "__main__":

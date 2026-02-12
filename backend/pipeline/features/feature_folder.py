@@ -364,10 +364,10 @@ def main():
     report_path = reports_dir / "feature_report.json"
     report_path.write_text(json.dumps(report, indent=2))
 
-    print("✅ Feature engineering done.")
-    print("✅ Loaded tables:", sorted(list(tables.keys())))
-    print("✅ Wrote:", written)
-    print("✅ Report:", str(report_path))
+    print(" Feature engineering done.")
+    print(" Loaded tables:", sorted(list(tables.keys())))
+    print("Wrote:", written)
+    print(" Report:", str(report_path))
 
 
 if __name__ == "__main__":
