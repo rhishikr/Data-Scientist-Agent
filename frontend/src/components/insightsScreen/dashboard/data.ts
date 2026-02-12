@@ -1,8 +1,8 @@
 // dashboard/data.ts
 import kpiSnapshot from "../../../../../backend/data/kpi_outputs/kpi_snapshot.json";
-import cardsJson from "../../../../../backend/data/kpi_outputs/cards.json";
-import customersJson from "../../../../../backend/data/kpi_outputs/customers.json";
-import productsJson from "../../../../../backend/data/kpi_outputs/products.json";
+import cardsJson from "../../../../../backend/data/mockJson/cards.json";
+import customersJson from "../../../../../backend/data/mockJson/customers.json";
+import productsJson from "../../../../../backend/data/mockJson/products.json";
 
 import type { Snapshot, KpiCardRow, CustomerRow } from "./types";
 

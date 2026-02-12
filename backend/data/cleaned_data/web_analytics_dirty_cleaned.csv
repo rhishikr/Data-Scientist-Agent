@@ -1,0 +1,978 @@
+event_id,customer_id,session_id,event_datetime,page_type,action,page_views_in_session,search_query,referral_source,add_to_cart,abandoned_cart
+evt200000,CUST1476,SESS104381,2024-01-13 19:27:54.452188,cart, purchase ,6.0,HEADPHONES,direct,False,False
+EVT200001,CUST1212,SESS101918,2025-07-25 14:11:03.615540,search_results,view_page,4.0, nan ,nan,False,False
+EVT200004,CUST1197,SESS103271,2024-05-24 10:28:18.090389,search_results,add_to_cart,10.0,,direct,True,False
+evt200005,CUST1191,SESS100742,2024-11-12 21:25:19.487999, checkout ,view_page,5.0,SHOES,google_ads,False,False
+evt200006,CUST1014,SESS100213,2024-11-30 11:17:03.307909,product,view_page,14.0, nan ,social,False,False
+EVT200007,cust1476,SESS100511,2025-02-11 05:34:38.254076,product,view_page,47.35393529348048,,social,False,False
+EVT200008,CUST1429,sess100986,2025-07-14 14:45:48.071491,category,click_product,11.0,HEADPHONES,social,False,True
+evt200010,CUST1070,sess102951,2025-04-14 19:17:56.605430,category,begin_checkout,3.0,laptop,organic_search,False,False
+EVT200011,CUST1146,SESS101100,2024-06-26 01:49:24.088567,category,begin_checkout,47.35393529348048,,email,False,False
+ EVT200012 ,CUST1356,SESS102415,2024-07-03 20:41:25.764363,CATEGORY,view_page,7.0, nan ,social,False,False
+EVT200013,CUST1388,SESS104029,2025-02-07 06:15:03.669670,home,view_page,4.0,t-shirt,social,False,True
+ EVT200014 ,CUST1229,SESS104383,2024-04-02 06:23:51.516418,category,,2.0,,organic_search,True,False
+evt200017,CUST1110,SESS102945,2024-03-23 19:50:56.822702,cart,view_page,4.0,,direct,False,False
+EVT200020,cust1397,SESS101392,2025-05-02 06:28:37.217551,PRODUCT,add_to_cart,9.0,coffee mug,email,True,False
+EVT200021,CUST1121,SESS100950,2025-05-07 14:06:22.409568,home,begin_checkout,14.0, t-shirt ,direct,True,True
+EVT200023,CUST1122,sess104113,2024-08-28 12:09:56.462572,search_results,purchase,10.0,,organic_search,False,False
+EVT200026,CUST1428,SESS102138,2024-06-05 20:21:15.069820,NAN, view_page ,11.0,COFFEE MUG,organic_search,False,False
+EVT200027,CUST1305,SESS103385,2024-12-20 16:57:04.288566, CART ,VIEW_PAGE,11.0,,google_ads,False,False
+EVT200028,CUST1008,sess104133,2025-05-07 18:16:32.943835,PRODUCT,view_page,1.0, coffee mug ,email,False,False
+EVT200029,nan,SESS101999,2025-03-26 06:17:17.464774,category, click_product ,12.0,coffee mug,nan,False,False
+EVT200030,CUST1367,SESS101677,2025-01-25 20:57:36.742261,cart,add_to_cart,2.0,,email,True,False
+EVT200033,CUST1123,SESS100094,, search_results , add_to_cart ,7.0,headphones,google_ads,True,False
+EVT200034,CUST1213,sess104950,2024-06-10 13:06:52.852955,,begin_checkout,, NAN ,email,False,False
+EVT200036,cust1268,SESS102883,2025-02-21 16:44:38.303594,home, view_page ,1.0,,google_ads,False,False
+,CUST1034,SESS102376,2025-04-16 18:19:34.596998,category,click_product,5.0,,organic_search,False,False
+ nan ,CUST1278,SESS100307,2025-01-31 04:24:07.444232,product, view_page ,1.0,SHOES,google_ads,False,True
+EVT200039,CUST1402,SESS102371,2025-01-31 04:57:07.444232,category,,4.0,t-shirt,social,False,False
+EVT200040,CUST1283,SESS101648,2024-01-20 08:04:22.739477,checkout,begin_checkout,2.0, nan ,organic_search,False,False
+ EVT200042 ,CUST1022,SESS102648,2024-11-19 12:59:12.582898,cart,,13.0,,direct,False,False
+EVT200043,CUST1191,SESS101255,,product,click_product,14.0, nan ,social,False,False
+,CUST1382,SESS104830,2024-09-18 11:35:08.637053, home ,view_page,9.0,NAN,social,False,False
+EVT200045,CUST1182,SESS102142,2024-01-28 20:42:56.496784,home,view_page,10.0,,google_ads,False,False
+EVT200046,CUST1176,SESS104089,,checkout,PURCHASE,12.0,headphones,social,False,False
+EVT200047,CUST1375,SESS102807,2024-05-18 09:14:23.577132,product,remove_from_cart,13.0,t-shirt,social,False,False
+ EVT200053 ,CUST1425,SESS101000,,, view_page ,2.0, nan ,google_ads,False,False
+EVT200055,CUST1323,SESS101494,2025-08-16 08:38:45.070285,home, begin_checkout ,2.0,,email,False,False
+evt200056,cust1415,SESS104522,2024-07-13 12:15:08.820107,checkout,purchase,1.0,coffee mug,social,False,False
+EVT200057,CUST1032,SESS102629,2024-10-23 01:25:41.330140,search_results,view_page,3.0,t-shirt,social,False,False
+evt200058,CUST1018,SESS101643,2025-06-17 12:39:25.614193,PRODUCT,ADD_TO_CART,7.0,t-shirt,social,True,False
+EVT200059,CUST1103,SESS102542,2025-02-02 02:37:47.429852, PRODUCT , nan ,5.0,coffee mug,organic_search,False,False
+EVT200060,CUST1405,SESS101305,2025-04-01 20:05:38.895978,search_results,add_to_cart,9.0,t-shirt,organic_search,True,False
+,cust1453,sess100566,2024-07-13 22:52:12.663119, product ,BEGIN_CHECKOUT,5.0,NAN,social,False,False
+EVT200063,cust1263,SESS100770,2025-01-30 09:50:45.745036,product,view_page,5.0, t-shirt ,direct,False,False
+EVT200064,CUST1417,SESS100038,,home,view_page,9.0,COFFEE MUG,organic_search,False,False
+EVT200065,CUST1242,SESS102099,2025-04-03 22:27:52.344758,,view_page,14.0,,social,False,False
+EVT200066,CUST1018,SESS103234,2025-10-31 21:25:33.064829,product, view_page ,13.0, headphones ,social,False,False
+EVT200067,CUST1146,SESS101388,, category ,view_page,4.0, headphones ,google_ads,False,False
+ EVT200068 ,CUST1441,SESS101833,2024-11-22 03:25:51.532854, home ,view_page,5.0,,direct,False,False
+evt200069,CUST1443,SESS100106,2025-02-25 23:46:53.501804,HOME,view_page,11.0,laptop,nan,False,False
+ EVT200070 ,CUST1139,sess104693,2024-08-16 10:13:32.425716,home,view_page,6.0, t-shirt ,email,False,False
+EVT200071,CUST1409,SESS103044,2024-01-18 07:55:31.714602, cart ,,8.0,coffee mug,organic_search,False,False
+EVT200073,CUST1380,SESS104759,2024-01-03 14:34:19.752810, home ,CLICK_PRODUCT,10.0,,direct,False,False
+,CUST1458,SESS101699,2025-02-16 20:23:58.708451, nan ,,10.0,,google_ads,False,False
+evt200075,CUST1173,SESS102757,2024-09-17 23:40:03.709928, category ,add_to_cart,12.0,,direct,True,False
+EVT200077,CUST1188,SESS104718,,category,CLICK_PRODUCT,47.35393529348048,,nan,False,False
+EVT200078,CUST1136,SESS100338,2024-05-25 11:19:11.747553,PRODUCT,purchase,13.0,,email,False,False
+EVT200080,CUST1040,SESS102718,2024-01-12 19:41:03.032419, search_results ,remove_from_cart,13.0,,organic_search,False,False
+,CUST1279,SESS104826,2025-01-25 14:59:42.115829,category,view_page,2.0,NAN,google_ads,False,True
+EVT200083,CUST1164,SESS100865,2025-02-20 22:42:54.852637,category,begin_checkout,9.0,headphones,social,False,False
+EVT200084,CUST1040,SESS100357,, home ,view_page,14.0,laptop,direct,False,False
+EVT200086,cust1156,SESS102538,2024-01-09 10:39:04.409201,search_results,view_page,1.0, coffee mug ,email,False,False
+EVT200087,CUST1308,sess101622,2025-07-10 13:14:23.146148, home , view_page ,4.0,coffee mug,direct,False,False
+EVT200088,CUST1085,SESS101121,2024-11-29 19:40:07.477987, CATEGORY ,view_page,14.0,shoes,google_ads,False,False
+EVT200089,CUST1179,SESS104812,2025-04-17 14:01:49.557797,product,VIEW_PAGE,5.0, nan ,social,False,False
+EVT200090,CUST1021,sess103787,2025-03-29 00:36:35.718953,home,remove_from_cart,, shoes ,email,False,False
+EVT200092,CUST1140,sess101982,,CATEGORY,purchase,3.0,headphones,email,False,False
+ EVT200094 ,CUST1186,SESS100850,2024-09-15 16:07:29.843424,,view_page,6.0,T-SHIRT,direct,False,False
+EVT200095,CUST1410,sess104908,2025-01-29 02:00:01.677803, product ,view_page,7.0,,email,True,False
+ EVT200098 ,CUST1017,SESS103982,2025-01-06 08:06:14.741365, search_results ,view_page,10.0,,google_ads,False,False
+EVT200101,cust1185,SESS103735,2024-08-15 13:34:26.298546, cart ,click_product,14.0,laptop,social,False,False
+ EVT200102 ,cust1486,SESS104848,,HOME,add_to_cart,11.0,,social,True,False
+EVT200104,CUST1347,SESS104311,2025-05-14 15:00:54.375346,search_results, VIEW_PAGE ,3.0,,nan,False,False
+EVT200106,CUST1190,SESS102764,2024-11-29 19:26:07.477987,PRODUCT,REMOVE_FROM_CART,4.0,,social,False,False
+ evt200108 ,cust1293,SESS104822,2024-07-05 07:19:37.155354,product,click_product,2.0, coffee mug ,organic_search,False,False
+evt200109,CUST1271,SESS102886,2024-07-16 09:17:17.737257,product,begin_checkout,13.0,,email,False,True
+EVT200110,CUST1203,SESS101637,2024-04-06 11:21:18.626271,product,VIEW_PAGE,3.0,COFFEE MUG,google_ads,False,False
+EVT200113,CUST1013,SESS101724,2024-03-14 19:10:16.473613,CHECKOUT, BEGIN_CHECKOUT ,13.0,shoes,google_ads,False,True
+EVT200115,CUST1198,SESS104071,2025-08-31 13:52:48.194793, home ,PURCHASE,1.0,t-shirt,direct,False,False
+ evt200116 ,CUST1060,SESS103792,2025-05-25 19:46:28.486011, home ,view_page,13.0,,organic_search,False,False
+EVT200119,CUST1109,SESS103220,2024-12-06 13:23:22.464139,category,click_product,11.0,LAPTOP,email,False,False
+EVT200120,CUST1355,sess102788,2025-10-03 18:56:34.239028, product ,click_product,3.0,headphones,social,False,False
+ evt200122 ,CUST1069,SESS101403,2025-05-12 03:44:15.694416,search_results,,,,social,False,False
+EVT200123,CUST1231,SESS103119,2025-03-31 14:22:42.353654,product,begin_checkout,13.0,laptop,social,False,True
+ EVT200124 ,CUST1460,sess103459,2024-05-26 05:01:58.931063,home,begin_checkout,1.0, nan ,email,False,False
+EVT200125,CUST1044,SESS104816,2024-02-11 20:03:28.425482,checkout,,14.0,,social,False,False
+ evt200126 ,CUST1341,SESS104185,2024-01-21 09:15:41.593585,product, nan ,10.0,,google_ads,False,True
+EVT200127,CUST1363,sess100500,2024-05-27 20:09:28.041173,cart,begin_checkout,,NAN,organic_search,False,False
+ EVT200128 ,CUST1281,SESS103537,2024-02-08 23:50:15.339017,product,view_page,47.35393529348048,t-shirt,google_ads,False,False
+evt200131,cust1364,SESS103311,2025-10-29 01:25:16.123439,product, remove_from_cart ,1.0,LAPTOP,direct,False,False
+EVT200133,CUST1260,SESS102504,2024-11-12 22:39:19.487999,product, view_page ,4.0,shoes,organic_search,False,False
+ EVT200134 ,CUST1062,SESS101364,2024-06-12 04:22:08.482216,,view_page,5.0,,social,False,False
+evt200135,cust1405,SESS102051,2024-07-03 20:25:25.764363, home ,,2.0,,organic_search,False,False
+EVT200136,CUST1121,SESS101343,,category,view_page,12.0,laptop,google_ads,False,False
+EVT200144,CUST1269,SESS102086,2025-04-12 06:39:39.876775, checkout ,view_page,14.0, nan ,social,False,False
+EVT200146,CUST1421,SESS102185,2024-03-29 17:51:02.810186, cart ,click_product,11.0,,social,False,True
+EVT200147,CUST1037,SESS100793,2024-08-14 20:13:06.830872,home,PURCHASE,,,google_ads,False,False
+EVT200148,CUST1497,SESS103656,, category , CLICK_PRODUCT ,12.0,,organic_search,False,False
+,CUST1328,SESS101926,2025-05-12 04:04:15.694416,category,view_page,6.0,,google_ads,False,False
+EVT200150,CUST1230,SESS102824,2024-04-27 14:30:22.167713, product ,add_to_cart,14.0,shoes,direct,True,False
+EVT200152,CUST1176,SESS103607,2025-09-06 22:18:03.307598,home,add_to_cart,5.0,,social,True,False
+EVT200153,CUST1449,SESS102021,2025-03-14 06:30:01.385502,category,view_page,3.0, laptop ,google_ads,False,False
+ evt200155 ,CUST1393,SESS101425,2025-02-09 00:40:06.094629,search_results,click_product,12.0,,organic_search,False,False
+EVT200156,CUST1221,SESS104436,,search_results,view_page,4.0,,organic_search,False,False
+EVT200158,CUST1425,SESS104339,2024-08-16 09:49:32.425716,category,begin_checkout,1.0,COFFEE MUG,email,False,False
+evt200162,CUST1478,SESS104164,,category,VIEW_PAGE,1.0,headphones,organic_search,True,False
+EVT200164,CUST1458,SESS104896,2025-03-08 12:23:53.881741,search_results,VIEW_PAGE,13.0,laptop,organic_search,False,False
+ EVT200166 ,CUST1128,SESS102614,, product ,click_product,5.0,t-shirt,google_ads,False,False
+ EVT200169 ,CUST1320,SESS102212,2024-04-01 23:34:17.780197,category,add_to_cart,8.0,shoes,social,True,False
+EVT200172,CUST1328,SESS101842,,search_results, CLICK_PRODUCT ,14.0,,email,False,False
+EVT200175,CUST1337,SESS103416,2024-06-08 13:35:27.800812,category,view_page,3.0,,organic_search,False,False
+EVT200176,CUST1431,SESS101368,,product,add_to_cart,14.0,t-shirt,direct,True,False
+EVT200177,CUST1021,sess101315,2024-10-18 16:09:25.217774,home,view_page,9.0,,social,False,False
+EVT200178,cust1041,SESS104224,2024-05-25 20:00:58.941671,,view_page,9.0, laptop ,direct,False,False
+EVT200181,CUST1392,SESS104470,2025-03-06 13:59:25.913490,, view_page ,1.0,NAN,email,False,False
+ evt200183 ,CUST1254,SESS101130,2024-03-07 05:06:00.060055,home, add_to_cart ,8.0,laptop,google_ads,True,False
+EVT200185,CUST1247,SESS103845,2025-02-26 22:27:15.462741,CATEGORY, view_page ,1.0, nan ,email,False,False
+EVT200187,CUST1152,SESS103927,2024-11-13 16:03:40.966357,category,click_product,11.0,,social,False,False
+EVT200188,CUST1037,sess101946,,product,click_product,5.0,headphones,organic_search,False,False
+EVT200189,CUST1080,SESS104201,,search_results, view_page ,5.0,,social,False,False
+EVT200193,CUST1160,SESS100000,2025-02-06 10:27:16.550388,CATEGORY, add_to_cart ,3.0,,direct,True,False
+EVT200195,CUST1499,SESS101695,2024-10-10 05:43:26.344789,home,view_page,9.0,coffee mug,google_ads,False,False
+evt200196,CUST1066,SESS102144,2025-08-13 13:00:41.317528, category ,VIEW_PAGE,,,email,False,False
+EVT200197,CUST1263,SESS104050,2025-08-31 13:39:48.194793,product, view_page ,8.0,headphones,google_ads,False,False
+EVT200199,CUST1123,SESS104840,2024-04-28 23:50:52.856359, category , purchase ,5.0,,social,False,False
+ EVT200201 ,CUST1230,SESS103781,2025-02-06 17:51:45.498237,product,view_page,2.0,shoes,social,False,False
+EVT200204,CUST1484,SESS102758,,category, add_to_cart ,,,organic_search,True,False
+EVT200205,CUST1442,SESS103873,2024-02-13 22:50:41.357368, product , click_product ,1.0,,email,False,False
+EVT200206,CUST1127,SESS102802,,product,purchase,5.0,,google_ads,False,False
+,CUST1416,SESS102990,2024-10-27 21:17:39.435235,category, click_product ,1.0,NAN,google_ads,False,False
+EVT200208,CUST1478,SESS102081,2024-11-12 14:49:10.981003,product,add_to_cart,13.0,coffee mug,social,True,False
+EVT200209,CUST1369,SESS101540,,category,view_page,6.0,t-shirt,social,False,False
+EVT200211,CUST1255,SESS103800,2024-12-06 12:12:15.861639,category,view_page,12.0, nan ,email,False,False
+evt200214,CUST1254,SESS103603,2025-02-20 17:45:03.976954,search_results, click_product ,12.0,t-shirt,google_ads,False,False
+ EVT200217 ,CUST1494,sess100281,2025-04-12 21:38:28.481422, CATEGORY ,view_page,12.0, nan ,direct,True,False
+EVT200219,cust1180,SESS103194,2025-03-02 20:23:27.934022,,click_product,2.0,,email,False,False
+EVT200220,CUST1025,SESS103663,2025-09-26 23:27:05.564677,HOME,add_to_cart,47.35393529348048,SHOES,email,True,False
+EVT200222,CUST1146,SESS100737,2025-03-31 23:24:53.312689,HOME,purchase,9.0,LAPTOP,social,False,False
+EVT200223,CUST1004,sess101421,, cart ,add_to_cart,14.0, NAN ,social,True,False
+ EVT200225 ,CUST1451,SESS102941,2025-03-01 17:03:51.473654,search_results,view_page,5.0,NAN,social,False,False
+ EVT200226 ,CUST1372,SESS104798,,cart,remove_from_cart,2.0,t-shirt,social,False,False
+,CUST1187,SESS103755,2024-02-24 17:57:38.228584,home, view_page ,14.0,,social,False,False
+ nan ,CUST1283,SESS101560,2025-02-28 15:19:56.599274,product,begin_checkout,8.0,,social,False,True
+EVT200233,CUST1037,sess100700,2025-02-16 20:33:58.708451, search_results , click_product ,11.0, SHOES ,social,False,False
+,CUST1143,SESS101445,2024-10-30 16:28:26.768187, home ,click_product,8.0, nan ,google_ads,False,False
+EVT200237,CUST1065,sess100287,2025-07-02 20:57:10.070185,product,view_page,,shoes,google_ads,False,False
+EVT200239,cust1406,SESS103330,,home,view_page,,shoes,social,False,True
+ EVT200242 ,CUST1101,SESS104722,2024-12-10 17:04:42.522636,PRODUCT, view_page ,4.0,t-shirt,google_ads,False,False
+EVT200244,CUST1020,SESS101543,2024-02-24 16:33:38.228584,cart,purchase,8.0,,social,False,False
+EVT200247,CUST1411,SESS104900,2025-06-24 11:41:30.760554,cart, view_page ,13.0,,google_ads,False,False
+EVT200251,CUST1476,SESS102360,2024-11-30 10:31:03.307909,home, CLICK_PRODUCT ,2.0, nan ,google_ads,False,False
+EVT200253,CUST1315,SESS104831,,, view_page ,13.0, nan ,social,False,False
+,cust1153,sess104859,2025-02-08 06:17:23.037006,checkout,view_page,14.0,,email,False,False
+ EVT200260 ,CUST1188,SESS103089,2025-05-02 10:54:48.995099, cart ,view_page,,,social,False,False
+ EVT200261 ,NAN,SESS101837,2024-02-22 23:18:32.702296, product ,view_page,10.0, nan ,social,False,False
+,CUST1213,SESS101104,,cart,add_to_cart,10.0, t-shirt ,social,True,False
+EVT200263,CUST1157,SESS100068,2024-01-13 19:57:54.452188,search_results,VIEW_PAGE,3.0,headphones,email,False,False
+ EVT200264 ,CUST1305,SESS104752,,,,8.0,,email,False,False
+EVT200266,CUST1295,SESS101946,2024-08-16 09:31:26.341487,product,click_product,1.0,,direct,False,False
+EVT200267,cust1369,SESS102925,2024-05-01 16:48:59.749721,CATEGORY,VIEW_PAGE,7.0,,direct,False,False
+EVT200268,CUST1298,SESS103678,2024-09-25 01:04:35.567974,checkout,view_page,7.0,headphones,social,False,False
+ EVT200269 ,CUST1087,SESS101168,,product,begin_checkout,8.0,shoes,direct,False,True
+EVT200272,CUST1016,SESS101026,2025-07-23 09:05:08.694912,category, view_page ,, nan ,organic_search,False,False
+,CUST1485,SESS104932,2024-10-26 20:48:47.278925, product ,CLICK_PRODUCT,10.0,,social,False,False
+,CUST1097,SESS103859,2025-09-01 19:37:01.722709,HOME,click_product,1.0,,organic_search,False,False
+EVT200276,CUST1214,SESS101476,2024-08-03 10:31:02.815634,product,purchase,1.0, nan ,google_ads,False,False
+ EVT200277 ,CUST1211,SESS101395,2024-01-11 06:39:39.238658,product,CLICK_PRODUCT,1.0, laptop ,social,False,False
+ EVT200278 ,CUST1210,SESS102233,2025-10-06 16:32:34.885980, checkout ,click_product,13.0,,organic_search,False,False
+EVT200283,cust1287,SESS100958,, home ,view_page,6.0,laptop,social,False,False
+EVT200284,CUST1339,SESS101971,2024-10-12 12:08:51.810855,, add_to_cart ,,,social,True,False
+EVT200285,CUST1269,sess103145,2024-04-23 12:40:44.012374,category,click_product,47.35393529348048, NAN ,direct,False,False
+NAN,CUST1160,SESS100756,, search_results , click_product ,12.0,shoes,direct,False,False
+EVT200287,CUST1235,SESS102298,, product ,view_page,11.0,NAN,nan,False,False
+ nan ,CUST1175,SESS101222,,product,add_to_cart,2.0,,social,True,False
+ EVT200289 ,CUST1181,SESS101561,2025-03-01 17:19:51.473654,PRODUCT,begin_checkout,8.0,,google_ads,False,False
+EVT200292,CUST1142,SESS100497,2024-02-18 12:12:17.486724,category, begin_checkout ,9.0, headphones ,direct,False,True
+EVT200293,CUST1152,sess101150,2024-12-14 04:02:07.083233,CATEGORY,remove_from_cart,14.0,headphones,google_ads,False,False
+EVT200294,CUST1482,SESS104081,, CATEGORY , click_product ,11.0,,email,False,False
+EVT200296,CUST1360,SESS102167,2024-04-28 04:47:05.432988, search_results ,CLICK_PRODUCT,8.0,headphones,email,False,False
+EVT200297,CUST1353,SESS100711,2024-09-01 17:19:54.195158,search_results,NAN,9.0,coffee mug,email,False,False
+EVT200303,CUST1194,SESS102968,2024-05-10 20:36:19.525604,cart,view_page,,SHOES,social,False,False
+EVT200304,CUST1419,SESS104300,2024-07-06 04:33:14.412627,product,view_page,12.0,,google_ads,False,False
+evt200307,CUST1147,sess101629,2024-12-14 13:04:47.729657,product,add_to_cart,1.0,shoes,organic_search,True,False
+ EVT200308 ,CUST1177,SESS104315,2024-06-28 00:36:02.720694,product,add_to_cart,1.0,NAN,social,True,False
+EVT200309,cust1335,SESS102178,2024-07-30 07:23:44.057183,category,view_page,4.0,,google_ads,False,False
+ EVT200310 ,CUST1382,SESS104583,2025-02-05 05:16:24.589312,search_results,purchase,,t-shirt,direct,False,False
+EVT200311,CUST1109,sess104174,2024-03-11 05:19:31.734260,category,purchase,,,organic_search,False,False
+,CUST1356,SESS100277,2025-09-08 03:57:45.555929,search_results, add_to_cart ,8.0, headphones ,social,True,False
+EVT200316,CUST1315,sess104838,, product ,view_page,5.0, shoes ,email,False,False
+evt200318,CUST1342,SESS101105,,category,view_page,7.0,,direct,False,False
+EVT200320,CUST1026,SESS103891,2025-05-25 21:34:50.378750,cart, begin_checkout ,7.0, shoes ,direct,False,False
+EVT200321,CUST1211,SESS100391,,category,add_to_cart,9.0,shoes,email,True,False
+EVT200327,CUST1244,SESS101025,,product,,7.0,,google_ads,False,False
+EVT200328,CUST1387,SESS104443,2024-10-12 23:04:21.065562,search_results,view_page,11.0, NAN ,email,False,False
+evt200330,CUST1330,SESS104450,,search_results,remove_from_cart,13.0,,social,False,False
+ EVT200332 ,CUST1333,SESS100543,2024-09-10 21:24:49.671020,product,view_page,3.0,t-shirt,social,False,False
+EVT200335,cust1467,SESS101846,,product, add_to_cart ,9.0, shoes ,organic_search,True,False
+EVT200337,CUST1478,SESS103325,2025-05-10 02:11:06.199270,category,add_to_cart,,NAN,direct,True,False
+EVT200339,CUST1403,SESS101157,2024-02-06 15:14:14.152770, category ,view_page,14.0,shoes,email,False,False
+ evt200342 ,NAN,sess102062,,home,view_page,8.0, shoes ,email,False,False
+evt200345,NAN,SESS100381,2024-01-08 08:58:41.287332,category,remove_from_cart,3.0,shoes,social,False,False
+ EVT200347 ,CUST1268,SESS101244,2025-03-22 13:32:07.350392,home,purchase,6.0,coffee mug,organic_search,False,False
+ nan ,CUST1455,SESS100746,,category,view_page,12.0,t-shirt,direct,False,False
+EVT200350,CUST1239,SESS104022,2024-05-20 02:34:16.958867,product,click_product,1.0,shoes,google_ads,False,False
+ EVT200354 ,CUST1331,SESS102953,2025-04-02 07:34:47.107980,HOME,view_page,4.0,shoes,nan,False,False
+EVT200355,CUST1367,SESS100395,2024-03-14 19:28:16.473613,category,view_page,2.0, nan ,organic_search,False,False
+EVT200357,CUST1404,SESS103760,2024-12-16 05:32:04.877065,category,view_page,14.0, headphones ,social,False,False
+evt200360,CUST1423,SESS103598,2024-12-16 13:03:50.350657,home,purchase,4.0,NAN,organic_search,False,False
+EVT200361,CUST1263,SESS103986,2025-06-17 15:33:40.035005,category,add_to_cart,6.0,coffee mug,google_ads,True,False
+ nan ,CUST1044,sess100810,,cart,purchase,14.0,,direct,False,False
+ nan ,CUST1342,SESS103886,2025-05-27 21:21:14.584569, product ,begin_checkout,11.0,shoes,social,False,True
+ EVT200365 ,CUST1244,SESS101101,2024-11-22 02:04:24.687019,CHECKOUT,begin_checkout,8.0,shoes,direct,False,True
+ EVT200367 ,CUST1003,sess101991,2024-03-25 06:19:03.516173,search_results,begin_checkout,10.0,,direct,False,False
+EVT200368,CUST1196,SESS104693,2024-09-14 06:43:04.451444,,ADD_TO_CART,14.0,headphones,organic_search,True,False
+ EVT200371 ,CUST1154,sess102294,2024-04-16 22:10:41.024101,product, click_product ,9.0,,google_ads,False,False
+ EVT200372 ,cust1370,sess101112,2024-07-14 23:35:29.497502,search_results,add_to_cart,3.0, shoes ,google_ads,True,False
+ EVT200373 ,CUST1005,SESS103112,, product , purchase ,13.0,,email,False,False
+EVT200374,CUST1334,SESS101004,2024-02-11 02:40:34.206122,search_results, begin_checkout ,13.0,coffee mug,organic_search,True,False
+ EVT200378 ,CUST1081,SESS103857,2025-01-03 01:45:04.627888,search_results,view_page,10.0,,social,False,False
+EVT200379,CUST1351,sess102049,2025-07-25 11:36:34.045510,home, add_to_cart ,6.0,,social,True,False
+ EVT200380 ,CUST1472,SESS101910,2025-10-01 10:42:05.907226,search_results, remove_from_cart ,9.0,laptop,email,False,False
+EVT200382,CUST1327,SESS100289,2024-12-16 05:55:04.877065, category ,view_page,11.0,,google_ads,False,False
+evt200386,CUST1232,SESS100249,,product, ADD_TO_CART ,7.0, T-SHIRT ,google_ads,True,False
+EVT200387,cust1212,SESS103680,,search_results,VIEW_PAGE,5.0,laptop,social,False,False
+EVT200388,CUST1467,sess100261,2025-01-10 02:26:54.765542, home , CLICK_PRODUCT ,5.0,t-shirt,google_ads,False,False
+ EVT200389 ,CUST1387,SESS104782,, CATEGORY , begin_checkout ,4.0,HEADPHONES,email,False,False
+EVT200390,CUST1410,SESS101676,,home, nan ,9.0,shoes,direct,False,False
+evt200391,CUST1390,SESS103022,,category,click_product,14.0,coffee mug,google_ads,False,False
+EVT200392,CUST1348,SESS104007,2024-05-24 10:29:18.090389,cart, remove_from_cart ,13.0,,email,False,False
+EVT200393,CUST1269,SESS103716,2024-04-13 03:52:43.959927,search_results,view_page,8.0,t-shirt,social,False,False
+EVT200395,CUST1039,SESS100159,2024-10-04 02:41:16.562957, product ,begin_checkout,7.0,shoes,social,False,True
+EVT200398,CUST1462,SESS103174,2024-03-12 02:01:20.938232,category, nan ,9.0, t-shirt ,email,False,False
+EVT200399,CUST1103,SESS101090,2025-07-23 10:02:08.694912, nan , nan ,2.0,NAN,google_ads,False,False
+EVT200400,CUST1274,sess104779,2024-03-23 18:58:56.822702,category, ADD_TO_CART ,6.0,,direct,True,False
+ EVT200401 ,CUST1084,SESS104166,2025-06-17 14:45:40.035005,product,view_page,5.0, t-shirt ,social,False,False
+EVT200402,cust1437,SESS103672,2024-07-29 23:30:44.960353,product,view_page,5.0,coffee mug,google_ads,False,False
+EVT200404,CUST1348,sess102113,2024-09-29 06:38:36.501532,product,ADD_TO_CART,7.0, shoes ,email,True,False
+EVT200405,cust1367,SESS104131,2024-09-27 23:56:58.738992,search_results,view_page,7.0,,google_ads,False,False
+ EVT200407 ,CUST1460,SESS104709,2024-07-26 15:26:22.712958,SEARCH_RESULTS, NAN ,4.0,,social,False,False
+ EVT200409 ,CUST1232,SESS104606,2025-06-05 12:45:43.611762, category ,VIEW_PAGE,1.0,,social,False,True
+EVT200411,CUST1233,SESS101071,2025-03-05 14:51:09.377462, product ,begin_checkout,2.0, nan ,direct,False,False
+EVT200412,CUST1029,SESS100736,,CATEGORY,,5.0,,social,False,False
+EVT200414,CUST1370,SESS100116,2024-10-28 07:02:20.855211,product,begin_checkout,1.0,,social,False,False
+EVT200415,CUST1202,SESS103819,2024-02-21 09:32:44.147710,,add_to_cart,3.0,shoes,social,True,False
+EVT200416,CUST1418,SESS100634,2024-10-07 16:01:54.915289,product,click_product,12.0,,social,False,False
+evt200417,CUST1381,SESS101884,2024-01-08 02:17:13.151999,home,remove_from_cart,14.0, nan ,direct,False,False
+EVT200421,cust1277,SESS103685,2024-07-12 22:10:12.472522,product,add_to_cart,13.0,NAN,google_ads,True,False
+ nan ,CUST1478,SESS100449,2024-09-02 07:03:56.170660,category,click_product,13.0,headphones,email,False,False
+NAN,CUST1478,SESS104571,2025-02-13 04:06:01.260068,product,view_page,1.0,,social,False,False
+ EVT200424 ,cust1016,SESS101446,,product,begin_checkout,6.0,t-shirt,organic_search,False,False
+ evt200425 ,CUST1209,SESS104887,2024-07-21 18:25:50.813380,home,purchase,6.0,shoes,organic_search,False,False
+EVT200428,CUST1191,SESS103283,, product ,add_to_cart,3.0,shoes,organic_search,True,False
+EVT200429,CUST1229,SESS100471,2025-10-15 02:52:56.695921,product,begin_checkout,1.0,shoes,nan,False,False
+EVT200430,CUST1192,SESS103063,,category, nan ,7.0,,google_ads,False,False
+EVT200431,CUST1349,SESS101542,2024-08-26 17:29:02.747727,category,view_page,10.0,,google_ads,False,False
+ EVT200434 ,cust1275,sess101153,,search_results,begin_checkout,2.0,NAN,email,False,True
+evt200435,CUST1270,SESS102135,2025-09-18 04:14:25.738558,search_results,click_product,9.0,NAN,direct,False,False
+EVT200436,CUST1372,SESS102381,,product,CLICK_PRODUCT,14.0,,social,False,False
+EVT200439,CUST1152,SESS102717,2025-04-30 16:57:37.162016, home ,VIEW_PAGE,8.0,NAN,social,False,False
+evt200440,cust1344,SESS104241,2025-03-26 11:35:54.376912,search_results,click_product,5.0,,organic_search,False,False
+evt200441,CUST1217,sess100867,2024-12-08 03:31:56.603678,search_results,CLICK_PRODUCT,5.0, t-shirt ,organic_search,False,True
+,cust1141,SESS100427,,product,view_page,11.0,NAN,email,False,False
+,CUST1062,SESS102499,2024-06-28 17:46:56.777295,,purchase,10.0,,google_ads,False,False
+,cust1123,SESS100003,2024-09-11 01:54:36.980324, search_results ,begin_checkout,11.0,,social,False,False
+EVT200450,CUST1034,SESS102482,2025-01-26 21:15:19.590640,category,purchase,47.35393529348048,,email,False,False
+EVT200452,CUST1228,SESS104992,2025-03-02 21:12:27.934022,cart,view_page,,coffee mug,direct,False,False
+EVT200454,CUST1205,SESS104897,2024-07-23 00:07:58.373595, search_results ,,12.0,headphones,email,False,False
+EVT200456,CUST1111,SESS103137,2025-07-26 23:36:31.489709,category,begin_checkout,6.0,T-SHIRT,social,False,False
+evt200458,CUST1148,SESS100660,2025-06-22 15:03:01.095172, product ,CLICK_PRODUCT,11.0,,organic_search,False,False
+ EVT200460 ,CUST1163,SESS103520,2024-08-06 06:08:29.623810,product, nan ,,,google_ads,False,False
+EVT200461,CUST1306,SESS104174,2024-06-03 08:16:09.899835,category,view_page,7.0,,email,False,False
+EVT200463,CUST1448,SESS100212,2025-09-06 10:15:40.609949,product, begin_checkout ,1.0, nan ,email,False,False
+EVT200465,CUST1113,sess101270,,,remove_from_cart,10.0, coffee mug ,google_ads,False,False
+ EVT200142 ,CUST1033,SESS104721,2025-02-17 23:44:44.890604, PRODUCT , remove_from_cart ,5.0,t-shirt,google_ads,False,False
+EVT200469,CUST1320,SESS104368,2025-02-11 00:21:44.890259,home,VIEW_PAGE,14.0,NAN,direct,False,False
+EVT200470,CUST1284,sess100975,,SEARCH_RESULTS, add_to_cart ,7.0,,email,True,False
+EVT200471,cust1024,SESS103775,2025-01-09 23:22:20.539562,category,view_page,11.0,shoes,social,False,False
+EVT200473,CUST1402,sess100064,, CHECKOUT ,,4.0,,direct,False,False
+EVT200474,CUST1163,SESS104005,2024-10-14 08:53:00.727172,checkout,purchase,6.0,,direct,False,False
+EVT200478,CUST1242,SESS102191,2025-04-12 21:32:28.481422, search_results ,view_page,11.0,coffee mug,direct,False,False
+ evt200481 ,CUST1412,SESS100637,2025-04-30 17:17:37.162016,home,view_page,9.0,NAN,google_ads,False,False
+ nan ,CUST1468,SESS104128,2025-04-24 00:03:00.783418,cart,view_page,12.0,,email,False,True
+EVT200484,CUST1495,SESS104474,2025-01-27 07:51:32.157980,category,begin_checkout,9.0,laptop,email,False,False
+EVT200485,CUST1285,sess104576,2024-03-12 05:14:30.477795,HOME,view_page,10.0,,social,False,False
+EVT200487,CUST1124,SESS104480,2024-10-12 13:54:02.265049,home,view_page,6.0,,nan,False,False
+ EVT200488 ,CUST1104,sess103572,,search_results,view_page,47.35393529348048,,email,False,False
+ EVT200491 ,CUST1433,SESS101134,2025-02-01 17:29:09.294695,cart,view_page,9.0,SHOES,google_ads,False,False
+,CUST1047,SESS100582,, search_results , view_page ,14.0,shoes,social,False,False
+EVT200495,CUST1193,SESS104453,,product,,10.0, NAN ,direct,False,False
+evt200499,nan,SESS102871,,, view_page ,12.0,shoes,social,False,False
+ EVT200500 ,CUST1155,SESS102438,2025-07-29 11:35:55.837710, cart ,view_page,11.0,,direct,False,False
+EVT200502,CUST1492,SESS101672,2024-07-12 17:41:06.355825,home, add_to_cart ,14.0, nan ,google_ads,True,False
+EVT200503,CUST1382,SESS104779,2025-01-05 00:47:46.840002,product,click_product,13.0, nan ,direct,False,False
+NAN,CUST1468,SESS102948,2025-04-15 11:07:50.823718,search_results, click_product ,7.0,COFFEE MUG,social,False,False
+EVT200505,CUST1356,SESS103629,2025-06-06 22:47:33.952322,CART,add_to_cart,8.0,laptop,social,True,False
+EVT200509,CUST1194,SESS104284,2024-04-27 14:56:22.167713, product ,VIEW_PAGE,47.35393529348048,,google_ads,False,False
+evt200510,CUST1273,SESS103620,2024-11-30 19:33:22.834617, product ,add_to_cart,8.0,NAN,direct,True,False
+ EVT200511 ,CUST1157,SESS104366,2024-10-04 15:08:58.110903, PRODUCT ,remove_from_cart,6.0, nan ,organic_search,True,False
+EVT200512,CUST1184,SESS102960,,product, view_page ,6.0, NAN ,organic_search,True,False
+ EVT200513 ,CUST1451,SESS101013,2025-06-26 08:13:38.452135,category,view_page,2.0,SHOES,social,False,False
+EVT200514,CUST1238,SESS104058,2024-05-22 17:13:28.595087, product ,add_to_cart,3.0,,email,True,False
+ EVT200517 ,CUST1468,SESS102419,,home,ADD_TO_CART,2.0, nan ,google_ads,True,False
+EVT200518,cust1189,SESS101066,2024-06-18 02:13:10.474571,home,view_page,47.35393529348048,,social,False,False
+EVT200519,CUST1211,SESS100419,2024-05-25 20:37:58.941671,,begin_checkout,12.0,,social,False,False
+EVT200521,CUST1379,SESS103357,2024-05-03 00:24:39.443790, product ,click_product,3.0, nan ,social,False,False
+EVT200522,cust1008,sess101900,2024-03-25 05:56:03.516173, search_results ,click_product,1.0,,social,False,False
+EVT200525,CUST1151,SESS104758,2024-03-26 06:03:34.255010,category,add_to_cart,4.0,,google_ads,True,False
+EVT200526,CUST1100,SESS104732,2025-02-20 17:48:27.921774,cart, purchase ,12.0,,social,False,False
+EVT200527,CUST1117,SESS103182,,home,,4.0,,social,True,False
+EVT200530,CUST1335,SESS101310,2024-06-08 14:29:27.800812, nan ,view_page,9.0, nan ,social,False,False
+EVT200531,CUST1131,SESS100186,, nan ,click_product,4.0,t-shirt,organic_search,False,False
+EVT200534,CUST1375,SESS103915,2025-10-05 00:28:23.829306,CATEGORY, VIEW_PAGE ,13.0, NAN ,google_ads,False,False
+EVT200537,CUST1250,SESS100838,2025-01-18 01:30:46.909910,PRODUCT,VIEW_PAGE,, shoes ,google_ads,False,False
+ nan ,CUST1268,SESS101003,2024-08-23 15:01:33.805577,checkout, view_page ,7.0,,direct,False,False
+EVT200541,CUST1429,SESS101759,2024-01-22 02:56:47.037943,cart, click_product ,3.0,shoes,email,False,False
+NAN,NAN,SESS100114,, product ,click_product,2.0,NAN,social,False,False
+EVT200543,CUST1391,sess103151,2024-04-06 05:36:54.333648,home,ADD_TO_CART,7.0,NAN,social,True,False
+EVT200545,CUST1431,SESS100611,,CART,,13.0,t-shirt,social,False,False
+,cust1004,sess102711,2024-03-02 06:42:03.851867,category,click_product,,,direct,False,False
+EVT200548,CUST1258,SESS102498,2025-03-21 04:15:59.637815, SEARCH_RESULTS ,click_product,4.0, NAN ,email,False,False
+ EVT200549 ,CUST1191,SESS101742,,category, purchase ,11.0,coffee mug,direct,False,False
+EVT200550,CUST1316,SESS104183,2024-08-11 01:45:32.492733,product,click_product,13.0,,email,False,False
+EVT200551,CUST1337,SESS101877,2025-01-23 11:38:11.821016, home ,view_page,1.0, nan ,email,False,False
+ EVT200553 ,CUST1272,SESS103817,2025-03-14 06:28:01.385502,home,PURCHASE,3.0,headphones,social,False,False
+EVT200556,CUST1369,SESS101893,,SEARCH_RESULTS,click_product,5.0,,direct,False,False
+EVT200557,CUST1274,SESS103462,, checkout ,view_page,3.0,,google_ads,False,False
+EVT200558,cust1008,SESS102003,2024-07-13 06:09:24.659301,checkout,view_page,47.35393529348048,shoes,google_ads,False,True
+EVT200560,CUST1412,SESS102112,2025-03-11 03:40:02.787649,, REMOVE_FROM_CART ,,,google_ads,False,False
+ EVT200562 ,CUST1268,SESS103122,2024-12-13 20:34:53.345845,product,add_to_cart,6.0,laptop,direct,True,False
+ EVT200564 ,CUST1317,SESS103947,2024-01-20 22:51:52.697440,cart,click_product,8.0, NAN ,email,False,False
+ EVT200565 ,CUST1129,SESS100422,,home,add_to_cart,9.0,,google_ads,True,False
+EVT200567,CUST1040,SESS104964,2025-07-02 13:55:55.359520,,CLICK_PRODUCT,47.35393529348048, nan ,direct,False,False
+EVT200569,CUST1235,SESS104228,, HOME , view_page ,6.0,,direct,False,False
+EVT200250,CUST1071,SESS101300,2025-06-17 15:17:40.035005, category ,view_page,8.0,shoes,social,False,False
+ EVT200573 ,CUST1047,SESS102739,2025-01-03 00:46:04.627888,PRODUCT,CLICK_PRODUCT,5.0,HEADPHONES,direct,False,False
+ EVT200574 ,cust1194,SESS104644,2025-03-02 15:50:20.924493,category,view_page,6.0,,google_ads,False,False
+EVT200575,CUST1282,SESS100858,2024-04-15 02:17:47.043691,cart,add_to_cart,3.0,,email,True,False
+ EVT200576 ,CUST1028,sess102231,2024-11-19 15:48:18.362496,HOME,click_product,,laptop,direct,False,False
+EVT200578,CUST1042,SESS103082,,CATEGORY,view_page,2.0,t-shirt,social,False,False
+EVT200582,CUST1458,sess103375,2024-12-24 21:27:49.653317,product,remove_from_cart,13.0,shoes,direct,False,False
+EVT200583,CUST1470,SESS104172,,product, view_page ,5.0,laptop,organic_search,False,False
+ evt200585 ,CUST1461,SESS104743,,NAN,NAN,2.0,,social,False,False
+EVT200588,CUST1350,sess100209,2025-04-26 03:14:33.406798,search_results, VIEW_PAGE ,9.0,,organic_search,False,False
+ evt200589 ,CUST1460,SESS104795,,search_results,begin_checkout,47.35393529348048,,direct,False,True
+evt200590,CUST1288,SESS102321,,product, view_page ,7.0,NAN,organic_search,False,False
+EVT200591,cust1091,SESS100483,2025-10-31 16:01:37.459599, category , click_product ,9.0, shoes ,email,False,True
+EVT200592,CUST1008,SESS101464,2024-04-28 05:57:05.432988,cart,purchase,7.0,shoes,google_ads,False,False
+EVT200593,CUST1300,SESS104302,2024-11-05 23:39:25.234940, checkout ,view_page,,,organic_search,False,False
+EVT200594,CUST1385,SESS102146,,category,view_page,1.0,headphones,organic_search,False,False
+EVT200595,CUST1475,SESS100669,2024-03-30 20:06:13.082338, product ,click_product,10.0,t-shirt,email,False,False
+EVT200598,CUST1290,SESS100295,,product,begin_checkout,,laptop,social,False,False
+ EVT200599 ,CUST1346,SESS101355,,category,begin_checkout,14.0,laptop,organic_search,False,False
+EVT200600,CUST1169,SESS104340,2024-07-11 06:17:51.847809,cart,view_page,6.0, headphones ,social,False,False
+ EVT200601 ,CUST1386,SESS104516,2024-02-21 07:17:17.606525, product ,begin_checkout,,,direct,False,False
+EVT200602,CUST1404,sess103062,,search_results,BEGIN_CHECKOUT,11.0,LAPTOP,social,False,False
+ EVT200604 ,CUST1027,SESS104841,2025-07-30 03:22:48.062649, product ,click_product,6.0,t-shirt,email,False,False
+ EVT200606 ,CUST1429,SESS104409,2025-08-25 08:09:20.307613,product,CLICK_PRODUCT,7.0, nan ,google_ads,False,False
+EVT200609,CUST1015,SESS101986,2025-07-22 10:39:38.168644,checkout,VIEW_PAGE,13.0,,email,False,False
+EVT200611,CUST1251,SESS104288,, CATEGORY ,click_product,, nan ,organic_search,False,False
+EVT200614,CUST1221,sess101249,2024-11-30 10:20:02.000533,category,view_page,4.0,,email,False,False
+,CUST1348,SESS103094,2025-03-19 03:03:36.897200, SEARCH_RESULTS , click_product ,2.0,,social,False,False
+EVT200616,CUST1338,SESS102568,2024-12-03 00:34:36.458581, product , view_page ,5.0, nan ,organic_search,False,False
+evt200617,CUST1043,SESS104369,2024-12-16 05:31:04.877065,home,begin_checkout,13.0,laptop,email,False,False
+EVT200618,CUST1408,SESS103115,2024-12-03 15:45:17.213232,search_results,CLICK_PRODUCT,7.0, coffee mug ,google_ads,False,False
+EVT200619,CUST1365,SESS103208,,category,begin_checkout,11.0,,organic_search,False,True
+evt200620,CUST1042,SESS102876,,product,view_page,1.0, t-shirt ,organic_search,False,False
+EVT200622,CUST1364,sess104205,2024-10-30 22:07:02.803003,category, begin_checkout ,10.0,,social,False,False
+EVT200625,CUST1054,SESS101161,2025-02-05 13:23:09.892117,product,PURCHASE,11.0,,social,False,False
+ evt200626 ,CUST1002,SESS104915,2024-11-24 19:55:46.719805,product, click_product ,5.0,,email,False,False
+EVT200627,CUST1227,SESS102078,2025-04-23 17:14:45.090641,search_results,ADD_TO_CART,11.0,,email,True,False
+EVT200628,CUST1389,SESS100983,2025-06-03 19:10:35.097130,product,ADD_TO_CART,13.0,NAN,social,True,False
+EVT200630,CUST1044,SESS103495,2024-06-10 13:12:52.852955, category ,view_page,4.0,NAN,social,False,False
+EVT200631,CUST1220,SESS102699,2025-08-17 04:17:06.183116,category, begin_checkout ,14.0,,email,False,False
+EVT200632,CUST1285,SESS100580,2024-09-13 10:54:07.427003,search_results, click_product ,7.0, nan ,social,False,False
+,CUST1052,sess104591,2024-08-18 01:48:53.482893,search_results,view_page,4.0,,social,False,False
+EVT200635,CUST1045,SESS103041,2025-05-03 22:42:35.373977,PRODUCT, NAN ,5.0,,google_ads,False,False
+ NAN ,CUST1283,SESS101770,2025-08-28 03:21:22.704561,cart,ADD_TO_CART,9.0,t-shirt,google_ads,True,False
+evt200637,CUST1305,SESS101205,2025-07-24 20:19:56.149841,product, nan ,9.0,,direct,True,False
+EVT200640,CUST1211,SESS103353,,,remove_from_cart,3.0,t-shirt,social,False,False
+evt200642,CUST1371,SESS103587,2024-04-08 12:59:01.709238,product, CLICK_PRODUCT ,10.0,NAN,social,False,False
+evt200644,CUST1292,SESS104447,2024-04-12 00:04:37.822253,home, view_page ,2.0,NAN,social,False,False
+EVT200645,CUST1086,SESS102405,,category,view_page,4.0, nan ,email,False,False
+EVT200646,cust1086,SESS103105,2024-07-03 21:22:25.764363,product,view_page,47.35393529348048, nan ,social,False,False
+,CUST1137,SESS104953,2025-05-07 15:00:22.409568,product,purchase,7.0,,direct,False,False
+EVT200648,CUST1137,sess100308,2024-03-07 20:34:52.828302,product,ADD_TO_CART,13.0,laptop,organic_search,True,False
+EVT200649,CUST1074,sess100238,2024-12-07 02:21:36.310488,product, nan ,14.0,SHOES,social,False,False
+ EVT200652 ,cust1153,SESS101844,2024-03-12 08:47:38.598846,category,view_page,7.0,,direct,False,False
+evt200654,CUST1184,SESS101721,2025-01-11 12:54:32.191289,product,click_product,9.0, nan ,social,False,False
+evt200655,cust1483,SESS102878,2024-01-10 00:22:57.725820,product, add_to_cart ,5.0, nan ,organic_search,True,False
+EVT200657,CUST1304,SESS104264,2025-08-21 22:43:08.673008,, CLICK_PRODUCT ,5.0, laptop ,email,False,True
+EVT200658,CUST1234,SESS102196,2024-07-17 22:46:56.792028,,click_product,13.0,headphones,organic_search,False,False
+EVT200659,CUST1069,sess103801,2024-03-09 23:11:49.753942,search_results,click_product,5.0,,direct,False,False
+EVT200661,CUST1170,SESS101902,2024-12-03 00:27:36.458581,product, view_page ,8.0,laptop,direct,False,False
+EVT200663,CUST1225,sess103290,,product,view_page,6.0,,social,False,False
+ EVT200664 ,CUST1220,SESS103052,2024-07-19 00:25:08.461364,category,,11.0,headphones,google_ads,False,False
+ EVT200666 ,CUST1308,SESS103491,2024-06-12 03:10:08.482216, SEARCH_RESULTS ,begin_checkout,1.0, headphones ,direct,False,False
+EVT200667,CUST1245,SESS104630,2024-04-06 12:23:18.626271,search_results,VIEW_PAGE,13.0,,email,False,False
+EVT200668,CUST1090,SESS102705,2025-01-30 09:47:45.745036, home ,begin_checkout,10.0, laptop ,email,False,False
+EVT200671,CUST1495,SESS104865,,CATEGORY,view_page,13.0, nan ,google_ads,False,False
+EVT200673,CUST1166,SESS100251,2024-10-30 01:35:12.691456,home,ADD_TO_CART,8.0,headphones,google_ads,True,False
+ evt200675 ,CUST1186,sess102321,2024-07-02 16:04:27.812774, checkout ,view_page,10.0,,direct,False,False
+EVT200676,CUST1477,SESS104550,2025-03-05 15:59:09.377462,SEARCH_RESULTS,VIEW_PAGE,12.0,,nan,False,False
+EVT200681,CUST1224,SESS100575,2024-10-24 06:14:25.106452, CHECKOUT ,click_product,7.0,,google_ads,False,False
+ EVT200683 ,CUST1419,SESS104746,2024-09-29 17:20:40.604690,cart, click_product ,12.0, NAN ,organic_search,False,False
+EVT200685,cust1071,SESS103779,,product,view_page,2.0,coffee mug,direct,False,False
+EVT200686,CUST1123,SESS103231,2024-02-26 11:48:02.453032,category,begin_checkout,2.0,,email,False,False
+evt200688,CUST1366,SESS103260,2024-09-21 07:38:55.771840,,purchase,11.0,,direct,False,False
+EVT200690,CUST1037,sess102032,2025-08-17 05:18:06.183116,category,click_product,14.0, nan ,direct,False,False
+ EVT200691 ,CUST1306,SESS103804,2025-02-05 06:50:24.589312,SEARCH_RESULTS,click_product,,headphones,email,False,False
+ EVT200692 ,CUST1298,SESS104113,2025-03-12 17:20:20.205073, product ,view_page,4.0,t-shirt,direct,False,False
+EVT200695,CUST1278,SESS101452,2024-01-20 12:09:06.724926,category, click_product ,9.0,,social,False,False
+EVT200696,CUST1404,SESS101169,2024-02-11 02:26:34.206122,category,view_page,5.0,NAN,organic_search,False,False
+ EVT200698 ,cust1304,SESS100358,2024-05-02 12:23:13.056039,product, click_product ,13.0,laptop,social,False,False
+EVT200699,CUST1055,SESS101624,2025-07-22 14:07:36.076317, home ,purchase,4.0,t-shirt,social,False,False
+EVT200700,CUST1336,SESS104761,2024-08-28 20:14:28.029881, product ,view_page,10.0, nan ,social,False,False
+EVT200702,CUST1288,SESS101363,,NAN, view_page ,,,google_ads,False,False
+ nan ,CUST1495,sess103935,2025-02-25 23:39:53.501804,product,click_product,,coffee mug,google_ads,False,True
+evt200704,CUST1494,SESS104428,2024-01-12 20:34:03.032419,product,purchase,5.0,coffee mug,email,False,False
+EVT200705,cust1054,SESS101797,,product,add_to_cart,47.35393529348048,,social,True,False
+EVT200708,CUST1382,SESS100433,2024-06-05 16:30:44.249277,checkout,view_page,5.0,T-SHIRT,social,False,False
+EVT200709,CUST1285,SESS100393,2025-07-26 13:40:26.164843,search_results,view_page,47.35393529348048, nan ,google_ads,False,False
+evt200710,CUST1352,SESS104370,2025-03-26 09:37:18.188681, product ,add_to_cart,11.0,headphones,direct,True,False
+EVT200711,CUST1113,SESS100663,,PRODUCT,VIEW_PAGE,,,email,False,False
+EVT200712,CUST1191,SESS100161,, checkout ,view_page,1.0,shoes,social,False,False
+EVT200713,CUST1237,SESS104541,,,click_product,9.0,coffee mug,direct,False,False
+EVT200714,CUST1077,SESS103348,2024-07-06 02:55:14.412627, checkout , begin_checkout ,10.0,,social,False,False
+EVT200715,nan,SESS102733,,search_results,view_page,9.0,,social,False,False
+EVT200716,CUST1053,SESS104312,2024-01-16 19:29:31.830895,search_results,add_to_cart,5.0,SHOES,email,True,False
+EVT200717,CUST1212,SESS100047,2025-01-15 04:48:12.426049,CATEGORY,purchase,3.0,,google_ads,False,False
+EVT200718,CUST1059,SESS101897,2024-07-10 17:11:33.406546,category,,,,google_ads,True,False
+EVT200719,CUST1178,SESS103483,2025-04-19 07:16:23.730357, cart , view_page ,,t-shirt,email,False,False
+EVT200720,CUST1175,SESS100133,,home, VIEW_PAGE ,9.0,,nan,False,False
+EVT200721,CUST1401,sess102000,2024-02-01 15:48:33.650528, nan ,add_to_cart,14.0,,direct,True,False
+EVT200722,CUST1266,SESS103906,2024-08-11 02:23:32.492733,HOME, click_product ,12.0,,email,False,True
+EVT200457,CUST1071,SESS100236,2024-08-04 12:28:48.735744,search_results,VIEW_PAGE,9.0,laptop,social,False,False
+EVT200725,CUST1369,SESS103997,2025-01-03 07:31:42.915352,cart,view_page,7.0,NAN,organic_search,False,False
+,CUST1153,sess102829,2025-02-18 14:17:05.320506,category,CLICK_PRODUCT,14.0,headphones,social,False,False
+evt200728,CUST1414,SESS104834,2025-05-26 07:14:10.542775,product,view_page,5.0,,direct,False,False
+EVT200729,CUST1011,SESS101504,,NAN,purchase,4.0,,direct,False,False
+EVT200734,CUST1282,SESS103658,, cart ,purchase,,,email,False,True
+ EVT200735 ,CUST1169,SESS100639,2025-04-21 08:07:51.001700, product ,,1.0,,organic_search,True,False
+EVT200736,CUST1218,SESS103165,2025-05-15 21:43:42.551420,product, view_page ,47.35393529348048, nan ,email,False,False
+EVT200737,CUST1118,SESS102159,2025-07-01 22:24:16.669960,, add_to_cart ,14.0, headphones ,social,True,False
+EVT200738,CUST1322,SESS102273,2024-08-10 04:46:29.283719,category,NAN,47.35393529348048,coffee mug,organic_search,True,False
+,CUST1095,SESS104325,2024-07-18 05:13:05.206404, product , begin_checkout ,8.0,NAN,google_ads,False,True
+EVT200741,CUST1377,SESS104655,,home,click_product,13.0, coffee mug ,social,False,False
+EVT200743,CUST1199,SESS100456,2025-08-30 02:40:10.559453,,add_to_cart,4.0, headphones ,direct,True,False
+ EVT200744 ,CUST1360,SESS104907,2024-05-24 09:12:48.297725,CATEGORY,remove_from_cart,10.0,T-SHIRT,email,False,True
+evt200746,CUST1385,SESS100555,2024-03-08 07:14:26.635932,home,view_page,,HEADPHONES,nan,False,False
+EVT200747,CUST1295,SESS100475,2024-01-21 23:39:24.414902,search_results,click_product,8.0,,direct,False,False
+EVT200749,CUST1095,SESS100071,2024-07-31 14:12:24.692820,product,add_to_cart,9.0,headphones,organic_search,True,False
+EVT200750,cust1166,SESS103190,2025-05-29 02:40:57.028025,product,click_product,13.0,,direct,True,False
+,CUST1364,SESS101641,2025-04-28 03:54:14.105972,search_results,click_product,8.0,,google_ads,False,False
+EVT200754,CUST1305,SESS103080,2024-01-20 12:29:37.665449, checkout , view_page ,2.0, coffee mug ,direct,False,False
+EVT200755,cust1312,SESS100820,2024-11-14 01:32:56.607198, CART ,view_page,12.0,shoes,social,False,False
+EVT200756,CUST1300,sess101572,2024-07-02 16:36:27.812774,category,purchase,4.0, shoes ,organic_search,False,False
+EVT200757,CUST1178,SESS103349,2024-11-12 00:33:58.217798,category,view_page,14.0,NAN,google_ads,False,False
+EVT200758,CUST1432,SESS101408,, product ,ADD_TO_CART,2.0, nan ,email,True,False
+EVT200759,CUST1316,SESS100325,2025-03-31 14:32:42.353654,category,view_page,1.0, nan ,social,False,True
+evt200760,CUST1416,SESS100554,,search_results,add_to_cart,7.0,,social,True,False
+EVT200761,CUST1470,sess104577,2025-09-22 09:02:25.372734,cart,purchase,12.0,,social,False,False
+EVT200762,CUST1344,SESS102456,2025-04-07 00:46:44.497588,search_results,click_product,7.0,shoes,social,False,False
+EVT200765,CUST1059,sess102380,,home,click_product,2.0,,direct,False,False
+EVT200766,CUST1191,SESS102006,,product,NAN,9.0,,direct,True,False
+ EVT200767 ,cust1261,SESS102689,, product ,view_page,1.0,shoes,google_ads,False,False
+EVT200769,CUST1294,sess101847,2025-04-26 17:38:57.525813,cart,ADD_TO_CART,9.0,,social,True,False
+EVT200770,CUST1216,SESS102964,2024-11-30 09:36:02.000533,cart, view_page ,9.0,COFFEE MUG,nan,False,False
+ EVT200383 ,CUST1188,SESS100140,,product,add_to_cart,5.0, headphones ,organic_search,True,False
+evt200490,CUST1472,SESS100757,,search_results,click_product,3.0, coffee mug ,social,False,False
+,CUST1317,SESS100849,2025-07-25 14:30:03.615540,category,view_page,4.0,t-shirt,direct,False,False
+EVT200778,CUST1443,SESS104957,2024-11-30 18:58:22.834617,product,VIEW_PAGE,8.0,headphones,direct,False,False
+ EVT200781 ,CUST1099,SESS100714,2024-07-11 07:33:51.847809,, purchase ,5.0, nan ,google_ads,False,False
+EVT200782,CUST1493,SESS100954,2025-08-31 13:35:48.194793,home,purchase,7.0,headphones,google_ads,False,False
+ EVT200783 ,CUST1258,SESS103831,2024-12-06 19:12:16.537200,CATEGORY,click_product,1.0,laptop,social,False,False
+EVT200785,CUST1212,SESS100887,2024-11-29 19:00:07.477987, product ,add_to_cart,8.0,,organic_search,True,False
+NAN,CUST1250,SESS103217,2024-03-20 00:32:12.868942,product,purchase,6.0,shoes,nan,False,False
+EVT200788,CUST1015,SESS102576,,cart,purchase,11.0,NAN,organic_search,False,False
+EVT200789,CUST1149,SESS100370,2025-10-20 02:36:38.855499,cart,CLICK_PRODUCT,11.0,,social,False,False
+EVT200790,CUST1140,SESS102256,2024-12-14 04:17:07.083233,product,view_page,10.0,NAN,organic_search,False,False
+EVT200791,CUST1275,SESS101929,2025-02-28 15:03:56.599274,product,click_product,13.0,headphones,email,False,False
+EVT200437,CUST1427,SESS102702,2024-12-10 18:17:12.919682,search_results, nan ,11.0,,email,False,False
+evt200795,CUST1057,sess103634,2025-07-23 09:22:08.694912,SEARCH_RESULTS,view_page,14.0, t-shirt ,direct,False,False
+EVT200796,CUST1058,SESS103887,2025-10-31 13:28:38.575685, product ,NAN,11.0,laptop,social,False,False
+ EVT200797 ,CUST1396,SESS102687,2025-03-10 11:03:18.072135,category,REMOVE_FROM_CART,10.0, nan ,organic_search,False,False
+ evt200800 ,CUST1389,SESS102374,2025-07-24 08:35:46.456255,cart,VIEW_PAGE,1.0,t-shirt,email,False,False
+EVT200802,CUST1217,sess101394,2024-03-21 00:03:16.994925,category,click_product,10.0, t-shirt ,organic_search,False,False
+EVT200806,CUST1178,SESS103515,2024-07-02 05:37:20.974864,PRODUCT,NAN,4.0, nan ,social,False,False
+EVT200807,CUST1224,SESS101353,,product, view_page ,5.0,t-shirt,google_ads,False,False
+EVT200808,CUST1397,SESS101484,,cart, click_product ,5.0,,social,False,False
+ EVT200809 ,CUST1107,SESS103708,2025-05-08 21:31:06.414096,HOME,,10.0, nan ,social,True,False
+EVT200810,CUST1440,sess102233,2025-08-08 22:09:34.778883,product,add_to_cart,7.0, nan ,social,True,False
+EVT200811,CUST1084,SESS101505,2025-05-04 18:14:47.090986,category,view_page,13.0, nan ,google_ads,False,False
+ EVT200812 ,CUST1401,sess100457,2024-02-01 16:09:33.650528,category,click_product,47.35393529348048,SHOES,organic_search,False,False
+EVT200814,CUST1412,SESS103211,2025-10-06 16:16:00.940792,category, CLICK_PRODUCT ,8.0,,social,False,True
+ EVT200816 ,cust1272,SESS100668,,category,add_to_cart,11.0,,direct,True,False
+evt200817,CUST1305,SESS102332,2025-05-27 17:55:00.100082,category, click_product ,14.0,,social,False,False
+EVT200818,CUST1086,SESS103671,2024-11-22 03:31:24.687019, product ,begin_checkout,8.0,,google_ads,False,False
+evt200820,CUST1148,SESS103247,, home , VIEW_PAGE ,2.0,coffee mug,social,False,False
+EVT200821,CUST1136,sess103747,, home ,,,,social,False,False
+EVT200822,cust1460,SESS101379,2025-05-27 21:19:14.584569,cart,view_page,47.35393529348048,,organic_search,False,False
+ EVT200823 ,CUST1069,SESS104670,2024-03-01 15:58:50.456717,category,,10.0,,nan,False,False
+evt200824,CUST1470,SESS100218,2025-10-06 15:34:00.940792,HOME, click_product ,10.0,,direct,False,False
+NAN,CUST1141,SESS103648,2025-01-28 21:20:09.783511, search_results , view_page ,9.0, headphones ,social,False,False
+EVT200826,CUST1359,SESS103055,2024-04-24 05:35:06.574620, product ,CLICK_PRODUCT,10.0,,email,False,False
+EVT200829,CUST1424,SESS101745,2024-08-31 02:31:56.414212,home, click_product ,2.0,coffee mug,direct,False,False
+EVT200831,CUST1250,SESS104310,2025-04-29 05:08:13.116913,category,view_page,11.0,NAN,social,False,False
+ EVT200832 ,CUST1295,SESS100665,,SEARCH_RESULTS,CLICK_PRODUCT,10.0,t-shirt,organic_search,False,False
+EVT200833,CUST1321,SESS101188,2024-10-15 16:37:12.088373, checkout ,add_to_cart,1.0,laptop,social,True,False
+,CUST1192,SESS102736,2024-01-12 13:59:30.335262, SEARCH_RESULTS ,click_product,6.0, coffee mug ,organic_search,False,False
+ EVT200835 ,CUST1038,SESS100084,2025-08-28 02:31:22.704561,cart,click_product,9.0,,email,False,False
+evt200836,CUST1206,SESS101501,2025-05-07 18:10:32.943835, nan ,view_page,3.0,shoes,direct,False,False
+EVT200838,nan,SESS102765,2025-01-06 03:20:12.458554,PRODUCT,view_page,2.0,,google_ads,False,False
+EVT200839,CUST1232,SESS103571,2025-01-23 11:38:11.821016,search_results,,10.0, nan ,organic_search,False,False
+ EVT200840 ,CUST1167,SESS100557,2025-04-09 20:56:04.876698,,purchase,1.0,laptop,social,False,False
+ EVT200842 ,cust1374,sess102001,2024-04-05 17:55:43.898681,product,add_to_cart,3.0,NAN,organic_search,True,False
+EVT200844,CUST1435,sess104385,2024-12-07 02:21:36.310488,category,view_page,47.35393529348048, NAN ,email,False,False
+EVT200845,CUST1407,SESS102866,2024-03-15 19:13:20.680879, search_results , begin_checkout ,9.0,NAN,google_ads,False,False
+EVT200846,CUST1203,SESS100522,2024-01-08 01:15:13.151999,product,purchase,10.0,,email,False,False
+EVT200847,CUST1495,SESS102560,2025-08-09 17:15:41.849479, home ,remove_from_cart,13.0,,google_ads,False,False
+ EVT200851 ,CUST1172,SESS100612,2024-04-25 08:26:21.042936,category,,9.0,headphones,email,True,False
+EVT200852,CUST1295,SESS101443,2025-10-17 10:42:33.794821,product,view_page,, coffee mug ,social,False,False
+,cust1289,SESS101508,2024-06-23 02:01:39.163316,product,add_to_cart,2.0,coffee mug,email,True,False
+EVT200854,cust1403,SESS101070,2025-03-17 02:58:55.777186,PRODUCT,CLICK_PRODUCT,10.0,t-shirt,google_ads,False,False
+EVT200856,CUST1023,SESS104188,2024-02-26 03:00:31.818874,home,click_product,1.0,headphones,organic_search,False,False
+EVT200857,CUST1320,SESS102847,2025-03-04 07:42:16.321658, cart ,view_page,4.0,shoes,google_ads,False,False
+ EVT200858 ,CUST1008,SESS102799,,search_results,click_product,,coffee mug,social,False,False
+ EVT200859 ,CUST1475,SESS102512,2025-08-02 18:47:11.443029,category, purchase ,9.0,laptop,organic_search,False,False
+EVT200860,CUST1225,SESS102786,2025-04-19 21:24:31.846887, category ,add_to_cart,8.0, t-shirt ,organic_search,True,False
+ EVT200862 ,CUST1103,SESS101977,2025-06-05 13:41:43.611762,category,add_to_cart,7.0, nan ,direct,True,False
+evt200863,CUST1451,SESS103597,2024-06-29 11:47:22.777510, SEARCH_RESULTS ,view_page,3.0,coffee mug,organic_search,False,False
+EVT200864,cust1081,SESS101689,2024-12-28 20:00:42.666959,cart, view_page ,11.0,t-shirt,direct,False,False
+,CUST1190,SESS103059,2024-12-22 23:53:54.793613,category, view_page ,10.0,t-shirt,google_ads,False,False
+EVT200870,cust1371,SESS102064,2025-06-22 14:29:01.095172,category,click_product,10.0,,organic_search,True,False
+,CUST1360,sess100575,2024-03-25 02:29:36.761686,category, view_page ,11.0, nan ,social,False,False
+,CUST1000,sess103073,2024-09-18 18:45:07.475700,product,click_product,11.0,laptop,google_ads,False,False
+EVT200874,CUST1244,SESS100767,2025-07-19 13:44:33.137465,CART,view_page,4.0,coffee mug,email,False,False
+evt200876,CUST1265,SESS104219,, home ,begin_checkout,8.0,,social,False,True
+evt200878,CUST1356,SESS102264,2025-03-17 03:28:55.777186,product,view_page,14.0,,google_ads,False,True
+,CUST1418,SESS103097,2024-02-22 20:12:31.448464,home,remove_from_cart,6.0,,direct,False,False
+EVT200882,cust1244,SESS103669,,product,view_page,,laptop,email,False,False
+evt200883,CUST1117,SESS101210,2024-08-15 13:56:26.298546,product,add_to_cart,47.35393529348048, NAN ,nan,True,False
+,CUST1327,SESS102244,2024-04-16 21:37:09.012779,category, begin_checkout ,10.0,laptop,social,False,True
+EVT200887,CUST1070,SESS100524,2024-10-20 06:02:09.168243,category,view_page,8.0,SHOES,google_ads,False,False
+EVT200888,CUST1396,SESS102007,2024-10-26 17:56:48.580838,product,view_page,12.0,headphones,social,False,False
+EVT200890,CUST1035,SESS104549,,, add_to_cart ,12.0, nan ,direct,True,False
+evt200892,CUST1312,SESS103293,,product,view_page,9.0,laptop,google_ads,False,False
+EVT200893,CUST1225,SESS101525,,home,view_page,5.0,headphones,social,False,False
+EVT200894,CUST1369,SESS102109,2024-10-08 02:06:44.208879,category,view_page,5.0,NAN,email,False,False
+EVT200896,CUST1470,SESS103719,2024-11-29 07:38:17.046197,search_results,NAN,11.0,,organic_search,False,False
+EVT200898,CUST1440,SESS100388,2024-04-23 08:08:06.255493,,view_page,2.0,,nan,False,False
+,CUST1044,SESS103575,2025-05-25 22:18:50.378750,,add_to_cart,8.0,HEADPHONES,organic_search,True,False
+ EVT200900 ,CUST1071,SESS100209,2025-01-26 13:58:11.108970,product,add_to_cart,4.0,SHOES,direct,True,False
+EVT200901,CUST1301,SESS100688,,cart,begin_checkout,12.0,shoes,social,False,False
+evt200903,cust1161,SESS104784,,category,NAN,5.0, LAPTOP ,email,False,False
+EVT200904,CUST1126,sess100563,,home,remove_from_cart,10.0,coffee mug,social,False,False
+EVT200905,CUST1330,SESS103737,,category,VIEW_PAGE,5.0,coffee mug,email,False,False
+EVT200906,CUST1127,SESS103281,2024-10-25 14:26:26.353804,home,click_product,,shoes,social,False,False
+EVT200907,cust1307,SESS102881,2025-05-06 00:54:09.992543,product,ADD_TO_CART,9.0,laptop,organic_search,True,False
+EVT200910,CUST1105,SESS104051,2025-08-07 20:01:36.594667,home,CLICK_PRODUCT,11.0,t-shirt,google_ads,False,False
+ EVT200913 ,CUST1151,SESS102590,2025-09-16 20:42:36.587971,search_results,view_page,2.0,,social,False,False
+ EVT200915 ,CUST1253,SESS102894,,CHECKOUT,,,shoes,email,False,False
+EVT200917,CUST1255,SESS100088,2024-06-29 02:40:08.974197, category , purchase ,12.0,,social,False,False
+,CUST1270,SESS104747,,category,begin_checkout,2.0,laptop,social,False,False
+EVT200919,CUST1184,SESS103370,2025-02-08 15:39:26.642719, search_results ,,10.0,,google_ads,True,False
+EVT200921,CUST1440,sess101418,, search_results ,view_page,,t-shirt,organic_search,False,False
+EVT200923,CUST1279,SESS104675,2025-03-31 13:44:42.353654, checkout ,view_page,11.0,,organic_search,False,False
+ EVT200924 ,CUST1390,SESS102265,,CATEGORY,view_page,13.0,,email,False,False
+EVT200926,CUST1008,sess101702,2024-01-28 20:43:56.496784, search_results ,view_page,1.0,coffee mug,social,False,False
+EVT200927,CUST1007,SESS100322,2025-05-25 20:17:28.486011,product, view_page ,7.0,,google_ads,False,False
+EVT200930,CUST1485,SESS104006,,product,click_product,8.0,headphones,email,False,True
+EVT200931,cust1259,SESS101036,2024-06-27 07:24:57.366728,category, view_page ,4.0,SHOES,social,False,False
+EVT200932,CUST1321,SESS104533,2024-03-24 07:59:07.429622,PRODUCT,purchase,,t-shirt,social,False,False
+EVT200933,cust1392,SESS100484,2024-10-20 10:57:25.747128, product , view_page ,1.0,shoes,organic_search,False,False
+EVT200934,cust1216,SESS103371,,search_results,add_to_cart,7.0, nan ,social,True,False
+ EVT200935 ,CUST1042,SESS101702,,category,,,,social,False,False
+EVT200937,CUST1142,sess100730,2025-10-10 16:23:53.379872,category, PURCHASE ,,NAN,direct,False,False
+EVT200938,CUST1158,sess103837,2024-12-14 13:56:47.729657,product,VIEW_PAGE,,,nan,False,False
+EVT200941,CUST1274,SESS102693,2024-05-27 03:53:19.336860, category ,purchase,14.0,headphones,direct,False,False
+EVT200942,CUST1200,SESS104335,2025-06-20 08:39:14.053577,product,view_page,5.0,T-SHIRT,direct,False,False
+EVT200944,CUST1373,SESS100948,2024-07-21 23:21:29.878821,category, purchase ,11.0,,google_ads,False,False
+EVT200945,CUST1029,SESS101634,2024-01-15 12:52:15.115311,search_results,view_page,1.0, nan ,organic_search,False,False
+EVT200946,CUST1044,SESS104245,2025-06-22 01:09:15.162507,SEARCH_RESULTS,view_page,9.0, laptop ,social,False,False
+evt200948,CUST1313,SESS100354,2024-03-24 22:00:55.723597,PRODUCT,VIEW_PAGE,9.0, laptop ,google_ads,False,False
+EVT200950,CUST1061,SESS102423,2024-12-01 01:11:43.304493,cart,view_page,,,direct,False,False
+EVT200951,cust1362,SESS101565,2024-07-05 08:40:37.155354,product,purchase,4.0,shoes,direct,False,False
+EVT200954,CUST1487,sess100054,,search_results,view_page,,laptop,email,False,False
+EVT200955,CUST1267,SESS103337,,product,view_page,3.0, nan ,google_ads,False,False
+ EVT200958 ,CUST1064,SESS100593,2024-01-07 18:56:24.219982,search_results,CLICK_PRODUCT,7.0,laptop,email,False,False
+EVT200959,CUST1375,SESS104001,2024-10-29 08:49:56.336459,category,purchase,11.0,coffee mug,email,False,False
+ EVT200962 ,cust1139,SESS104954,2024-08-08 03:20:28.003809,product, nan ,6.0,,social,False,False
+EVT200963,CUST1032,sess100269,2025-03-21 10:55:23.846584,category,view_page,5.0,,google_ads,False,True
+ EVT200965 ,CUST1321,SESS103617,, search_results ,purchase,3.0,NAN,organic_search,False,False
+,CUST1254,sess104210,,category,begin_checkout,4.0,,email,False,False
+EVT200967,CUST1261,SESS102782,,category, view_page ,9.0,headphones,social,False,False
+ EVT200968 ,CUST1028,SESS103464,,product, purchase ,13.0,laptop,direct,False,False
+NAN,CUST1439,SESS103204,2025-10-11 04:12:11.600220,CATEGORY,view_page,,NAN,google_ads,False,False
+ EVT200970 ,CUST1085,SESS102026,2024-01-18 09:21:31.714602,home,view_page,11.0, nan ,email,True,False
+EVT200971,CUST1080,SESS103851,2024-10-12 14:50:02.265049,SEARCH_RESULTS,VIEW_PAGE,6.0,,google_ads,False,False
+EVT200972,CUST1395,SESS102554,2025-02-20 21:59:54.852637,cart, add_to_cart ,7.0, nan ,email,True,False
+ EVT200974 ,CUST1345,SESS100708,2025-06-21 11:48:00.487562,product,remove_from_cart,2.0,shoes,email,False,False
+,CUST1355,SESS102971,2025-06-05 13:20:43.611762, cart ,BEGIN_CHECKOUT,9.0,,social,False,False
+EVT200976,CUST1001,SESS102472,2025-04-26 21:54:13.655246, cart ,purchase,11.0,laptop,email,False,False
+EVT200977,CUST1439,SESS103511,,product,click_product,47.35393529348048,NAN,email,False,False
+ EVT200979 ,CUST1241,SESS103152,2025-03-26 05:24:34.672321,search_results,add_to_cart,13.0,,email,True,False
+EVT200980,NAN,SESS104637,2024-03-23 20:05:55.960329,home,view_page,7.0,NAN,direct,False,False
+EVT200981,CUST1091,SESS102417,,product,begin_checkout,4.0,,direct,False,False
+EVT200982,cust1283,sess103739,2025-01-09 23:17:22.931018, category ,add_to_cart,2.0,coffee mug,social,True,False
+evt200985,CUST1468,SESS102299,2025-04-28 05:54:21.974577,PRODUCT,CLICK_PRODUCT,5.0,,social,False,False
+EVT200987,CUST1292,sess102021,,cart,CLICK_PRODUCT,12.0, laptop ,social,False,False
+ EVT200989 ,CUST1344,SESS103087,2024-02-04 01:05:20.311913,home,view_page,14.0,,direct,False,False
+EVT200991,CUST1411,SESS102938,2025-10-26 16:42:43.972664,category,click_product,6.0,t-shirt,organic_search,False,False
+ EVT200992 ,CUST1023,SESS102065,2025-06-06 05:53:12.881412,category,CLICK_PRODUCT,10.0,,social,False,False
+EVT200993,CUST1035,SESS101554,2024-04-26 18:00:27.558533, home ,purchase,11.0, SHOES ,google_ads,False,False
+EVT200994,CUST1443,SESS101875,2024-03-12 04:21:51.571886, checkout ,CLICK_PRODUCT,1.0,,social,False,False
+EVT200996,CUST1167,SESS101345,2024-09-09 14:46:02.429868,product, view_page ,12.0,,social,False,False
+EVT200997,CUST1283,SESS103167,2024-04-29 03:39:25.599625, home ,view_page,4.0, nan ,email,True,False
+EVT200998,CUST1004,SESS104400,2025-01-06 03:42:12.458554, product ,begin_checkout,13.0, nan ,google_ads,False,False
+EVT201000,CUST1288,SESS102068,,CHECKOUT,PURCHASE,8.0,coffee mug,google_ads,False,False
+EVT201002,CUST1237,SESS104207,2024-07-10 02:38:17.474492,cart,add_to_cart,1.0,,social,True,False
+ nan ,CUST1389,SESS104374,2024-04-19 15:25:11.300329,product, remove_from_cart ,7.0,t-shirt,organic_search,False,False
+ EVT201007 ,CUST1077,sess103304,2024-04-06 05:19:54.333648,SEARCH_RESULTS,PURCHASE,7.0,t-shirt,email,False,False
+EVT201008,cust1477,SESS101825,,category, add_to_cart ,7.0,coffee mug,organic_search,True,False
+EVT201009,CUST1012,SESS100766,2025-07-23 03:02:33.662875,product, add_to_cart ,7.0,,social,True,False
+EVT201010,CUST1277,SESS100023,2024-05-18 10:32:20.687011, category , add_to_cart ,3.0,coffee mug,google_ads,True,False
+ EVT201012 ,CUST1486,SESS104862,2025-07-14 14:26:48.071491,,view_page,10.0, nan ,social,False,False
+evt201013,CUST1000,SESS101209,,category,view_page,12.0,,organic_search,False,False
+EVT201014,CUST1434,SESS100240,,category,,2.0,,direct,False,False
+EVT201015,CUST1053,sess104251,, checkout , click_product ,7.0,,email,False,False
+EVT201016,CUST1271,SESS100142,,product,add_to_cart,1.0,,social,True,False
+EVT201020,CUST1364,SESS101093,,cart, add_to_cart ,5.0,t-shirt,social,True,False
+evt201023,CUST1459,SESS101017,2025-04-24 02:44:57.736045,category,view_page,5.0,,google_ads,False,False
+EVT201024,cust1211,SESS100620,2025-03-29 05:33:19.442489,,view_page,8.0,,direct,False,False
+EVT201025,CUST1234,SESS101799,2025-09-22 09:02:25.372734,home,CLICK_PRODUCT,4.0,SHOES,email,False,False
+ EVT201026 ,CUST1297,sess102364,2025-05-27 22:24:14.584569,product, purchase ,7.0,,social,False,False
+EVT201027,CUST1258,SESS101008,2024-05-20 23:54:29.502955,product,view_page,11.0,,social,False,False
+,CUST1326,SESS101034,2025-06-07 21:13:33.178780,,view_page,13.0, nan ,social,False,False
+EVT201030,CUST1031,sess102466,,cart,click_product,14.0,laptop,social,False,False
+ EVT201032 ,CUST1121,SESS100076,2025-09-07 13:03:23.980509,home,add_to_cart,12.0,,email,True,False
+EVT201035,CUST1358,SESS101423,2025-05-01 15:26:37.029350,home,add_to_cart,3.0,,email,True,False
+ evt201036 ,CUST1162,SESS102303,2025-07-28 16:08:50.871262,product,view_page,10.0,,email,False,False
+EVT201037,CUST1139,SESS103326,2024-12-28 14:39:23.592969,home,view_page,13.0,,social,False,False
+EVT201040,cust1055,sess104463,2024-12-19 19:56:05.068996,SEARCH_RESULTS,add_to_cart,6.0,laptop,social,True,False
+EVT201042,CUST1230,SESS104482,2024-04-27 16:00:22.167713,category, view_page ,14.0,shoes,social,False,False
+EVT201046,CUST1231,SESS100326,2024-11-24 19:22:46.719805,product,,7.0,,organic_search,False,False
+EVT201047,CUST1237,SESS104015,2025-06-23 21:03:01.702164,cart, add_to_cart ,3.0,headphones,organic_search,True,False
+EVT201049,CUST1046,sess100647,,CATEGORY,view_page,3.0, NAN ,social,False,False
+ EVT201050 ,CUST1413,sess104218,2024-03-09 22:50:49.753942,category,view_page,13.0,,organic_search,False,False
+ EVT201051 ,CUST1423,SESS101657,2024-12-05 23:17:38.721250,home,remove_from_cart,2.0,,email,False,False
+EVT201052,CUST1110,SESS100976,2025-06-17 15:11:40.035005, product ,view_page,7.0, nan ,social,False,False
+EVT201053,CUST1075,SESS102324,2024-02-03 04:44:47.108206,search_results,begin_checkout,,,direct,False,False
+NAN,CUST1364,sess103590,2025-07-22 14:33:36.076317, cart ,,10.0,,organic_search,False,False
+ EVT201056 ,CUST1202,SESS100617,2025-04-07 04:35:53.934458,product, nan ,2.0, nan ,social,True,False
+EVT201058,CUST1133,SESS102673,, product ,click_product,9.0,,email,False,False
+EVT201059,CUST1015,sess101634,2024-10-20 13:12:07.255015,product,add_to_cart,12.0,t-shirt,email,True,False
+EVT201060,CUST1437,SESS102550,2025-01-03 07:20:42.915352,category,view_page,7.0,shoes,google_ads,False,False
+EVT201061,CUST1284,SESS103764,2024-07-07 18:19:34.891016,home,add_to_cart,11.0,headphones,direct,True,False
+EVT201063,CUST1236,SESS102022,,home,view_page,8.0,,google_ads,False,False
+,CUST1411,SESS103438,2024-02-21 07:06:17.606525,PRODUCT,view_page,14.0,,social,False,False
+,CUST1031,SESS102077,2025-09-06 19:24:09.105209, CART ,click_product,11.0,,organic_search,False,False
+evt201070,CUST1298,SESS104652,2024-09-15 20:21:58.722575,home, remove_from_cart ,10.0,NAN,direct,False,False
+,CUST1011,SESS101041,,product,add_to_cart,13.0,NAN,google_ads,True,False
+EVT201073,CUST1101,SESS100234,2024-08-15 07:33:11.168535,HOME,click_product,8.0, COFFEE MUG ,direct,False,False
+ EVT201074 ,CUST1414,sess100055,,product,view_page,10.0,,social,False,False
+EVT201075,CUST1047,SESS102103,2025-02-25 23:25:53.501804, category , add_to_cart ,5.0, NAN ,email,True,False
+EVT200891,cust1288,sess103715,, category ,add_to_cart,9.0,laptop,google_ads,True,False
+evt201078,CUST1025,SESS103822,,product,add_to_cart,47.35393529348048,,google_ads,True,False
+EVT201079,CUST1473,sess102640,2024-09-10 21:29:49.671020,product,view_page,11.0,laptop,organic_search,False,False
+EVT201080,CUST1221,SESS102420,,product, view_page ,11.0,NAN,social,False,False
+EVT201081,CUST1254,SESS100227,2024-05-13 17:42:52.417817,product,view_page,10.0,,email,False,False
+EVT201084,CUST1109,SESS104289,2024-06-10 12:38:52.852955,category,view_page,12.0,,direct,False,False
+,CUST1140,SESS102002,2024-12-18 05:49:13.249918,category,begin_checkout,5.0,,google_ads,False,False
+EVT201086,cust1228,SESS101365,2024-12-13 20:06:53.345845, home , add_to_cart ,8.0,,social,True,False
+EVT201087,CUST1017,SESS103032,2025-01-13 23:47:17.014279,SEARCH_RESULTS,view_page,3.0,headphones,direct,False,False
+EVT201088,CUST1331,SESS103261,2024-12-16 05:41:04.877065,product,click_product,12.0,shoes,google_ads,False,False
+EVT201089,CUST1255,SESS103625,2024-11-29 09:14:17.046197,category, view_page ,6.0,,social,False,False
+EVT201090,CUST1451,SESS100438,2025-04-28 17:00:20.410737,SEARCH_RESULTS,add_to_cart,4.0,NAN,email,True,False
+EVT201092,cust1044,SESS103972,2025-03-29 21:46:38.650244,category,CLICK_PRODUCT,,SHOES,organic_search,False,False
+EVT201093,CUST1196,SESS104202,2024-07-05 08:11:37.155354,category, click_product ,3.0,headphones,google_ads,False,False
+ EVT201094 ,CUST1214,sess102327,2025-04-01 19:26:38.895978,product,add_to_cart,2.0,,email,True,True
+EVT201095,CUST1329,SESS104543,2024-11-21 09:35:31.931652,home,click_product,7.0,NAN,social,False,False
+EVT201096,CUST1127,SESS103894,2024-09-11 08:33:27.546081,category,click_product,10.0,,email,False,False
+EVT201097,CUST1406,SESS102200,2024-04-13 11:00:19.372430, category ,view_page,10.0, nan ,direct,False,False
+EVT201098,CUST1195,SESS104860,2024-11-30 19:17:22.834617,product,VIEW_PAGE,11.0, laptop ,google_ads,False,False
+EVT201099,cust1245,sess104846,,search_results, view_page ,8.0, nan ,organic_search,False,False
+ EVT201102 ,CUST1257,SESS102261,2025-10-19 20:26:21.642360,home,purchase,2.0,,organic_search,False,False
+EVT201103,CUST1198,SESS103336,2024-10-26 08:57:53.465707, home ,PURCHASE,8.0,coffee mug,organic_search,False,False
+EVT201105,CUST1163,SESS100016,,category,begin_checkout,9.0,laptop,organic_search,False,False
+ EVT201106 ,cust1015,SESS103627,2025-01-24 14:05:46.137692,product,begin_checkout,14.0, coffee mug ,social,False,True
+EVT201107,CUST1029,SESS101713,, nan ,CLICK_PRODUCT,1.0,,organic_search,True,False
+EVT201108,CUST1271,SESS103179,2024-05-27 16:59:28.280664,product, click_product ,2.0,laptop,social,False,False
+EVT201111,CUST1051,SESS100743,2025-02-06 17:04:45.498237, home , nan ,9.0,,social,False,False
+EVT201114,CUST1417,SESS100638,2024-01-19 22:51:06.438660, product ,view_page,10.0,,organic_search,False,False
+EVT201115,CUST1391,SESS102226,2025-08-20 13:38:11.749927,product, add_to_cart ,5.0,coffee mug,google_ads,True,False
+EVT201116,CUST1294,sess100835,2024-01-20 12:45:37.665449,category, add_to_cart ,9.0,t-shirt,direct,True,False
+EVT201117,cust1181,SESS104049,2025-05-14 13:05:12.912947,search_results, PURCHASE ,1.0,laptop,google_ads,False,True
+EVT201118,CUST1090,SESS102466,2024-04-04 20:29:19.077785,home,VIEW_PAGE,,headphones,direct,False,False
+EVT201119,CUST1303,SESS102269,2024-01-23 00:58:08.518796,product,begin_checkout,5.0,headphones,social,False,True
+EVT201120,cust1412,SESS101075,2025-08-04 12:00:12.972219,category,view_page,6.0,t-shirt,direct,False,True
+EVT201121,CUST1467,SESS101420,2025-02-27 11:33:29.617453,product,remove_from_cart,4.0,NAN,social,False,False
+evt201123,CUST1485,SESS100017,2025-08-06 08:38:49.951991, NAN ,ADD_TO_CART,1.0,,social,True,False
+ EVT200483 ,CUST1287,SESS101731,,product, nan ,5.0,,google_ads,False,False
+ EVT201126 ,CUST1428,SESS102431,2024-04-30 09:02:02.438363,category, purchase ,13.0,NAN,google_ads,False,False
+ evt201128 ,CUST1089,SESS100604,2025-07-02 02:42:54.095809,product,click_product,2.0,,email,False,False
+EVT201129,CUST1019,sess104909,2025-04-14 21:32:33.779251,checkout, click_product ,14.0,NAN,email,False,False
+EVT201131,CUST1308,SESS101663,2025-01-08 01:29:58.358229,HOME,view_page,,coffee mug,organic_search,False,False
+EVT201132,CUST1010,SESS103749,2024-01-20 23:02:52.697440,,purchase,3.0,coffee mug,organic_search,False,False
+ EVT201133 ,CUST1244,SESS101814,2025-06-07 18:33:07.715508,search_results, add_to_cart ,5.0,shoes,direct,True,False
+NAN,cust1174,sess101349,2024-02-11 06:45:38.296650,product,,11.0,,email,False,False
+EVT201137,CUST1470,SESS103487,,search_results,PURCHASE,4.0,t-shirt,social,False,False
+EVT201138,CUST1030,SESS102444,2024-10-28 07:16:20.855211,CATEGORY,view_page,14.0,NAN,social,False,False
+EVT201139,CUST1075,SESS103302,2024-07-10 16:07:33.406546,search_results,ADD_TO_CART,8.0, headphones ,direct,True,False
+evt201140,cust1396,SESS100931,2024-01-11 15:05:52.431309,CATEGORY,purchase,11.0,coffee mug,organic_search,False,False
+,cust1491,SESS100321,,search_results,view_page,7.0,,social,False,False
+EVT201144,CUST1191,SESS104052,2025-02-09 16:31:50.365356,category, add_to_cart ,11.0,laptop,direct,True,False
+EVT201146,CUST1172,SESS100693,2024-06-29 12:07:22.777510,, view_page ,47.35393529348048,,social,False,False
+EVT200049,CUST1376,SESS103546,2024-08-29 01:08:49.561853,product,purchase,10.0,coffee mug,direct,False,False
+EVT201148,cust1499,SESS103472,2025-07-14 21:20:51.783322,home,click_product,12.0, nan ,social,False,False
+evt201151,CUST1332,SESS102313,,PRODUCT,view_page,6.0,COFFEE MUG,organic_search,False,False
+ EVT201153 ,CUST1355,sess102448,, cart ,view_page,3.0,,social,False,False
+ EVT201154 ,CUST1114,SESS102072,2025-09-10 11:38:15.853192,home,VIEW_PAGE,,,social,False,False
+EVT201156,CUST1375,SESS100262,2025-03-18 09:47:00.556802, category ,add_to_cart,6.0, nan ,google_ads,True,False
+EVT201157,CUST1065,SESS102019,2024-02-11 08:20:38.296650,product, view_page ,10.0, coffee mug ,email,False,False
+EVT201160,CUST1200,sess103671,,search_results,ADD_TO_CART,13.0,,social,True,False
+EVT201161,CUST1016,SESS102349,2024-04-16 21:57:09.012779, CHECKOUT ,view_page,3.0,,social,False,False
+ EVT201162 ,CUST1308,SESS102672,2024-01-23 01:17:08.518796, cart ,purchase,7.0,,social,False,False
+EVT201164,CUST1327,SESS100421,, category ,click_product,13.0,shoes,social,False,False
+EVT201165,CUST1053,SESS100721,2025-09-18 22:43:53.251133,product,view_page,13.0,,google_ads,False,False
+EVT201166,CUST1072,SESS102719,2025-05-02 11:39:48.995099,category,begin_checkout,1.0,,email,False,False
+EVT201168,CUST1121,SESS101582,2025-08-08 16:09:28.624279,product,view_page,13.0,,nan,False,False
+EVT201169,CUST1163,SESS104787,,search_results, view_page ,3.0,,social,False,False
+ nan ,CUST1325,sess102728,, product ,view_page,6.0,,organic_search,False,False
+ EVT201171 ,CUST1420,SESS101481,2024-04-19 15:13:16.821986,product,click_product,5.0,HEADPHONES,nan,False,False
+ EVT201172 ,cust1228,SESS100949,2024-08-29 18:37:55.753050,, view_page ,10.0,shoes,organic_search,False,False
+EVT201173,CUST1135,sess104511,2024-11-26 11:38:20.532974,product,VIEW_PAGE,9.0,,google_ads,False,False
+,CUST1402,sess103421,2025-10-07 07:30:13.049412,search_results,CLICK_PRODUCT,,,direct,False,False
+ EVT201177 ,CUST1368,SESS103061,2024-05-16 11:23:17.564882, search_results ,click_product,5.0,coffee mug,social,False,False
+EVT201178,CUST1024,SESS103251,,search_results, view_page ,,,social,False,False
+EVT201179,CUST1224,SESS100607,,,view_page,3.0, shoes ,direct,False,False
+EVT201180,cust1496,SESS101682,,category,view_page,7.0,,direct,False,False
+evt201181,CUST1452,SESS103452,,home,,10.0,,organic_search,False,False
+EVT201182,CUST1252,SESS101863,2024-02-10 04:42:54.252593,home, ADD_TO_CART ,4.0,coffee mug,social,True,False
+ EVT201183 ,CUST1179,SESS101439,2025-06-28 04:35:51.949203,product,add_to_cart,,headphones,google_ads,True,False
+EVT201185,CUST1424,SESS100224,2025-02-05 06:09:24.589312,checkout, view_page ,9.0, headphones ,social,False,False
+NAN,CUST1333,SESS102859,2024-05-07 16:30:46.180787, home , click_product ,6.0, nan ,direct,False,False
+EVT201188,CUST1083,SESS100601,2025-06-11 00:46:43.959494,search_results,,11.0, NAN ,organic_search,False,False
+EVT201190,CUST1150,sess104375,,product,add_to_cart,13.0,NAN,google_ads,True,False
+EVT201191,CUST1163,SESS104760,2024-03-25 04:31:03.516173,product, VIEW_PAGE ,1.0,,direct,False,False
+EVT201192,CUST1487,SESS102063,2025-08-03 12:45:59.149360,category,click_product,4.0,laptop,direct,False,False
+EVT201193,CUST1037,SESS104444,2025-10-20 21:41:59.418022,cart,add_to_cart,12.0,,social,True,False
+,CUST1082,SESS100296,, product , click_product ,11.0,coffee mug,google_ads,False,False
+,CUST1155,SESS100184,2025-07-23 02:30:16.919704,category,begin_checkout,6.0,,organic_search,False,True
+EVT201197,CUST1173,SESS104362,2024-10-01 21:28:29.776819,, view_page ,11.0,headphones,social,False,False
+EVT201198,CUST1360,SESS103722,,product,click_product,10.0,shoes,google_ads,False,False
+ EVT201200 ,NAN,SESS104479,2025-06-21 23:53:15.162507, product ,click_product,14.0, laptop ,direct,False,False
+EVT201201,CUST1080,SESS103641,,category, VIEW_PAGE ,14.0,coffee mug,google_ads,False,False
+EVT201202,CUST1051,SESS100885,2025-05-02 11:35:48.995099,category, view_page ,6.0,coffee mug,social,False,False
+ EVT200111 ,CUST1332,SESS103205,2024-05-09 02:30:22.089586,category,PURCHASE,13.0,headphones,email,False,False
+EVT201204,CUST1209,SESS104546,,product,add_to_cart,,,direct,True,True
+ EVT201205 ,cust1369,SESS103001,2025-06-20 18:22:05.520636,search_results, purchase ,12.0,headphones,organic_search,False,False
+ EVT201206 ,cust1135,SESS101748,,product, remove_from_cart ,47.35393529348048,,social,False,False
+EVT201207,CUST1152,SESS103090,,home,add_to_cart,5.0,,social,True,False
+ EVT201208 ,CUST1049,SESS101872,,,click_product,9.0,coffee mug,social,False,False
+EVT201209,CUST1201,SESS101374,2025-01-21 15:17:23.450026,product,view_page,11.0,,social,False,False
+EVT201210,CUST1281,SESS100247,2025-10-03 18:56:34.239028,category,view_page,47.35393529348048,shoes,social,False,False
+evt201214,CUST1150,SESS100722,2024-09-25 00:29:35.567974,search_results,view_page,12.0,t-shirt,organic_search,False,False
+EVT201215,CUST1102,SESS103333,2025-07-02 22:00:10.070185,checkout,begin_checkout,6.0,laptop,social,False,False
+EVT201216,CUST1013,SESS103301,2024-02-01 14:57:33.650528,product,,2.0,laptop,social,True,False
+EVT201217,CUST1087,sess103345,,product,NAN,14.0,shoes,social,False,False
+ EVT201218 ,CUST1041,SESS102375,2024-12-08 14:08:57.230119,cart, view_page ,8.0, nan ,organic_search,False,False
+EVT201220,CUST1157,SESS100684,2025-03-20 01:30:40.497065,CATEGORY, add_to_cart ,12.0,,google_ads,True,False
+EVT201223,CUST1046,SESS100717,2025-05-20 21:58:17.292879, PRODUCT ,purchase,, shoes ,social,False,False
+ evt201224 ,nan,SESS100290,,,VIEW_PAGE,4.0, laptop ,organic_search,False,True
+EVT201225,CUST1189,SESS101237,,product,view_page,7.0,laptop,organic_search,False,False
+EVT201226,CUST1189,SESS103808,2024-09-17 23:18:03.709928,search_results,view_page,1.0,coffee mug,google_ads,False,False
+EVT201227,CUST1228,SESS100463,2025-02-18 13:59:05.320506,product,remove_from_cart,12.0,,social,False,False
+EVT201231,CUST1288,SESS101250,2024-01-04 07:13:02.382362,product,view_page,2.0, laptop ,email,False,False
+EVT201234,CUST1413,SESS103543,2025-08-28 05:54:34.745586, category ,NAN,, nan ,social,True,False
+EVT201235,CUST1211,SESS103236,2025-08-01 13:46:36.211966,category,click_product,14.0,,direct,False,False
+evt201236,CUST1283,SESS104351,,home,view_page,13.0,,google_ads,False,False
+EVT201241,CUST1293,SESS103365,2024-09-14 05:23:04.451444,CATEGORY,add_to_cart,, coffee mug ,email,True,False
+EVT201243,CUST1040,SESS100610,2024-05-10 21:44:19.525604,home,view_page,2.0,headphones,email,False,False
+EVT201244,CUST1462,SESS103987,2024-02-16 10:20:08.365641,category,view_page,2.0,t-shirt,google_ads,False,False
+EVT201245,CUST1257,SESS102082,2024-02-20 15:29:10.501654,search_results,view_page,14.0, nan ,social,True,False
+EVT201246,CUST1461,SESS102775,2024-09-05 03:14:45.030155,product,purchase,10.0,NAN,social,False,False
+EVT201247,CUST1409,SESS103674,2025-01-21 14:51:23.450026,product, add_to_cart ,6.0,shoes,google_ads,True,False
+EVT201248,CUST1346,SESS102565,2024-05-06 15:27:21.884411,category,add_to_cart,10.0, t-shirt ,social,True,False
+ EVT201250 ,CUST1088,SESS100987,,search_results,view_page,14.0,coffee mug,social,False,False
+EVT201251,CUST1497,sess102588,,category,view_page,13.0,,direct,False,False
+EVT201253,CUST1064,SESS103384,2025-08-28 23:51:04.355730, cart ,click_product,6.0,,google_ads,False,False
+EVT201255,CUST1349,SESS103996,2024-07-08 23:54:07.255538,product,begin_checkout,1.0,HEADPHONES,google_ads,False,True
+EVT201256,CUST1103,SESS101869,2024-07-07 19:00:05.019752,category,purchase,47.35393529348048, nan ,email,False,False
+EVT201257,CUST1427,sess100082,2024-06-08 02:30:32.020263,cart,click_product,3.0,laptop,google_ads,False,False
+EVT201258,CUST1163,SESS104620,2025-03-01 15:19:39.588243,product,click_product,8.0,laptop,social,False,False
+,CUST1044,SESS101552,,home, view_page ,47.35393529348048,,direct,False,False
+EVT201263,CUST1266,sess103939,2024-04-05 16:33:43.898681,home,click_product,6.0,NAN,social,False,False
+EVT201265,CUST1402,sess100425,,PRODUCT,remove_from_cart,3.0,NAN,direct,False,False
+EVT201266,CUST1400,SESS100043,2024-08-28 12:06:56.462572,search_results,view_page,3.0,,google_ads,False,False
+EVT201267,CUST1057,SESS100147,,home,CLICK_PRODUCT,11.0, coffee mug ,social,False,False
+EVT201268,CUST1076,SESS102939,2024-06-28 04:50:04.727016,search_results,view_page,5.0,t-shirt,organic_search,False,False
+,cust1388,SESS101308,,product, view_page ,9.0,,social,False,False
+EVT201271,CUST1473,SESS101633,2025-03-24 09:06:38.389798, category , NAN ,47.35393529348048,NAN,direct,False,False
+EVT201272,CUST1288,SESS104380,,product,remove_from_cart,6.0, headphones ,direct,False,False
+ evt201275 ,CUST1450,SESS100965,2024-07-11 02:14:41.008071,home,view_page,3.0,coffee mug,email,False,False
+EVT201276,CUST1449,sess100969,2025-04-12 06:16:39.876775,product,begin_checkout,12.0,coffee mug,google_ads,False,False
+,cust1135,SESS101658,2024-08-15 13:23:26.298546,,view_page,9.0,,direct,False,False
+EVT201278,CUST1335,sess102815,2024-06-19 15:38:35.704201,checkout, add_to_cart ,4.0, COFFEE MUG ,direct,True,False
+NAN,CUST1091,SESS104153,2025-10-25 19:02:27.078155,product,begin_checkout,,coffee mug,direct,False,True
+evt201283,CUST1019,SESS103015,, product ,view_page,4.0,NAN,social,False,False
+EVT201284,CUST1455,SESS103702,,cart,purchase,14.0,,social,False,False
+ nan ,CUST1353,SESS103372,,product, nan ,11.0,t-shirt,social,False,False
+EVT201286,CUST1025,SESS102250,2025-06-24 13:47:33.113405,search_results,view_page,12.0,,organic_search,False,False
+EVT201287,CUST1471,SESS104832,2024-01-07 18:13:24.219982,category,click_product,1.0, nan ,google_ads,False,False
+EVT200730,CUST1331,sess101307,,SEARCH_RESULTS,CLICK_PRODUCT,6.0,LAPTOP,google_ads,False,False
+evt201290,CUST1418,SESS100822,, search_results ,CLICK_PRODUCT,1.0,,direct,False,False
+EVT201292,cust1431,sess103885,2025-07-06 06:17:45.169103,category,purchase,4.0,NAN,direct,False,False
+EVT201293,CUST1439,SESS103934,,category,remove_from_cart,3.0,,social,False,False
+EVT201294,CUST1497,SESS101747,2024-08-16 10:56:26.341487,home,begin_checkout,47.35393529348048,headphones,email,False,False
+evt201295,CUST1068,SESS100208,2025-06-03 04:35:59.404847,search_results,view_page,13.0,,social,False,False
+EVT201298,cust1137,SESS103467,2025-01-27 07:36:32.157980,cart,click_product,3.0,,social,False,False
+EVT200848,CUST1422,SESS104489,2025-10-13 07:33:08.571951,CATEGORY, view_page ,1.0,t-shirt,email,True,False
+EVT201300,CUST1096,SESS100802,,category, view_page ,, shoes ,organic_search,True,False
+EVT201301,cust1108,SESS104719,2024-02-16 10:12:59.244413,product, view_page ,7.0,coffee mug,social,False,False
+EVT201302,CUST1379,SESS101418,2025-04-06 05:24:26.191002,,,5.0,,organic_search,True,False
+EVT201304,CUST1444,SESS101711,,product,click_product,12.0,HEADPHONES,direct,False,False
+ EVT201305 ,CUST1420,SESS100287,,category,view_page,10.0,coffee mug,direct,False,False
+EVT201306,CUST1263,SESS102205,2025-05-02 10:12:08.699498,CART,VIEW_PAGE,14.0,laptop,email,False,False
+EVT201308,CUST1363,SESS104265,,cart,click_product,13.0,,email,False,False
+EVT201309,CUST1206,SESS101286,,checkout,view_page,6.0,,google_ads,False,False
+EVT201310,CUST1399,SESS103164,2024-07-09 20:44:18.363755, category ,add_to_cart,12.0,,social,True,False
+EVT201311,CUST1450,SESS104674,2025-04-08 04:30:56.823278,search_results,VIEW_PAGE,9.0, NAN ,direct,False,False
+ EVT201312 ,CUST1014,SESS102991,2025-05-14 13:11:12.912947,product, purchase ,3.0,,direct,False,False
+,CUST1428,SESS101621,2025-04-23 22:40:00.783418,product, remove_from_cart ,5.0,,google_ads,False,False
+ EVT201315 ,CUST1127,SESS102166,,HOME,remove_from_cart,5.0,headphones,social,False,False
+EVT201316,CUST1233,SESS103392,,cart,view_page,3.0,laptop,social,False,False
+evt201317,CUST1470,SESS101645,2025-02-21 17:15:38.303594,cart,,7.0,,email,False,False
+EVT201323,CUST1348,SESS101341,2025-05-15 03:07:51.119610,PRODUCT,PURCHASE,11.0,,social,False,False
+evt201324,CUST1123,SESS103637,2025-03-29 04:48:19.442489, search_results ,click_product,4.0, NAN ,social,False,False
+,CUST1250,SESS100592,2024-01-09 10:39:04.409201,search_results,click_product,3.0,,email,False,False
+evt201326,CUST1090,SESS104293,2024-02-03 09:30:20.604095,product,view_page,1.0,coffee mug,organic_search,False,False
+EVT201327,CUST1300,SESS100206,2025-03-14 05:17:01.385502,search_results,view_page,13.0,shoes,organic_search,False,False
+EVT201328,CUST1179,SESS101772,2025-01-09 23:14:20.539562,category,view_page,3.0, t-shirt ,social,False,False
+EVT201329,CUST1083,SESS104788,2025-10-17 20:17:35.264669,home, BEGIN_CHECKOUT ,7.0, headphones ,social,False,False
+EVT201332,CUST1197,SESS103199,2024-11-01 20:54:44.618011,cart, purchase ,4.0,shoes,google_ads,False,False
+EVT201333,CUST1083,SESS100567,2025-03-06 13:51:25.913490, cart ,view_page,4.0,shoes,direct,False,False
+EVT201335,CUST1438,SESS101817,,product,begin_checkout,4.0,NAN,organic_search,False,True
+EVT201336,cust1331,SESS100932,,HOME,purchase,7.0, T-SHIRT ,organic_search,True,False
+ EVT201338 ,CUST1137,SESS103033,2025-03-30 00:07:09.052221,home,view_page,4.0,t-shirt,organic_search,False,False
+ EVT201339 ,CUST1262,SESS101142,2024-01-20 06:15:22.739477,product,view_page,1.0,t-shirt,direct,False,False
+EVT201340,CUST1442,SESS104072,2024-07-23 23:36:18.950083,search_results,view_page,9.0,,organic_search,False,False
+EVT200323,CUST1051,SESS104501,,HOME,ADD_TO_CART,12.0,,social,True,False
+EVT201344,cust1114,SESS100809,2024-07-29 18:15:29.568883, product ,remove_from_cart,,NAN,google_ads,False,False
+EVT201345,CUST1311,SESS103811,2024-09-16 10:53:59.238403, CATEGORY ,click_product,5.0,shoes,email,False,False
+ EVT200995 ,CUST1396,SESS104710,2025-10-01 11:30:05.907226,checkout,click_product,1.0, shoes ,social,False,False
+,CUST1216,SESS101511,2024-04-23 12:59:44.012374,product,click_product,1.0,headphones,google_ads,False,False
+EVT201348,CUST1436,sess101507,, category ,view_page,2.0,,email,False,False
+EVT201349,CUST1235,sess100170,2024-07-29 18:37:29.568883,HOME,purchase,13.0,,email,False,False
+ evt201350 ,cust1111,SESS100599,2024-04-28 22:11:52.856359,category,ADD_TO_CART,9.0,,organic_search,True,False
+EVT201351,CUST1154,SESS101625,2024-07-24 07:37:33.639577,PRODUCT, CLICK_PRODUCT ,1.0,,social,False,False
+ EVT201353 ,nan,SESS103026,2024-03-21 01:02:16.994925,product,click_product,1.0,,google_ads,False,False
+ EVT201354 ,CUST1003,SESS104286,2024-09-25 19:49:29.536497,cart,view_page,7.0,,organic_search,False,False
+EVT201355,CUST1339,SESS101216,2025-03-15 13:19:06.418159,NAN, add_to_cart ,3.0,,google_ads,True,False
+EVT201356,CUST1287,SESS104044,,,purchase,7.0,coffee mug,google_ads,False,False
+EVT201357,CUST1152,SESS104104,,home,view_page,11.0,headphones,email,False,False
+EVT201358,cust1246,SESS103138,2024-01-17 12:17:34.328440,PRODUCT,view_page,13.0,,social,False,False
+EVT201359,CUST1172,SESS102865,2024-12-03 08:39:50.142018, category ,NAN,6.0,coffee mug,social,False,False
+evt201361,CUST1441,SESS100031,2024-02-10 06:07:44.094266,search_results,add_to_cart,11.0,shoes,email,True,False
+EVT201362,CUST1133,SESS103909,2024-05-07 00:15:58.374925,home,click_product,12.0,,social,False,False
+EVT201363,CUST1096,SESS101422,,PRODUCT,view_page,5.0, laptop ,google_ads,False,False
+EVT201364,CUST1264,SESS100103,2025-10-27 02:08:07.748840,product,,5.0, NAN ,nan,False,False
+EVT201365,CUST1460,SESS104723,2024-08-28 09:10:33.551888, product , purchase ,8.0,,google_ads,False,False
+EVT201366,cust1412,SESS101944,2025-05-13 00:35:30.581771,category,add_to_cart,3.0,,organic_search,True,False
+evt201367,CUST1338,SESS104699,2024-02-11 19:51:28.425482,SEARCH_RESULTS,view_page,2.0,,nan,False,False
+ EVT201368 ,CUST1348,SESS103331,2024-02-21 08:53:17.606525,, VIEW_PAGE ,7.0,,direct,False,False
+EVT201369,CUST1369,SESS102247,2025-03-21 02:20:37.254070,,purchase,13.0,laptop,organic_search,False,False
+EVT201370,CUST1335,SESS104572,2025-06-26 06:39:38.452135,checkout,view_page,11.0,,direct,False,False
+evt201371,CUST1151,SESS103177,2024-06-28 01:15:10.765793,cart,view_page,3.0,,social,False,False
+ EVT201373 ,CUST1207,SESS102957,,home, view_page ,11.0,,google_ads,False,False
+EVT201374,CUST1377,sess103055,2025-01-22 10:36:05.652254,HOME,BEGIN_CHECKOUT,, nan ,email,False,False
+EVT201375,CUST1298,SESS101714,2025-03-06 12:46:25.913490,category,click_product,9.0, nan ,email,False,False
+ EVT201376 ,CUST1417,SESS101454,2024-03-02 23:38:02.167047, product , add_to_cart ,8.0,,social,True,False
+ EVT201377 ,CUST1175,SESS104260,, product ,view_page,8.0,headphones,social,False,False
+EVT201381,CUST1259,SESS101961,,category,NAN,7.0,shoes,organic_search,True,False
+ evt201383 ,CUST1430,SESS101958,,cart, view_page ,11.0,coffee mug,google_ads,False,False
+EVT201384,CUST1092,SESS100777,2025-01-25 15:56:42.115829,category,view_page,13.0,headphones,organic_search,False,False
+EVT201385,CUST1049,SESS102162,2025-01-10 02:23:54.765542,category,view_page,,,social,False,False
+evt201386,CUST1065,SESS103173,,search_results,VIEW_PAGE,1.0,,google_ads,False,False
+EVT201387,CUST1371,SESS101840,2025-08-14 03:05:24.370130,home,,13.0,,social,False,False
+EVT201388,cust1390,SESS103527,2024-01-07 16:44:02.646447,PRODUCT,view_page,12.0,coffee mug,organic_search,False,False
+EVT201389,CUST1484,SESS104875,2024-04-19 15:53:16.821986, PRODUCT ,click_product,6.0,,email,False,False
+EVT201390,cust1335,SESS102700,,home,view_page,,shoes,social,False,False
+EVT201391,cust1113,SESS103498,2024-08-28 21:05:28.029881,product, click_product ,5.0,,social,False,False
+evt201393,CUST1215,SESS104785,2025-05-02 11:52:48.995099,checkout,begin_checkout,4.0,NAN,google_ads,False,False
+ NAN ,CUST1190,SESS104562,2024-03-04 05:01:41.085123, category ,view_page,47.35393529348048,coffee mug,direct,False,False
+EVT201395,CUST1299,sess101042,2025-10-05 08:58:23.774097,product,view_page,47.35393529348048,NAN,email,False,False
+EVT201282,cust1073,SESS102316,,category,click_product,7.0,,organic_search,False,False
+EVT201398,CUST1443,SESS100496,2024-11-01 06:16:35.621682,product,view_page,11.0,,google_ads,True,False
+EVT201399,CUST1297,sess101489,, product , click_product ,1.0,,google_ads,False,False
+NAN,nan,sess100230,2025-02-13 07:37:46.718644,home,view_page,3.0,laptop,direct,False,True
+ EVT201401 ,CUST1256,sess104561,2025-01-24 11:13:31.189844,home, purchase ,14.0, nan ,organic_search,False,False
+EVT201402,CUST1444,SESS100175,2025-08-08 10:12:07.039026,product,view_page,14.0,shoes,nan,False,False
+EVT201403,CUST1271,SESS102105,2024-05-06 23:12:58.374925,CATEGORY,purchase,5.0,headphones,google_ads,False,False
+EVT201068,CUST1421,SESS104019,2025-03-12 18:25:20.205073,product, view_page ,,laptop,social,False,False
+EVT201407,CUST1175,SESS102934,2025-03-30 00:33:09.052221,,purchase,7.0,,social,False,False
+ EVT201410 ,CUST1441,SESS102136,2024-11-04 03:39:18.894326,search_results,begin_checkout,9.0,,social,False,False
+ EVT201411 ,CUST1398,SESS102976,2025-04-06 18:39:13.486828,product,click_product,2.0,NAN,social,False,False
+EVT201412,CUST1249,SESS101315,2024-09-28 21:26:30.393289,product,PURCHASE,7.0,shoes,nan,False,False
+EVT201413,CUST1323,SESS102916,2025-08-18 11:48:38.365318,search_results,remove_from_cart,1.0,NAN,email,False,False
+ EVT201414 ,CUST1160,SESS102909,2025-04-24 00:29:00.783418,search_results,,12.0, headphones ,social,False,False
+ EVT201415 ,cust1002,SESS102632,, cart ,view_page,10.0,headphones,email,False,False
+EVT201416,CUST1140,SESS104014,2024-12-03 02:19:15.622268,search_results,view_page,9.0,laptop,direct,False,False
+ EVT201417 ,CUST1389,SESS103582,2024-01-19 10:33:35.922752,search_results, click_product ,7.0,coffee mug,social,False,False
+EVT201418,CUST1295,SESS102640,2025-02-07 22:15:11.268342,home,view_page,5.0,headphones,google_ads,False,False
+ nan ,CUST1250,SESS100888,2025-10-20 13:13:26.502415,search_results,view_page,,NAN,organic_search,False,False
+ EVT201421 ,CUST1324,SESS101818,2025-08-09 18:50:41.849479,product,click_product,1.0,,social,False,False
+evt201422,CUST1206,SESS101230,2024-06-23 21:53:11.529227,search_results,ADD_TO_CART,13.0, nan ,organic_search,True,False
+,CUST1494,SESS100257,2025-01-29 00:47:02.895163,category, purchase ,, nan ,direct,True,False
+EVT201425,CUST1019,SESS104422,2024-11-19 22:03:28.667844,product,click_product,,coffee mug,social,False,False
+EVT201426,CUST1102,SESS101194,2025-07-02 13:05:55.359520,category,begin_checkout,5.0,HEADPHONES,direct,False,False
+EVT201427,CUST1486,SESS101945,2024-07-19 21:02:41.651690, product ,view_page,12.0,,nan,False,False
+EVT201428,CUST1456,NAN,2025-04-08 01:47:56.605677,product,VIEW_PAGE,7.0,,direct,False,False
+EVT201429,cust1387,SESS101868,2024-11-19 11:48:16.635333,home,view_page,13.0,,direct,False,False
+,CUST1346,sess102768,,product,click_product,,t-shirt,social,False,False
+EVT201433,CUST1115,SESS104378,2025-01-09 22:41:20.539562,PRODUCT,click_product,13.0, nan ,social,False,False
+evt201434,CUST1159,SESS100340,2025-02-09 01:22:06.094629, cart ,begin_checkout,14.0, coffee mug ,social,False,False
+evt201435,CUST1052,sess103478,2025-04-26 17:52:57.525813,home, nan ,5.0,t-shirt,social,False,False
+EVT200674,cust1143,SESS101602,2024-06-22 01:58:13.599920, search_results ,click_product,1.0, nan ,nan,False,False
+ EVT201438 ,CUST1421,SESS103313,,category,,6.0,shoes,organic_search,True,False
+EVT201439,CUST1152,SESS100718,,search_results,add_to_cart,12.0,,email,True,False
+EVT201440,CUST1233,SESS100372,,category,click_product,7.0,headphones,direct,False,False
+EVT201441,CUST1305,SESS100361,,checkout,CLICK_PRODUCT,12.0, nan ,email,False,False
+ EVT201442 ,CUST1172,SESS100651,2025-06-19 06:11:34.361207, category ,VIEW_PAGE,10.0, shoes ,social,False,False
+EVT201443,CUST1454,SESS102096,2025-04-07 01:03:44.497588,product,view_page,3.0,shoes,email,False,False
+EVT201444,CUST1175,SESS104821,2025-06-12 04:55:52.047339, category ,view_page,47.35393529348048,,social,False,False
+,CUST1183,SESS100195,2024-08-29 07:10:07.426715,product,purchase,9.0,,direct,False,False
+EVT201446,CUST1084,SESS101035,,product,begin_checkout,5.0, headphones ,email,False,False
+EVT201447,CUST1009,SESS100912,2025-08-25 16:54:54.945895,product,click_product,3.0,coffee mug,social,False,False
+EVT201448,cust1114,SESS100702,2025-06-02 01:18:11.339848, product ,view_page,9.0,,social,False,False
+,CUST1108,SESS100473,2024-10-28 07:46:20.855211,category, click_product ,9.0,shoes,email,False,False
+EVT201450,cust1301,SESS100167,2024-08-31 09:48:37.052927, category , click_product ,47.35393529348048, T-SHIRT ,google_ads,False,False
+evt201451,CUST1086,SESS104010,2025-01-26 13:10:11.108970,product,view_page,7.0,laptop,google_ads,False,False
+EVT201452,CUST1187,SESS101021,2024-12-28 15:53:37.757146,category,click_product,9.0,,social,False,False
+evt201453,CUST1192,SESS101074,2024-10-23 08:00:14.995611,home, view_page ,10.0,headphones,social,False,False
+NAN,CUST1394,sess101769,2024-03-18 08:32:46.508792, category , begin_checkout ,3.0,,direct,False,False
+EVT201456,CUST1304,SESS100560,2025-09-18 09:18:48.678947, category ,view_page,3.0,laptop,nan,False,False
+ EVT201458 ,CUST1334,SESS100719,2025-02-23 21:52:11.828024, SEARCH_RESULTS ,click_product,1.0,NAN,social,False,False
+ EVT200246 ,CUST1365,sess102274,2025-10-12 04:14:06.717803,product,VIEW_PAGE,,NAN,social,False,True
+EVT201460,CUST1213,SESS104451,2024-11-29 19:00:07.477987,PRODUCT,add_to_cart,,,direct,True,False
+ EVT201461 ,CUST1194,SESS103373,2025-06-17 21:34:02.580148, nan ,PURCHASE,,,organic_search,False,False
+EVT201463,CUST1242,SESS101716,2025-09-04 19:20:18.708791,home, add_to_cart ,3.0,,social,True,False
+EVT201464,cust1105,sess101707,2024-11-19 17:43:18.362496,,add_to_cart,5.0,SHOES,google_ads,True,False
+EVT201110,cust1119,SESS102728,, category ,add_to_cart,14.0,coffee mug,direct,True,False
+EVT201466,CUST1338,SESS100062,2025-01-26 21:15:19.590640,HOME,view_page,,headphones,google_ads,False,False
+EVT201467,CUST1339,SESS104324,,category,click_product,14.0,NAN,google_ads,False,False
+EVT201468,CUST1138,SESS104231,,category,view_page,2.0, t-shirt ,email,False,False
+EVT201469,CUST1214,SESS104618,2025-08-03 12:32:59.149360,product, add_to_cart ,4.0, NAN ,organic_search,True,False
+ EVT201470 ,CUST1261,SESS101292,,product,view_page,11.0,coffee mug,email,False,False
+ EVT201471 ,CUST1144,SESS102574,, product ,view_page,5.0, NAN ,google_ads,False,False
+EVT201472,CUST1401,SESS100993,2025-06-30 02:03:46.651749,home,add_to_cart,10.0,coffee mug,social,True,False
+ EVT201474 ,CUST1311,SESS100794,2025-08-18 10:17:23.779336,,,,,social,False,False
+ EVT201475 ,CUST1398,SESS101957,,category, VIEW_PAGE ,11.0,,social,False,False
+EVT201476,CUST1425,SESS103621,2024-08-13 08:07:02.969423,product,add_to_cart,2.0,,organic_search,True,False
+ EVT201477 ,CUST1498,SESS103447,2024-03-11 06:29:31.734260,,click_product,9.0, nan ,email,False,False
+ evt201478 ,CUST1183,SESS103530,2024-05-31 21:36:10.926692, CART ,click_product,, shoes ,social,False,False
+,CUST1151,SESS103870,2025-03-22 19:58:30.643466,product,view_page,4.0,,google_ads,False,False
+EVT201483,CUST1169,sess102427,2024-12-06 23:48:29.651527,search_results,add_to_cart,7.0,laptop,google_ads,True,False
+EVT201485,CUST1343,sess104698,2024-12-02 17:18:32.133083,category,VIEW_PAGE,8.0,shoes,google_ads,False,False
+evt201487,CUST1427,SESS102478,2024-09-10 22:34:49.671020,category,add_to_cart,6.0,laptop,google_ads,True,False
+EVT200498,CUST1111,sess102694,2025-02-05 05:06:24.589312,category, click_product ,5.0,t-shirt,direct,False,False
+EVT200338,CUST1428,SESS101781,2024-12-21 09:39:17.266304,product,view_page,11.0,,social,False,False
+EVT201491,CUST1038,SESS104965,2024-06-27 08:52:09.158763,, add_to_cart ,6.0,,social,True,False
+EVT201492,CUST1463,SESS103200,2025-03-24 01:04:40.184969,home,view_page,7.0,LAPTOP,organic_search,False,False
+EVT201493,CUST1329,nan,2025-10-06 07:21:59.360186, home ,begin_checkout,11.0,coffee mug,social,False,True
+,CUST1239,SESS104797,,category,view_page,4.0, COFFEE MUG ,direct,False,False
+EVT201495,CUST1135,SESS104823,2024-12-13 06:02:54.203980,CATEGORY, view_page ,8.0,,email,False,False
+EVT201496,cust1025,SESS104294,2025-03-06 20:33:14.794045,,view_page,9.0,,social,False,False
+EVT201497,CUST1416,SESS101165,2025-03-21 23:00:36.180236,product,CLICK_PRODUCT,12.0,NAN,social,False,False
+evt201498,CUST1447,SESS101491,2025-09-02 20:10:01.684800,,view_page,7.0,,email,True,False
+EVT201499,CUST1436,SESS102676,2025-07-22 21:12:25.131330,product,view_page,6.0,,organic_search,False,False

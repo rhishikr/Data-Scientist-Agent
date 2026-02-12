@@ -1,0 +1,135 @@
+product_id,name,category,brand,color,material,cost_price,price,discount_percent,average_rating,stock_available
+SKU10000,product 0,beauty,terra,Green,,82.57,180.45,15.0,,296.0
+sku10001,Product 1,books,Terra,Green,Cotton,104.78,229.27,,3.05,489.0
+SKU10005,Product 5,nan,Helios, Blue ,,33.34,82.33,0.0,3.25,314.0
+SKU10006,Product 6,beauty,Zenith,red, Metal ,103.61,211.29,0.0,4.3,38.0
+sku10007,Product 7,sports,Orion,White,Leather,17.1,41.29,0.0,3.11,258.0
+SKU10009,PRODUCT 9,clothing,Nova,BLACK,Leather,116.9,259.11,10.0,4.11,6.0
+nan,product 11,electronics,Zenith,Black,metal,176.22,369.91,5.0,3.91,25.0
+SKU10012,Product 12,nan,Zenith,Gray,Plastic,113.79,279.38,0.0,3.33,160.0
+SKU10013,Product 13,electronics,Orion,,Plastic,192.16,328.9,20.0,3.61,356.0
+sku10014,Product 14,books,Acme, NAN ,Cotton,14.5,19.86,20.0,,175.0
+SKU10015,Product 15,sports,Helios, Gray ,METAL,24.11,49.99,97.90983460235884,3.6,78.0
+sku10016,Product 16,clothing,Acme, Red ,Cotton,13.59,29.2,0.0,4.8,1.0
+SKU10017,Product 17,sports,orion,Gray,METAL,41.13,80.1,0.0,4.26,488.0
+SKU10018,PRODUCT 18,sports,Zenith,BLUE,Cotton,110.55,162.38,30.0,3.88,382.0
+SKU10020,PRODUCT 20,books,Zenith,Blue,Leather,13.89,22.3,0.0,4.0,415.0
+SKU10021,PRODUCT 21,home & kitchen,Helios,Black,Leather,189.46,332.64,0.0,4.53,131.0
+SKU10024,Product 24,nan,NAN,White,Wood,20.05,30.12,15.0,3.5,116.0
+SKU10029,PRODUCT 29,beauty,zenith, WHITE , polyester ,52.94,126.11,20.0,3.59,0.0
+SKU10030,Product 30,books,helios, black ,Leather,74.84,125.82,0.0,3.53,187.0
+SKU10031,Product 31,books,nan,BLACK,Cotton,197.95,430.88,15.0,3.86,55.0
+SKU10032,Product 32,beauty,Zenith,White,metal,138.44,327.57,5.0,5.0,34.0
+SKU10033,Product 33,sports,Acme,White, Polyester ,190.05,437.11,0.0,3.44,1744.6608834088852
+SKU10034,Product 34,books,HELIOS,Red, Plastic ,32.8,47.15,30.0,3.21,285.0
+sku10035,Product 35,clothing,zenith,BLUE,Wood,79.52,194.27,0.0,4.17,309.0
+SKU10036,product 36,sports,nan,white,Wood,113.17,191.23,20.0,3.98,1744.6608834088852
+SKU10037,product 37,sports,Terra,White, Polyester ,19.97,32.77,0.0,4.05,438.0
+SKU10038,product 38,nan,Helios,Green,PLASTIC,5.82,7.45,20.0,,216.0
+SKU10039,Product 39,books,Nova, Gray ,Polyester,135.73,248.67,0.0,3.53,79.0
+SKU10040,Product 40,books,Helios,White,Plastic,130.15,174.63,,4.82,313.0
+SKU10041,Product 41,beauty,Nova,Blue,Wood,85.1,129.62,15.0,3.87,82.0
+SKU10042,PRODUCT 42,home & kitchen,Zenith,NAN,Leather,100.48,161.98,20.0,3.26,64.0
+SKU10043,Product 43,home & kitchen,Nova,Gray,COTTON,86.01,193.65,20.0,4.48,324.0
+SKU10045,Product 45,sports,zenith,Black,Cotton,,112.16,20.0,3.63,306.0
+SKU10047,Product 47,beauty,Zenith,Black,Leather,24.19,55.99,0.0,3.44,215.0
+SKU10048,product 48,home & kitchen,Nova, Green ,leather,647.3323775570758,420.29,0.0,3.89,106.0
+SKU10050,Product 50,home & kitchen,Orion,black,Metal,147.09,308.51,0.0,3.27,371.0
+SKU10051,Product 51,beauty,Zenith,Red,Wood,66.5,161.49,5.0,3.77,356.0
+SKU10052,Product 52,home & kitchen,helios,black,Plastic,81.66,170.46,0.0,4.64,1744.6608834088852
+SKU10053,Product 53,home & kitchen,helios,White,WOOD,51.2,83.51,10.0,4.94,355.0
+SKU10058,Product 58,electronics,ZENITH,White,Plastic,111.65,179.28,15.0,4.72,180.0
+SKU10059,Product 59,home & kitchen,Zenith,Blue,NAN,97.64,219.02,10.0,3.34,465.0
+SKU10061,Product 61,books,Terra, RED , wood ,19.18,26.44,5.0,3.93,463.0
+SKU10062,Product 62,electronics,Orion,White,Wood,59.72,145.6,0.0,4.58,168.0
+SKU10063,Product 63,clothing,Acme,White,Plastic,73.24,119.19,0.0,4.21,
+SKU10064,PRODUCT 64,beauty,Helios,Blue,Metal,157.57,324.76,97.90983460235884,4.31,21.0
+SKU10066,Product 66,electronics,Helios,Blue,Plastic,51.93,117.13,0.0,3.15,20.0
+SKU10067,Product 67,home & kitchen,NOVA,Gray,Cotton,,426.35,30.0,3.45,99.0
+SKU10068,Product 68,books,Zenith,,Cotton,,268.29,30.0,3.82,383.0
+SKU10071,Product 71,home & kitchen,Acme,White,polyester,84.89,179.67,0.0,,46.0
+sku10072,Product 72,books,Helios,Red,METAL,195.75,423.72,0.0,4.36,38.0
+sku10073,Product 73,books,Terra, Black ,Plastic,40.27,83.81,20.0,4.76,284.0
+SKU10075,PRODUCT 75,sports,ZENITH,Gray,Polyester,70.17,163.84,15.0,4.08,89.0
+SKU10076,Product 76,books,Orion,White,wood,147.52,209.41,0.0,3.51,84.0
+SKU10077,product 77,nan,nova,Gray,Plastic,86.9,110.34,30.0,4.54,272.0
+SKU10078,Product 78,books,Orion,White,Plastic,117.78,251.19,0.0,4.5,
+SKU10079,Product 79,clothing,Helios, Red , Polyester ,167.36,304.28,15.0,4.18,187.0
+SKU10080,Product 80,electronics,Terra,RED,Polyester,,372.79,0.0,3.43,158.0
+sku10081,Product 81,clothing,ACME,Red,Polyester,173.95,295.44,10.0,9.857120778600729,
+SKU10082,Product 82,clothing,orion,White,wood,,23.59,0.0,3.13,72.0
+SKU10084,PRODUCT 84,electronics,ORION,Red,polyester,32.3,61.8,20.0,4.65,461.0
+SKU10085,Product 85,home & kitchen,Zenith,gray,Cotton,86.08,124.47,20.0,4.72,48.0
+SKU10086,Product 86,books,Helios,Black, PLASTIC ,111.97,239.23,20.0,3.93,100.0
+SKU10088,Product 88,electronics,Helios,Gray,Cotton,,211.12,15.0,4.89,243.0
+SKU10090,PRODUCT 90,sports,HELIOS,Green,PLASTIC,31.37,71.43,0.0,3.8,237.0
+SKU10091,Product 91,clothing,nan,Black,Leather,136.71,311.49,0.0,4.86,397.0
+SKU10092,Product 92,beauty,Acme,Blue, POLYESTER ,82.22,174.49,10.0,3.68,58.0
+SKU10093,product 93,clothing,Nova,Red,Wood,30.94,41.36,,4.83,352.0
+SKU10094,Product 94,nan,Helios,White,Polyester,35.95,82.35,0.0,4.96,98.0
+sku10095,Product 95,beauty,Nova,Gray,Wood,190.11,393.96,10.0,4.32,441.0
+SKU10096,product 96,books,TERRA,Red, metal ,176.52,371.78,15.0,4.63,358.0
+SKU10087,Product 87,home & kitchen,Helios,White,Wood,83.53,155.75,10.0,4.57,1.0
+SKU10099,product 99,clothing,Helios,Green,Wood,45.62,97.77,,3.61,434.0
+SKU10101,Product 101,home & kitchen,Acme,,,135.5,234.43,0.0,3.69,1.0
+sku10102,Product 102,clothing,Orion,, Wood ,99.34,233.68,10.0,,242.0
+SKU10103,Product 103,sports,Orion,Black,Wood,86.59,109.22,10.0,3.21,296.0
+SKU10104,Product 104,electronics,ZENITH,Blue, Polyester ,74.77,183.18,,3.02,210.0
+SKU10105,product 105,clothing,Helios,Gray,metal,,251.59,0.0,3.28,122.0
+SKU10106,PRODUCT 106,clothing,Acme,Red, Polyester ,117.24,236.92,15.0,4.43,228.0
+SKU10108,product 108,beauty,Acme,Blue,Leather,96.99,147.76,5.0,4.97,143.0
+SKU10109,Product 109,home & kitchen,Orion,Green,Wood,112.93,273.81,15.0,3.99,387.0
+SKU10110,Product 110,home & kitchen,Helios,White,WOOD,116.21,184.51,0.0,4.74,139.0
+SKU10113,Product 113,electronics,terra,Black,Leather,9.91,13.69,0.0,4.15,1744.6608834088852
+SKU10115,Product 115,clothing,Nova, Gray ,Plastic,157.14,299.75,0.0,4.88,11.0
+SKU10116,Product 116,home & kitchen,Helios,,METAL,114.96,283.78,10.0,3.7,354.0
+SKU10119,Product 119,sports,Zenith,White,POLYESTER,115.64,190.5,10.0,3.67,105.0
+SKU10120,Product 120,clothing,Helios,White,Plastic,160.27,300.78,0.0,3.51,31.0
+SKU10122,product 122,sports,HELIOS,Gray,Cotton,123.97,290.57,0.0,3.05,170.0
+SKU10127,Product 127,beauty,nan,red,Polyester,121.86,185.84,0.0,9.857120778600729,136.0
+SKU10130,product 130,clothing,acme,Blue,METAL,6.26,12.36,0.0,4.51,483.0
+sku10136,Product 136,books,Acme, White ,Leather,188.59,385.35,5.0,3.79,28.0
+SKU10133,product 133,beauty,Nova, Red ,wood,148.25,329.2,30.0,3.38,8.0
+SKU10135,Product 135,clothing,nova,Red,Leather,119.04,269.79,15.0,4.9,184.0
+SKU10138,PRODUCT 138,electronics,Helios,White,Plastic,,174.11,10.0,4.05,113.0
+SKU10139,PRODUCT 139,electronics,Helios, Black ,Cotton,22.83,35.01,5.0,3.22,461.0
+SKU10141,Product 141,books,Terra,Black,wood,112.35,209.73,0.0,5.0,142.0
+SKU10143,product 143,nan,Zenith,Blue,Plastic,106.67,210.66,0.0,3.57,119.0
+SKU10146,Product 146,books,Orion,Green,Plastic,,22.53,0.0,3.88,334.0
+SKU10147,Product 147,sports,Zenith,White,Wood,173.02,285.23,30.0,3.52,348.0
+SKU10151,PRODUCT 151,books,Zenith,red,Wood,162.98,242.11,0.0,9.857120778600729,440.0
+SKU10153,PRODUCT 153,home & kitchen,Helios,,Plastic,151.22,361.35,5.0,3.57,171.0
+SKU10154,Product 154,clothing,Nova,Green, nan ,183.04,420.46,0.0,4.39,230.0
+sku10155,Product 155,books,NAN,GREEN,Leather,116.56,252.36,15.0,3.61,207.0
+sku10156,Product 156,home & kitchen,Helios,Gray,,40.25,57.09,20.0,4.52,74.0
+sku10158,Product 158,beauty,ZENITH,Blue,POLYESTER,43.74,56.33,0.0,3.15,386.0
+sku10161,Product 161,electronics,TERRA,Red,,113.25,199.29,5.0,3.66,61.0
+SKU10162,Product 162,nan,Acme,RED,,119.66,162.12,0.0,4.2,361.0
+SKU10163,product 163,electronics,ZENITH, Green ,Plastic,88.17,164.53,20.0,9.857120778600729,319.0
+SKU10165,product 165,clothing,terra, NAN , leather ,20.91,35.28,15.0,3.14,428.0
+SKU10166,Product 166,sports,Orion,Black,Leather,22.12,44.41,15.0,4.32,361.0
+SKU10167,Product 167,electronics,Helios, Green ,Polyester,38.51,82.19,0.0,4.62,209.0
+sku10169,Product 169,sports,Helios, White ,Leather,46.73,58.24,15.0,3.99,254.0
+NAN,PRODUCT 170,clothing,Zenith,Blue,Leather,60.24,150.16,0.0,4.9,19.0
+SKU10171,PRODUCT 171,home & kitchen,Orion,White, Leather ,83.06,124.8,15.0,3.6,57.0
+SKU10172,PRODUCT 172,clothing,Zenith, Gray , Plastic ,163.31,207.41,20.0,3.04,111.0
+SKU10173,Product 173,books,Orion, Green ,NAN,7.7,11.15,10.0,3.86,472.0
+SKU10175,Product 175,sports,HELIOS, Black ,METAL,135.43,231.5,15.0,4.91,485.0
+SKU10177,Product 177,clothing,Zenith,Black,Metal,647.3323775570758,307.17,0.0,4.58,195.0
+SKU10179,Product 179,electronics,Zenith, Red ,Cotton,34.99,72.71,5.0,3.44,461.0
+SKU10181,PRODUCT 181,clothing,Nova,Gray,,94.41,219.02,5.0,3.1,91.0
+SKU10182,Product 182,electronics,NOVA,BLACK,PLASTIC,115.1,267.69,97.90983460235884,3.97,51.0
+SKU10183,Product 183,sports,nan,black,Metal,134.29,162.88,0.0,3.03,292.0
+SKU10184,Product 184,nan,Terra,White,Polyester,137.42,303.89,10.0,4.84,7.0
+SKU10003,Product 3,clothing,NAN,Red,NAN,79.64,138.09,97.90983460235884,3.59,214.0
+sku10186,Product 186,electronics,Terra,Black,COTTON,199.41,495.62,15.0,3.44,97.0
+SKU10187,Product 187,beauty,ZENITH,GREEN,wood,145.43,265.88,5.0,3.42,235.0
+sku10188,Product 188,clothing,Acme,Gray,Metal,61.01,151.48,,4.51,388.0
+SKU10190,Product 190,electronics,NAN,BLUE,Leather,14.6,22.24,15.0,4.79,68.0
+SKU10140,PRODUCT 140,clothing,Nova,Black,Metal,127.01,276.59,0.0,3.41,408.0
+SKU10193,Product 193,sports,Acme,Green, leather ,54.96,127.21,30.0,4.67,136.0
+SKU10194,product 194,home & kitchen,Nova, Black ,Wood,48.03,63.71,15.0,3.99,233.0
+SKU10195,Product 195,home & kitchen,Acme,blue,,31.93,67.65,30.0,4.82,31.0
+sku10196,product 196,clothing,Orion,Red,Polyester,172.53,284.54,5.0,4.86,288.0
+SKU10197,Product 197,nan,Zenith,gray, Polyester ,102.51,123.94,5.0,,125.0
+SKU10198,PRODUCT 198,books,Acme,green,Plastic,136.6,235.58,20.0,3.0,66.0

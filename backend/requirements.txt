@@ -10,3 +10,11 @@ pyarrow
 featuretools
 woodwork
 pyyaml
+pandas>=2.2
+numpy>=1.26
+pyyaml>=6.0.1
+pandera>=0.20.0
+great-expectations>=0.18.14
+pyarrow>=16.1.0
+matplotlib
+
