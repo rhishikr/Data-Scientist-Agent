@@ -5,6 +5,8 @@ import re
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
+from openai import BadRequestError
+
 
 from .config import load_config
 from .store_faiss import FaissStore
@@ -182,6 +184,12 @@ def answer_question(base_dir: Path, question: str) -> Dict[str, Any]:
                 "mode": "lookup",
                 "source": "customers.csv",
             }
+        # Optional hard-stop for deterministic behavior:
+        return {
+            "answer": f"I couldn’t find {cust_id} in customers.csv (or location column is missing).",
+            "mode": "lookup_not_found",
+            "source": "customers.csv",
+        }
 
     prod_id = _extract_product_id(question)
     if prod_id and ("name" in question.lower() or "product" in question.lower() or "title" in question.lower()):
@@ -192,24 +200,31 @@ def answer_question(base_dir: Path, question: str) -> Dict[str, Any]:
                 "mode": "lookup",
                 "source": "products.csv",
             }
-        # ---------- Step 2: Deterministic analytics (SQL-ish questions) ----------
+        return {
+            "answer": f"I couldn’t find product {prod_id} in products.csv (or name column is missing).",
+            "mode": "lookup_not_found",
+            "source": "products.csv",
+        }
+
+    # ---------- Step 2: Deterministic analytics ----------
     analytics = _try_deterministic_analytics(tool, question)
     if analytics is not None:
         return analytics
 
-    # ---------- Step 2: RAG fallback ----------
+    # ---------- Step 3: RAG fallback ----------
     store = FaissStore(cfg)
 
     if not store.index_exists():
         return {"error": "Vector index not found. Call POST /rag/ingest first."}
-    
-        # If it's an aggregation question but we couldn't handle it deterministically,
-    # do NOT fall back to RAG guessing. Tell the user what's missing.
+
+    # Do NOT guess aggregation via RAG
     if _is_aggregation_question(question):
         return {
-            "answer": "I can answer that, but I need a supported deterministic operation or a clearer metric/table mapping. "
-                      "Try specifying the table and metric (e.g., 'in transactions.csv, who has the highest sum of total_amount?').",
-            "mode": "needs_clarification",
+            "answer": (
+                "This question requires deterministic aggregation (count/sum/top/etc.). "
+                "That handler isn't implemented yet for this query, so I won't guess via RAG."
+            ),
+            "mode": "needs_handler",
         }
 
     vs = store.load()
@@ -223,13 +238,28 @@ def answer_question(base_dir: Path, question: str) -> Dict[str, Any]:
 
     context = "\n\n---\n\n".join(context_parts)
 
+    # Safety cap BEFORE calling LLM
+    MAX_CONTEXT_CHARS = 120_000
+    if len(context) > MAX_CONTEXT_CHARS:
+        context = context[:MAX_CONTEXT_CHARS] + "\n\n[TRUNCATED]"
+
     llm = ChatOpenAI(model=cfg.llm_model, temperature=0.2)
     prompt = f"QUESTION:\n{question}\n\nCONTEXT:\n{context}"
 
-    answer = llm.invoke([
-        SystemMessage(content=SYSTEM_PROMPT),
-        HumanMessage(content=prompt),
-    ]).content
+    try:
+        answer = llm.invoke([
+            SystemMessage(content=SYSTEM_PROMPT),
+            HumanMessage(content=prompt),
+        ]).content
+    except BadRequestError as e:
+        return {
+            "answer": (
+                "The retrieved context is too large to send to the model. "
+                "Reduce indexed row samples or narrow the question."
+            ),
+            "mode": "error_context_too_large",
+            "error": str(e),
+        }
 
     return {
         "answer": answer,
@@ -256,13 +286,28 @@ def schema_help(base_dir: Path, question: str) -> Dict[str, Any]:
 
     context = "\n\n---\n\n".join(context_parts)
 
+    # Safety cap BEFORE calling LLM
+    MAX_CONTEXT_CHARS = 120_000
+    if len(context) > MAX_CONTEXT_CHARS:
+        context = context[:MAX_CONTEXT_CHARS] + "\n\n[TRUNCATED]"
+
     llm = ChatOpenAI(model=cfg.llm_model, temperature=0.0)
     prompt = f"QUESTION:\n{question}\n\nCONTEXT:\n{context}"
 
-    answer = llm.invoke([
-        SystemMessage(content=SYSTEM_PROMPT),
-        HumanMessage(content=prompt),
-    ]).content
+    try:
+        answer = llm.invoke([
+            SystemMessage(content=SYSTEM_PROMPT),
+            HumanMessage(content=prompt),
+        ]).content
+    except BadRequestError as e:
+        return {
+            "answer": (
+                "The schema context is too large to send to the model. "
+                "Reduce indexed row samples or narrow the question."
+            ),
+            "mode": "error_context_too_large",
+            "error": str(e),
+        }
 
     return {
         "answer": answer,
@@ -270,3 +315,4 @@ def schema_help(base_dir: Path, question: str) -> Dict[str, Any]:
         "top_k": cfg.top_k,
         "mode": "schema",
     }
+
