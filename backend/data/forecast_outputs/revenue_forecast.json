@@ -1,0 +1,362 @@
+[
+  {
+    "date": "2025-11-01",
+    "revenue_forecast": 467.1330090993102
+  },
+  {
+    "date": "2025-11-02",
+    "revenue_forecast": 618.3876644148356
+  },
+  {
+    "date": "2025-11-03",
+    "revenue_forecast": 697.577560790182
+  },
+  {
+    "date": "2025-11-04",
+    "revenue_forecast": 640.8856758425917
+  },
+  {
+    "date": "2025-11-05",
+    "revenue_forecast": 689.5881021011072
+  },
+  {
+    "date": "2025-11-06",
+    "revenue_forecast": 959.0447817586484
+  },
+  {
+    "date": "2025-11-07",
+    "revenue_forecast": 435.6023455324133
+  },
+  {
+    "date": "2025-11-08",
+    "revenue_forecast": 868.1252380252051
+  },
+  {
+    "date": "2025-11-09",
+    "revenue_forecast": 181.0112626957862
+  },
+  {
+    "date": "2025-11-10",
+    "revenue_forecast": 586.0864283630938
+  },
+  {
+    "date": "2025-11-11",
+    "revenue_forecast": 725.4520544186311
+  },
+  {
+    "date": "2025-11-12",
+    "revenue_forecast": 695.4702986889762
+  },
+  {
+    "date": "2025-11-13",
+    "revenue_forecast": 745.6808168884944
+  },
+  {
+    "date": "2025-11-14",
+    "revenue_forecast": 1053.0763140142565
+  },
+  {
+    "date": "2025-11-15",
+    "revenue_forecast": 688.7185014585162
+  },
+  {
+    "date": "2025-11-16",
+    "revenue_forecast": 432.2076261890458
+  },
+  {
+    "date": "2025-11-17",
+    "revenue_forecast": 865.4865967867727
+  },
+  {
+    "date": "2025-11-18",
+    "revenue_forecast": 955.0431481870019
+  },
+  {
+    "date": "2025-11-19",
+    "revenue_forecast": 638.586524867435
+  },
+  {
+    "date": "2025-11-20",
+    "revenue_forecast": 700.7124694614064
+  },
+  {
+    "date": "2025-11-21",
+    "revenue_forecast": 729.4445662212389
+  },
+  {
+    "date": "2025-11-22",
+    "revenue_forecast": 350.5033229150113
+  },
+  {
+    "date": "2025-11-23",
+    "revenue_forecast": 875.3611362602591
+  },
+  {
+    "date": "2025-11-24",
+    "revenue_forecast": 904.7292055284809
+  },
+  {
+    "date": "2025-11-25",
+    "revenue_forecast": 909.6282054676201
+  },
+  {
+    "date": "2025-11-26",
+    "revenue_forecast": 1195.813917020653
+  },
+  {
+    "date": "2025-11-27",
+    "revenue_forecast": 545.4551588450014
+  },
+  {
+    "date": "2025-11-28",
+    "revenue_forecast": 363.9774781902572
+  },
+  {
+    "date": "2025-11-29",
+    "revenue_forecast": 717.9392556503766
+  },
+  {
+    "date": "2025-11-30",
+    "revenue_forecast": 357.39279756707873
+  },
+  {
+    "date": "2025-12-01",
+    "revenue_forecast": 743.6915851322796
+  },
+  {
+    "date": "2025-12-02",
+    "revenue_forecast": 629.1426442488238
+  },
+  {
+    "date": "2025-12-03",
+    "revenue_forecast": 810.4027442238845
+  },
+  {
+    "date": "2025-12-04",
+    "revenue_forecast": 723.0924749192329
+  },
+  {
+    "date": "2025-12-05",
+    "revenue_forecast": 724.276527588081
+  },
+  {
+    "date": "2025-12-06",
+    "revenue_forecast": 545.5995454028333
+  },
+  {
+    "date": "2025-12-07",
+    "revenue_forecast": 668.9841915574744
+  },
+  {
+    "date": "2025-12-08",
+    "revenue_forecast": 686.911345125679
+  },
+  {
+    "date": "2025-12-09",
+    "revenue_forecast": 984.314896110257
+  },
+  {
+    "date": "2025-12-10",
+    "revenue_forecast": 1052.2654466411602
+  },
+  {
+    "date": "2025-12-11",
+    "revenue_forecast": 869.635558843786
+  },
+  {
+    "date": "2025-12-12",
+    "revenue_forecast": 570.1870935875843
+  },
+  {
+    "date": "2025-12-13",
+    "revenue_forecast": 982.6769955337525
+  },
+  {
+    "date": "2025-12-14",
+    "revenue_forecast": 655.1710173844757
+  },
+  {
+    "date": "2025-12-15",
+    "revenue_forecast": 746.6439131039101
+  },
+  {
+    "date": "2025-12-16",
+    "revenue_forecast": 875.9747015573431
+  },
+  {
+    "date": "2025-12-17",
+    "revenue_forecast": 894.2357380167603
+  },
+  {
+    "date": "2025-12-18",
+    "revenue_forecast": 732.1626264650522
+  },
+  {
+    "date": "2025-12-19",
+    "revenue_forecast": 667.3172455321661
+  },
+  {
+    "date": "2025-12-20",
+    "revenue_forecast": 707.2300486374876
+  },
+  {
+    "date": "2025-12-21",
+    "revenue_forecast": 367.146585490328
+  },
+  {
+    "date": "2025-12-22",
+    "revenue_forecast": 1045.876218626034
+  },
+  {
+    "date": "2025-12-23",
+    "revenue_forecast": 885.9748318841796
+  },
+  {
+    "date": "2025-12-24",
+    "revenue_forecast": 1112.2937185597643
+  },
+  {
+    "date": "2025-12-25",
+    "revenue_forecast": 674.807537412305
+  },
+  {
+    "date": "2025-12-26",
+    "revenue_forecast": 857.1501919181708
+  },
+  {
+    "date": "2025-12-27",
+    "revenue_forecast": 457.4432158382333
+  },
+  {
+    "date": "2025-12-28",
+    "revenue_forecast": 1033.6476336808616
+  },
+  {
+    "date": "2025-12-29",
+    "revenue_forecast": 166.4902928108686
+  },
+  {
+    "date": "2025-12-30",
+    "revenue_forecast": 521.1446042805558
+  },
+  {
+    "date": "2025-12-31",
+    "revenue_forecast": 332.97487443904686
+  },
+  {
+    "date": "2026-01-01",
+    "revenue_forecast": 279.5606177039376
+  },
+  {
+    "date": "2026-01-02",
+    "revenue_forecast": 680.202452059346
+  },
+  {
+    "date": "2026-01-03",
+    "revenue_forecast": 356.28125054611826
+  },
+  {
+    "date": "2026-01-04",
+    "revenue_forecast": 256.58568346805464
+  },
+  {
+    "date": "2026-01-05",
+    "revenue_forecast": 1139.2771295302005
+  },
+  {
+    "date": "2026-01-06",
+    "revenue_forecast": 854.4372670347119
+  },
+  {
+    "date": "2026-01-07",
+    "revenue_forecast": 811.3088995086332
+  },
+  {
+    "date": "2026-01-08",
+    "revenue_forecast": 442.1888528814287
+  },
+  {
+    "date": "2026-01-09",
+    "revenue_forecast": 288.1901547760061
+  },
+  {
+    "date": "2026-01-10",
+    "revenue_forecast": 826.826806412985
+  },
+  {
+    "date": "2026-01-11",
+    "revenue_forecast": 298.89533499756607
+  },
+  {
+    "date": "2026-01-12",
+    "revenue_forecast": 769.8069613930016
+  },
+  {
+    "date": "2026-01-13",
+    "revenue_forecast": 535.4836317957196
+  },
+  {
+    "date": "2026-01-14",
+    "revenue_forecast": 623.5835955123343
+  },
+  {
+    "date": "2026-01-15",
+    "revenue_forecast": 424.69268840544254
+  },
+  {
+    "date": "2026-01-16",
+    "revenue_forecast": 579.3177011153026
+  },
+  {
+    "date": "2026-01-17",
+    "revenue_forecast": 484.58818184949195
+  },
+  {
+    "date": "2026-01-18",
+    "revenue_forecast": 734.0681143709235
+  },
+  {
+    "date": "2026-01-19",
+    "revenue_forecast": 624.6542312691581
+  },
+  {
+    "date": "2026-01-20",
+    "revenue_forecast": 124.53002839044402
+  },
+  {
+    "date": "2026-01-21",
+    "revenue_forecast": 920.8667099619469
+  },
+  {
+    "date": "2026-01-22",
+    "revenue_forecast": 594.393076257216
+  },
+  {
+    "date": "2026-01-23",
+    "revenue_forecast": 627.8943030285208
+  },
+  {
+    "date": "2026-01-24",
+    "revenue_forecast": 662.2366761794083
+  },
+  {
+    "date": "2026-01-25",
+    "revenue_forecast": 656.7184399448495
+  },
+  {
+    "date": "2026-01-26",
+    "revenue_forecast": 1209.1315251878405
+  },
+  {
+    "date": "2026-01-27",
+    "revenue_forecast": 952.6996980161645
+  },
+  {
+    "date": "2026-01-28",
+    "revenue_forecast": 747.3234780792554
+  },
+  {
+    "date": "2026-01-29",
+    "revenue_forecast": 602.1248991474408
+  }
+]

@@ -1,0 +1,64 @@
+sku,warehouse_location,stock_level,reorder_threshold,supplier,avg_shipping_time_days,return_rate_percent,avg_daily_qty_sold_30d,days_of_inventory_remaining,risk_flag
+SKU10096,WH-LON,1,41,FastTrack Logistics,4.0,10.78,4.0,0.25,True
+SKU10138,WH-NY,1,37,FastTrack Logistics,2.1,3.22,4.0,0.25,True
+SKU10170,WH-LON,8,76,FastTrack Logistics,3.6,1.42,3.0,2.6666666666666665,True
+SKU10131,WH-BER,11,60,UrbanTraders,4.8,11.42,4.0,2.75,True
+SKU10140,WH-LON,25,66,PrimeWholesale,6.4,14.57,4.0,6.25,True
+SKU10183,WH-NY,17,57,PrimeWholesale,4.2,2.87,2.0,8.5,True
+SKU10131,WH-SYD,36,77,UrbanTraders,2.8,14.1,4.0,9.0,True
+SKU10054,WH-TOR,46,49,GlobalSupplyCo,3.2,12.09,4.0,11.5,True
+SKU10055,WH-SYD,26,33,PrimeWholesale,4.2,7.95,2.0,13.0,True
+SKU10079,WH-NY,61,65,PrimeWholesale,3.5,6.5,3.0,20.333333333333332,True
+SKU10066,WH-NY,23,74,GlobalSupplyCo,1.9,10.63,1.0,23.0,True
+SKU10039,WH-NY,51,67,UrbanTraders,2.2,10.65,2.0,25.5,True
+SKU10067,WH-BER,30,72,FastTrack Logistics,4.9,0.6,1.0,30.0,True
+SKU10114,WH-SYD,59,74,GlobalSupplyCo,4.3,4.05,1.0,59.0,True
+SKU10009,WH-TOR,26,56,FastTrack Logistics,2.3,1.01,,,True
+SKU10012,WH-NY,27,44,GlobalSupplyCo,5.1,5.82,,,True
+SKU10016,WH-NY,65,66,UrbanTraders,4.5,1.76,,,True
+SKU10017,WH-NY,50,61,UrbanTraders,3.2,8.19,,,True
+SKU10018,WH-NY,16,34,UrbanTraders,1.0,10.66,,,True
+SKU10021,WH-SYD,52,72,UrbanTraders,4.6,7.71,,,True
+SKU10042,WH-TOR,9,66,PrimeWholesale,5.2,11.17,,,True
+SKU10044,WH-LON,25,76,PrimeWholesale,4.5,12.37,,,True
+SKU10051,WH-TOR,32,40,UrbanTraders,4.3,5.95,,,True
+SKU10051,WH-SYD,56,62,GlobalSupplyCo,6.1,14.83,,,True
+SKU10057,WH-TOR,35,63,UrbanTraders,2.4,1.05,,,True
+SKU10069,WH-SYD,57,57,UrbanTraders,2.5,4.29,,,True
+SKU10070,WH-BER,48,56,PrimeWholesale,2.3,9.77,,,True
+SKU10071,WH-TOR,29,37,UrbanTraders,2.7,6.62,,,True
+SKU10076,WH-BER,2,70,FastTrack Logistics,3.4,0.99,,,True
+SKU10077,WH-NY,15,71,PrimeWholesale,4.7,11.05,,,True
+SKU10078,WH-LON,15,60,UrbanTraders,5.0,4.95,,,True
+SKU10082,WH-BER,63,65,UrbanTraders,4.1,13.83,,,True
+SKU10084,WH-TOR,71,78,GlobalSupplyCo,1.2,9.07,,,True
+SKU10087,WH-TOR,8,25,UrbanTraders,5.2,14.26,,,True
+SKU10089,WH-SYD,12,67,UrbanTraders,4.9,9.1,,,True
+SKU10094,WH-NY,6,71,PrimeWholesale,5.3,5.3,,,True
+SKU10103,WH-TOR,8,34,GlobalSupplyCo,1.6,6.67,,,True
+SKU10103,WH-NY,26,32,GlobalSupplyCo,2.6,4.54,,,True
+SKU10108,WH-TOR,24,27,FastTrack Logistics,3.8,10.01,,,True
+SKU10111,WH-BER,61,65,GlobalSupplyCo,3.6,14.49,,,True
+SKU10113,WH-NY,29,70,FastTrack Logistics,2.3,0.57,,,True
+SKU10118,WH-SYD,2,21,FastTrack Logistics,6.9,12.39,,,True
+SKU10121,WH-TOR,42,63,PrimeWholesale,2.3,13.07,,,True
+SKU10128,WH-SYD,51,66,PrimeWholesale,6.8,13.78,,,True
+SKU10129,WH-TOR,32,47,FastTrack Logistics,3.0,11.41,,,True
+SKU10133,WH-BER,15,65,PrimeWholesale,1.9,8.22,,,True
+SKU10134,WH-BER,42,56,PrimeWholesale,1.6,0.51,,,True
+SKU10141,WH-BER,41,51,FastTrack Logistics,3.5,2.12,,,True
+SKU10144,WH-TOR,38,49,FastTrack Logistics,3.9,11.83,,,True
+SKU10145,WH-SYD,18,56,GlobalSupplyCo,1.4,0.65,,,True
+SKU10146,WH-LON,16,64,FastTrack Logistics,5.7,13.89,,,True
+SKU10148,WH-BER,34,55,GlobalSupplyCo,3.1,9.92,,,True
+SKU10155,WH-SYD,23,56,FastTrack Logistics,3.8,13.67,,,True
+SKU10156,WH-TOR,1,23,FastTrack Logistics,5.1,0.88,,,True
+SKU10159,WH-SYD,27,29,PrimeWholesale,3.0,11.9,,,True
+SKU10161,WH-NY,17,34,PrimeWholesale,4.4,9.05,,,True
+SKU10166,WH-TOR,10,27,UrbanTraders,1.1,4.51,,,True
+SKU10180,WH-TOR,10,79,GlobalSupplyCo,6.0,0.66,,,True
+SKU10182,WH-BER,52,67,GlobalSupplyCo,3.8,9.87,,,True
+SKU10192,WH-LON,40,50,UrbanTraders,2.3,11.13,,,True
+SKU10194,WH-TOR,42,63,UrbanTraders,2.9,2.85,,,True
+SKU10195,WH-LON,28,37,PrimeWholesale,2.4,5.91,,,True
+SKU10196,WH-NY,31,39,GlobalSupplyCo,3.2,3.3,,,True

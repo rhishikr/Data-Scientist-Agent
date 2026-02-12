@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "generated_at": "2026-02-12T03:17:03.928081Z",
+    "as_of": "2025-10-31T21:34:33.064829",
+    "datasets_used": [
+      "customers",
+      "inventory",
+      "marketing",
+      "payments",
+      "products",
+      "transactions",
+      "web_analytics",
+      "customers_features",
+      "products_features",
+      "transactions_features"
+    ]
+  },
+  "forecasts": {
+    "forecasted_revenue": {
+      "as_of": "2025-10-31T21:34:33.064829",
+      "next_7d": 4508.219139539088,
+      "next_30d": 20594.121463249685,
+      "next_90d": 61426.855896625515,
+      "series_daily_path": "revenue_forecast_daily.csv",
+      "metrics": {
+        "mae": 650.0221564001747,
+        "mape": 167747902660.73743,
+        "train_rows": 612,
+        "test_rows": 30
+      }
+    },
+    "forecasted_demand_per_sku": {
+      "error": "Found array with 0 sample(s) (shape=(0, 18)) while a minimum of 1 is required by HistGradientBoostingRegressor."
+    },
+    "expected_churn_next_month": {
+      "as_of": "2025-10-31T21:34:33.064829",
+      "snapshot_date": "2025-10-28T00:00:00",
+      "expected_churn_rate_next_30d": 0.8814319922405568,
+      "top_customers_path": "churn_predictions.csv",
+      "definition": "churn_30d = no purchase in next 30 days after snapshot date",
+      "metrics": {
+        "roc_auc": 0.6425904088050315,
+        "avg_precision": 0.939600152047443,
+        "train_rows": 5126,
+        "test_rows": 932,
+        "positive_rate_train": 0.7922356613343737,
+        "positive_rate_test": 0.9098712446351931
+      }
+    },
+    "projected_cashflow": {
+      "as_of": "2025-10-31T21:34:33.064829",
+      "next_30d_cash_proxy": 28525.142393445392,
+      "series_daily_path": "cashflow_forecast_daily.csv",
+      "metrics": {
+        "mae": 600.9994680640149,
+        "train_rows": 514,
+        "test_rows": 24,
+        "note": "cashflow is a proxy (revenue - refunds aligned to order_date), not settlement-timing cash"
+      },
+      "note": "Proxy cashflow = revenue - refunds aligned to order_date; add payment_date for true timing."
+    }
+  },
+  "executive_insights": {
+    "key_drivers_of_growth_decline": [
+      "marketing: conversions vs revenue (Spearman) p_adj=0 effect=0.8861404054494878",
+      "web_analytics: action vs add_to_cart (Chi-square) p_adj=0 effect=1.0",
+      "customers_features: total_spend vs monetary_value (Pearson) p_adj=0 effect=1.0",
+      "customers_features: total_spend vs monetary_value (Spearman) p_adj=0 effect=1.0",
+      "transactions_features: unit_price vs cost_price (Pearson) p_adj=0 effect=0.9238554913488844"
+    ],
+    "top_3_risks": [
+      {
+        "title": "Rising churn risk",
+        "evidence": {
+          "expected_churn_rate_next_30d": 0.8814319922405568,
+          "top_at_risk_customers_path": "churn_predictions.csv"
+        }
+      }
+    ],
+    "top_3_opportunities": [
+      {
+        "title": "Retention targeting",
+        "evidence": {
+          "suggestion": "Use churn_predictions.csv to target high-risk customers first."
+        }
+      }
+    ],
+    "recommended_actions_rule_based": [
+      "Review churn_predictions.csv and prioritize outreach for the highest-risk customers.",
+      "Track forecast vs actual weekly; retrain monthly or when drift is observed."
+    ],
+    "recommended_actions_llm_context": {
+      "what_to_do": "Write 3 recommended actions in business language. Keep them feasible and tie each to evidence.",
+      "constraints": [
+        "Do NOT invent numbers; only use provided metrics.",
+        "Prefer retention offers over site-wide discounts when churn risk is high.",
+        "Mention any hypothesis-supported drivers if relevant."
+      ],
+      "evidence": {
+        "forecasted_revenue_next_30d": 20594.121463249685,
+        "expected_churn_rate_next_30d": 0.8814319922405568,
+        "top_hypothesis_findings": [
+          "marketing: conversions vs revenue (Spearman) p_adj=0 effect=0.8861404054494878",
+          "web_analytics: action vs add_to_cart (Chi-square) p_adj=0 effect=1.0",
+          "customers_features: total_spend vs monetary_value (Pearson) p_adj=0 effect=1.0",
+          "customers_features: total_spend vs monetary_value (Spearman) p_adj=0 effect=1.0",
+          "transactions_features: unit_price vs cost_price (Pearson) p_adj=0 effect=0.9238554913488844"
+        ],
+        "files": {
+          "revenue_forecast_daily": "revenue_forecast_daily.csv",
+          "churn_predictions": "churn_predictions.csv",
+          "demand_forecast_sku": null
+        }
+      },
+      "example_style": "Concise, exec-friendly, action-oriented bullets."
+    },
+    "summary": [
+      "If current patterns continue, forecasted revenue is ~20,594 in the next 30 days.",
+      "Expected churn over the next month is ~88.1% (30-day inactivity proxy)."
+    ]
+  }
+}

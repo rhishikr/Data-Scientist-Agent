@@ -1,0 +1,113 @@
+{
+  "model_cards": [
+    {
+      "model_id": "revenue_hgbr_v1",
+      "task": "forecasting",
+      "target": "daily_revenue",
+      "training_window": {
+        "end": "2025-10-31T21:34:33.064829",
+        "notes": "daily revenue from transactions"
+      },
+      "features_used": [
+        "dow",
+        "dom",
+        "month",
+        "weekofyear",
+        "is_weekend",
+        "revenue_lag_1",
+        "revenue_lag_7",
+        "revenue_lag_14",
+        "revenue_lag_28",
+        "revenue_roll_mean_7",
+        "revenue_roll_std_7",
+        "revenue_roll_mean_14",
+        "revenue_roll_std_14",
+        "revenue_roll_mean_28",
+        "revenue_roll_std_28"
+      ],
+      "metrics": {
+        "mae": 650.0221564001747,
+        "mape": 167747902660.73743,
+        "train_rows": 612,
+        "test_rows": 30
+      },
+      "caveats": [
+        "Does not incorporate future promo calendar unless you add it as exogenous features.",
+        "Recursive forecasting can drift on longer horizons; monitor weekly."
+      ]
+    },
+    {
+      "model_id": "churn_logreg_cal_v1",
+      "task": "classification",
+      "target": "churn_30d",
+      "training_window": {
+        "end": "2025-10-31T21:34:33.064829",
+        "notes": "rolling weekly snapshots from transactions"
+      },
+      "features_used": [
+        "orders_30d",
+        "revenue_30d",
+        "orders_90d",
+        "revenue_90d",
+        "recency_days_x",
+        "avg_session_time_min",
+        "wishlist_items_count",
+        "total_orders",
+        "total_quantity",
+        "total_spend",
+        "avg_order_value",
+        "recency_days_y",
+        "orders_per_active_day",
+        "monetary_value"
+      ],
+      "metrics": {
+        "roc_auc": 0.6425904088050315,
+        "avg_precision": 0.939600152047443,
+        "train_rows": 5126,
+        "test_rows": 932,
+        "positive_rate_train": 0.7922356613343737,
+        "positive_rate_test": 0.9098712446351931
+      },
+      "caveats": [
+        "Churn is a proxy label based on inactivity window; tune horizon based on business cycle.",
+        "Monitor calibration drift monthly."
+      ]
+    },
+    {
+      "model_id": "cashflow_proxy_hgbr_v1",
+      "task": "forecasting",
+      "target": "daily_cash_proxy",
+      "training_window": {
+        "end": "2025-10-31T21:34:33.064829",
+        "notes": "cashflow proxy from transactions/payments"
+      },
+      "features_used": [
+        "dow",
+        "dom",
+        "month",
+        "weekofyear",
+        "is_weekend",
+        "cash_proxy_lag_1",
+        "cash_proxy_lag_7",
+        "cash_proxy_lag_14",
+        "cash_proxy_lag_28",
+        "cash_proxy_roll_mean_7",
+        "cash_proxy_roll_std_7",
+        "cash_proxy_roll_mean_14",
+        "cash_proxy_roll_std_14",
+        "cash_proxy_roll_mean_28",
+        "cash_proxy_roll_std_28"
+      ],
+      "metrics": {
+        "mae": 600.9994680640149,
+        "train_rows": 514,
+        "test_rows": 24,
+        "note": "cashflow is a proxy (revenue - refunds aligned to order_date), not settlement-timing cash"
+      },
+      "caveats": [
+        "This is NOT settlement-timing cashflow (missing payment_date).",
+        "Add payment_date/payment_amount for real cash timing forecasts."
+      ]
+    }
+  ]
+}

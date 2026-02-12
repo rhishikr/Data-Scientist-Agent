@@ -1,0 +1,70 @@
+  web_session:
+    keys: [session_id]
+    fields:
+      session_id:
+        synonyms: [visit_id, session, web_session_id]
+        dtype: string
+      customer_id:
+        synonyms: [user_id, shopper_id]
+        dtype: string
+      session_start:
+        synonyms: [start_time, session_time, session_datetime, timestamp]
+        dtype: datetime
+
+      # page counts
+      session_pages:
+        synonyms: [pages, pageviews, hits, total_pages, productrelated]   # Online Shoppers: ProductRelated ~ total pages
+        dtype: float
+      admin_pages:
+        synonyms: [administrative]
+        dtype: float
+      info_pages:
+        synonyms: [informational]
+        dtype: float
+
+      # durations (seconds)
+      session_duration:
+        synonyms: [duration, total_duration, dwell_time, time_on_site, productrelated_duration]
+        dtype: float
+      admin_duration:
+        synonyms: [administrative_duration]
+        dtype: float
+      info_duration:
+        synonyms: [informational_duration]
+        dtype: float
+
+      bounce_rate:
+        synonyms: [bounce, bouncerate, bouncerates]
+        dtype: float
+      exit_rate:
+        synonyms: [exitrate, exitrates]
+        dtype: float
+      page_value:
+        synonyms: [pagevalue, pagevalues, pv]
+        dtype: float
+      special_day:
+        synonyms: [specialday, promo_day, holiday_flag]
+        dtype: float
+      weekend:
+        synonyms: [is_weekend, wknd]
+        dtype: float
+
+      # categoricals
+      month_name:
+        synonyms: [month]
+        dtype: string
+      operating_system:
+        synonyms: [operatingsystems, os]
+        dtype: string
+      browser:
+        synonyms: [useragent_browser, agent_browser]
+        dtype: string
+      traffic_source:
+        synonyms: [source, medium, campaign, traffictype, channel]
+        dtype: string
+      visitor_type:
+        synonyms: [visitortype, segment, loyalty_segment]
+        dtype: string
+      region:
+        synonyms: [market, geo, area, state, province]
+        dtype: string

@@ -1,0 +1,51 @@
+sku,name,category,brand,discount_percent,average_rating,retail_price,cost_price
+SKU10172,Product 172,Clothing,Zenith,20,3.04,207.41,163.31
+SKU10198,Product 198,Books,Acme,20,3.0,235.58,136.6
+SKU10165,Product 165,Clothing,Terra,15,3.14,35.28,20.91
+SKU10174,Product 174,Electronics,Orion,15,3.07,164.62,131.63
+SKU10018,Product 18,Sports,Zenith,30,3.88,162.38,110.55
+SKU10034,Product 34,Books,Helios,30,3.21,47.15,32.8
+SKU10067,Product 67,Home & Kitchen,Nova,30,3.45,426.35,175.49
+SKU10068,Product 68,Books,Zenith,30,3.82,268.29,166.97
+SKU10077,Product 77,Sports,Nova,30,4.54,110.34,86.9
+SKU10133,Product 133,Beauty,Nova,30,3.38,329.2,148.25
+SKU10147,Product 147,Sports,Zenith,30,3.52,285.23,173.02
+SKU10159,Product 159,Books,Nova,30,4.03,113.78,53.14
+SKU10193,Product 193,Sports,Acme,30,4.67,127.21,54.96
+SKU10195,Product 195,Home & Kitchen,Acme,30,4.82,67.65,31.93
+SKU10013,Product 13,Electronics,Orion,20,3.61,328.9,192.16
+SKU10014,Product 14,Books,Acme,20,4.24,19.86,14.5
+SKU10029,Product 29,Beauty,Zenith,20,3.59,126.11,52.94
+SKU10036,Product 36,Sports,Terra,20,3.98,191.23,113.17
+SKU10038,Product 38,Home & Kitchen,Helios,20,4.33,7.45,5.82
+SKU10042,Product 42,Home & Kitchen,Zenith,20,3.26,161.98,100.48
+SKU10043,Product 43,Home & Kitchen,Nova,20,4.48,193.65,86.01
+SKU10045,Product 45,Sports,Zenith,20,3.63,112.16,70.4
+SKU10073,Product 73,Books,Terra,20,4.76,83.81,40.27
+SKU10084,Product 84,Electronics,Orion,20,4.65,61.8,32.3
+SKU10085,Product 85,Home & Kitchen,Zenith,20,4.72,124.47,86.08
+SKU10086,Product 86,Books,Helios,20,3.93,239.23,111.97
+SKU10112,Product 112,Sports,Orion,20,4.0,256.22,149.74
+SKU10126,Product 126,Sports,Zenith,20,4.26,214.87,86.72
+SKU10131,Product 131,Beauty,Acme,20,4.45,177.04,101.77
+SKU10137,Product 137,Sports,Terra,20,3.25,68.06,39.01
+SKU10142,Product 142,Books,Nova,20,4.08,136.54,84.44
+SKU10150,Product 150,Clothing,Orion,20,4.37,211.77,121.4
+SKU10156,Product 156,Home & Kitchen,Helios,20,4.52,57.09,40.25
+SKU10163,Product 163,Electronics,Zenith,20,3.64,164.53,88.17
+SKU10000,Product 0,Beauty,Terra,15,3.89,180.45,82.57
+SKU10002,Product 2,Books,Helios,15,3.9,159.42,99.24
+SKU10024,Product 24,Sports,Zenith,15,3.5,30.12,20.05
+SKU10031,Product 31,Books,Acme,15,3.86,430.88,197.95
+SKU10041,Product 41,Beauty,Nova,15,3.87,129.62,85.1
+SKU10044,Product 44,Books,Zenith,15,4.29,22.64,9.68
+SKU10057,Product 57,Beauty,Helios,15,4.86,185.93,137.12
+SKU10058,Product 58,Electronics,Zenith,15,4.72,179.28,111.65
+SKU10075,Product 75,Sports,Zenith,15,4.08,163.84,70.17
+SKU10079,Product 79,Clothing,Helios,15,4.18,304.28,167.36
+SKU10088,Product 88,Electronics,Helios,15,4.89,211.12,106.32
+SKU10096,Product 96,Books,Terra,15,4.63,371.78,176.52
+SKU10106,Product 106,Clothing,Acme,15,4.43,236.92,117.24
+SKU10109,Product 109,Home & Kitchen,Orion,15,3.99,273.81,112.93
+SKU10135,Product 135,Clothing,Nova,15,4.9,269.79,119.04
+SKU10145,Product 145,Sports,Terra,15,4.93,76.42,43.28

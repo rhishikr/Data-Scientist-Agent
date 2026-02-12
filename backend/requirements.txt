@@ -9,3 +9,7 @@ langchain
 langchain-core
 
 
+pyarrow
+featuretools
+woodwork
+pyyaml

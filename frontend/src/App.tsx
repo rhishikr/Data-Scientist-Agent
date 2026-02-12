@@ -34,20 +34,20 @@ import {
 import { HomeScreen } from "./components/HomeScreen";
 import { DataSourcesScreen } from "./components/DataSourcesScreen";
 import { PipelineScreen } from "./components/PipelineScreen";
-import { CustomerInsightsScreen } from "./components/CustomerInsightsScreen";
+import { CustomerInsightsScreen } from "./components/insightsScreen/CustomerInsightsScreen";
 import { InventorySalesScreen } from "./components/InventorySalesScreen";
 import { LLMAssistantScreen } from "./components/LLMAssistantScreen";
 import { ReportsScreen } from "./components/ReportsScreen";
 import { SettingsScreen } from "./components/SettingsScreen";
 
 const menuItems = [
-  { id: "home", label: "Home", icon: Home },
-  { id: "data-sources", label: "Data Sources", icon: Database },
-  { id: "pipelines", label: "Pipelines", icon: GitBranch },
-  { id: "customer-insights", label: "Customer Insights", icon: Users },
-  { id: "inventory-sales", label: "Inventory & Sales", icon: Package },
+  // { id: "home", label: "Home", icon: Home },
+  // { id: "data-sources", label: "Data Sources", icon: Database },
+  // { id: "pipelines", label: "Pipelines", icon: GitBranch },
+  { id: "customer-insights", label: "Insights and Predictions", icon: Users },
+  // { id: "inventory-sales", label: "Inventory & Sales", icon: Package },
   { id: "llm-assistant", label: "LLM Assistant", icon: MessageSquare },
-  { id: "reports", label: "Reports", icon: FileText },
+  // { id: "reports", label: "Reports", icon: FileText },
   { id: "settings", label: "Settings", icon: Settings },
 ];
 
@@ -57,24 +57,24 @@ export default function App() {
 
   const renderContent = () => {
     switch (activeSection) {
-      case "home":
-        return <HomeScreen />;
+      // case "home":
+      //   return <HomeScreen />;
       case "data-sources":
         return <DataSourcesScreen />;
-      case "pipelines":
-        return <PipelineScreen />;
+      // case "pipelines":
+      //   return <PipelineScreen />;
       case "customer-insights":
         return <CustomerInsightsScreen />;
-      case "inventory-sales":
-        return <InventorySalesScreen />;
+      // case "inventory-sales":
+      //   return <InventorySalesScreen />;
       case "llm-assistant":
         return <LLMAssistantScreen />;
-      case "reports":
-        return <ReportsScreen />;
+      // case "reports":
+      //   return <ReportsScreen />;
       case "settings":
         return <SettingsScreen />;
       default:
-        return <HomeScreen />;
+        return <CustomerInsightsScreen />;
     }
   };
 
