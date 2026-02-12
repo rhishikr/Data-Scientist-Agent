@@ -1,0 +1,829 @@
+insight_id,title,description,evidence,recommendation,severity,confidence,datasets_used,hypothesis_support,created_at,doc,tags
+cust_engaged_no_purchase,Engaged customers are not converting into purchases,"A segment of customers shows high engagement signals (time on site and/or wishlist activity) but no recorded purchases. This often indicates conversion friction (checkout, pricing, shipping trust, or product fit).","{""count_customers"": 16, ""total_customers"": 500, ""derived_rules"": {""engaged_session_min"": 16.3, ""engaged_wishlist_min"": 4.0}, ""examples"": [{""customer_id"": ""CUST1002"", ""location"": ""New York, USA"", ""device_type"": ""desktop"", ""avg_session_time_min"": 4.7, ""wishlist_items_count"": 4}, {""customer_id"": ""CUST1011"", ""location"": ""Berlin, Germany"", ""device_type"": ""mobile"", ""avg_session_time_min"": 11.4, ""wishlist_items_count"": 4}, {""customer_id"": ""CUST1028"", ""location"": ""Berlin, Germany"", ""device_type"": ""desktop"", ""avg_session_time_min"": 15.6, ""wishlist_items_count"": 4}, {""customer_id"": ""CUST1062"", ""location"": ""São Paulo, Brazil"", ""device_type"": ""mobile"", ""avg_session_time_min"": 18.3, ""wishlist_items_count"": 2}, {""customer_id"": ""CUST1095"", ""location"": ""Toronto, Canada"", ""device_type"": ""mobile"", ""avg_session_time_min"": 7.9, ""wishlist_items_count"": 4}, {""customer_id"": ""CUST1103"", ""location"": ""New York, USA"", ""device_type"": ""desktop"", ""avg_session_time_min"": 7.3, ""wishlist_items_count"": 7}, {""customer_id"": ""CUST1137"", ""location"": ""Toronto, Canada"", ""device_type"": ""mobile"", ""avg_session_time_min"": 4.6, ""wishlist_items_count"": 5}, {""customer_id"": ""CUST1143"", ""location"": ""São Paulo, Brazil"", ""device_type"": ""mobile"", ""avg_session_time_min"": 11.3, ""wishlist_items_count"": 4}, {""customer_id"": ""CUST1163"", ""location"": ""Mumbai, India"", ""device_type"": ""mobile"", ""avg_session_time_min"": 8.8, ""wishlist_items_count"": 4}, {""customer_id"": ""CUST1245"", ""location"": ""Tokyo, Japan"", ""device_type"": ""mobile"", ""avg_session_time_min"": 4.3, ""wishlist_items_count"": 5}, {""customer_id"": ""CUST1273"", ""location"": ""London, UK"", ""device_type"": ""tablet"", ""avg_session_time_min"": 14.2, ""wishlist_items_count"": 5}, {""customer_id"": ""CUST1290"", ""location"": ""New York, USA"", ""device_type"": ""mobile"", ""avg_session_time_min"": 1.4, ""wishlist_items_count"": 5}]}","Investigate conversion friction for this segment: audit checkout steps, validate pricing/competitiveness, improve trust signals, and run targeted retargeting campaigns. Track the conversion rate of this segment after changes.",medium,0.33097659550215935,customers_features,"[{""dataset"": ""customers_features"", ""x"": ""total_spend"", ""y"": ""monetary_value"", ""test"": ""Pearson"", ""stat"": 1.0, ""p_value"": 0.0, ""n"": 461, ""effect_size"": 1.0, ""notes"": ""numeric-numeric"", ""p_adj"": 0.0, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_spend"", ""y"": ""monetary_value"", ""test"": ""Spearman"", ""stat"": 1.0, ""p_value"": 0.0, ""n"": 461, ""effect_size"": 1.0, ""notes"": ""numeric-numeric"", ""p_adj"": 0.0, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_orders"", ""y"": ""total_quantity"", ""test"": ""Pearson"", ""stat"": 0.8881634279761764, ""p_value"": 4.198839251954024e-157, ""n"": 461, ""effect_size"": 0.8881634279761764, ""notes"": ""numeric-numeric"", ""p_adj"": 8.855733695030306e-156, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_orders"", ""y"": ""total_quantity"", ""test"": ""Spearman"", ""stat"": 0.8708430169928771, ""p_value"": 1.1606064938710377e-143, ""n"": 461, ""effect_size"": 0.8708430169928771, ""notes"": ""numeric-numeric"", ""p_adj"": 2.375829763924242e-142, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_quantity"", ""y"": ""total_spend"", ""test"": ""Spearman"", ""stat"": 0.8076052329686696, ""p_value"": 2.458799846432245e-107, ""n"": 461, ""effect_size"": 0.8076052329686696, ""notes"": ""numeric-numeric"", ""p_adj"": 4.1739626661386406e-106, ""significant"": true}]",2026-02-10T02:45:30.517154Z,"Title: Engaged customers are not converting into purchases
+Severity: medium
+Confidence: 0.3310
+
+What is happening:
+A segment of customers shows high engagement signals (time on site and/or wishlist activity) but no recorded purchases. This often indicates conversion friction (checkout, pricing, shipping trust, or product fit).
+
+Evidence (structured):
+{
+  ""count_customers"": 16,
+  ""total_customers"": 500,
+  ""derived_rules"": {
+    ""engaged_session_min"": 16.3,
+    ""engaged_wishlist_min"": 4.0
+  },
+  ""examples"": [
+    {
+      ""customer_id"": ""CUST1002"",
+      ""location"": ""New York, USA"",
+      ""device_type"": ""desktop"",
+      ""avg_session_time_min"": 4.7,
+      ""wishlist_items_count"": 4
+    },
+    {
+      ""customer_id"": ""CUST1011"",
+      ""location"": ""Berlin, Germany"",
+      ""device_type"": ""mobile"",
+      ""avg_session_time_min"": 11.4,
+      ""wishlist_items_count"": 4
+    },
+    {
+      ""customer_id"": ""CUST1028"",
+      ""location"": ""Berlin, Germany"",
+      ""device_type"": ""desktop"",
+      ""avg_session_time_min"": 15.6,
+      ""wishlist_items_count"": 4
+    },
+    {
+      ""customer_id"": ""CUST1062"",
+      ""location"": ""São Paulo, Brazil"",
+      ""device_type"": ""mobile"",
+      ""avg_session_time_min"": 18.3,
+      ""wishlist_items_count"": 2
+    },
+    {
+      ""customer_id"": ""CUST1095"",
+      ""location"": ""Toronto, Canada"",
+      ""device_type"": ""mobile"",
+      ""avg_session_time_min"": 7.9,
+      ""wishlist_items_count"": 4
+    },
+    {
+      ""customer_id"": ""CUST1103"",
+      ""location"": ""New York, USA"",
+      ""device_type"": ""desktop"",
+      ""avg_session_time_min"": 7.3,
+      ""wishlist_items_count"": 7
+    },
+    {
+      ""customer_id"": ""CUST1137"",
+      ""location"": ""Toronto, Canada"",
+      ""device_type"": ""mobile"",
+      ""avg_session_time_min"": 4.6,
+      ""wishlist_items_count"": 5
+    },
+    {
+      ""customer_id"": ""CUST1143"",
+      ""location"": ""São Paulo, Brazil"",
+      ""device_type"": ""mobile"",
+      ""avg_session_time_min"": 11.3,
+      ""wishlist_items_count"": 4
+    },
+    {
+      ""customer_id"": ""CUST1163"",
+      ""location"": ""Mumbai, India"",
+      ""device_type"": ""mobile"",
+      ""avg_session_time_min"": 8.8,
+      ""wishlist_items_count"": 4
+    },
+    {
+      ""customer_id"": ""CUST1245"",
+      ""location"": ""Tokyo, Japan"",
+      ""device_type"": ""mobile"",
+      ""avg_session_time_min"": 4.3,
+      ""wishlist_items_count"": 5
+    },
+    {
+      ""customer_id"": ""CUST1273"",
+      ""location"": ""London, UK"",
+      ""device_type"": ""tablet"",
+      ""avg_session_time_min"": 14.2,
+      ""wishlist_items_count"": 5
+    },
+    {
+      ""customer_id"": ""CUST1290"",
+      ""location"": ""New York, USA"",
+      ""device_type"": ""mobile"",
+      ""avg_session_time_min"": 1.4,
+      ""wishlist_items_count"": 5
+    }
+  ]
+}
+
+Recommended action:
+Investigate conversion friction for this segment: audit checkout steps, validate pricing/competitiveness, improve trust signals, and run targeted retargeting campaigns. Track the conversion rate of this segment after changes.
+
+Statistical support (significant & meaningful relationships):
+- customers_features: total_spend vs monetary_value (Pearson) | n=461 | adj_p=0.0 | effect=1.0
+- customers_features: total_spend vs monetary_value (Spearman) | n=461 | adj_p=0.0 | effect=1.0
+- customers_features: total_orders vs total_quantity (Pearson) | n=461 | adj_p=8.855733695030306e-156 | effect=0.8881634279761764
+- customers_features: total_orders vs total_quantity (Spearman) | n=461 | adj_p=2.375829763924242e-142 | effect=0.8708430169928771
+- customers_features: total_quantity vs total_spend (Spearman) | n=461 | adj_p=4.1739626661386406e-106 | effect=0.8076052329686696
+
+Datasets used: customers_features
+Tags: customer, conversion, engagement
+Generated at: 2026-02-10T02:45:30.517154Z","customer,conversion,engagement"
+cust_at_risk,A segment of buyers is becoming inactive (at-risk),Buyers with purchase history show elevated inactivity based on the natural separation in the recency distribution. This is an early warning signal for churn if they are not re-engaged.,"{""segment"": ""at_risk"", ""threshold_recency_days"": 269.0, ""count_customers"": 144, ""total_buyers"": 461, ""revenue_share_of_buyers"": 0.21250914507854443, ""examples"": [{""customer_id"": ""CUST1003"", ""location"": ""New York, USA"", ""device_type"": ""mobile"", ""total_orders"": 2.0, ""total_spend"": 625.12, ""recency_days"": 424.0, ""top_product_id"": ""SKU10018""}, {""customer_id"": ""CUST1010"", ""location"": ""Berlin, Germany"", ""device_type"": ""mobile"", ""total_orders"": 3.0, ""total_spend"": 1497.26, ""recency_days"": 321.0, ""top_product_id"": ""SKU10083""}, {""customer_id"": ""CUST1016"", ""location"": ""Toronto, Canada"", ""device_type"": ""desktop"", ""total_orders"": 1.0, ""total_spend"": 612.94, ""recency_days"": 482.0, ""top_product_id"": ""SKU10176""}, {""customer_id"": ""CUST1017"", ""location"": ""London, UK"", ""device_type"": ""desktop"", ""total_orders"": 1.0, ""total_spend"": 254.0, ""recency_days"": 611.0, ""top_product_id"": ""SKU10148""}, {""customer_id"": ""CUST1018"", ""location"": ""Tokyo, Japan"", ""device_type"": ""mobile"", ""total_orders"": 1.0, ""total_spend"": 168.99, ""recency_days"": 322.0, ""top_product_id"": ""SKU10158""}, {""customer_id"": ""CUST1021"", ""location"": ""New York, USA"", ""device_type"": ""desktop"", ""total_orders"": 1.0, ""total_spend"": 406.04, ""recency_days"": 277.0, ""top_product_id"": ""SKU10111""}, {""customer_id"": ""CUST1038"", ""location"": ""New York, USA"", ""device_type"": ""mobile"", ""total_orders"": 3.0, ""total_spend"": 2288.42, ""recency_days"": 276.0, ""top_product_id"": ""SKU10040""}, {""customer_id"": ""CUST1040"", ""location"": ""Berlin, Germany"", ""device_type"": ""mobile"", ""total_orders"": 2.0, ""total_spend"": 255.4, ""recency_days"": 408.0, ""top_product_id"": ""SKU10141""}, {""customer_id"": ""CUST1044"", ""location"": ""Mumbai, India"", ""device_type"": ""mobile"", ""total_orders"": 1.0, ""total_spend"": 726.33, ""recency_days"": 325.0, ""top_product_id"": ""SKU10151""}, {""customer_id"": ""CUST1052"", ""location"": ""London, UK"", ""device_type"": ""mobile"", ""total_orders"": 1.0, ""total_spend"": 285.72, ""recency_days"": 555.0, ""top_product_id"": ""SKU10090""}, {""customer_id"": ""CUST1053"", ""location"": ""São Paulo, Brazil"", ""device_type"": ""desktop"", ""total_orders"": 2.0, ""total_spend"": 396.54, ""recency_days"": 411.0, ""top_product_id"": ""SKU10034""}, {""customer_id"": ""CUST1057"", ""location"": ""São Paulo, Brazil"", ""device_type"": ""desktop"", ""total_orders"": 1.0, ""total_spend"": 157.04, ""recency_days"": 650.0, ""top_product_id"": ""SKU10092""}]}","Trigger re-engagement for this segment: personalized messages based on past purchases, replenishment reminders, and targeted offers. Prioritize high historical spenders first and measure win-back conversion rate.",high,0.734072858170642,customers_features,"[{""dataset"": ""customers_features"", ""x"": ""total_spend"", ""y"": ""monetary_value"", ""test"": ""Pearson"", ""stat"": 1.0, ""p_value"": 0.0, ""n"": 461, ""effect_size"": 1.0, ""notes"": ""numeric-numeric"", ""p_adj"": 0.0, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_spend"", ""y"": ""monetary_value"", ""test"": ""Spearman"", ""stat"": 1.0, ""p_value"": 0.0, ""n"": 461, ""effect_size"": 1.0, ""notes"": ""numeric-numeric"", ""p_adj"": 0.0, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_orders"", ""y"": ""total_quantity"", ""test"": ""Pearson"", ""stat"": 0.8881634279761764, ""p_value"": 4.198839251954024e-157, ""n"": 461, ""effect_size"": 0.8881634279761764, ""notes"": ""numeric-numeric"", ""p_adj"": 8.855733695030306e-156, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_orders"", ""y"": ""total_quantity"", ""test"": ""Spearman"", ""stat"": 0.8708430169928771, ""p_value"": 1.1606064938710377e-143, ""n"": 461, ""effect_size"": 0.8708430169928771, ""notes"": ""numeric-numeric"", ""p_adj"": 2.375829763924242e-142, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_quantity"", ""y"": ""total_spend"", ""test"": ""Spearman"", ""stat"": 0.8076052329686696, ""p_value"": 2.458799846432245e-107, ""n"": 461, ""effect_size"": 0.8076052329686696, ""notes"": ""numeric-numeric"", ""p_adj"": 4.1739626661386406e-106, ""significant"": true}]",2026-02-10T02:45:30.981923Z,"Title: A segment of buyers is becoming inactive (at-risk)
+Severity: high
+Confidence: 0.7341
+
+What is happening:
+Buyers with purchase history show elevated inactivity based on the natural separation in the recency distribution. This is an early warning signal for churn if they are not re-engaged.
+
+Evidence (structured):
+{
+  ""segment"": ""at_risk"",
+  ""threshold_recency_days"": 269.0,
+  ""count_customers"": 144,
+  ""total_buyers"": 461,
+  ""revenue_share_of_buyers"": 0.21250914507854443,
+  ""examples"": [
+    {
+      ""customer_id"": ""CUST1003"",
+      ""location"": ""New York, USA"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 2.0,
+      ""total_spend"": 625.12,
+      ""recency_days"": 424.0,
+      ""top_product_id"": ""SKU10018""
+    },
+    {
+      ""customer_id"": ""CUST1010"",
+      ""location"": ""Berlin, Germany"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 3.0,
+      ""total_spend"": 1497.26,
+      ""recency_days"": 321.0,
+      ""top_product_id"": ""SKU10083""
+    },
+    {
+      ""customer_id"": ""CUST1016"",
+      ""location"": ""Toronto, Canada"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 612.94,
+      ""recency_days"": 482.0,
+      ""top_product_id"": ""SKU10176""
+    },
+    {
+      ""customer_id"": ""CUST1017"",
+      ""location"": ""London, UK"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 254.0,
+      ""recency_days"": 611.0,
+      ""top_product_id"": ""SKU10148""
+    },
+    {
+      ""customer_id"": ""CUST1018"",
+      ""location"": ""Tokyo, Japan"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 168.99,
+      ""recency_days"": 322.0,
+      ""top_product_id"": ""SKU10158""
+    },
+    {
+      ""customer_id"": ""CUST1021"",
+      ""location"": ""New York, USA"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 406.04,
+      ""recency_days"": 277.0,
+      ""top_product_id"": ""SKU10111""
+    },
+    {
+      ""customer_id"": ""CUST1038"",
+      ""location"": ""New York, USA"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 3.0,
+      ""total_spend"": 2288.42,
+      ""recency_days"": 276.0,
+      ""top_product_id"": ""SKU10040""
+    },
+    {
+      ""customer_id"": ""CUST1040"",
+      ""location"": ""Berlin, Germany"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 2.0,
+      ""total_spend"": 255.4,
+      ""recency_days"": 408.0,
+      ""top_product_id"": ""SKU10141""
+    },
+    {
+      ""customer_id"": ""CUST1044"",
+      ""location"": ""Mumbai, India"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 726.33,
+      ""recency_days"": 325.0,
+      ""top_product_id"": ""SKU10151""
+    },
+    {
+      ""customer_id"": ""CUST1052"",
+      ""location"": ""London, UK"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 285.72,
+      ""recency_days"": 555.0,
+      ""top_product_id"": ""SKU10090""
+    },
+    {
+      ""customer_id"": ""CUST1053"",
+      ""location"": ""São Paulo, Brazil"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 2.0,
+      ""total_spend"": 396.54,
+      ""recency_days"": 411.0,
+      ""top_product_id"": ""SKU10034""
+    },
+    {
+      ""customer_id"": ""CUST1057"",
+      ""location"": ""São Paulo, Brazil"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 157.04,
+      ""recency_days"": 650.0,
+      ""top_product_id"": ""SKU10092""
+    }
+  ]
+}
+
+Recommended action:
+Trigger re-engagement for this segment: personalized messages based on past purchases, replenishment reminders, and targeted offers. Prioritize high historical spenders first and measure win-back conversion rate.
+
+Statistical support (significant & meaningful relationships):
+- customers_features: total_spend vs monetary_value (Pearson) | n=461 | adj_p=0.0 | effect=1.0
+- customers_features: total_spend vs monetary_value (Spearman) | n=461 | adj_p=0.0 | effect=1.0
+- customers_features: total_orders vs total_quantity (Pearson) | n=461 | adj_p=8.855733695030306e-156 | effect=0.8881634279761764
+- customers_features: total_orders vs total_quantity (Spearman) | n=461 | adj_p=2.375829763924242e-142 | effect=0.8708430169928771
+- customers_features: total_quantity vs total_spend (Spearman) | n=461 | adj_p=4.1739626661386406e-106 | effect=0.8076052329686696
+
+Datasets used: customers_features
+Tags: customer, retention, at_risk
+Generated at: 2026-02-10T02:45:30.981923Z","customer,retention,at_risk"
+cust_churn_candidates,Churn candidates detected from prolonged inactivity,A subset of buyers has been inactive for a prolonged period based on the natural separation in the recency distribution. These customers are likely churned unless reactivated quickly.,"{""segment"": ""churn_candidates"", ""threshold_recency_days"": 424.0, ""count_customers"": 62, ""total_buyers"": 461, ""revenue_share_of_buyers"": 0.07577815174321163, ""examples"": [{""customer_id"": ""CUST1003"", ""location"": ""New York, USA"", ""device_type"": ""mobile"", ""total_orders"": 2.0, ""total_spend"": 625.12, ""recency_days"": 424.0, ""top_product_id"": ""SKU10018""}, {""customer_id"": ""CUST1016"", ""location"": ""Toronto, Canada"", ""device_type"": ""desktop"", ""total_orders"": 1.0, ""total_spend"": 612.94, ""recency_days"": 482.0, ""top_product_id"": ""SKU10176""}, {""customer_id"": ""CUST1017"", ""location"": ""London, UK"", ""device_type"": ""desktop"", ""total_orders"": 1.0, ""total_spend"": 254.0, ""recency_days"": 611.0, ""top_product_id"": ""SKU10148""}, {""customer_id"": ""CUST1052"", ""location"": ""London, UK"", ""device_type"": ""mobile"", ""total_orders"": 1.0, ""total_spend"": 285.72, ""recency_days"": 555.0, ""top_product_id"": ""SKU10090""}, {""customer_id"": ""CUST1057"", ""location"": ""São Paulo, Brazil"", ""device_type"": ""desktop"", ""total_orders"": 1.0, ""total_spend"": 157.04, ""recency_days"": 650.0, ""top_product_id"": ""SKU10092""}, {""customer_id"": ""CUST1059"", ""location"": ""Sydney, Australia"", ""device_type"": ""mobile"", ""total_orders"": 2.0, ""total_spend"": 336.67, ""recency_days"": 512.0, ""top_product_id"": ""SKU10024""}, {""customer_id"": ""CUST1061"", ""location"": ""Berlin, Germany"", ""device_type"": ""desktop"", ""total_orders"": 1.0, ""total_spend"": 917.08, ""recency_days"": 475.0, ""top_product_id"": ""SKU10001""}, {""customer_id"": ""CUST1076"", ""location"": ""Mumbai, India"", ""device_type"": ""mobile"", ""total_orders"": 1.0, ""total_spend"": 1345.74, ""recency_days"": 633.0, ""top_product_id"": ""SKU10144""}, {""customer_id"": ""CUST1083"", ""location"": ""Sydney, Australia"", ""device_type"": ""mobile"", ""total_orders"": 2.0, ""total_spend"": 783.96, ""recency_days"": 554.0, ""top_product_id"": ""SKU10094""}, {""customer_id"": ""CUST1085"", ""location"": ""New York, USA"", ""device_type"": ""mobile"", ""total_orders"": 1.0, ""total_spend"": 329.72, ""recency_days"": 486.0, ""top_product_id"": ""SKU10104""}, {""customer_id"": ""CUST1086"", ""location"": ""New York, USA"", ""device_type"": ""desktop"", ""total_orders"": 1.0, ""total_spend"": 406.04, ""recency_days"": 553.0, ""top_product_id"": ""SKU10168""}, {""customer_id"": ""CUST1090"", ""location"": ""Sydney, Australia"", ""device_type"": ""mobile"", ""total_orders"": 1.0, ""total_spend"": 235.49, ""recency_days"": 479.0, ""top_product_id"": ""SKU10197""}]}","Launch a win-back campaign: personalized offers, product reminders based on top_product_id, and outreach that prioritizes customers with the highest historical spend. Track time-to-reactivation.",high,0.5584282498412021,customers_features,"[{""dataset"": ""customers_features"", ""x"": ""total_spend"", ""y"": ""monetary_value"", ""test"": ""Pearson"", ""stat"": 1.0, ""p_value"": 0.0, ""n"": 461, ""effect_size"": 1.0, ""notes"": ""numeric-numeric"", ""p_adj"": 0.0, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_spend"", ""y"": ""monetary_value"", ""test"": ""Spearman"", ""stat"": 1.0, ""p_value"": 0.0, ""n"": 461, ""effect_size"": 1.0, ""notes"": ""numeric-numeric"", ""p_adj"": 0.0, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_orders"", ""y"": ""total_quantity"", ""test"": ""Pearson"", ""stat"": 0.8881634279761764, ""p_value"": 4.198839251954024e-157, ""n"": 461, ""effect_size"": 0.8881634279761764, ""notes"": ""numeric-numeric"", ""p_adj"": 8.855733695030306e-156, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_orders"", ""y"": ""total_quantity"", ""test"": ""Spearman"", ""stat"": 0.8708430169928771, ""p_value"": 1.1606064938710377e-143, ""n"": 461, ""effect_size"": 0.8708430169928771, ""notes"": ""numeric-numeric"", ""p_adj"": 2.375829763924242e-142, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_quantity"", ""y"": ""total_spend"", ""test"": ""Spearman"", ""stat"": 0.8076052329686696, ""p_value"": 2.458799846432245e-107, ""n"": 461, ""effect_size"": 0.8076052329686696, ""notes"": ""numeric-numeric"", ""p_adj"": 4.1739626661386406e-106, ""significant"": true}]",2026-02-10T02:45:31.406780Z,"Title: Churn candidates detected from prolonged inactivity
+Severity: high
+Confidence: 0.5584
+
+What is happening:
+A subset of buyers has been inactive for a prolonged period based on the natural separation in the recency distribution. These customers are likely churned unless reactivated quickly.
+
+Evidence (structured):
+{
+  ""segment"": ""churn_candidates"",
+  ""threshold_recency_days"": 424.0,
+  ""count_customers"": 62,
+  ""total_buyers"": 461,
+  ""revenue_share_of_buyers"": 0.07577815174321163,
+  ""examples"": [
+    {
+      ""customer_id"": ""CUST1003"",
+      ""location"": ""New York, USA"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 2.0,
+      ""total_spend"": 625.12,
+      ""recency_days"": 424.0,
+      ""top_product_id"": ""SKU10018""
+    },
+    {
+      ""customer_id"": ""CUST1016"",
+      ""location"": ""Toronto, Canada"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 612.94,
+      ""recency_days"": 482.0,
+      ""top_product_id"": ""SKU10176""
+    },
+    {
+      ""customer_id"": ""CUST1017"",
+      ""location"": ""London, UK"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 254.0,
+      ""recency_days"": 611.0,
+      ""top_product_id"": ""SKU10148""
+    },
+    {
+      ""customer_id"": ""CUST1052"",
+      ""location"": ""London, UK"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 285.72,
+      ""recency_days"": 555.0,
+      ""top_product_id"": ""SKU10090""
+    },
+    {
+      ""customer_id"": ""CUST1057"",
+      ""location"": ""São Paulo, Brazil"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 157.04,
+      ""recency_days"": 650.0,
+      ""top_product_id"": ""SKU10092""
+    },
+    {
+      ""customer_id"": ""CUST1059"",
+      ""location"": ""Sydney, Australia"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 2.0,
+      ""total_spend"": 336.67,
+      ""recency_days"": 512.0,
+      ""top_product_id"": ""SKU10024""
+    },
+    {
+      ""customer_id"": ""CUST1061"",
+      ""location"": ""Berlin, Germany"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 917.08,
+      ""recency_days"": 475.0,
+      ""top_product_id"": ""SKU10001""
+    },
+    {
+      ""customer_id"": ""CUST1076"",
+      ""location"": ""Mumbai, India"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 1345.74,
+      ""recency_days"": 633.0,
+      ""top_product_id"": ""SKU10144""
+    },
+    {
+      ""customer_id"": ""CUST1083"",
+      ""location"": ""Sydney, Australia"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 2.0,
+      ""total_spend"": 783.96,
+      ""recency_days"": 554.0,
+      ""top_product_id"": ""SKU10094""
+    },
+    {
+      ""customer_id"": ""CUST1085"",
+      ""location"": ""New York, USA"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 329.72,
+      ""recency_days"": 486.0,
+      ""top_product_id"": ""SKU10104""
+    },
+    {
+      ""customer_id"": ""CUST1086"",
+      ""location"": ""New York, USA"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 406.04,
+      ""recency_days"": 553.0,
+      ""top_product_id"": ""SKU10168""
+    },
+    {
+      ""customer_id"": ""CUST1090"",
+      ""location"": ""Sydney, Australia"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 1.0,
+      ""total_spend"": 235.49,
+      ""recency_days"": 479.0,
+      ""top_product_id"": ""SKU10197""
+    }
+  ]
+}
+
+Recommended action:
+Launch a win-back campaign: personalized offers, product reminders based on top_product_id, and outreach that prioritizes customers with the highest historical spend. Track time-to-reactivation.
+
+Statistical support (significant & meaningful relationships):
+- customers_features: total_spend vs monetary_value (Pearson) | n=461 | adj_p=0.0 | effect=1.0
+- customers_features: total_spend vs monetary_value (Spearman) | n=461 | adj_p=0.0 | effect=1.0
+- customers_features: total_orders vs total_quantity (Pearson) | n=461 | adj_p=8.855733695030306e-156 | effect=0.8881634279761764
+- customers_features: total_orders vs total_quantity (Spearman) | n=461 | adj_p=2.375829763924242e-142 | effect=0.8708430169928771
+- customers_features: total_quantity vs total_spend (Spearman) | n=461 | adj_p=4.1739626661386406e-106 | effect=0.8076052329686696
+
+Datasets used: customers_features
+Tags: customer, retention, churn_candidates
+Generated at: 2026-02-10T02:45:31.406780Z","customer,retention,churn_candidates"
+cust_revenue_concentration,Revenue is concentrated among a small group of customers,"Customer spend forms a naturally separated top group. Revenue concentration increases risk: if a small number of customers churn, total revenue can drop disproportionately.","{""top_spend_threshold"": 1716.56, ""top_customer_count"": 100, ""total_spenders"": 461, ""total_revenue"": 506665.96, ""top_group_revenue"": 236758.26, ""top_group_revenue_share"": 0.46728669121564825, ""examples"": [{""customer_id"": ""CUST1441"", ""location"": ""Toronto, Canada"", ""device_type"": ""mobile"", ""total_orders"": 3.0, ""total_spend"": 4001.3, ""recency_days"": 170.0}, {""customer_id"": ""CUST1097"", ""location"": ""Mumbai, India"", ""device_type"": ""tablet"", ""total_orders"": 7.0, ""total_spend"": 3984.73, ""recency_days"": 37.0}, {""customer_id"": ""CUST1232"", ""location"": ""Berlin, Germany"", ""device_type"": ""mobile"", ""total_orders"": 8.0, ""total_spend"": 3873.37, ""recency_days"": 224.0}, {""customer_id"": ""CUST1127"", ""location"": ""Toronto, Canada"", ""device_type"": ""desktop"", ""total_orders"": 4.0, ""total_spend"": 3715.19, ""recency_days"": 148.0}, {""customer_id"": ""CUST1299"", ""location"": ""Toronto, Canada"", ""device_type"": ""mobile"", ""total_orders"": 5.0, ""total_spend"": 3606.23, ""recency_days"": 215.0}, {""customer_id"": ""CUST1259"", ""location"": ""London, UK"", ""device_type"": ""mobile"", ""total_orders"": 7.0, ""total_spend"": 3513.02, ""recency_days"": 132.0}, {""customer_id"": ""CUST1348"", ""location"": ""Tokyo, Japan"", ""device_type"": ""desktop"", ""total_orders"": 3.0, ""total_spend"": 3471.13, ""recency_days"": 187.0}, {""customer_id"": ""CUST1022"", ""location"": ""Toronto, Canada"", ""device_type"": ""mobile"", ""total_orders"": 4.0, ""total_spend"": 3409.23, ""recency_days"": 100.0}, {""customer_id"": ""CUST1283"", ""location"": ""New York, USA"", ""device_type"": ""mobile"", ""total_orders"": 6.0, ""total_spend"": 3043.86, ""recency_days"": 131.0}, {""customer_id"": ""CUST1158"", ""location"": ""Sydney, Australia"", ""device_type"": ""mobile"", ""total_orders"": 6.0, ""total_spend"": 2989.56, ""recency_days"": 17.0}, {""customer_id"": ""CUST1248"", ""location"": ""Toronto, Canada"", ""device_type"": ""tablet"", ""total_orders"": 6.0, ""total_spend"": 2979.27, ""recency_days"": 61.0}, {""customer_id"": ""CUST1174"", ""location"": ""New York, USA"", ""device_type"": ""mobile"", ""total_orders"": 6.0, ""total_spend"": 2968.55, ""recency_days"": 23.0}]}","Create a retention plan for the top group: proactive outreach, loyalty benefits, and early-warning alerts when recency increases. Also invest in converting engaged non-buyers and growing mid-tier customers to reduce dependency.",high,0.6313621817602226,customers_features,"[{""dataset"": ""customers_features"", ""x"": ""total_spend"", ""y"": ""monetary_value"", ""test"": ""Pearson"", ""stat"": 1.0, ""p_value"": 0.0, ""n"": 461, ""effect_size"": 1.0, ""notes"": ""numeric-numeric"", ""p_adj"": 0.0, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_spend"", ""y"": ""monetary_value"", ""test"": ""Spearman"", ""stat"": 1.0, ""p_value"": 0.0, ""n"": 461, ""effect_size"": 1.0, ""notes"": ""numeric-numeric"", ""p_adj"": 0.0, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_quantity"", ""y"": ""total_spend"", ""test"": ""Spearman"", ""stat"": 0.8076052329686696, ""p_value"": 2.458799846432245e-107, ""n"": 461, ""effect_size"": 0.8076052329686696, ""notes"": ""numeric-numeric"", ""p_adj"": 4.1739626661386406e-106, ""significant"": true}, {""dataset"": ""customers_features"", ""x"": ""total_quantity"", ""y"": ""monetary_value"", ""test"": ""Spearman"", ""stat"": 0.8076052329686696, ""p_value"": 2.458799846432245e-107, ""n"": 461, ""effect_size"": 0.8076052329686696, ""notes"": ""numeric-numeric"", ""p_adj"": 4.1739626661386406e-106, ""significant"": true}]",2026-02-10T02:45:31.879469Z,"Title: Revenue is concentrated among a small group of customers
+Severity: high
+Confidence: 0.6314
+
+What is happening:
+Customer spend forms a naturally separated top group. Revenue concentration increases risk: if a small number of customers churn, total revenue can drop disproportionately.
+
+Evidence (structured):
+{
+  ""top_spend_threshold"": 1716.56,
+  ""top_customer_count"": 100,
+  ""total_spenders"": 461,
+  ""total_revenue"": 506665.96,
+  ""top_group_revenue"": 236758.26,
+  ""top_group_revenue_share"": 0.46728669121564825,
+  ""examples"": [
+    {
+      ""customer_id"": ""CUST1441"",
+      ""location"": ""Toronto, Canada"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 3.0,
+      ""total_spend"": 4001.3,
+      ""recency_days"": 170.0
+    },
+    {
+      ""customer_id"": ""CUST1097"",
+      ""location"": ""Mumbai, India"",
+      ""device_type"": ""tablet"",
+      ""total_orders"": 7.0,
+      ""total_spend"": 3984.73,
+      ""recency_days"": 37.0
+    },
+    {
+      ""customer_id"": ""CUST1232"",
+      ""location"": ""Berlin, Germany"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 8.0,
+      ""total_spend"": 3873.37,
+      ""recency_days"": 224.0
+    },
+    {
+      ""customer_id"": ""CUST1127"",
+      ""location"": ""Toronto, Canada"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 4.0,
+      ""total_spend"": 3715.19,
+      ""recency_days"": 148.0
+    },
+    {
+      ""customer_id"": ""CUST1299"",
+      ""location"": ""Toronto, Canada"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 5.0,
+      ""total_spend"": 3606.23,
+      ""recency_days"": 215.0
+    },
+    {
+      ""customer_id"": ""CUST1259"",
+      ""location"": ""London, UK"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 7.0,
+      ""total_spend"": 3513.02,
+      ""recency_days"": 132.0
+    },
+    {
+      ""customer_id"": ""CUST1348"",
+      ""location"": ""Tokyo, Japan"",
+      ""device_type"": ""desktop"",
+      ""total_orders"": 3.0,
+      ""total_spend"": 3471.13,
+      ""recency_days"": 187.0
+    },
+    {
+      ""customer_id"": ""CUST1022"",
+      ""location"": ""Toronto, Canada"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 4.0,
+      ""total_spend"": 3409.23,
+      ""recency_days"": 100.0
+    },
+    {
+      ""customer_id"": ""CUST1283"",
+      ""location"": ""New York, USA"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 6.0,
+      ""total_spend"": 3043.86,
+      ""recency_days"": 131.0
+    },
+    {
+      ""customer_id"": ""CUST1158"",
+      ""location"": ""Sydney, Australia"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 6.0,
+      ""total_spend"": 2989.56,
+      ""recency_days"": 17.0
+    },
+    {
+      ""customer_id"": ""CUST1248"",
+      ""location"": ""Toronto, Canada"",
+      ""device_type"": ""tablet"",
+      ""total_orders"": 6.0,
+      ""total_spend"": 2979.27,
+      ""recency_days"": 61.0
+    },
+    {
+      ""customer_id"": ""CUST1174"",
+      ""location"": ""New York, USA"",
+      ""device_type"": ""mobile"",
+      ""total_orders"": 6.0,
+      ""total_spend"": 2968.55,
+      ""recency_days"": 23.0
+    }
+  ]
+}
+
+Recommended action:
+Create a retention plan for the top group: proactive outreach, loyalty benefits, and early-warning alerts when recency increases. Also invest in converting engaged non-buyers and growing mid-tier customers to reduce dependency.
+
+Statistical support (significant & meaningful relationships):
+- customers_features: total_spend vs monetary_value (Pearson) | n=461 | adj_p=0.0 | effect=1.0
+- customers_features: total_spend vs monetary_value (Spearman) | n=461 | adj_p=0.0 | effect=1.0
+- customers_features: total_quantity vs total_spend (Spearman) | n=461 | adj_p=4.1739626661386406e-106 | effect=0.8076052329686696
+- customers_features: total_quantity vs monetary_value (Spearman) | n=461 | adj_p=4.1739626661386406e-106 | effect=0.8076052329686696
+
+Datasets used: customers_features
+Tags: customer, revenue, concentration, risk
+Generated at: 2026-02-10T02:45:31.879469Z","customer,revenue,concentration,risk"
+prod_low_rating_risk,Low-rated products may be creating quality and satisfaction risk,A naturally separated low-rating group exists in the catalog. Low ratings typically reduce conversion and can increase returns or refund pressure.,"{""low_rating_threshold"": 3.86, ""count_products"": 77, ""total_products"": 200, ""low_rating_revenue_share"": 0.4273010959725812, ""examples"": [{""product_id"": ""SKU10189"", ""category"": ""Clothing"", ""brand"": ""Terra"", ""average_rating"": 3.51, ""stock"": 373, ""total_revenue"": 10011.3, ""times_purchased"": 10}, {""product_id"": ""SKU10031"", ""category"": ""Books"", ""brand"": ""Acme"", ""average_rating"": 3.86, ""stock"": 55, ""total_revenue"": 9522.43, ""times_purchased"": 9}, {""product_id"": ""SKU10192"", ""category"": ""Clothing"", ""brand"": ""Orion"", ""average_rating"": 3.7, ""stock"": 44, ""total_revenue"": 8514.66, ""times_purchased"": 9}, {""product_id"": ""SKU10136"", ""category"": ""Books"", ""brand"": ""Acme"", ""average_rating"": 3.79, ""stock"": 28, ""total_revenue"": 7687.719999999999, ""times_purchased"": 7}, {""product_id"": ""SKU10080"", ""category"": ""Electronics"", ""brand"": ""Terra"", ""average_rating"": 3.43, ""stock"": 158, ""total_revenue"": 7455.8, ""times_purchased"": 7}, {""product_id"": ""SKU10186"", ""category"": ""Electronics"", ""brand"": ""Terra"", ""average_rating"": 3.44, ""stock"": 97, ""total_revenue"": 6740.42, ""times_purchased"": 6}, {""product_id"": ""SKU10067"", ""category"": ""Home & Kitchen"", ""brand"": ""Nova"", ""average_rating"": 3.45, ""stock"": 99, ""total_revenue"": 5968.88, ""times_purchased"": 11}, {""product_id"": ""SKU10116"", ""category"": ""Home & Kitchen"", ""brand"": ""Helios"", ""average_rating"": 3.7, ""stock"": 354, ""total_revenue"": 5618.860000000001, ""times_purchased"": 8}, {""product_id"": ""SKU10010"", ""category"": ""Clothing"", ""brand"": ""Zenith"", ""average_rating"": 3.6, ""stock"": 48, ""total_revenue"": 5573.04, ""times_purchased"": 8}, {""product_id"": ""SKU10019"", ""category"": ""Home & Kitchen"", ""brand"": ""Nova"", ""average_rating"": 3.08, ""stock"": 454, ""total_revenue"": 5343.8, ""times_purchased"": 7}, {""product_id"": ""SKU10033"", ""category"": ""Sports"", ""brand"": ""Acme"", ""average_rating"": 3.44, ""stock"": 111, ""total_revenue"": 5245.32, ""times_purchased"": 5}, {""product_id"": ""SKU10039"", ""category"": ""Books"", ""brand"": ""Nova"", ""average_rating"": 3.53, ""stock"": 79, ""total_revenue"": 5222.07, ""times_purchased"": 10}]}","Prioritize investigation of the highest-impact low-rated SKUs first. Check quality issues, supplier consistency, and whether product pages set correct expectations. Improve, replace, or de-list persistent offenders.",high,0.7514966279678067,products_features,"[{""dataset"": ""products_features"", ""x"": ""times_purchased"", ""y"": ""unique_customers"", ""test"": ""Spearman"", ""stat"": 0.9968134044606486, ""p_value"": 2.075915362108234e-219, ""n"": 200, ""effect_size"": 0.9968134044606486, ""notes"": ""numeric-numeric"", ""p_adj"": 5.557065738566657e-218, ""significant"": true}, {""dataset"": ""products_features"", ""x"": ""times_purchased"", ""y"": ""unique_customers"", ""test"": ""Pearson"", ""stat"": 0.9964746869551364, ""p_value"": 4.50054991343018e-215, ""n"": 200, ""effect_size"": 0.9964746869551364, ""notes"": ""numeric-numeric"", ""p_adj"": 1.160141755462002e-213, ""significant"": true}, {""dataset"": ""products_features"", ""x"": ""times_purchased"", ""y"": ""total_quantity_sold"", ""test"": ""Spearman"", ""stat"": 0.9301550855172364, ""p_value"": 4.237781771340202e-88, ""n"": 200, ""effect_size"": 0.9301550855172364, ""notes"": ""numeric-numeric"", ""p_adj"": 5.362720205186873e-87, ""significant"": true}]",2026-02-10T02:45:31.979480Z,"Title: Low-rated products may be creating quality and satisfaction risk
+Severity: high
+Confidence: 0.7515
+
+What is happening:
+A naturally separated low-rating group exists in the catalog. Low ratings typically reduce conversion and can increase returns or refund pressure.
+
+Evidence (structured):
+{
+  ""low_rating_threshold"": 3.86,
+  ""count_products"": 77,
+  ""total_products"": 200,
+  ""low_rating_revenue_share"": 0.4273010959725812,
+  ""examples"": [
+    {
+      ""product_id"": ""SKU10189"",
+      ""category"": ""Clothing"",
+      ""brand"": ""Terra"",
+      ""average_rating"": 3.51,
+      ""stock"": 373,
+      ""total_revenue"": 10011.3,
+      ""times_purchased"": 10
+    },
+    {
+      ""product_id"": ""SKU10031"",
+      ""category"": ""Books"",
+      ""brand"": ""Acme"",
+      ""average_rating"": 3.86,
+      ""stock"": 55,
+      ""total_revenue"": 9522.43,
+      ""times_purchased"": 9
+    },
+    {
+      ""product_id"": ""SKU10192"",
+      ""category"": ""Clothing"",
+      ""brand"": ""Orion"",
+      ""average_rating"": 3.7,
+      ""stock"": 44,
+      ""total_revenue"": 8514.66,
+      ""times_purchased"": 9
+    },
+    {
+      ""product_id"": ""SKU10136"",
+      ""category"": ""Books"",
+      ""brand"": ""Acme"",
+      ""average_rating"": 3.79,
+      ""stock"": 28,
+      ""total_revenue"": 7687.719999999999,
+      ""times_purchased"": 7
+    },
+    {
+      ""product_id"": ""SKU10080"",
+      ""category"": ""Electronics"",
+      ""brand"": ""Terra"",
+      ""average_rating"": 3.43,
+      ""stock"": 158,
+      ""total_revenue"": 7455.8,
+      ""times_purchased"": 7
+    },
+    {
+      ""product_id"": ""SKU10186"",
+      ""category"": ""Electronics"",
+      ""brand"": ""Terra"",
+      ""average_rating"": 3.44,
+      ""stock"": 97,
+      ""total_revenue"": 6740.42,
+      ""times_purchased"": 6
+    },
+    {
+      ""product_id"": ""SKU10067"",
+      ""category"": ""Home & Kitchen"",
+      ""brand"": ""Nova"",
+      ""average_rating"": 3.45,
+      ""stock"": 99,
+      ""total_revenue"": 5968.88,
+      ""times_purchased"": 11
+    },
+    {
+      ""product_id"": ""SKU10116"",
+      ""category"": ""Home & Kitchen"",
+      ""brand"": ""Helios"",
+      ""average_rating"": 3.7,
+      ""stock"": 354,
+      ""total_revenue"": 5618.860000000001,
+      ""times_purchased"": 8
+    },
+    {
+      ""product_id"": ""SKU10010"",
+      ""category"": ""Clothing"",
+      ""brand"": ""Zenith"",
+      ""average_rating"": 3.6,
+      ""stock"": 48,
+      ""total_revenue"": 5573.04,
+      ""times_purchased"": 8
+    },
+    {
+      ""product_id"": ""SKU10019"",
+      ""category"": ""Home & Kitchen"",
+      ""brand"": ""Nova"",
+      ""average_rating"": 3.08,
+      ""stock"": 454,
+      ""total_revenue"": 5343.8,
+      ""times_purchased"": 7
+    },
+    {
+      ""product_id"": ""SKU10033"",
+      ""category"": ""Sports"",
+      ""brand"": ""Acme"",
+      ""average_rating"": 3.44,
+      ""stock"": 111,
+      ""total_revenue"": 5245.32,
+      ""times_purchased"": 5
+    },
+    {
+      ""product_id"": ""SKU10039"",
+      ""category"": ""Books"",
+      ""brand"": ""Nova"",
+      ""average_rating"": 3.53,
+      ""stock"": 79,
+      ""total_revenue"": 5222.07,
+      ""times_purchased"": 10
+    }
+  ]
+}
+
+Recommended action:
+Prioritize investigation of the highest-impact low-rated SKUs first. Check quality issues, supplier consistency, and whether product pages set correct expectations. Improve, replace, or de-list persistent offenders.
+
+Statistical support (significant & meaningful relationships):
+- products_features: times_purchased vs unique_customers (Spearman) | n=200 | adj_p=5.557065738566657e-218 | effect=0.9968134044606486
+- products_features: times_purchased vs unique_customers (Pearson) | n=200 | adj_p=1.160141755462002e-213 | effect=0.9964746869551364
+- products_features: times_purchased vs total_quantity_sold (Spearman) | n=200 | adj_p=5.362720205186873e-87 | effect=0.9301550855172364
+
+Datasets used: products_features
+Tags: product, quality, rating, risk
+Generated at: 2026-02-10T02:45:31.979480Z","product,quality,rating,risk"
+prod_high_discount_underperformance,Some high-discount products may be underperforming relative to their discount level,"A naturally separated high-discount group exists. Within it, a subset shows weaker performance patterns (when measured by revenue-per-purchase where available). This suggests discounts may not be efficiently driving demand.","{""high_discount_threshold"": 0.0, ""within_group_low_performance_threshold"": 25.086250000000064, ""count_products_flagged"": 2, ""total_products"": 200, ""flagged_revenue_share"": 0.0005607836768824967, ""examples"": [{""product_id"": ""SKU10038"", ""category"": ""Home & Kitchen"", ""brand"": ""Helios"", ""discount_percent"": 20, ""total_revenue"": 83.44, ""times_purchased"": 6}, {""product_id"": ""SKU10173"", ""category"": ""Books"", ""brand"": ""Orion"", ""discount_percent"": 10, ""total_revenue"": 200.69, ""times_purchased"": 8}]}","Audit high-discount SKUs: validate pricing strategy, check product page quality, and compare against competitors. Shift discounts toward products with stronger demand response and reduce discounts where performance remains weak.",low,0.28778950338087383,products_features,"[{""dataset"": ""products_features"", ""x"": ""times_purchased"", ""y"": ""unique_customers"", ""test"": ""Spearman"", ""stat"": 0.9968134044606486, ""p_value"": 2.075915362108234e-219, ""n"": 200, ""effect_size"": 0.9968134044606486, ""notes"": ""numeric-numeric"", ""p_adj"": 5.557065738566657e-218, ""significant"": true}, {""dataset"": ""products_features"", ""x"": ""times_purchased"", ""y"": ""unique_customers"", ""test"": ""Pearson"", ""stat"": 0.9964746869551364, ""p_value"": 4.50054991343018e-215, ""n"": 200, ""effect_size"": 0.9964746869551364, ""notes"": ""numeric-numeric"", ""p_adj"": 1.160141755462002e-213, ""significant"": true}, {""dataset"": ""products_features"", ""x"": ""retail_price"", ""y"": ""avg_order_value_per_order"", ""test"": ""Spearman"", ""stat"": 0.9501173592280574, ""p_value"": 3.873080299810821e-102, ""n"": 200, ""effect_size"": 0.9501173592280574, ""notes"": ""numeric-numeric"", ""p_adj"": 6.26898578760077e-101, ""significant"": true}, {""dataset"": ""products_features"", ""x"": ""retail_price"", ""y"": ""avg_order_value_per_order"", ""test"": ""Pearson"", ""stat"": 0.9311519997343034, ""p_value"": 1.0734387092595716e-88, ""n"": 200, ""effect_size"": 0.9311519997343034, ""notes"": ""numeric-numeric"", ""p_adj"": 1.4096478144238904e-87, ""significant"": true}]",2026-02-10T02:45:32.067427Z,"Title: Some high-discount products may be underperforming relative to their discount level
+Severity: low
+Confidence: 0.2878
+
+What is happening:
+A naturally separated high-discount group exists. Within it, a subset shows weaker performance patterns (when measured by revenue-per-purchase where available). This suggests discounts may not be efficiently driving demand.
+
+Evidence (structured):
+{
+  ""high_discount_threshold"": 0.0,
+  ""within_group_low_performance_threshold"": 25.086250000000064,
+  ""count_products_flagged"": 2,
+  ""total_products"": 200,
+  ""flagged_revenue_share"": 0.0005607836768824967,
+  ""examples"": [
+    {
+      ""product_id"": ""SKU10038"",
+      ""category"": ""Home & Kitchen"",
+      ""brand"": ""Helios"",
+      ""discount_percent"": 20,
+      ""total_revenue"": 83.44,
+      ""times_purchased"": 6
+    },
+    {
+      ""product_id"": ""SKU10173"",
+      ""category"": ""Books"",
+      ""brand"": ""Orion"",
+      ""discount_percent"": 10,
+      ""total_revenue"": 200.69,
+      ""times_purchased"": 8
+    }
+  ]
+}
+
+Recommended action:
+Audit high-discount SKUs: validate pricing strategy, check product page quality, and compare against competitors. Shift discounts toward products with stronger demand response and reduce discounts where performance remains weak.
+
+Statistical support (significant & meaningful relationships):
+- products_features: times_purchased vs unique_customers (Spearman) | n=200 | adj_p=5.557065738566657e-218 | effect=0.9968134044606486
+- products_features: times_purchased vs unique_customers (Pearson) | n=200 | adj_p=1.160141755462002e-213 | effect=0.9964746869551364
+- products_features: retail_price vs avg_order_value_per_order (Spearman) | n=200 | adj_p=6.26898578760077e-101 | effect=0.9501173592280574
+- products_features: retail_price vs avg_order_value_per_order (Pearson) | n=200 | adj_p=1.4096478144238904e-87 | effect=0.9311519997343034
+
+Datasets used: products_features
+Tags: product, pricing, discount, margin
+Generated at: 2026-02-10T02:45:32.067427Z","product,pricing,discount,margin"
+prod_high_demand_low_stock,Stockout risk detected for high-demand products,A naturally separated group of products shows high demand signals while also having unusually low stock. This combination increases near-term stockout risk and potential lost revenue.,"{""high_demand_threshold_times_purchased"": 8.0, ""low_stock_threshold"": 497.0, ""count_products"": 56, ""total_products"": 200, ""revenue_share"": 0.40990665723823244, ""examples"": [{""product_id"": ""SKU10169"", ""category"": ""Sports"", ""brand"": ""Helios"", ""times_purchased"": 14, ""stock"": 254, ""total_revenue"": 2227.7}, {""product_id"": ""SKU10138"", ""category"": ""Electronics"", ""brand"": ""Helios"", ""times_purchased"": 13, ""stock"": 113, ""total_revenue"": 5327.8}, {""product_id"": ""SKU10097"", ""category"": ""Electronics"", ""brand"": ""Helios"", ""times_purchased"": 13, ""stock"": 441, ""total_revenue"": 8818.029999999999}, {""product_id"": ""SKU10191"", ""category"": ""Beauty"", ""brand"": ""Terra"", ""times_purchased"": 12, ""stock"": 414, ""total_revenue"": 2349.19}, {""product_id"": ""SKU10029"", ""category"": ""Beauty"", ""brand"": ""Zenith"", ""times_purchased"": 11, ""stock"": 0, ""total_revenue"": 2320.44}, {""product_id"": ""SKU10067"", ""category"": ""Home & Kitchen"", ""brand"": ""Nova"", ""times_purchased"": 11, ""stock"": 99, ""total_revenue"": 5968.88}, {""product_id"": ""SKU10141"", ""category"": ""Books"", ""brand"": ""Terra"", ""times_purchased"": 11, ""stock"": 142, ""total_revenue"": 5452.98}, {""product_id"": ""SKU10152"", ""category"": ""Electronics"", ""brand"": ""Orion"", ""times_purchased"": 11, ""stock"": 432, ""total_revenue"": 3197.1}, {""product_id"": ""SKU10168"", ""category"": ""Sports"", ""brand"": ""Acme"", ""times_purchased"": 11, ""stock"": 441, ""total_revenue"": 3789.72}, {""product_id"": ""SKU10184"", ""category"": ""Books"", ""brand"": ""Terra"", ""times_purchased"": 10, ""stock"": 7, ""total_revenue"": 7658.0}, {""product_id"": ""SKU10039"", ""category"": ""Books"", ""brand"": ""Nova"", ""times_purchased"": 10, ""stock"": 79, ""total_revenue"": 5222.07}, {""product_id"": ""SKU10172"", ""category"": ""Clothing"", ""brand"": ""Zenith"", ""times_purchased"": 10, ""stock"": 111, ""total_revenue"": 4148.19}]}","Prioritize replenishment for these SKUs. If lead times are long, adjust reorder planning and monitor stock more frequently. Consider redistributing inventory from lower-performing locations if applicable.",high,0.6992289932799481,products_features,"[{""dataset"": ""products_features"", ""x"": ""times_purchased"", ""y"": ""unique_customers"", ""test"": ""Spearman"", ""stat"": 0.9968134044606486, ""p_value"": 2.075915362108234e-219, ""n"": 200, ""effect_size"": 0.9968134044606486, ""notes"": ""numeric-numeric"", ""p_adj"": 5.557065738566657e-218, ""significant"": true}, {""dataset"": ""products_features"", ""x"": ""times_purchased"", ""y"": ""unique_customers"", ""test"": ""Pearson"", ""stat"": 0.9964746869551364, ""p_value"": 4.50054991343018e-215, ""n"": 200, ""effect_size"": 0.9964746869551364, ""notes"": ""numeric-numeric"", ""p_adj"": 1.160141755462002e-213, ""significant"": true}, {""dataset"": ""products_features"", ""x"": ""times_purchased"", ""y"": ""total_quantity_sold"", ""test"": ""Spearman"", ""stat"": 0.9301550855172364, ""p_value"": 4.237781771340202e-88, ""n"": 200, ""effect_size"": 0.9301550855172364, ""notes"": ""numeric-numeric"", ""p_adj"": 5.362720205186873e-87, ""significant"": true}]",2026-02-10T02:45:32.166554Z,"Title: Stockout risk detected for high-demand products
+Severity: high
+Confidence: 0.6992
+
+What is happening:
+A naturally separated group of products shows high demand signals while also having unusually low stock. This combination increases near-term stockout risk and potential lost revenue.
+
+Evidence (structured):
+{
+  ""high_demand_threshold_times_purchased"": 8.0,
+  ""low_stock_threshold"": 497.0,
+  ""count_products"": 56,
+  ""total_products"": 200,
+  ""revenue_share"": 0.40990665723823244,
+  ""examples"": [
+    {
+      ""product_id"": ""SKU10169"",
+      ""category"": ""Sports"",
+      ""brand"": ""Helios"",
+      ""times_purchased"": 14,
+      ""stock"": 254,
+      ""total_revenue"": 2227.7
+    },
+    {
+      ""product_id"": ""SKU10138"",
+      ""category"": ""Electronics"",
+      ""brand"": ""Helios"",
+      ""times_purchased"": 13,
+      ""stock"": 113,
+      ""total_revenue"": 5327.8
+    },
+    {
+      ""product_id"": ""SKU10097"",
+      ""category"": ""Electronics"",
+      ""brand"": ""Helios"",
+      ""times_purchased"": 13,
+      ""stock"": 441,
+      ""total_revenue"": 8818.029999999999
+    },
+    {
+      ""product_id"": ""SKU10191"",
+      ""category"": ""Beauty"",
+      ""brand"": ""Terra"",
+      ""times_purchased"": 12,
+      ""stock"": 414,
+      ""total_revenue"": 2349.19
+    },
+    {
+      ""product_id"": ""SKU10029"",
+      ""category"": ""Beauty"",
+      ""brand"": ""Zenith"",
+      ""times_purchased"": 11,
+      ""stock"": 0,
+      ""total_revenue"": 2320.44
+    },
+    {
+      ""product_id"": ""SKU10067"",
+      ""category"": ""Home & Kitchen"",
+      ""brand"": ""Nova"",
+      ""times_purchased"": 11,
+      ""stock"": 99,
+      ""total_revenue"": 5968.88
+    },
+    {
+      ""product_id"": ""SKU10141"",
+      ""category"": ""Books"",
+      ""brand"": ""Terra"",
+      ""times_purchased"": 11,
+      ""stock"": 142,
+      ""total_revenue"": 5452.98
+    },
+    {
+      ""product_id"": ""SKU10152"",
+      ""category"": ""Electronics"",
+      ""brand"": ""Orion"",
+      ""times_purchased"": 11,
+      ""stock"": 432,
+      ""total_revenue"": 3197.1
+    },
+    {
+      ""product_id"": ""SKU10168"",
+      ""category"": ""Sports"",
+      ""brand"": ""Acme"",
+      ""times_purchased"": 11,
+      ""stock"": 441,
+      ""total_revenue"": 3789.72
+    },
+    {
+      ""product_id"": ""SKU10184"",
+      ""category"": ""Books"",
+      ""brand"": ""Terra"",
+      ""times_purchased"": 10,
+      ""stock"": 7,
+      ""total_revenue"": 7658.0
+    },
+    {
+      ""product_id"": ""SKU10039"",
+      ""category"": ""Books"",
+      ""brand"": ""Nova"",
+      ""times_purchased"": 10,
+      ""stock"": 79,
+      ""total_revenue"": 5222.07
+    },
+    {
+      ""product_id"": ""SKU10172"",
+      ""category"": ""Clothing"",
+      ""brand"": ""Zenith"",
+      ""times_purchased"": 10,
+      ""stock"": 111,
+      ""total_revenue"": 4148.19
+    }
+  ]
+}
+
+Recommended action:
+Prioritize replenishment for these SKUs. If lead times are long, adjust reorder planning and monitor stock more frequently. Consider redistributing inventory from lower-performing locations if applicable.
+
+Statistical support (significant & meaningful relationships):
+- products_features: times_purchased vs unique_customers (Spearman) | n=200 | adj_p=5.557065738566657e-218 | effect=0.9968134044606486
+- products_features: times_purchased vs unique_customers (Pearson) | n=200 | adj_p=1.160141755462002e-213 | effect=0.9964746869551364
+- products_features: times_purchased vs total_quantity_sold (Spearman) | n=200 | adj_p=5.362720205186873e-87 | effect=0.9301550855172364
+
+Datasets used: products_features
+Tags: product, inventory, stockout, risk
+Generated at: 2026-02-10T02:45:32.166554Z","product,inventory,stockout,risk"

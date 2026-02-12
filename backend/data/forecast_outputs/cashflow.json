@@ -1,0 +1,362 @@
+[
+  {
+    "date": "2025-11-01",
+    "cash_inflow_forecast": 195.14758473696065
+  },
+  {
+    "date": "2025-11-02",
+    "cash_inflow_forecast": 0
+  },
+  {
+    "date": "2025-11-03",
+    "cash_inflow_forecast": 1185.6165192646536
+  },
+  {
+    "date": "2025-11-04",
+    "cash_inflow_forecast": 397.45171400398044
+  },
+  {
+    "date": "2025-11-05",
+    "cash_inflow_forecast": 0
+  },
+  {
+    "date": "2025-11-06",
+    "cash_inflow_forecast": 1054.4301043597402
+  },
+  {
+    "date": "2025-11-07",
+    "cash_inflow_forecast": 1113.4843957142855
+  },
+  {
+    "date": "2025-11-08",
+    "cash_inflow_forecast": 1593.980907620818
+  },
+  {
+    "date": "2025-11-09",
+    "cash_inflow_forecast": 1110.1602155306045
+  },
+  {
+    "date": "2025-11-10",
+    "cash_inflow_forecast": 827.1905407618218
+  },
+  {
+    "date": "2025-11-11",
+    "cash_inflow_forecast": 778.3977312882515
+  },
+  {
+    "date": "2025-11-12",
+    "cash_inflow_forecast": 1143.8815333290613
+  },
+  {
+    "date": "2025-11-13",
+    "cash_inflow_forecast": 1011.292787876849
+  },
+  {
+    "date": "2025-11-14",
+    "cash_inflow_forecast": 543.4390875545308
+  },
+  {
+    "date": "2025-11-15",
+    "cash_inflow_forecast": 940.0035822095707
+  },
+  {
+    "date": "2025-11-16",
+    "cash_inflow_forecast": 263.73572701996125
+  },
+  {
+    "date": "2025-11-17",
+    "cash_inflow_forecast": 963.0621717766094
+  },
+  {
+    "date": "2025-11-18",
+    "cash_inflow_forecast": 1695.0120260534609
+  },
+  {
+    "date": "2025-11-19",
+    "cash_inflow_forecast": 1113.283578351537
+  },
+  {
+    "date": "2025-11-20",
+    "cash_inflow_forecast": 1146.7949720581232
+  },
+  {
+    "date": "2025-11-21",
+    "cash_inflow_forecast": 1115.9795068880444
+  },
+  {
+    "date": "2025-11-22",
+    "cash_inflow_forecast": 367.22936249110677
+  },
+  {
+    "date": "2025-11-23",
+    "cash_inflow_forecast": 975.6738002981347
+  },
+  {
+    "date": "2025-11-24",
+    "cash_inflow_forecast": 1169.1208088001756
+  },
+  {
+    "date": "2025-11-25",
+    "cash_inflow_forecast": 1338.1366062711963
+  },
+  {
+    "date": "2025-11-26",
+    "cash_inflow_forecast": 828.6660910737467
+  },
+  {
+    "date": "2025-11-27",
+    "cash_inflow_forecast": 1107.7299352989774
+  },
+  {
+    "date": "2025-11-28",
+    "cash_inflow_forecast": 1039.8566950781276
+  },
+  {
+    "date": "2025-11-29",
+    "cash_inflow_forecast": 1121.921649989181
+  },
+  {
+    "date": "2025-11-30",
+    "cash_inflow_forecast": 1302.6710611654178
+  },
+  {
+    "date": "2025-12-01",
+    "cash_inflow_forecast": 763.4817735647724
+  },
+  {
+    "date": "2025-12-02",
+    "cash_inflow_forecast": 959.973994286632
+  },
+  {
+    "date": "2025-12-03",
+    "cash_inflow_forecast": 1338.8563716100225
+  },
+  {
+    "date": "2025-12-04",
+    "cash_inflow_forecast": 659.4586248024086
+  },
+  {
+    "date": "2025-12-05",
+    "cash_inflow_forecast": 699.4914805112601
+  },
+  {
+    "date": "2025-12-06",
+    "cash_inflow_forecast": 883.445950277238
+  },
+  {
+    "date": "2025-12-07",
+    "cash_inflow_forecast": 699.6051190238991
+  },
+  {
+    "date": "2025-12-08",
+    "cash_inflow_forecast": 1193.3325936320855
+  },
+  {
+    "date": "2025-12-09",
+    "cash_inflow_forecast": 876.8649063919282
+  },
+  {
+    "date": "2025-12-10",
+    "cash_inflow_forecast": 985.6429217650993
+  },
+  {
+    "date": "2025-12-11",
+    "cash_inflow_forecast": 733.1900649437918
+  },
+  {
+    "date": "2025-12-12",
+    "cash_inflow_forecast": 1037.3197173889066
+  },
+  {
+    "date": "2025-12-13",
+    "cash_inflow_forecast": 700.3780496633202
+  },
+  {
+    "date": "2025-12-14",
+    "cash_inflow_forecast": 917.950039551934
+  },
+  {
+    "date": "2025-12-15",
+    "cash_inflow_forecast": 900.3651438725265
+  },
+  {
+    "date": "2025-12-16",
+    "cash_inflow_forecast": 830.6104131737325
+  },
+  {
+    "date": "2025-12-17",
+    "cash_inflow_forecast": 740.9401137683305
+  },
+  {
+    "date": "2025-12-18",
+    "cash_inflow_forecast": 1242.823695516118
+  },
+  {
+    "date": "2025-12-19",
+    "cash_inflow_forecast": 528.5581123012297
+  },
+  {
+    "date": "2025-12-20",
+    "cash_inflow_forecast": 1004.9401779945523
+  },
+  {
+    "date": "2025-12-21",
+    "cash_inflow_forecast": 412.2877212805536
+  },
+  {
+    "date": "2025-12-22",
+    "cash_inflow_forecast": 1421.9698717188362
+  },
+  {
+    "date": "2025-12-23",
+    "cash_inflow_forecast": 847.7078695331161
+  },
+  {
+    "date": "2025-12-24",
+    "cash_inflow_forecast": 1144.7684922179983
+  },
+  {
+    "date": "2025-12-25",
+    "cash_inflow_forecast": 974.9515591703445
+  },
+  {
+    "date": "2025-12-26",
+    "cash_inflow_forecast": 691.3859758789297
+  },
+  {
+    "date": "2025-12-27",
+    "cash_inflow_forecast": 1253.7794656923897
+  },
+  {
+    "date": "2025-12-28",
+    "cash_inflow_forecast": 530.5466632241316
+  },
+  {
+    "date": "2025-12-29",
+    "cash_inflow_forecast": 994.6957687876883
+  },
+  {
+    "date": "2025-12-30",
+    "cash_inflow_forecast": 670.6688933251728
+  },
+  {
+    "date": "2025-12-31",
+    "cash_inflow_forecast": 623.8797918270207
+  },
+  {
+    "date": "2026-01-01",
+    "cash_inflow_forecast": 808.0056189805842
+  },
+  {
+    "date": "2026-01-02",
+    "cash_inflow_forecast": 865.1183949046136
+  },
+  {
+    "date": "2026-01-03",
+    "cash_inflow_forecast": 399.86007539963487
+  },
+  {
+    "date": "2026-01-04",
+    "cash_inflow_forecast": 328.4702633247842
+  },
+  {
+    "date": "2026-01-05",
+    "cash_inflow_forecast": 758.89077139547
+  },
+  {
+    "date": "2026-01-06",
+    "cash_inflow_forecast": 726.3751155860963
+  },
+  {
+    "date": "2026-01-07",
+    "cash_inflow_forecast": 644.7697976757212
+  },
+  {
+    "date": "2026-01-08",
+    "cash_inflow_forecast": 1050.8481963783513
+  },
+  {
+    "date": "2026-01-09",
+    "cash_inflow_forecast": 464.1961140681722
+  },
+  {
+    "date": "2026-01-10",
+    "cash_inflow_forecast": 637.5697123491165
+  },
+  {
+    "date": "2026-01-11",
+    "cash_inflow_forecast": 582.9946951569106
+  },
+  {
+    "date": "2026-01-12",
+    "cash_inflow_forecast": 896.0598222473409
+  },
+  {
+    "date": "2026-01-13",
+    "cash_inflow_forecast": 700.3441091991289
+  },
+  {
+    "date": "2026-01-14",
+    "cash_inflow_forecast": 749.200962584948
+  },
+  {
+    "date": "2026-01-15",
+    "cash_inflow_forecast": 741.8063998564731
+  },
+  {
+    "date": "2026-01-16",
+    "cash_inflow_forecast": 830.2509721616519
+  },
+  {
+    "date": "2026-01-17",
+    "cash_inflow_forecast": 396.91651102350914
+  },
+  {
+    "date": "2026-01-18",
+    "cash_inflow_forecast": 182.1710773707655
+  },
+  {
+    "date": "2026-01-19",
+    "cash_inflow_forecast": 533.0808084161066
+  },
+  {
+    "date": "2026-01-20",
+    "cash_inflow_forecast": 1110.2503510661554
+  },
+  {
+    "date": "2026-01-21",
+    "cash_inflow_forecast": 1256.778917285442
+  },
+  {
+    "date": "2026-01-22",
+    "cash_inflow_forecast": 873.9292161880551
+  },
+  {
+    "date": "2026-01-23",
+    "cash_inflow_forecast": 1629.0041543150255
+  },
+  {
+    "date": "2026-01-24",
+    "cash_inflow_forecast": 899.6919695788185
+  },
+  {
+    "date": "2026-01-25",
+    "cash_inflow_forecast": 713.1626723326513
+  },
+  {
+    "date": "2026-01-26",
+    "cash_inflow_forecast": 812.3573554494176
+  },
+  {
+    "date": "2026-01-27",
+    "cash_inflow_forecast": 671.9273651216878
+  },
+  {
+    "date": "2026-01-28",
+    "cash_inflow_forecast": 1135.1851244309696
+  },
+  {
+    "date": "2026-01-29",
+    "cash_inflow_forecast": 725.9580685655351
+  }
+]

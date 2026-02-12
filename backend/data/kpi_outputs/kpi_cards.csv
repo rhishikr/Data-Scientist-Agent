@@ -1,0 +1,32 @@
+id,title,value,unit,format,group
+rev_mtd,Total Revenue (MTD),20351.8,USD,currency,Revenue
+rev_qtd,Total Revenue (QTD),20351.8,USD,currency,Revenue
+rev_ytd,Total Revenue (YTD),201383.27000000002,USD,currency,Revenue
+rev_growth_30d,Revenue Growth (30d vs prev),0.11671216340416188,,percent,Revenue
+aov,Average Order Value (AOV),420.32120515179395,USD,currency,Revenue
+orders_day,Orders per Day,1.6248131539611361,,number,Revenue
+orders_week,Orders per Week,11.373692077727952,,number,Revenue
+active_customers_30d,Active Customers (30d),46.0,,number,Customers
+new_customers_30d,New Customers (30d),3.0,,number,Customers
+returning_customers_30d,Returning Customers (lifetime),458.0,,number,Customers
+repeat_purchase_rate,Repeat Purchase Rate,0.754880694143167,,percent,Customers
+retention_rate_proxy,Retention Rate (proxy),0.14432989690721648,,percent,Customers
+churn_rate_proxy,Churn Rate (proxy),0.8556701030927836,,percent,Customers
+avg_clv,Average CLV,1099.0584815618222,USD,currency,Customers
+median_clv,Median CLV,908.95,USD,currency,Customers
+conversion_rate,Conversion Rate,0.11670480549199085,,percent,Funnel
+cart_abandonment_rate,Cart Abandonment Rate,0.18807339449541285,,percent,Funnel
+checkout_completion_rate,Checkout Completion Rate,2.217391304347826,,percent,Funnel
+bounce_rate,Bounce Rate,0.059496567505720827,,percent,Funnel
+time_to_purchase,Avg Time to Purchase,35517.64619688225,min,minutes,Funnel
+cac,Customer Acquisition Cost (proxy),2.9979337167537077,USD,currency,Marketing
+roas,ROAS,28.078636534730844,x,number,Marketing
+campaign_cr,Campaign Conversion Rate,0.08356359999999999,,percent,Marketing
+promo_uplift,Promotion Uplift (proxy),0.01498466168943982,,percent,Marketing
+avg_margin_pct,Average Product Margin,0.44446087339448853,,percent,Product
+return_rate_proxy,Return Rate (proxy),0.105,,percent,Product
+stock_out_risk_pct,Stock-Out Risk,0.20860927152317882,,percent,Inventory
+inventory_turnover_proxy,Inventory Turnover (proxy),20.616555486784495,,number,Inventory
+forecast_rev_7d,Forecasted Revenue (7d),6816.238333333334,USD,currency,Forecast
+forecast_rev_30d,Forecasted Revenue (30d),29212.45,USD,currency,Forecast
+forecast_rev_90d,Forecasted Revenue (90d),87637.35,USD,currency,Forecast
