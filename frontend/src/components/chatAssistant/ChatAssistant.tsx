@@ -5,10 +5,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
+} from "../ui/card";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
 import { Send, Sparkles, TrendingUp } from "lucide-react";
 
 interface Message {
@@ -183,8 +183,8 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
             {context === "customer-insights"
               ? "Customer Data"
               : context === "inventory-sales"
-              ? "Inventory Data"
-              : "All Data"}
+                ? "Inventory Data"
+                : "All Data"}
           </Badge>
           <Badge variant="outline" className="text-xs">
             Last 30 days
@@ -266,7 +266,9 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            placeholder={isLoading ? "Waiting for response..." : "Ask a question..."}
+            placeholder={
+              isLoading ? "Waiting for response..." : "Ask a question..."
+            }
             className="text-sm"
             disabled={isLoading}
           />
