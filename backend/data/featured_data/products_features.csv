@@ -1,7 +1,0 @@
-product_id,name,brand,category,subcategory,supplier_id,cost_price,price,launch_date,status,times_purchased,total_quantity_sold,total_revenue,avg_order_value_per_order,unique_customers,quantity_std
-AA-10,T-Shirt,Nike,apparel,Topwear,SUP1,10,20.0,2024-01-31,active,44,119,4041.56,91.85363636363637,34,1.456014717765913
-BB-20,Jeans,Levis,apparel,Bottomwear,SUP2,25,50.0,2024-03-31,active,56,168,4770.38,85.18535714285714,46,1.348399724926484
-CC-30,Sneakers,Adidas,footwear,Footwear,SUP3,30,60.0,2024-05-31,active,44,138,4433.6,100.76363636363637,34,1.4561962091617897
-DD-40,Jacket,Zara,apparel,Outerwear,SUP4,40,80.0,2024-07-31,active,45,138,4387.33,97.49622222222222,35,1.4984840824828758
-EE-50,Cap,Puma,accessories,Headwear,SUP5,5,10.0,2024-09-30,inactive,45,129,4265.35,94.78555555555556,39,1.3751033019046572
-FF-60,Socks,Uniqlo,apparel,Innerwear,SUP6,3,5.0,2024-11-30,active,47,135,4366.91,92.91297872340425,38,1.498071532462228
