@@ -1,15 +1,43 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { Upload, Database, Cloud, CheckCircle2, AlertCircle, FileText } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import {
+  Upload,
+  Database,
+  Cloud,
+  CheckCircle2,
+  AlertCircle,
+  FileText,
+} from "lucide-react";
 
 export function DataSourcesScreen() {
   const [uploadedFiles] = useState([
-    { name: "customers.csv", status: "validated", rows: 8347, date: "2025-01-15" },
-    { name: "orders.csv", status: "validated", rows: 45231, date: "2025-01-15" },
-    { name: "inventory.csv", status: "mapping", rows: 1523, date: "2025-01-15" },
+    {
+      name: "customers.csv",
+      status: "validated",
+      rows: 8347,
+      date: "2025-01-15",
+    },
+    {
+      name: "orders.csv",
+      status: "validated",
+      rows: 45231,
+      date: "2025-01-15",
+    },
+    {
+      name: "inventory.csv",
+      status: "mapping",
+      rows: 1523,
+      date: "2025-01-15",
+    },
   ]);
 
   return (
@@ -42,7 +70,8 @@ export function DataSourcesScreen() {
                   </div>
                   <h3 className="mb-2">Upload Data Files</h3>
                   <p className="text-sm text-muted-foreground text-center mb-4 max-w-md">
-                    Drag and drop your CSV or Excel files here, or click to browse. Files will be automatically validated and mapped.
+                    Drag and drop your CSV or Excel files here, or click to
+                    browse. Files will be automatically validated and mapped.
                   </p>
                   <Button className="bg-teal-600 hover:bg-teal-700">
                     <Upload className="size-4 mr-2" />
@@ -63,28 +92,40 @@ export function DataSourcesScreen() {
                 <CardContent>
                   <div className="space-y-3">
                     {uploadedFiles.map((file, index) => (
-                      <div key={index} className="flex items-center gap-4 p-3 rounded-lg border bg-white hover:bg-slate-50">
+                      <div
+                        key={index}
+                        className="flex items-center gap-4 p-3 rounded-lg border bg-white hover:bg-slate-50"
+                      >
                         <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-slate-100">
                           <FileText className="size-5 text-slate-600" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm">{file.name}</p>
                           <p className="text-xs text-muted-foreground">
-                            {file.rows.toLocaleString()} rows • Uploaded {file.date}
+                            {file.rows.toLocaleString()} rows • Uploaded{" "}
+                            {file.date}
                           </p>
                         </div>
                         {file.status === "validated" ? (
-                          <Badge variant="outline" className="text-green-600 border-green-200">
+                          <Badge
+                            variant="outline"
+                            className="text-green-600 border-green-200"
+                          >
                             <CheckCircle2 className="size-3 mr-1" />
                             Validated
                           </Badge>
                         ) : (
-                          <Badge variant="outline" className="text-orange-600 border-orange-200">
+                          <Badge
+                            variant="outline"
+                            className="text-orange-600 border-orange-200"
+                          >
                             <AlertCircle className="size-3 mr-1" />
                             Needs Mapping
                           </Badge>
                         )}
-                        <Button variant="ghost" size="sm">View</Button>
+                        <Button variant="ghost" size="sm">
+                          View
+                        </Button>
                       </div>
                     ))}
                   </div>
@@ -99,10 +140,12 @@ export function DataSourcesScreen() {
                   </div>
                   <div>
                     <p className="text-sm">
-                      Once connected, data will flow automatically into the AI pipeline
+                      Once connected, data will flow automatically into the AI
+                      pipeline
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      Your data is processed securely and used only for generating insights
+                      Your data is processed securely and used only for
+                      generating insights
                     </p>
                   </div>
                 </div>
@@ -123,7 +166,9 @@ export function DataSourcesScreen() {
                       <span>8,347</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Total Columns</span>
+                      <span className="text-muted-foreground">
+                        Total Columns
+                      </span>
                       <span>12</span>
                     </div>
                     <div className="flex justify-between text-sm">
@@ -310,9 +355,7 @@ export function DataSourcesScreen() {
                   <Database className="size-6 text-orange-600" />
                 </div>
                 <CardTitle className="text-base">MySQL</CardTitle>
-                <CardDescription>
-                  Connect to MySQL database
-                </CardDescription>
+                <CardDescription>Connect to MySQL database</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button variant="outline" className="w-full">
@@ -344,9 +387,7 @@ export function DataSourcesScreen() {
                   <Database className="size-6 text-red-600" />
                 </div>
                 <CardTitle className="text-base">Oracle</CardTitle>
-                <CardDescription>
-                  Connect to Oracle database
-                </CardDescription>
+                <CardDescription>Connect to Oracle database</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button variant="outline" className="w-full">
@@ -361,9 +402,7 @@ export function DataSourcesScreen() {
                   <Database className="size-6 text-green-600" />
                 </div>
                 <CardTitle className="text-base">MariaDB</CardTitle>
-                <CardDescription>
-                  Connect to MariaDB database
-                </CardDescription>
+                <CardDescription>Connect to MariaDB database</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button variant="outline" className="w-full">
@@ -378,9 +417,7 @@ export function DataSourcesScreen() {
                   <Database className="size-6 text-purple-600" />
                 </div>
                 <CardTitle className="text-base">MongoDB</CardTitle>
-                <CardDescription>
-                  Connect to MongoDB database
-                </CardDescription>
+                <CardDescription>Connect to MongoDB database</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button variant="outline" className="w-full">

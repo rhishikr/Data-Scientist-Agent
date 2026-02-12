@@ -1,10 +1,22 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { Switch } from "./ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Separator } from "./ui/separator";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Switch } from "../ui/switch";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { Separator } from "../ui/separator";
 
 export function SettingsScreen() {
   return (
@@ -21,7 +33,9 @@ export function SettingsScreen() {
       <Card>
         <CardHeader>
           <CardTitle>Pipeline Configuration</CardTitle>
-          <CardDescription>Configure automated analytics pipeline settings</CardDescription>
+          <CardDescription>
+            Configure automated analytics pipeline settings
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -37,14 +51,18 @@ export function SettingsScreen() {
                 <SelectItem value="manual">Manual Only</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-muted-foreground">How often the pipeline should automatically run</p>
+            <p className="text-xs text-muted-foreground">
+              How often the pipeline should automatically run
+            </p>
           </div>
 
           <Separator />
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="auto-pipeline">Automatic Pipeline Execution</Label>
+              <Label htmlFor="auto-pipeline">
+                Automatic Pipeline Execution
+              </Label>
               <p className="text-sm text-muted-foreground">
                 Run pipeline automatically when new data is detected
               </p>
@@ -70,7 +88,9 @@ export function SettingsScreen() {
       <Card>
         <CardHeader>
           <CardTitle>Data Settings</CardTitle>
-          <CardDescription>Configure data retention and storage</CardDescription>
+          <CardDescription>
+            Configure data retention and storage
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -87,7 +107,9 @@ export function SettingsScreen() {
                 <SelectItem value="forever">Forever</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-muted-foreground">How long to keep historical data</p>
+            <p className="text-xs text-muted-foreground">
+              How long to keep historical data
+            </p>
           </div>
 
           <Separator />
@@ -108,7 +130,9 @@ export function SettingsScreen() {
       <Card>
         <CardHeader>
           <CardTitle>ML Model Settings</CardTitle>
-          <CardDescription>Configure machine learning model preferences</CardDescription>
+          <CardDescription>
+            Configure machine learning model preferences
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -124,15 +148,26 @@ export function SettingsScreen() {
                 <SelectItem value="auto">Auto-Select</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-muted-foreground">Primary algorithm for predictions</p>
+            <p className="text-xs text-muted-foreground">
+              Primary algorithm for predictions
+            </p>
           </div>
 
           <Separator />
 
           <div className="space-y-2">
             <Label htmlFor="confidence">Confidence Threshold</Label>
-            <Input id="confidence" type="number" defaultValue="0.75" step="0.05" min="0" max="1" />
-            <p className="text-xs text-muted-foreground">Minimum confidence for predictions (0-1)</p>
+            <Input
+              id="confidence"
+              type="number"
+              defaultValue="0.75"
+              step="0.05"
+              min="0"
+              max="1"
+            />
+            <p className="text-xs text-muted-foreground">
+              Minimum confidence for predictions (0-1)
+            </p>
           </div>
 
           <Separator />
@@ -168,7 +203,9 @@ export function SettingsScreen() {
                 <SelectItem value="detailed">Detailed</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-muted-foreground">How detailed AI responses should be</p>
+            <p className="text-xs text-muted-foreground">
+              How detailed AI responses should be
+            </p>
           </div>
 
           <Separator />
@@ -201,7 +238,9 @@ export function SettingsScreen() {
       <Card>
         <CardHeader>
           <CardTitle>Notifications</CardTitle>
-          <CardDescription>Manage alert and notification preferences</CardDescription>
+          <CardDescription>
+            Manage alert and notification preferences
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
@@ -242,9 +281,7 @@ export function SettingsScreen() {
 
       {/* Save Button */}
       <div className="flex justify-end">
-        <Button className="bg-teal-600 hover:bg-teal-700">
-          Save Settings
-        </Button>
+        <Button className="bg-teal-600 hover:bg-teal-700">Save Settings</Button>
       </div>
     </div>
   );

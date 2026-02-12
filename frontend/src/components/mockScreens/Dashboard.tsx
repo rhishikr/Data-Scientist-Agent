@@ -1,11 +1,27 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { Activity, Users, CreditCard, TrendingUp } from "lucide-react";
 
 export function Dashboard() {
   const stats = [
-    { title: "Total Revenue", value: "$45,231", change: "+20.1%", icon: CreditCard },
+    {
+      title: "Total Revenue",
+      value: "$45,231",
+      change: "+20.1%",
+      icon: CreditCard,
+    },
     { title: "Active Users", value: "2,350", change: "+15.3%", icon: Users },
-    { title: "Engagement Rate", value: "68.5%", change: "+5.2%", icon: Activity },
+    {
+      title: "Engagement Rate",
+      value: "68.5%",
+      change: "+5.2%",
+      icon: Activity,
+    },
     { title: "Growth", value: "+12.5%", change: "+2.4%", icon: TrendingUp },
   ];
 
@@ -28,7 +44,8 @@ export function Dashboard() {
             <CardContent>
               <div className="text-2xl">{stat.value}</div>
               <p className="text-xs text-muted-foreground">
-                <span className="text-green-600">{stat.change}</span> from last month
+                <span className="text-green-600">{stat.change}</span> from last
+                month
               </p>
             </CardContent>
           </Card>
@@ -52,7 +69,9 @@ export function Dashboard() {
                 <div key={index} className="flex items-center justify-between">
                   <div>
                     <p>{activity.title}</p>
-                    <p className="text-sm text-muted-foreground">{activity.time}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {activity.time}
+                    </p>
                   </div>
                 </div>
               ))}

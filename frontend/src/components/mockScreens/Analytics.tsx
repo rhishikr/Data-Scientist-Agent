@@ -1,5 +1,25 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const lineData = [
   { name: "Jan", users: 400, revenue: 2400 },
@@ -43,7 +63,9 @@ export function Analytics() {
         <Card>
           <CardHeader>
             <CardTitle>User Growth & Revenue</CardTitle>
-            <CardDescription>Monthly trends over the last 6 months</CardDescription>
+            <CardDescription>
+              Monthly trends over the last 6 months
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -53,8 +75,18 @@ export function Analytics() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="users" stroke="#8884d8" strokeWidth={2} />
-                <Line type="monotone" dataKey="revenue" stroke="#82ca9d" strokeWidth={2} />
+                <Line
+                  type="monotone"
+                  dataKey="users"
+                  stroke="#8884d8"
+                  strokeWidth={2}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="revenue"
+                  stroke="#82ca9d"
+                  strokeWidth={2}
+                />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -63,7 +95,9 @@ export function Analytics() {
         <Card>
           <CardHeader>
             <CardTitle>Weekly Visits</CardTitle>
-            <CardDescription>Daily visit statistics for the current week</CardDescription>
+            <CardDescription>
+              Daily visit statistics for the current week
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -98,7 +132,10 @@ export function Analytics() {
                   dataKey="value"
                 >
                   {pieData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
                   ))}
                 </Pie>
                 <Tooltip />

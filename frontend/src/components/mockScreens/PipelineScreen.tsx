@@ -1,9 +1,32 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Progress } from "./ui/progress";
-import { CheckCircle2, Clock, AlertCircle, Database, Sparkles, GitBranch, TrendingUp, Users, Package, ArrowRight } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { Progress } from "../ui/progress";
+import {
+  CheckCircle2,
+  Clock,
+  AlertCircle,
+  Database,
+  Sparkles,
+  GitBranch,
+  TrendingUp,
+  Users,
+  Package,
+  ArrowRight,
+} from "lucide-react";
 
 export function PipelineScreen() {
   const pipelineStages = [
@@ -126,7 +149,9 @@ export function PipelineScreen() {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>Pipeline Status</CardTitle>
-              <CardDescription>Current run started 47 minutes ago</CardDescription>
+              <CardDescription>
+                Current run started 47 minutes ago
+              </CardDescription>
             </div>
             <Badge variant="outline" className="text-blue-600 border-blue-200">
               <Clock className="size-3 mr-1" />
@@ -149,32 +174,45 @@ export function PipelineScreen() {
       <div className="space-y-4">
         {pipelineStages.map((stage, index) => (
           <div key={stage.id}>
-            <Card className={`border-2 ${stage.status === "running" ? "border-blue-200 shadow-md" : ""}`}>
+            <Card
+              className={`border-2 ${stage.status === "running" ? "border-blue-200 shadow-md" : ""}`}
+            >
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   {/* Stage Icon */}
-                  <div className={`flex size-14 shrink-0 items-center justify-center rounded-xl ${
-                    stage.status === "completed" ? "bg-green-100" :
-                    stage.status === "running" ? "bg-blue-100" :
-                    "bg-slate-100"
-                  }`}>
-                    <stage.icon className={`size-7 ${
-                      stage.status === "completed" ? "text-green-600" :
-                      stage.status === "running" ? "text-blue-600" :
-                      "text-slate-400"
-                    }`} />
+                  <div
+                    className={`flex size-14 shrink-0 items-center justify-center rounded-xl ${
+                      stage.status === "completed"
+                        ? "bg-green-100"
+                        : stage.status === "running"
+                          ? "bg-blue-100"
+                          : "bg-slate-100"
+                    }`}
+                  >
+                    <stage.icon
+                      className={`size-7 ${
+                        stage.status === "completed"
+                          ? "text-green-600"
+                          : stage.status === "running"
+                            ? "text-blue-600"
+                            : "text-slate-400"
+                      }`}
+                    />
                   </div>
 
                   {/* Stage Details */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-base">{stage.name}</h3>
-                      <Badge variant="outline" className={getStatusColor(stage.status)}>
+                      <Badge
+                        variant="outline"
+                        className={getStatusColor(stage.status)}
+                      >
                         {getStatusIcon(stage.status)}
                         <span className="ml-1 capitalize">{stage.status}</span>
                       </Badge>
                     </div>
-                    
+
                     <div className="flex gap-6 mb-3">
                       {stage.metrics.map((metric, i) => (
                         <p key={i} className="text-sm text-muted-foreground">
@@ -186,7 +224,9 @@ export function PipelineScreen() {
                     {stage.status === "running" && (
                       <div className="space-y-1">
                         <Progress value={stage.progress} className="h-1.5" />
-                        <p className="text-xs text-muted-foreground">{stage.progress}% complete</p>
+                        <p className="text-xs text-muted-foreground">
+                          {stage.progress}% complete
+                        </p>
                       </div>
                     )}
                   </div>
@@ -207,7 +247,7 @@ export function PipelineScreen() {
                 </div>
               </CardContent>
             </Card>
-            
+
             {/* Connector Arrow */}
             {index < pipelineStages.length - 1 && (
               <div className="flex justify-center py-2">
@@ -229,7 +269,9 @@ export function PipelineScreen() {
               This pipeline runs automatically once data is connected
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              You can monitor progress in real-time and review detailed logs for each stage. When complete, insights will be available in Customer Insights and Inventory & Sales sections.
+              You can monitor progress in real-time and review detailed logs for
+              each stage. When complete, insights will be available in Customer
+              Insights and Inventory & Sales sections.
             </p>
           </div>
         </div>

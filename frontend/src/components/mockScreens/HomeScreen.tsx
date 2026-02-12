@@ -1,7 +1,22 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
-import { Database, GitBranch, Users, Package, TrendingUp, AlertCircle, CheckCircle2, Clock } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import {
+  Database,
+  GitBranch,
+  Users,
+  Package,
+  TrendingUp,
+  AlertCircle,
+  CheckCircle2,
+  Clock,
+} from "lucide-react";
 
 export function HomeScreen() {
   return (
@@ -10,7 +25,8 @@ export function HomeScreen() {
       <div>
         <h1 className="mb-2">Welcome to AI Data Scientist Agent</h1>
         <p className="text-muted-foreground">
-          Your automated analytics and ML platform for retail & e-commerce intelligence
+          Your automated analytics and ML platform for retail & e-commerce
+          intelligence
         </p>
       </div>
 
@@ -28,7 +44,7 @@ export function HomeScreen() {
             </p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm">Pipeline Status</CardTitle>
@@ -41,7 +57,7 @@ export function HomeScreen() {
             </p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm">Active Customers</CardTitle>
@@ -54,7 +70,7 @@ export function HomeScreen() {
             </p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm">Stock-Out Risk</CardTitle>
@@ -62,9 +78,7 @@ export function HomeScreen() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl">23 SKUs</div>
-            <p className="text-xs text-muted-foreground">
-              Requires attention
-            </p>
+            <p className="text-xs text-muted-foreground">Requires attention</p>
           </CardContent>
         </Card>
       </div>
@@ -84,48 +98,68 @@ export function HomeScreen() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm">Customer Churn Analysis</p>
-                  <p className="text-xs text-muted-foreground">Completed • 2 hours ago</p>
+                  <p className="text-xs text-muted-foreground">
+                    Completed • 2 hours ago
+                  </p>
                 </div>
-                <Badge variant="outline" className="text-green-600 border-green-200">
+                <Badge
+                  variant="outline"
+                  className="text-green-600 border-green-200"
+                >
                   Success
                 </Badge>
               </div>
-              
+
               <div className="flex items-center gap-4">
                 <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-blue-50">
                   <Clock className="size-5 text-blue-600" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm">Sales Forecast - Next 30 Days</p>
-                  <p className="text-xs text-muted-foreground">Running • 45% complete</p>
+                  <p className="text-xs text-muted-foreground">
+                    Running • 45% complete
+                  </p>
                 </div>
-                <Badge variant="outline" className="text-blue-600 border-blue-200">
+                <Badge
+                  variant="outline"
+                  className="text-blue-600 border-blue-200"
+                >
                   In Progress
                 </Badge>
               </div>
-              
+
               <div className="flex items-center gap-4">
                 <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-green-50">
                   <CheckCircle2 className="size-5 text-green-600" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm">Inventory Optimization</p>
-                  <p className="text-xs text-muted-foreground">Completed • 5 hours ago</p>
+                  <p className="text-xs text-muted-foreground">
+                    Completed • 5 hours ago
+                  </p>
                 </div>
-                <Badge variant="outline" className="text-green-600 border-green-200">
+                <Badge
+                  variant="outline"
+                  className="text-green-600 border-green-200"
+                >
                   Success
                 </Badge>
               </div>
-              
+
               <div className="flex items-center gap-4">
                 <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-orange-50">
                   <AlertCircle className="size-5 text-orange-600" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm">Customer Segmentation</p>
-                  <p className="text-xs text-muted-foreground">Warning • 1 day ago</p>
+                  <p className="text-xs text-muted-foreground">
+                    Warning • 1 day ago
+                  </p>
                 </div>
-                <Badge variant="outline" className="text-orange-600 border-orange-200">
+                <Badge
+                  variant="outline"
+                  className="text-orange-600 border-orange-200"
+                >
                   Needs Review
                 </Badge>
               </div>
@@ -146,39 +180,54 @@ export function HomeScreen() {
                   <div>
                     <p className="text-sm">High Churn Risk Detected</p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      234 customers show high churn probability. Consider targeted re-engagement campaign.
+                      234 customers show high churn probability. Consider
+                      targeted re-engagement campaign.
                     </p>
-                    <Button variant="link" size="sm" className="h-auto p-0 mt-2 text-teal-700">
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="h-auto p-0 mt-2 text-teal-700"
+                    >
                       View Details →
                     </Button>
                   </div>
                 </div>
               </div>
-              
+
               <div className="rounded-lg border border-orange-200 bg-orange-50 p-4">
                 <div className="flex items-start gap-3">
                   <Package className="size-5 text-orange-600 mt-0.5" />
                   <div>
                     <p className="text-sm">Stock-Out Risk Alert</p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      23 SKUs predicted to run out in next 7 days. Reorder recommendations ready.
+                      23 SKUs predicted to run out in next 7 days. Reorder
+                      recommendations ready.
                     </p>
-                    <Button variant="link" size="sm" className="h-auto p-0 mt-2 text-orange-700">
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="h-auto p-0 mt-2 text-orange-700"
+                    >
                       View Forecast →
                     </Button>
                   </div>
                 </div>
               </div>
-              
+
               <div className="rounded-lg border border-purple-200 bg-purple-50 p-4">
                 <div className="flex items-start gap-3">
                   <Users className="size-5 text-purple-600 mt-0.5" />
                   <div>
                     <p className="text-sm">New Customer Segment Identified</p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      "Weekend Browsers" segment shows 3.2x higher conversion with evening promotions.
+                      "Weekend Browsers" segment shows 3.2x higher conversion
+                      with evening promotions.
                     </p>
-                    <Button variant="link" size="sm" className="h-auto p-0 mt-2 text-purple-700">
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="h-auto p-0 mt-2 text-purple-700"
+                    >
                       Explore Segment →
                     </Button>
                   </div>
@@ -197,19 +246,31 @@ export function HomeScreen() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <Button variant="outline" className="justify-start gap-2 h-auto py-3">
+            <Button
+              variant="outline"
+              className="justify-start gap-2 h-auto py-3"
+            >
               <Database className="size-4" />
               <span>Upload New Data</span>
             </Button>
-            <Button variant="outline" className="justify-start gap-2 h-auto py-3">
+            <Button
+              variant="outline"
+              className="justify-start gap-2 h-auto py-3"
+            >
               <GitBranch className="size-4" />
               <span>Run Pipeline</span>
             </Button>
-            <Button variant="outline" className="justify-start gap-2 h-auto py-3">
+            <Button
+              variant="outline"
+              className="justify-start gap-2 h-auto py-3"
+            >
               <Users className="size-4" />
               <span>View Customer Insights</span>
             </Button>
-            <Button variant="outline" className="justify-start gap-2 h-auto py-3">
+            <Button
+              variant="outline"
+              className="justify-start gap-2 h-auto py-3"
+            >
               <Package className="size-4" />
               <span>Check Inventory</span>
             </Button>
