@@ -277,14 +277,14 @@ export function CustomerInsightsScreen() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="mb-2">Insights and Predictions</h1>
-            <p className="text-muted-foreground">
+            {/* <p className="text-muted-foreground">
               AI-powered analytics • Snapshot as of{" "}
               <span className="font-medium">{KPI.asOf}</span>
-            </p>
+            </p> */}
           </div>
 
           <div className="flex items-center gap-3">
-            <Select defaultValue="30">
+            {/* <Select defaultValue="30">
               <SelectTrigger className="w-[160px]">
                 <SelectValue placeholder="Date range" />
               </SelectTrigger>
@@ -294,7 +294,7 @@ export function CustomerInsightsScreen() {
                 <SelectItem value="90">Last 90 days</SelectItem>
                 <SelectItem value="365">Last year</SelectItem>
               </SelectContent>
-            </Select>
+            </Select> */}
 
             <Button
               variant={isCustomizing ? "default" : "outline"}

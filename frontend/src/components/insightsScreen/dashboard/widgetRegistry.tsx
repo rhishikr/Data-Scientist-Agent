@@ -77,7 +77,7 @@ export function buildWidgetRegistry({
             <div className="text-2xl">
               {KPI.activeCustomers30d.toLocaleString()}
             </div>
-            <p className="text-xs text-muted-foreground">As of {KPI.asOf}</p>
+            {/* <p className="text-xs text-muted-foreground">As of {KPI.asOf}</p> */}
           </CardContent>
         </Card>
       ),
@@ -202,7 +202,7 @@ export function buildWidgetRegistry({
           </CardHeader>
           <CardContent>
             <div className="text-2xl">{fmtCurrency2(KPI.avgClv)}</div>
-            <p className="text-xs text-muted-foreground">As of {KPI.asOf}</p>
+            {/* <p className="text-xs text-muted-foreground">As of {KPI.asOf}</p> */}
           </CardContent>
         </Card>
       ),

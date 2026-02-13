@@ -121,7 +121,7 @@ export default function App() {
             <div className="flex items-center gap-4">
               <h1 className="text-lg">AI Data Scientist Agent</h1>
               <div className="h-6 w-px bg-border" />
-              <DropdownMenu>
+              {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="gap-2">
                     {environment}
@@ -143,7 +143,7 @@ export default function App() {
                     Client B
                   </DropdownMenuItem>
                 </DropdownMenuContent>
-              </DropdownMenu>
+              </DropdownMenu> */}
             </div>
 
             <div className="flex items-center gap-4">
