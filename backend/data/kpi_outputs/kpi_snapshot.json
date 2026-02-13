@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-02-12T08:05:45.676646Z",
+    "generated_at": "2026-02-13T01:24:05.631329Z",
     "as_of": "2025-10-30 15:28:38.947356",
     "datasets_used": [
       "customers",
@@ -20,12 +20,12 @@
       "total_revenue": {
         "mtd": 2106.99,
         "qtd": 2106.99,
-        "ytd": 17477.79
+        "ytd": 16296.06
       },
       "revenue_growth_30d": 1.2449655848445456,
-      "average_order_value": 363.2347872340425,
-      "orders_per_day": 0.9954614220877458,
-      "orders_per_week": 6.968229954614221
+      "average_order_value": 371.0630139103555,
+      "orders_per_day": 0.9788199697428139,
+      "orders_per_week": 6.851739788199697
     },
     "customer_health_value": {
       "active_customers_30d": 5,
@@ -35,9 +35,9 @@
         "new": 0.047619047619047616,
         "returning": 0.9523809523809523
       },
-      "repeat_purchase_rate": 0.4052757793764988,
-      "avg_clv": 435.0021406727829,
-      "median_clv": 209.73,
+      "repeat_purchase_rate": 0.4029126213592233,
+      "avg_clv": 438.0530886850153,
+      "median_clv": 186.03,
       "retention_rate_proxy": 0.0,
       "churn_rate_proxy": 1.0
     },
@@ -62,11 +62,11 @@
     },
     "product_merchandising": {
       "avg_product_margin_pct": null,
-      "return_rate_proxy": 0.08789625360230548
+      "return_rate_proxy": 0.0849194729136164
     },
     "inventory_operations": {
       "stock_out_risk_pct": 0.17803030303030304,
-      "inventory_turnover_proxy": 8.300998685563469
+      "inventory_turnover_proxy": 8.266341481284991
     }
   },
   "cards": [
@@ -89,7 +89,7 @@
     {
       "id": "rev_ytd",
       "title": "Total Revenue (YTD)",
-      "value": 17477.79,
+      "value": 16296.06,
       "unit": "USD",
       "format": "currency",
       "group": "Revenue"
@@ -105,7 +105,7 @@
     {
       "id": "aov",
       "title": "Average Order Value (AOV)",
-      "value": 363.2347872340425,
+      "value": 371.0630139103555,
       "unit": "USD",
       "format": "currency",
       "group": "Revenue"
@@ -113,7 +113,7 @@
     {
       "id": "orders_day",
       "title": "Orders per Day",
-      "value": 0.9954614220877458,
+      "value": 0.9788199697428139,
       "unit": "",
       "format": "number",
       "group": "Revenue"
@@ -121,7 +121,7 @@
     {
       "id": "orders_week",
       "title": "Orders per Week",
-      "value": 6.968229954614221,
+      "value": 6.851739788199697,
       "unit": "",
       "format": "number",
       "group": "Revenue"
@@ -153,7 +153,7 @@
     {
       "id": "repeat_purchase_rate",
       "title": "Repeat Purchase Rate",
-      "value": 0.4052757793764988,
+      "value": 0.4029126213592233,
       "unit": "",
       "format": "percent",
       "group": "Customers"
@@ -177,7 +177,7 @@
     {
       "id": "avg_clv",
       "title": "Average CLV",
-      "value": 435.0021406727829,
+      "value": 438.0530886850153,
       "unit": "USD",
       "format": "currency",
       "group": "Customers"
@@ -185,7 +185,7 @@
     {
       "id": "median_clv",
       "title": "Median CLV",
-      "value": 209.73,
+      "value": 186.03,
       "unit": "USD",
       "format": "currency",
       "group": "Customers"
@@ -273,7 +273,7 @@
     {
       "id": "return_rate_proxy",
       "title": "Return Rate (proxy)",
-      "value": 0.08789625360230548,
+      "value": 0.0849194729136164,
       "unit": "",
       "format": "percent",
       "group": "Product"
@@ -289,7 +289,7 @@
     {
       "id": "inventory_turnover_proxy",
       "title": "Inventory Turnover (proxy)",
-      "value": 8.300998685563469,
+      "value": 8.266341481284991,
       "unit": "",
       "format": "number",
       "group": "Inventory"
@@ -320,26 +320,26 @@
         "top_product_id": "SKU10109"
       },
       {
-        "customer_id": "CUST1026",
-        "name": "Customer 26",
-        "location": "Toronto, Canada",
-        "device_type": "mobile",
-        "total_orders": 4.0,
-        "total_spend": 2694.42,
-        "avg_order_value": 673.605,
-        "recency_days": 88.0,
-        "top_product_id": "SKU10052"
-      },
-      {
         "customer_id": "CUST1400",
         "name": "CUSTOMER 400",
         "location": "London, UK",
         "device_type": "desktop",
         "total_orders": 3.0,
-        "total_spend": 2661.64,
-        "avg_order_value": 887.2133333333333,
+        "total_spend": 2661.66,
+        "avg_order_value": 887.2199999999999,
         "recency_days": 545.0,
         "top_product_id": "SKU10105"
+      },
+      {
+        "customer_id": "CUST1038",
+        "name": null,
+        "location": "New York, USA",
+        "device_type": "mobile",
+        "total_orders": 3.0,
+        "total_spend": 2288.42,
+        "avg_order_value": 762.8066666666667,
+        "recency_days": 591.0,
+        "top_product_id": "NAN"
       },
       {
         "customer_id": "CUST1206",
@@ -353,15 +353,15 @@
         "top_product_id": "SKU10069"
       },
       {
-        "customer_id": "CUST1092",
-        "name": "Customer 92",
-        "location": "Tokyo, Japan",
-        "device_type": "mobile",
-        "total_orders": 3.0,
-        "total_spend": 2036.72,
-        "avg_order_value": 509.1799999999999,
+        "customer_id": "CUST1294",
+        "name": "CUSTOMER 294",
+        "location": "sydney, australia",
+        "device_type": "desktop",
+        "total_orders": 4.0,
+        "total_spend": 2114.09,
+        "avg_order_value": 528.5225,
         "recency_days": 0.0,
-        "top_product_id": "SKU10036"
+        "top_product_id": "SKU10097"
       },
       {
         "customer_id": "CUST1108",
@@ -380,8 +380,8 @@
         "location": null,
         "device_type": "mobile",
         "total_orders": 5.0,
-        "total_spend": 1963.51,
-        "avg_order_value": 392.702,
+        "total_spend": 1963.53,
+        "avg_order_value": 392.706,
         "recency_days": 77.0,
         "top_product_id": "SKU10165"
       },
@@ -391,8 +391,8 @@
         "location": "toronto, canada",
         "device_type": null,
         "total_orders": 3.0,
-        "total_spend": 1836.32,
-        "avg_order_value": 612.1066666666667,
+        "total_spend": 1836.34,
+        "avg_order_value": 612.1133333333333,
         "recency_days": 456.0,
         "top_product_id": "SKU10086"
       },
@@ -413,10 +413,21 @@
         "location": "London, UK",
         "device_type": "desktop",
         "total_orders": 4.0,
-        "total_spend": 1718.53,
-        "avg_order_value": 429.6325,
+        "total_spend": 1718.56,
+        "avg_order_value": 429.64,
         "recency_days": 118.0,
         "top_product_id": "SKU10056"
+      },
+      {
+        "customer_id": "CUST1092",
+        "name": "Customer 92",
+        "location": "Tokyo, Japan",
+        "device_type": "mobile",
+        "total_orders": 2.0,
+        "total_spend": 1697.63,
+        "avg_order_value": 565.8766666666667,
+        "recency_days": 0.0,
+        "top_product_id": "SKU10036"
       },
       {
         "customer_id": "CUST1382",
@@ -441,6 +452,17 @@
         "top_product_id": "SKU10136"
       },
       {
+        "customer_id": "CUST1026",
+        "name": "Customer 26",
+        "location": "Toronto, Canada",
+        "device_type": "mobile",
+        "total_orders": 3.0,
+        "total_spend": 1618.58,
+        "avg_order_value": 539.5266666666666,
+        "recency_days": 88.0,
+        "top_product_id": "SKU10052"
+      },
+      {
         "customer_id": "CUST1335",
         "name": "customer 335",
         "location": "Mumbai, India",
@@ -457,8 +479,8 @@
         "location": "MUMBAI, INDIA",
         "device_type": "mobile",
         "total_orders": 6.0,
-        "total_spend": 1581.2,
-        "avg_order_value": 263.53333333333336,
+        "total_spend": 1581.21,
+        "avg_order_value": 263.535,
         "recency_days": 254.0,
         "top_product_id": "SKU10016"
       },
@@ -468,8 +490,8 @@
         "location": "Berlin, Germany",
         "device_type": "mobile",
         "total_orders": 2.0,
-        "total_spend": 1564.7800000000002,
-        "avg_order_value": 782.3900000000001,
+        "total_spend": 1564.8000000000002,
+        "avg_order_value": 782.4000000000001,
         "recency_days": 0.0,
         "top_product_id": "SKU10198"
       },
@@ -501,8 +523,8 @@
         "location": "S\u00e3o Paulo, Brazil",
         "device_type": null,
         "total_orders": 2.0,
-        "total_spend": 1441.4,
-        "avg_order_value": 720.7,
+        "total_spend": 1441.39,
+        "avg_order_value": 720.6949999999999,
         "recency_days": 0.0,
         "top_product_id": "SKU10116"
       },
@@ -512,8 +534,8 @@
         "location": "Sydney, Australia",
         "device_type": "mobile",
         "total_orders": 4.0,
-        "total_spend": 1431.75,
-        "avg_order_value": 357.9375,
+        "total_spend": 1431.78,
+        "avg_order_value": 357.945,
         "recency_days": 0.0,
         "top_product_id": "SKU10102"
       },
@@ -523,8 +545,8 @@
         "location": null,
         "device_type": "mobile",
         "total_orders": 3.0,
-        "total_spend": 1411.96,
-        "avg_order_value": 470.65333333333336,
+        "total_spend": 1411.94,
+        "avg_order_value": 470.6466666666667,
         "recency_days": 231.0,
         "top_product_id": "SKU10160"
       },
@@ -534,8 +556,8 @@
         "location": "Mumbai, India",
         "device_type": "desktop",
         "total_orders": 3.0,
-        "total_spend": 1408.5,
-        "avg_order_value": 469.5,
+        "total_spend": 1408.47,
+        "avg_order_value": 469.49,
         "recency_days": 0.0,
         "top_product_id": "SKU10160"
       },
@@ -549,28 +571,6 @@
         "avg_order_value": 701.98,
         "recency_days": 140.0,
         "top_product_id": "SKU10111"
-      },
-      {
-        "customer_id": "CUST1067",
-        "name": "Customer 67",
-        "location": "S\u00e3o Paulo, Brazil",
-        "device_type": "mobile",
-        "total_orders": 3.0,
-        "total_spend": 1394.25,
-        "avg_order_value": 464.75,
-        "recency_days": 0.0,
-        "top_product_id": "SKU10073"
-      },
-      {
-        "customer_id": "CUST1159",
-        "name": "Customer 159",
-        "location": "SYDNEY, AUSTRALIA",
-        "device_type": "mobile",
-        "total_orders": 2.0,
-        "total_spend": 1385.92,
-        "avg_order_value": 692.96,
-        "recency_days": 0.0,
-        "top_product_id": "SKU10141"
       }
     ],
     "top_products": [
@@ -580,14 +580,9 @@
         "revenue": 5452.98
       },
       {
-        "sku": "SKU10116",
-        "quantity": 19,
-        "revenue": 4852.63
-      },
-      {
-        "sku": "SKU10031",
-        "quantity": 13,
-        "revenue": 4761.22
+        "sku": "SKU10097",
+        "quantity": 17,
+        "revenue": 5169.19
       },
       {
         "sku": "SKU10184",
@@ -615,9 +610,14 @@
         "revenue": 3727.8999999999996
       },
       {
-        "sku": "SKU10097",
-        "quantity": 11,
-        "revenue": 3344.77
+        "sku": "SKU10031",
+        "quantity": 10,
+        "revenue": 3662.4700000000003
+      },
+      {
+        "sku": "NAN",
+        "quantity": 20,
+        "revenue": 3342.1
       },
       {
         "sku": "SKU10138",
@@ -626,11 +626,6 @@
       }
     ],
     "low_products": [
-      {
-        "sku": "sku10020",
-        "quantity": 1,
-        "revenue": 22.3
-      },
       {
         "sku": "sku10038",
         "quantity": 4,
@@ -644,7 +639,7 @@
       {
         "sku": "sku10173",
         "quantity": 3,
-        "revenue": 30.119999999999997
+        "revenue": 30.1
       },
       {
         "sku": "sku10007",
@@ -675,6 +670,11 @@
         "sku": "sku10045",
         "quantity": 1,
         "revenue": 89.73
+      },
+      {
+        "sku": "SKU10173",
+        "quantity": 9,
+        "revenue": 90.31
       }
     ],
     "risky_products": [
@@ -1653,11 +1653,11 @@
       "Stock-out risk is elevated: ~18% of SKUs are at/under reorder threshold."
     ],
     "top_drivers_from_hypothesis": [
-      "transactions_features: total_amount vs line_amount (Pearson) p_adj=0 effect=1.0",
-      "transactions_features: total_amount vs line_amount (Spearman) p_adj=0 effect=0.9999999999999999",
-      "transactions_features: name_prod vs material (Chi-square) p_adj=0 effect=0.5358454608794775",
       "customers_features: total_spend vs monetary_value (Pearson) p_adj=0 effect=1.0",
-      "customers_features: total_spend vs monetary_value (Spearman) p_adj=0 effect=1.0"
+      "customers_features: total_spend vs monetary_value (Spearman) p_adj=0 effect=1.0",
+      "transactions_features: total_amount vs line_amount (Pearson) p_adj=0 effect=0.9999999999999997",
+      "transactions_features: total_amount vs line_amount (Spearman) p_adj=0 effect=1.0",
+      "transactions_features: location vs signup_date (Chi-square) p_adj=0 effect=0.4945741453385089"
     ]
   }
 }

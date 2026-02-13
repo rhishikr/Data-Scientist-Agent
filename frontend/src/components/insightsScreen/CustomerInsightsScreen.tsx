@@ -21,7 +21,7 @@ import { Input } from "../ui/input";
 
 import { Settings2, Search, Plus, BarChart3 } from "lucide-react";
 
-import { snapshot, cards, customers } from "./dashboard/data";
+import { useDashboardData } from "./dashboard/data";
 import { DashboardWidget } from "./dashboard/DashboardWidget";
 import { buildWidgetRegistry } from "./dashboard/widgetRegistry";
 import {
@@ -33,11 +33,24 @@ import {
 } from "./dashboard/formatters";
 
 export function CustomerInsightsScreen() {
+  const {
+    snapshot,
+    cards,
+    customers,
+    loading,
+    error,
+    refresh,
+    forecastSnapshot,
+  } = useDashboardData();
+
   const [isCustomizing, setIsCustomizing] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const asOfLabel = useMemo(() => getAsOfLabel(snapshot), []);
+  const asOfLabel = useMemo(
+    () => getAsOfLabel(snapshot ?? ({} as any)),
+    [snapshot],
+  );
 
   const KPI = useMemo(() => {
     const revenueByChannel =
@@ -92,7 +105,7 @@ export function CustomerInsightsScreen() {
       forecastRev30d: getCardValue(cards, "forecast_rev_30d", 0),
       forecastRev90d: getCardValue(cards, "forecast_rev_90d", 0),
     };
-  }, [asOfLabel]);
+  }, [snapshot, asOfLabel, cards]);
 
   const channelRevenueData = useMemo(() => {
     const entries = Object.entries(KPI.revenueByChannel ?? {});
@@ -125,7 +138,7 @@ export function CustomerInsightsScreen() {
 
       return {
         id: c.customer_id,
-        name: c.name,
+        name: c.name ?? "Unknown",
         segment: segmentFromSpend(safeNum(c.total_spend)),
         recency: `${recencyDays} days`,
         frequency: safeNum(c.total_orders, 0),
@@ -133,10 +146,16 @@ export function CustomerInsightsScreen() {
         churn,
       };
     });
-  }, []);
+  }, [customers]);
 
   const widgetRegistry = useMemo(
-    () => buildWidgetRegistry({ KPI, channelRevenueData, topCustomers }),
+    () =>
+      buildWidgetRegistry({
+        KPI,
+        channelRevenueData,
+        topCustomers,
+        forecastSnapshot,
+      }),
     [KPI, channelRevenueData, topCustomers],
   );
 
@@ -148,7 +167,7 @@ export function CustomerInsightsScreen() {
     "active-customers",
     "avg-customer-value",
     "stock-out-risk",
-    "forecast-rev-30d",
+    "forecast-revenue-7-30-90",
     "top-customers",
   ]);
 
@@ -183,7 +202,7 @@ export function CustomerInsightsScreen() {
 
   const catalogCategories = useMemo(() => {
     return Object.values(widgetRegistry).reduce(
-      (acc, widget) => {
+      (acc, widget: any) => {
         if (!acc[widget.category]) acc[widget.category] = [];
         acc[widget.category].push(widget);
         return acc;
@@ -232,6 +251,25 @@ export function CustomerInsightsScreen() {
       </DashboardWidget>
     );
   };
+
+  if (loading) {
+    return (
+      <div className="p-6 text-sm text-muted-foreground">
+        Loading dashboard…
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-6 space-y-3">
+        <p className="text-sm text-red-600">Failed to load: {error}</p>
+        <Button onClick={refresh} className="bg-teal-600 hover:bg-teal-700">
+          Retry
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr,380px]">

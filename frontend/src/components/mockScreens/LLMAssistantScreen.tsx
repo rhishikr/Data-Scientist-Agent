@@ -1,4 +1,4 @@
-import { ChatAssistant } from "./ChatAssistant";
+import { ChatAssistant } from "../chatAssistant/ChatAssistant";
 
 export function LLMAssistantScreen() {
   return (

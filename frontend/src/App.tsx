@@ -31,14 +31,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./components/ui/dropdown-menu";
-import { HomeScreen } from "./components/HomeScreen";
-import { DataSourcesScreen } from "./components/DataSourcesScreen";
-import { PipelineScreen } from "./components/PipelineScreen";
+import { HomeScreen } from "./components/mockScreens/HomeScreen";
+import { DataSourcesScreen } from "./components/mockScreens/DataSourcesScreen";
+import { PipelineScreen } from "./components/mockScreens/PipelineScreen";
 import { CustomerInsightsScreen } from "./components/insightsScreen/CustomerInsightsScreen";
-import { InventorySalesScreen } from "./components/InventorySalesScreen";
-import { LLMAssistantScreen } from "./components/LLMAssistantScreen";
-import { ReportsScreen } from "./components/ReportsScreen";
-import { SettingsScreen } from "./components/SettingsScreen";
+import { InventorySalesScreen } from "./components/mockScreens/InventorySalesScreen";
+import { LLMAssistantScreen } from "./components/mockScreens/LLMAssistantScreen";
+import { ReportsScreen } from "./components/mockScreens/ReportsScreen";
+import { SettingsScreen } from "./components/mockScreens/SettingsScreen";
 
 const menuItems = [
   // { id: "home", label: "Home", icon: Home },

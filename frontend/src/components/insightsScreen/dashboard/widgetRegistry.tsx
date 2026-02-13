@@ -33,13 +33,14 @@ import {
 } from "../../ui/card";
 import { Badge } from "../../ui/badge";
 
-import type { WidgetDefinition } from "./types";
+import type { WidgetDefinition, ForecastSnapshot } from "./types";
 import { fmtCurrency, fmtCurrency2, fmtPercent } from "./formatters";
 
 export function buildWidgetRegistry({
   KPI,
   channelRevenueData,
   topCustomers,
+  forecastSnapshot,
 }: {
   KPI: any;
   channelRevenueData: Array<{ channel: string; revenue: number }>;
@@ -52,6 +53,7 @@ export function buildWidgetRegistry({
     monetary: string;
     churn: number;
   }>;
+  forecastSnapshot: ForecastSnapshot | null;
 }): Record<string, WidgetDefinition> {
   return {
     // ------------------------
@@ -542,30 +544,30 @@ export function buildWidgetRegistry({
       ),
     },
 
-    "forecast-rev-30d": {
-      id: "forecast-rev-30d",
-      title: "Forecasted Revenue (30d)",
-      description: "Simple run-rate forecast from recent window",
-      type: "card",
-      defaultSize: "small",
-      category: "Product & Sales",
-      icon: TrendingUp,
-      render: () => (
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm">Forecasted Revenue (30d)</CardTitle>
-            <TrendingUp className="size-4 text-teal-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl">{fmtCurrency(KPI.forecastRev30d)}</div>
-            <p className="text-xs text-muted-foreground">
-              7d: {fmtCurrency(KPI.forecastRev7d)} • 90d:{" "}
-              {fmtCurrency(KPI.forecastRev90d)}
-            </p>
-          </CardContent>
-        </Card>
-      ),
-    },
+    // "forecast-rev-30d": {
+    //   id: "forecast-rev-30d",
+    //   title: "Forecasted Revenue (30d)",
+    //   description: "Simple run-rate forecast from recent window",
+    //   type: "card",
+    //   defaultSize: "small",
+    //   category: "Product & Sales",
+    //   icon: TrendingUp,
+    //   render: () => (
+    //     <Card>
+    //       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+    //         <CardTitle className="text-sm">Forecasted Revenue (30d)</CardTitle>
+    //         <TrendingUp className="size-4 text-teal-600" />
+    //       </CardHeader>
+    //       <CardContent>
+    //         <div className="text-2xl">{fmtCurrency(KPI.forecastRev30d)}</div>
+    //         <p className="text-xs text-muted-foreground">
+    //           7d: {fmtCurrency(KPI.forecastRev7d)} • 90d:{" "}
+    //           {fmtCurrency(KPI.forecastRev90d)}
+    //         </p>
+    //       </CardContent>
+    //     </Card>
+    //   ),
+    // },
 
     "avg-margin": {
       id: "avg-margin",
@@ -591,6 +593,281 @@ export function buildWidgetRegistry({
           </CardContent>
         </Card>
       ),
+    },
+
+    // ------------------------
+    // Forecasting & Executive Insights
+    // ------------------------
+    "forecast-revenue-7-30-90": {
+      id: "forecast-revenue-7-30-90",
+      title: "Forecasted Revenue (7/30/90)",
+      description: "Projected revenue if current trends continue",
+      type: "card",
+      defaultSize: "small",
+      category: "Product & Sales",
+      icon: TrendingUp,
+      render: () => {
+        const fr = forecastSnapshot?.forecasts?.forecasted_revenue;
+        return (
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm">Forecasted Revenue (30)</CardTitle>
+              <TrendingUp className="size-4 text-teal-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl">
+                {fmtCurrency(fr?.next_30d ?? KPI.forecastRev30d ?? 0)}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                7d: {fmtCurrency(fr?.next_7d ?? KPI.forecastRev7d ?? 0)} • 90d:{" "}
+                {fmtCurrency(fr?.next_90d ?? KPI.forecastRev90d ?? 0)}
+              </p>
+            </CardContent>
+          </Card>
+        );
+      },
+    },
+
+    "expected-churn-next-30d": {
+      id: "expected-churn-next-30d",
+      title: "Expected Churn (Next 30 Days)",
+      description: "Forecasted churn rate next month",
+      type: "card",
+      defaultSize: "small",
+      category: "Customer",
+      icon: AlertTriangle,
+      render: () => {
+        const churn = forecastSnapshot?.forecasts?.expected_churn_next_month;
+        const v = churn?.expected_churn_rate_next_30d ?? 0;
+        return (
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm">
+                Expected Churn (Next 30 Days)
+              </CardTitle>
+              <AlertTriangle className="size-4 text-orange-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl">{fmtPercent(v)}</div>
+              <p className="text-xs text-muted-foreground">
+                ROC-AUC: {(churn?.metrics?.roc_auc ?? 0).toFixed(2)} • AP:{" "}
+                {(churn?.metrics?.avg_precision ?? 0).toFixed(2)}
+              </p>
+            </CardContent>
+          </Card>
+        );
+      },
+    },
+
+    "projected-cashflow-30d": {
+      id: "projected-cashflow-30d",
+      title: "Projected Cash Flow (30d)",
+      description: "Proxy cashflow projection next 30 days",
+      type: "card",
+      defaultSize: "small",
+      category: "Product & Sales",
+      icon: DollarSign,
+      render: () => {
+        const cf = forecastSnapshot?.forecasts?.projected_cashflow;
+        return (
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm">
+                Projected Cash Flow (30d)
+              </CardTitle>
+              <DollarSign className="size-4 text-green-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl">
+                {fmtCurrency(cf?.next_30d_cash_proxy ?? 0)}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {cf?.note ?? "Proxy estimate"}
+              </p>
+            </CardContent>
+          </Card>
+        );
+      },
+    },
+
+    "sku-demand-forecast-status": {
+      id: "sku-demand-forecast-status",
+      title: "SKU Demand Forecast Status",
+      description: "Data sufficiency / readiness for SKU forecasting",
+      type: "card",
+      defaultSize: "small",
+      category: "Product & Sales",
+      icon: BarChart3,
+      render: () => {
+        const err =
+          forecastSnapshot?.forecasts?.forecasted_demand_per_sku?.error;
+        const ok = !err;
+        return (
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm">
+                SKU Demand Forecast Status
+              </CardTitle>
+              <BarChart3 className="size-4 text-slate-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl">{ok ? "Available" : "Unavailable"}</div>
+              <p className="text-xs text-muted-foreground">
+                {ok ? "SKU forecast is ready" : err}
+              </p>
+            </CardContent>
+          </Card>
+        );
+      },
+    },
+
+    "drivers-growth-decline": {
+      id: "drivers-growth-decline",
+      title: "Key Drivers of Growth / Decline",
+      description: "Auto-generated drivers from recent signals",
+      type: "card",
+      defaultSize: "medium",
+      category: "Marketing / Growth",
+      icon: Sparkles,
+      render: () => {
+        const drivers =
+          forecastSnapshot?.executive_insights?.key_drivers_of_growth_decline ??
+          [];
+        const top = drivers.slice(0, 6);
+
+        const prettyDriver = (s: string) => {
+          // Example:
+          // "customers_features: total_spend vs monetary_value (Pearson) p_adj=0 effect=1.0"
+          const [left, ...rest] = s.split(":");
+          const right = rest.join(":").trim();
+
+          const dataset = left.replace(/_/g, " ");
+          const effectMatch = right.match(/effect=([0-9.]+)/);
+          const effect = effectMatch ? Number(effectMatch[1]) : null;
+
+          const methodMatch = right.match(/\(([^)]+)\)/);
+          const method = methodMatch?.[1] ?? null;
+
+          const statement = right
+            .replace(/\([^)]*\)/g, "") // remove (Pearson)
+            .replace(/\s*p_adj=.*$/, "") // remove p_adj=...
+            .trim();
+
+          return { dataset, statement, method, effect };
+        };
+
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle>Key Drivers of Growth / Decline</CardTitle>
+              <CardDescription>
+                Auto-generated drivers from recent signals
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent>
+              {top.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  No drivers available.
+                </p>
+              ) : (
+                <div className="space-y-2 max-h-44 overflow-auto pr-1">
+                  {top.map((raw, i) => {
+                    const d = prettyDriver(raw);
+                    return (
+                      <div
+                        key={i}
+                        className="rounded-md border p-2 text-sm leading-relaxed"
+                      >
+                        <div className="flex flex-wrap items-center gap-2 mb-1">
+                          <Badge variant="outline" className="text-xs">
+                            {d.dataset}
+                          </Badge>
+                          {d.method && (
+                            <Badge variant="secondary" className="text-xs">
+                              {d.method}
+                            </Badge>
+                          )}
+                          {d.effect !== null && (
+                            <span className="text-xs text-muted-foreground">
+                              effect {d.effect.toFixed(2)}
+                            </span>
+                          )}
+                        </div>
+
+                        <p className="text-muted-foreground break-words whitespace-normal">
+                          {d.statement}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        );
+      },
+    },
+
+    "risks-opportunities-month": {
+      id: "risks-opportunities-month",
+      title: "Top Risks & Opportunities (This Month)",
+      description: "Executive decision support",
+      type: "card",
+      defaultSize: "medium",
+      category: "Marketing / Growth",
+      icon: AlertTriangle,
+      render: () => {
+        const risks = forecastSnapshot?.executive_insights?.top_3_risks ?? [];
+        const opps =
+          forecastSnapshot?.executive_insights?.top_3_opportunities ?? [];
+
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle>Top Risks & Opportunities (This Month)</CardTitle>
+              <CardDescription>
+                AI-generated summary for executives
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <p className="text-sm font-medium">Risks</p>
+                {risks.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">
+                    No risks available.
+                  </p>
+                ) : (
+                  <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                    {risks.slice(0, 3).map((r, i) => (
+                      <li key={i} className="break-words">
+                        {r.title}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div>
+                <p className="text-sm font-medium">Opportunities</p>
+                {opps.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">
+                    No opportunities available.
+                  </p>
+                ) : (
+                  <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                    {opps.slice(0, 3).map((o, i) => (
+                      <li key={i} className="break-words">
+                        {o.title}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        );
+      },
     },
   };
 }

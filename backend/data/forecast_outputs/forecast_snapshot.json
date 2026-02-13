@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-02-12T08:05:50.482561Z",
+    "generated_at": "2026-02-13T01:24:14.965065Z",
     "as_of": "2025-10-30T15:28:38.947356",
     "datasets_used": [
       "customers",
@@ -18,13 +18,13 @@
   "forecasts": {
     "forecasted_revenue": {
       "as_of": "2025-10-30T15:28:38.947356",
-      "next_7d": 925.2215741364397,
-      "next_30d": 2276.361896857459,
-      "next_90d": 9466.741061802128,
+      "next_7d": 377.42839559924647,
+      "next_30d": 1826.1087476710027,
+      "next_90d": 5911.715055357306,
       "series_daily_path": "revenue_forecast_daily.csv",
       "metrics": {
-        "mae": 197.63378375220807,
-        "mape": 143115051516.75702,
+        "mae": 245.71739888070982,
+        "mape": 198751091594.67023,
         "train_rows": 605,
         "test_rows": 30
       }
@@ -35,12 +35,12 @@
     "expected_churn_next_month": {
       "as_of": "2025-10-30T15:28:38.947356",
       "snapshot_date": "2025-10-29T00:00:00",
-      "expected_churn_rate_next_30d": 0.906651509739252,
+      "expected_churn_rate_next_30d": 0.9085068791926603,
       "top_customers_path": "churn_predictions.csv",
       "definition": "churn_30d = no purchase in next 30 days after snapshot date",
       "metrics": {
-        "roc_auc": 0.9038461538461539,
-        "avg_precision": 0.9926948452915844,
+        "roc_auc": 0.9134615384615385,
+        "avg_precision": 0.9934626474207726,
         "train_rows": 616,
         "test_rows": 112,
         "positive_rate_train": 0.8198051948051948,
@@ -49,10 +49,10 @@
     },
     "projected_cashflow": {
       "as_of": "2025-10-30T15:28:38.947356",
-      "next_30d_cash_proxy": 13531.540161149522,
+      "next_30d_cash_proxy": 21166.483736052352,
       "series_daily_path": "cashflow_forecast_daily.csv",
       "metrics": {
-        "mae": 261.4275402520662,
+        "mae": 213.81751942636413,
         "train_rows": 80,
         "test_rows": 4,
         "note": "cashflow is a proxy (revenue - refunds aligned to order_date), not settlement-timing cash"
@@ -62,17 +62,17 @@
   },
   "executive_insights": {
     "key_drivers_of_growth_decline": [
-      "transactions_features: total_amount vs line_amount (Pearson) p_adj=0 effect=1.0",
-      "transactions_features: total_amount vs line_amount (Spearman) p_adj=0 effect=0.9999999999999999",
-      "transactions_features: name_prod vs material (Chi-square) p_adj=0 effect=0.5358454608794775",
       "customers_features: total_spend vs monetary_value (Pearson) p_adj=0 effect=1.0",
-      "customers_features: total_spend vs monetary_value (Spearman) p_adj=0 effect=1.0"
+      "customers_features: total_spend vs monetary_value (Spearman) p_adj=0 effect=1.0",
+      "transactions_features: total_amount vs line_amount (Pearson) p_adj=0 effect=0.9999999999999997",
+      "transactions_features: total_amount vs line_amount (Spearman) p_adj=0 effect=1.0",
+      "transactions_features: location vs signup_date (Chi-square) p_adj=0 effect=0.4945741453385089"
     ],
     "top_3_risks": [
       {
         "title": "Rising churn risk",
         "evidence": {
-          "expected_churn_rate_next_30d": 0.906651509739252,
+          "expected_churn_rate_next_30d": 0.9085068791926603,
           "top_at_risk_customers_path": "churn_predictions.csv"
         }
       }
@@ -97,14 +97,14 @@
         "Mention any hypothesis-supported drivers if relevant."
       ],
       "evidence": {
-        "forecasted_revenue_next_30d": 2276.361896857459,
-        "expected_churn_rate_next_30d": 0.906651509739252,
+        "forecasted_revenue_next_30d": 1826.1087476710027,
+        "expected_churn_rate_next_30d": 0.9085068791926603,
         "top_hypothesis_findings": [
-          "transactions_features: total_amount vs line_amount (Pearson) p_adj=0 effect=1.0",
-          "transactions_features: total_amount vs line_amount (Spearman) p_adj=0 effect=0.9999999999999999",
-          "transactions_features: name_prod vs material (Chi-square) p_adj=0 effect=0.5358454608794775",
           "customers_features: total_spend vs monetary_value (Pearson) p_adj=0 effect=1.0",
-          "customers_features: total_spend vs monetary_value (Spearman) p_adj=0 effect=1.0"
+          "customers_features: total_spend vs monetary_value (Spearman) p_adj=0 effect=1.0",
+          "transactions_features: total_amount vs line_amount (Pearson) p_adj=0 effect=0.9999999999999997",
+          "transactions_features: total_amount vs line_amount (Spearman) p_adj=0 effect=1.0",
+          "transactions_features: location vs signup_date (Chi-square) p_adj=0 effect=0.4945741453385089"
         ],
         "files": {
           "revenue_forecast_daily": "revenue_forecast_daily.csv",
@@ -115,8 +115,8 @@
       "example_style": "Concise, exec-friendly, action-oriented bullets."
     },
     "summary": [
-      "If current patterns continue, forecasted revenue is ~2,276 in the next 30 days.",
-      "Expected churn over the next month is ~90.7% (30-day inactivity proxy)."
+      "If current patterns continue, forecasted revenue is ~1,826 in the next 30 days.",
+      "Expected churn over the next month is ~90.9% (30-day inactivity proxy)."
     ]
   }
 }

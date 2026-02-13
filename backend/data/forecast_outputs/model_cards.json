@@ -26,8 +26,8 @@
         "revenue_roll_std_28"
       ],
       "metrics": {
-        "mae": 197.63378375220807,
-        "mape": 143115051516.75702,
+        "mae": 245.71739888070982,
+        "mape": 198751091594.67023,
         "train_rows": 605,
         "test_rows": 30
       },
@@ -61,8 +61,8 @@
         "orders_per_active_day"
       ],
       "metrics": {
-        "roc_auc": 0.9038461538461539,
-        "avg_precision": 0.9926948452915844,
+        "roc_auc": 0.9134615384615385,
+        "avg_precision": 0.9934626474207726,
         "train_rows": 616,
         "test_rows": 112,
         "positive_rate_train": 0.8198051948051948,
@@ -99,7 +99,7 @@
         "cash_proxy_roll_std_28"
       ],
       "metrics": {
-        "mae": 261.4275402520662,
+        "mae": 213.81751942636413,
         "train_rows": 80,
         "test_rows": 4,
         "note": "cashflow is a proxy (revenue - refunds aligned to order_date), not settlement-timing cash"
