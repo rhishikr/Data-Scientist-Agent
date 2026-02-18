@@ -43,7 +43,7 @@ import { SettingsScreen } from "./components/mockScreens/SettingsScreen";
 const menuItems = [
   // { id: "home", label: "Home", icon: Home },
   // { id: "data-sources", label: "Data Sources", icon: Database },
-  // { id: "pipelines", label: "Pipelines", icon: GitBranch },
+  { id: "pipelines", label: "Agent Pipeline", icon: GitBranch },
   { id: "customer-insights", label: "Insights and Predictions", icon: Users },
   // { id: "inventory-sales", label: "Inventory & Sales", icon: Package },
   { id: "llm-assistant", label: "LLM Assistant", icon: MessageSquare },
@@ -61,8 +61,8 @@ export default function App() {
       //   return <HomeScreen />;
       case "data-sources":
         return <DataSourcesScreen />;
-      // case "pipelines":
-      //   return <PipelineScreen />;
+      case "pipelines":
+        return <PipelineScreen />;
       case "customer-insights":
         return <CustomerInsightsScreen />;
       // case "inventory-sales":
