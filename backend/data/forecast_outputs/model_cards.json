@@ -61,8 +61,8 @@
         "orders_per_active_day"
       ],
       "metrics": {
-        "roc_auc": 0.9134615384615385,
-        "avg_precision": 0.9934626474207726,
+        "roc_auc": 0.9170673076923077,
+        "avg_precision": 0.9922165677480318,
         "train_rows": 616,
         "test_rows": 112,
         "positive_rate_train": 0.8198051948051948,

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from typing import Any, Dict, List, Optional
 
 import numpy as np
@@ -96,6 +97,10 @@ def pearson_spearman(df: pd.DataFrame, x: str, y: str) -> List[Dict[str, Any]]:
     xvals = merged.iloc[:, 0].values
     yvals = merged.iloc[:, 1].values
 
+    # Skip correlation tests when either array is constant (std == 0)
+    if np.std(xvals) == 0 or np.std(yvals) == 0:
+        return []
+
     out = []
     r, p = stats.pearsonr(xvals, yvals)
     out.append({"test": "Pearson", "stat": _safe_float(r), "p_value": _safe_float(p)})
@@ -152,7 +157,9 @@ def cat_vs_num(df: pd.DataFrame, cat: str, num: str) -> Dict[str, Any]:
     # 3+ groups case
     f_stat, f_p = stats.f_oneway(*groups)
     try:
-        h_stat, h_p = stats.kruskal(*groups)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", RuntimeWarning)
+            h_stat, h_p = stats.kruskal(*groups)
     except Exception:
         h_stat, h_p = (None, None)
 

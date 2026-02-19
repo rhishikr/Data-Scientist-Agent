@@ -1,10 +1,10 @@
 {
-  "input_dir": "C:\\Data Scientist Agent\\backend\\data\\cleaned_data",
-  "output_dir": "C:\\Data Scientist Agent\\backend\\data\\featured_data",
+  "input_dir": "E:\\Programming\\Projects\\Data-Scientist-Agent\\backend\\data\\cleaned_data",
+  "output_dir": "E:\\Programming\\Projects\\Data-Scientist-Agent\\backend\\data\\featured_data",
   "written": [
-    "C:\\Data Scientist Agent\\backend\\data\\featured_data\\customers_features.csv",
-    "C:\\Data Scientist Agent\\backend\\data\\featured_data\\products_features.csv",
-    "C:\\Data Scientist Agent\\backend\\data\\featured_data\\transactions_features.csv"
+    "E:\\Programming\\Projects\\Data-Scientist-Agent\\backend\\data\\featured_data\\customers_features.csv",
+    "E:\\Programming\\Projects\\Data-Scientist-Agent\\backend\\data\\featured_data\\products_features.csv",
+    "E:\\Programming\\Projects\\Data-Scientist-Agent\\backend\\data\\featured_data\\transactions_features.csv"
   ],
   "loaded_tables": [
     "customers",

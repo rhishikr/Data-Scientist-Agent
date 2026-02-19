@@ -1,7 +1,7 @@
 {
-  "input_dir": "C:\\Data Scientist Agent\\backend\\data\\raw",
-  "output_dir": "C:\\Data Scientist Agent\\backend\\data\\cleaned_data",
-  "config_path": "C:\\Data Scientist Agent\\backend\\pipeline\\cleaning\\config\\defaults.yaml",
+  "input_dir": "E:\\Programming\\Projects\\Data-Scientist-Agent\\backend\\data\\raw",
+  "output_dir": "E:\\Programming\\Projects\\Data-Scientist-Agent\\backend\\data\\cleaned_data",
+  "config_path": "E:\\Programming\\Projects\\Data-Scientist-Agent\\backend\\pipeline\\cleaning\\config\\defaults.yaml",
   "files": [
     {
       "input_file": "customers_dirty.csv",

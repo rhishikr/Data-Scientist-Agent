@@ -10,6 +10,10 @@ from asyncio import Queue
 from pathlib import Path
 from typing import Optional
 
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import StreamingResponse
@@ -158,15 +162,11 @@ def run_pipeline(reset: bool = True, alpha: float = 0.05):
 # -----------------------------------------------------------------------------
 app = FastAPI(title="AI Data Scientist Agent API")
 
-# CORS (adjust ports/origins as needed)
+# CORS (origins configured via ALLOWED_ORIGINS in .env)
+_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:5173")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=[o.strip() for o in _origins.split(",") if o.strip()],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

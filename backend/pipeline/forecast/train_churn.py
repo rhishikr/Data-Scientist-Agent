@@ -7,6 +7,8 @@ from joblib import dump
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score, average_precision_score
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
 from .features import _to_dt, ChurnConfig, infer_as_of
 
@@ -115,7 +117,7 @@ def train_churn_model(
     X_train, y_train = train[feature_cols].fillna(0.0), train["churn_30d"]
     X_test, y_test = test[feature_cols].fillna(0.0), test["churn_30d"]
 
-    base = LogisticRegression(max_iter=3000)
+    base = make_pipeline(StandardScaler(), LogisticRegression(max_iter=5000))
     cal = CalibratedClassifierCV(base, method="isotonic", cv=3)
     cal.fit(X_train, y_train)
 
