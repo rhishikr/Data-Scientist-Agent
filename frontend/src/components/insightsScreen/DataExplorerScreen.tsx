@@ -293,20 +293,23 @@ export function DataExplorerScreen() {
     useFeaturedData(selectedRunId);
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="mb-2">Data Explorer</h1>
-          <p className="text-sm text-muted-foreground">
-            Explore cleaned and engineered datasets from each pipeline run
-          </p>
+    <div>
+      <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-semibold">Data Explorer</h1>
+            <p className="text-xs text-muted-foreground">
+              Explore cleaned and engineered datasets from each pipeline run
+            </p>
+          </div>
+          <RunSelector
+            selectedRunId={selectedRunId}
+            onSelectRun={setSelectedRunId}
+          />
         </div>
-        <RunSelector
-          selectedRunId={selectedRunId}
-          onSelectRun={setSelectedRunId}
-        />
       </div>
 
+      <div className="p-6 space-y-8">
       <DataStageSection
         title="Cleaned Data"
         icon={Database}
@@ -326,6 +329,7 @@ export function DataExplorerScreen() {
         report={featuredData?.report ?? {}}
         loading={featuredLoading}
       />
+      </div>
     </div>
   );
 }

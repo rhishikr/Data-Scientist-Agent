@@ -325,30 +325,33 @@ export function PipelineScreen() {
   };
 
   return (
-    <div className="space-y-6">
+    <div>
       {/* Header with Controls */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="mb-2 text-2xl font-semibold">
-            Multi-Agent Pipeline
-          </h1>
-          <p className="text-muted-foreground">
-            6 autonomous agents with LLM-driven perceive &rarr; reason &rarr;
-            act cycles
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <Button
-            className="bg-teal-600 hover:bg-teal-700 gap-2"
-            onClick={startPipeline}
-            disabled={pipelineRunning}
-          >
-            <Play className="size-4" />
-            {pipelineRunning ? "Running..." : "Run Pipeline"}
-          </Button>
+      <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-semibold">
+              Multi-Agent Pipeline
+            </h1>
+            <p className="text-xs text-muted-foreground">
+              6 autonomous agents with LLM-driven perceive &rarr; reason &rarr;
+              act cycles
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <Button
+              className="bg-teal-600 hover:bg-teal-700 gap-2"
+              onClick={startPipeline}
+              disabled={pipelineRunning}
+            >
+              <Play className="size-4" />
+              {pipelineRunning ? "Running..." : "Run Pipeline"}
+            </Button>
+          </div>
         </div>
       </div>
 
+      <div className="p-6 space-y-6">
       {/* Overall Progress */}
       <Card>
         <CardHeader>
@@ -609,6 +612,7 @@ export function PipelineScreen() {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

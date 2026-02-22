@@ -1,6 +1,10 @@
 // dashboard/data.ts
 import { useCallback, useEffect, useState } from "react";
-import type { Snapshot, KpiCardRow, CustomerRow, ForecastSnapshot } from "./types";
+import type {
+  Snapshot, KpiCardRow, CustomerRow, ForecastSnapshot,
+  InsightsSnapshot, RevenueForecastPoint, DemandForecastSku,
+  ChurnPrediction, AiAnalysis,
+} from "./types";
 
 const API_BASE = "http://127.0.0.1:8000";
 
@@ -175,6 +179,160 @@ export function useCleanedData(runId?: string | null) {
 
   return { data, loading, refresh };
 }
+
+// ---------------------------------------------------------------------------
+// Insights snapshot
+// ---------------------------------------------------------------------------
+
+export function useInsightsData(runId?: string | null) {
+  const [data, setData] = useState<InsightsSnapshot | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<InsightsSnapshot>(
+        `${API_BASE}/api/insights/snapshot${qs}`
+      );
+      setData(result);
+    } catch (e: any) {
+      setError(e?.message ?? "Failed to load insights");
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { data, loading, error, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Revenue forecast series
+// ---------------------------------------------------------------------------
+
+export function useRevenueForecastSeries(runId?: string | null) {
+  const [series, setSeries] = useState<RevenueForecastPoint[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<{ series: RevenueForecastPoint[] }>(
+        `${API_BASE}/api/forecast/series/revenue${qs}`
+      );
+      setSeries(result.series || []);
+    } catch (e: any) {
+      setError(e?.message ?? "Failed to load revenue series");
+      setSeries([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { series, loading, error, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Demand forecast per SKU
+// ---------------------------------------------------------------------------
+
+export function useDemandForecast(runId?: string | null) {
+  const [skus, setSkus] = useState<DemandForecastSku[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<{ skus: DemandForecastSku[] }>(
+        `${API_BASE}/api/forecast/series/demand${qs}`
+      );
+      setSkus(result.skus || []);
+    } catch (e: any) {
+      setError(e?.message ?? "Failed to load demand forecast");
+      setSkus([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { skus, loading, error, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Churn predictions
+// ---------------------------------------------------------------------------
+
+export function useChurnPredictions(runId?: string | null) {
+  const [customers, setCustomers] = useState<ChurnPrediction[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<{ customers: ChurnPrediction[] }>(
+        `${API_BASE}/api/forecast/series/churn${qs}`
+      );
+      setCustomers(result.customers || []);
+    } catch (e: any) {
+      setError(e?.message ?? "Failed to load churn predictions");
+      setCustomers([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { customers, loading, error, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// AI analysis (auto-cached per run)
+// ---------------------------------------------------------------------------
+
+export function useAiAnalysis(runId?: string | null) {
+  const [data, setData] = useState<AiAnalysis | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<AiAnalysis>(
+        `${API_BASE}/api/insights/ai-analysis${qs}`
+      );
+      setData(result);
+    } catch (e: any) {
+      setError(e?.message ?? "Failed to load AI analysis");
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { data, loading, error, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Featured data
+// ---------------------------------------------------------------------------
 
 export function useFeaturedData(runId?: string | null) {
   const [data, setData] = useState<FeaturedDataResponse | null>(null);

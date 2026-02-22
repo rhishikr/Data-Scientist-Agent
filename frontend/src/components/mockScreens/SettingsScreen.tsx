@@ -20,15 +20,16 @@ import { Separator } from "../ui/separator";
 
 export function SettingsScreen() {
   return (
-    <div className="max-w-4xl space-y-6">
+    <div>
       {/* Header */}
-      <div>
-        <h1 className="mb-2">Settings</h1>
-        <p className="text-muted-foreground">
+      <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
+        <h1 className="text-xl font-semibold">Settings</h1>
+        <p className="text-xs text-muted-foreground">
           Manage your account and application preferences
         </p>
       </div>
 
+      <div className="p-6 max-w-4xl space-y-6">
       {/* Pipeline Settings */}
       <Card>
         <CardHeader>
@@ -282,6 +283,7 @@ export function SettingsScreen() {
       {/* Save Button */}
       <div className="flex justify-end">
         <Button className="bg-teal-600 hover:bg-teal-700">Save Settings</Button>
+      </div>
       </div>
     </div>
   );

@@ -146,3 +146,77 @@ export type ForecastSnapshot = {
   };
   executive_insights?: ExecutiveInsights;
 };
+
+// ------------------------
+// Insight types (from /api/insights/snapshot)
+// ------------------------
+export type Insight = {
+  insight_id: string;
+  title: string;
+  description: string;
+  evidence: Record<string, any>;
+  recommendation: string;
+  severity: "low" | "medium" | "high";
+  confidence: number;
+  datasets_used?: string[];
+  hypothesis_support?: Array<Record<string, any>>;
+  tags?: string[];
+  created_at?: string;
+};
+
+export type InsightsSnapshot = {
+  meta?: { generated_at?: string; datasets_used?: string[]; num_insights?: number };
+  insights: Insight[];
+  validation?: Record<string, string[]>;
+};
+
+// ------------------------
+// Revenue forecast series (from /api/forecast/series/revenue)
+// ------------------------
+export type RevenueForecastPoint = {
+  date: string;
+  revenue_actual?: number;
+  revenue_forecast?: number;
+};
+
+// ------------------------
+// Demand forecast per SKU (from /api/forecast/series/demand)
+// ------------------------
+export type DemandForecastSku = {
+  sku: string;
+  name?: string;
+  category?: string;
+  brand?: string;
+  forecast_qty_30d: number;
+  avg_daily_forecast: number;
+  current_stock: number;
+  reorder_threshold: number;
+  days_until_stockout: number | null;
+  status: "critical" | "warning" | "healthy" | "unknown";
+};
+
+// ------------------------
+// Churn prediction (from /api/forecast/series/churn)
+// ------------------------
+export type ChurnPrediction = {
+  customer_id: string;
+  name?: string;
+  churn_prob_30d: number;
+  total_spend?: number;
+  recency_days?: number;
+  total_orders?: number;
+  segment?: string;
+};
+
+// ------------------------
+// AI Analysis (from /api/insights/ai-analysis)
+// ------------------------
+export type AiAnalysis = {
+  analysis: string | null;
+  key_findings: string[];
+  recommendations: string[];
+  risks: string[];
+  generated_at?: string;
+  cached?: boolean;
+  error?: string;
+};
