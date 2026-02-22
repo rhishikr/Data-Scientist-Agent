@@ -1,14 +1,19 @@
 # Python
 backend/.venv/
 backend/venv/
-backend/__pycache__/
+**/__pycache__/
 backend/**/*.pyc
 backend/.pytest_cache/
 backend/.mypy_cache/
+*.egg-info/
+.coverage
+htmlcov/
+.ruff_cache/
 
 # Node
 frontend/node_modules/
 frontend/dist/
+frontend/build/
 frontend/.vite/
 
 venv/
@@ -28,8 +33,14 @@ backend/data/kpi_outputs/
 backend/data/forecast_outputs/
 backend/data/reports/
 
+# RAG artifacts
+backend/rag_artifacts/
+
 # Model artifacts
 backend/models/*.joblib
+
+# Jupyter
+.ipynb_checkpoints/
 
 # Env files / secrets
 .env
