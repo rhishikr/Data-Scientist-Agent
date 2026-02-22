@@ -32,6 +32,7 @@ import {
   getCardValue,
 } from "../dashboard/formatters";
 import { RevenueLineChart } from "../charts/RevenueLineChart";
+import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
 
 /* ------------------------------------------------------------------ */
 /* Chart config                                                        */
@@ -170,7 +171,8 @@ export function RevenueSalesTab({
                 No channel data
               </div>
             ) : (
-              <ChartContainer config={barChartConfig} className="h-[280px] w-full">
+              <ChartEnlargeWrapper title="Revenue by Channel">
+              <ChartContainer config={barChartConfig} className="w-full" style={{ height: 280 }}>
                 <BarChart
                   data={channelRevenueData}
                   margin={{ top: 8, right: 12, bottom: 0, left: 12 }}
@@ -204,6 +206,7 @@ export function RevenueSalesTab({
                   />
                 </BarChart>
               </ChartContainer>
+              </ChartEnlargeWrapper>
             )}
           </CardContent>
         </Card>

@@ -30,6 +30,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "../../ui/chart";
+import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
 
 import {
   fmtCurrency,
@@ -191,43 +192,45 @@ export function ProductsTab({ cards, snapshot }: ProductsTabProps) {
                 No top products data available
               </p>
             ) : (
-              <ChartContainer
-                config={topProductsChartConfig}
-                className="w-full"
-                style={{ height: topChartHeight }}
-              >
-                <BarChart
-                  data={topChartData}
-                  layout="vertical"
-                  margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+              <ChartEnlargeWrapper title="Top 10 Products">
+                <ChartContainer
+                  config={topProductsChartConfig}
+                  className="w-full"
+                  style={{ height: topChartHeight }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                  <XAxis
-                    type="number"
-                    tickFormatter={(v: number) => fmtCurrency(v)}
-                  />
-                  <YAxis
-                    type="category"
-                    dataKey="name"
-                    width={140}
-                    tick={{ fontSize: 12 }}
-                  />
-                  <ChartTooltip
-                    content={
-                      <ChartTooltipContent
-                        formatter={(value) =>
-                          fmtCurrency(safeNum(value))
-                        }
-                      />
-                    }
-                  />
-                  <Bar dataKey="revenue" radius={[0, 4, 4, 0]}>
-                    {topChartData.map((_, idx) => (
-                      <Cell key={idx} fill="var(--chart-2)" />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ChartContainer>
+                  <BarChart
+                    data={topChartData}
+                    layout="vertical"
+                    margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                    <XAxis
+                      type="number"
+                      tickFormatter={(v: number) => fmtCurrency(v)}
+                    />
+                    <YAxis
+                      type="category"
+                      dataKey="name"
+                      width={140}
+                      tick={{ fontSize: 12 }}
+                    />
+                    <ChartTooltip
+                      content={
+                        <ChartTooltipContent
+                          formatter={(value) =>
+                            fmtCurrency(safeNum(value))
+                          }
+                        />
+                      }
+                    />
+                    <Bar dataKey="revenue" radius={[0, 4, 4, 0]}>
+                      {topChartData.map((_, idx) => (
+                        <Cell key={idx} fill="var(--chart-2)" />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ChartContainer>
+              </ChartEnlargeWrapper>
             )}
           </CardContent>
         </Card>
@@ -244,43 +247,45 @@ export function ProductsTab({ cards, snapshot }: ProductsTabProps) {
                 No bottom products data available
               </p>
             ) : (
-              <ChartContainer
-                config={bottomProductsChartConfig}
-                className="w-full"
-                style={{ height: bottomChartHeight }}
-              >
-                <BarChart
-                  data={bottomChartData}
-                  layout="vertical"
-                  margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+              <ChartEnlargeWrapper title="Bottom 10 Products">
+                <ChartContainer
+                  config={bottomProductsChartConfig}
+                  className="w-full"
+                  style={{ height: bottomChartHeight }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                  <XAxis
-                    type="number"
-                    tickFormatter={(v: number) => fmtCurrency(v)}
-                  />
-                  <YAxis
-                    type="category"
-                    dataKey="name"
-                    width={140}
-                    tick={{ fontSize: 12 }}
-                  />
-                  <ChartTooltip
-                    content={
-                      <ChartTooltipContent
-                        formatter={(value) =>
-                          fmtCurrency(safeNum(value))
-                        }
-                      />
-                    }
-                  />
-                  <Bar dataKey="revenue" radius={[0, 4, 4, 0]}>
-                    {bottomChartData.map((_, idx) => (
-                      <Cell key={idx} fill="var(--chart-1)" />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ChartContainer>
+                  <BarChart
+                    data={bottomChartData}
+                    layout="vertical"
+                    margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                    <XAxis
+                      type="number"
+                      tickFormatter={(v: number) => fmtCurrency(v)}
+                    />
+                    <YAxis
+                      type="category"
+                      dataKey="name"
+                      width={140}
+                      tick={{ fontSize: 12 }}
+                    />
+                    <ChartTooltip
+                      content={
+                        <ChartTooltipContent
+                          formatter={(value) =>
+                            fmtCurrency(safeNum(value))
+                          }
+                        />
+                      }
+                    />
+                    <Bar dataKey="revenue" radius={[0, 4, 4, 0]}>
+                      {bottomChartData.map((_, idx) => (
+                        <Cell key={idx} fill="var(--chart-1)" />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ChartContainer>
+              </ChartEnlargeWrapper>
             )}
           </CardContent>
         </Card>

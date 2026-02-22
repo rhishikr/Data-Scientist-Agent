@@ -21,6 +21,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "../../ui/chart";
+import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
 
 import {
   fmtCurrency,
@@ -172,38 +173,40 @@ export function MarketingTab({
               No channel revenue data available
             </p>
           ) : (
-            <ChartContainer
-              config={channelChartConfig}
-              className="w-full"
-              style={{ height: 350 }}
-            >
-              <BarChart
-                data={sortedChannelData}
-                margin={{ top: 10, right: 30, left: 10, bottom: 20 }}
+            <ChartEnlargeWrapper title="Revenue by Channel">
+              <ChartContainer
+                config={channelChartConfig}
+                className="w-full"
+                style={{ height: 350 }}
               >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis
-                  dataKey="channel"
-                  tick={{ fontSize: 12 }}
-                  angle={-25}
-                  textAnchor="end"
-                  height={60}
-                />
-                <YAxis tickFormatter={(v: number) => fmtCurrency(v)} />
-                <ChartTooltip
-                  content={
-                    <ChartTooltipContent
-                      formatter={(value) => fmtCurrency(safeNum(value))}
-                    />
-                  }
-                />
-                <Bar dataKey="revenue" radius={[4, 4, 0, 0]}>
-                  {sortedChannelData.map((_, idx) => (
-                    <Cell key={idx} fill="var(--chart-2)" />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ChartContainer>
+                <BarChart
+                  data={sortedChannelData}
+                  margin={{ top: 10, right: 30, left: 10, bottom: 20 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis
+                    dataKey="channel"
+                    tick={{ fontSize: 12 }}
+                    angle={-25}
+                    textAnchor="end"
+                    height={60}
+                  />
+                  <YAxis tickFormatter={(v: number) => fmtCurrency(v)} />
+                  <ChartTooltip
+                    content={
+                      <ChartTooltipContent
+                        formatter={(value) => fmtCurrency(safeNum(value))}
+                      />
+                    }
+                  />
+                  <Bar dataKey="revenue" radius={[4, 4, 0, 0]}>
+                    {sortedChannelData.map((_, idx) => (
+                      <Cell key={idx} fill="var(--chart-2)" />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ChartContainer>
+            </ChartEnlargeWrapper>
           )}
         </CardContent>
       </Card>

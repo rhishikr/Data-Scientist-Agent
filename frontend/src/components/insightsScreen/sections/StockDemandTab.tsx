@@ -32,6 +32,7 @@ import {
 } from "../../ui/chart";
 import type { KpiCardRow, DemandForecastSku } from "../dashboard/types";
 import { getCardValue, fmtPercent, safeNum } from "../dashboard/formatters";
+import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
 
 /* ------------------------------------------------------------------ */
 /* Status badge helper                                                 */
@@ -133,8 +134,8 @@ export function StockDemandTab({ cards, demandSkus }: StockDemandTabProps) {
   };
 
   /* ---------- KPI values ---------- */
-  const stockOutRisk = getCardValue(cards, "stockout_risk_pct");
-  const inventoryTurnover = getCardValue(cards, "inventory_turnover");
+  const stockOutRisk = getCardValue(cards, "stock_out_risk_pct");
+  const inventoryTurnover = getCardValue(cards, "inventory_turnover_proxy");
   const criticalCount = useMemo(
     () => demandSkus.filter((s) => s.status === "critical").length,
     [demandSkus],
@@ -370,45 +371,47 @@ export function StockDemandTab({ cards, demandSkus }: StockDemandTabProps) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ChartContainer config={healthChartConfig} className="h-[220px] w-full">
-              <BarChart
-                data={healthData}
-                margin={{ top: 8, right: 12, bottom: 0, left: 12 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis
-                  dataKey="name"
-                  tick={{ fontSize: 12 }}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <YAxis
-                  tick={{ fontSize: 12 }}
-                  tickLine={false}
-                  axisLine={false}
-                  width={40}
-                />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar
-                  dataKey="critical"
-                  stackId="status"
-                  fill="var(--chart-1)"
-                  radius={[0, 0, 0, 0]}
-                />
-                <Bar
-                  dataKey="warning"
-                  stackId="status"
-                  fill="var(--chart-2)"
-                  radius={[0, 0, 0, 0]}
-                />
-                <Bar
-                  dataKey="healthy"
-                  stackId="status"
-                  fill="var(--chart-4)"
-                  radius={[4, 4, 0, 0]}
-                />
-              </BarChart>
-            </ChartContainer>
+            <ChartEnlargeWrapper title="Inventory Health by Status">
+              <ChartContainer config={healthChartConfig} className="w-full" style={{ height: 220 }}>
+                <BarChart
+                  data={healthData}
+                  margin={{ top: 8, right: 12, bottom: 0, left: 12 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fontSize: 12 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    tick={{ fontSize: 12 }}
+                    tickLine={false}
+                    axisLine={false}
+                    width={40}
+                  />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Bar
+                    dataKey="critical"
+                    stackId="status"
+                    fill="var(--chart-1)"
+                    radius={[0, 0, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="warning"
+                    stackId="status"
+                    fill="var(--chart-2)"
+                    radius={[0, 0, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="healthy"
+                    stackId="status"
+                    fill="var(--chart-4)"
+                    radius={[4, 4, 0, 0]}
+                  />
+                </BarChart>
+              </ChartContainer>
+            </ChartEnlargeWrapper>
           </CardContent>
         </Card>
 
@@ -423,35 +426,37 @@ export function StockDemandTab({ cards, demandSkus }: StockDemandTabProps) {
                 No demand data
               </div>
             ) : (
-              <ChartContainer config={demandChartConfig} className="h-[320px] w-full">
-                <BarChart
-                  data={topDemandSkus}
-                  layout="vertical"
-                  margin={{ top: 8, right: 12, bottom: 0, left: 8 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                  <XAxis
-                    type="number"
-                    tick={{ fontSize: 11 }}
-                    tickLine={false}
-                    axisLine={false}
-                  />
-                  <YAxis
-                    type="category"
-                    dataKey="name"
-                    tick={{ fontSize: 11 }}
-                    tickLine={false}
-                    axisLine={false}
-                    width={120}
-                  />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar
-                    dataKey="forecast_qty_30d"
-                    fill="var(--chart-1)"
-                    radius={[0, 4, 4, 0]}
-                  />
-                </BarChart>
-              </ChartContainer>
+              <ChartEnlargeWrapper title="Top Demand SKUs">
+                <ChartContainer config={demandChartConfig} className="w-full" style={{ height: 320 }}>
+                  <BarChart
+                    data={topDemandSkus}
+                    layout="vertical"
+                    margin={{ top: 8, right: 12, bottom: 0, left: 8 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                    <XAxis
+                      type="number"
+                      tick={{ fontSize: 11 }}
+                      tickLine={false}
+                      axisLine={false}
+                    />
+                    <YAxis
+                      type="category"
+                      dataKey="name"
+                      tick={{ fontSize: 11 }}
+                      tickLine={false}
+                      axisLine={false}
+                      width={120}
+                    />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Bar
+                      dataKey="forecast_qty_30d"
+                      fill="var(--chart-1)"
+                      radius={[0, 4, 4, 0]}
+                    />
+                  </BarChart>
+                </ChartContainer>
+              </ChartEnlargeWrapper>
             )}
           </CardContent>
         </Card>

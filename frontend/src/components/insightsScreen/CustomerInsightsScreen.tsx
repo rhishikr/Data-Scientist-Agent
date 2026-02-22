@@ -12,7 +12,11 @@ import {
   ShoppingBag,
   Megaphone,
   Sparkles,
+  AlertCircle,
+  RefreshCw,
+  ServerOff,
 } from "lucide-react";
+import { Card, CardContent } from "../ui/card";
 
 import {
   useDashboardData,
@@ -87,32 +91,77 @@ export function CustomerInsightsScreen() {
 
   if (loading) {
     return (
-      <div className="p-6 space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <Skeleton className="h-8 w-64 mb-2" />
-            <Skeleton className="h-4 w-48" />
+      <div>
+        <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-xl font-semibold">Insights & Predictions</h1>
+              <p className="text-xs text-muted-foreground">
+                AI-powered retail analytics dashboard
+              </p>
+            </div>
+            <Skeleton className="h-10 w-48 rounded-lg" />
           </div>
-          <Skeleton className="h-10 w-48" />
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="h-24 rounded-lg" />
-          ))}
+        <div className="p-6 space-y-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className="h-24 rounded-xl" />
+            ))}
+          </div>
+          <Skeleton className="h-10 w-full rounded-xl" />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <Skeleton className="h-72 rounded-xl lg:col-span-2" />
+            <Skeleton className="h-72 rounded-xl" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Skeleton className="h-32 rounded-xl" />
+            <Skeleton className="h-32 rounded-xl" />
+            <Skeleton className="h-32 rounded-xl" />
+          </div>
         </div>
-        <Skeleton className="h-10 w-full rounded-lg" />
-        <Skeleton className="h-96 rounded-lg" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="p-6 space-y-3">
-        <p className="text-sm text-red-600">Failed to load: {error}</p>
-        <Button onClick={refresh} className="bg-teal-600 hover:bg-teal-700">
-          Retry
-        </Button>
+      <div>
+        <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-xl font-semibold">Insights & Predictions</h1>
+              <p className="text-xs text-muted-foreground">
+                AI-powered retail analytics dashboard
+              </p>
+            </div>
+            <RunSelector
+              selectedRunId={selectedRunId}
+              onSelectRun={setSelectedRunId}
+            />
+          </div>
+        </div>
+        <div className="p-6 flex items-center justify-center min-h-[60vh]">
+          <Card className="max-w-md w-full">
+            <CardContent className="pt-6 pb-6 flex flex-col items-center text-center gap-4">
+              <div className="rounded-full bg-red-50 p-4">
+                <ServerOff className="size-8 text-red-500" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold mb-1">Unable to load dashboard</h2>
+                <p className="text-sm text-muted-foreground">
+                  {error.includes("fetch")
+                    ? "Could not connect to the backend server. Make sure the API server is running."
+                    : error}
+                </p>
+              </div>
+              <Button onClick={refresh} className="bg-teal-600 hover:bg-teal-700 gap-2">
+                <RefreshCw className="size-4" />
+                Try Again
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     );
   }
@@ -142,32 +191,32 @@ export function CustomerInsightsScreen() {
 
       {/* Tabbed Content */}
       <Tabs defaultValue="overview">
-        <TabsList className="flex-wrap">
-          <TabsTrigger value="overview">
+        <TabsList className="w-full">
+          <TabsTrigger value="overview" className="flex-1">
             <LayoutDashboard className="size-4 mr-1.5" />
             Overview
           </TabsTrigger>
-          <TabsTrigger value="revenue">
+          <TabsTrigger value="revenue" className="flex-1">
             <DollarSign className="size-4 mr-1.5" />
             Revenue & Sales
           </TabsTrigger>
-          <TabsTrigger value="stock">
+          <TabsTrigger value="stock" className="flex-1">
             <Package className="size-4 mr-1.5" />
             Stock & Demand
           </TabsTrigger>
-          <TabsTrigger value="customers">
+          <TabsTrigger value="customers" className="flex-1">
             <Users className="size-4 mr-1.5" />
             Customers
           </TabsTrigger>
-          <TabsTrigger value="products">
+          <TabsTrigger value="products" className="flex-1">
             <ShoppingBag className="size-4 mr-1.5" />
             Products
           </TabsTrigger>
-          <TabsTrigger value="marketing">
+          <TabsTrigger value="marketing" className="flex-1">
             <Megaphone className="size-4 mr-1.5" />
             Marketing
           </TabsTrigger>
-          <TabsTrigger value="insights">
+          <TabsTrigger value="insights" className="flex-1">
             <Sparkles className="size-4 mr-1.5" />
             AI Insights
           </TabsTrigger>

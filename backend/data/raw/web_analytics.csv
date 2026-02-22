@@ -10121,3 +10121,1293 @@ EVT210118,CUST1027,SESS102500,2026-02-16 05:37:20.000000,home,purchase,6.0,coffe
 ,CUST1108,SESS102501,2026-02-17 01:50:05.000000,category,purchase,13.0,,social,False,False
 EVT210120,CUST1421,SESS102501,2026-02-19 02:29:21.000000,product,view_page,10.0,,paid_ads,False,False
 ,CUST1466,SESS102501,2026-02-19 21:36:23.000000,product,remove_from_cart,6.0,,organic_search,False,False
+EVT210121,CUST1201,SESS102502,2026-02-25 10:19:09.000000,search_results,add_to_cart,6.0,,organic_search,True,False
+EVT210122,CUST1110,SESS102502,2026-02-27 22:08:21.000000,checkout,add_to_cart,15.0,,social,True,False
+EVT210123,CUST1399,SESS102502,2026-02-24 01:33:16.000000,home,,4.0,yoga mat,paid_ads,False,False
+EVT210124,CUST1099,SESS102503,2026-02-24 03:02:12.000000,checkout,purchase,9.0,,,False,False
+EVT210125,CUST1477,SESS102503,2026-02-22 16:07:37.000000,category,purchase,6.0,, email ,False,False
+EVT210126,CUST1304,SESS102503,2026-02-26 13:38:06.000000,cart,remove_from_cart,6.0,,direct,False,False
+EVT210127,CUST1377,SESS102503,2026-02-28 06:22:25.000000,cart,search,5.0,,organic_search,False,False
+EVT210128,CUST1029,SESS102503,2026-02-26 16:11:28.000000,product,purchase,,,email,False,False
+EVT210129,CUST1290,SESS102504,2026-02-28 18:54:45.000000,search_results,add_to_cart,13.0,,,True,False
+EVT210130,CUST1182,SESS102504,2026-02-27 04:00:49.000000,,purchase,9.0,water bottle,social,False,False
+EVT210131,CUST1424,SESS102504,2026-02-23 14:26:05.000000,search_results,remove_from_cart,,backpack,organic_search,False,False
+EVT210132,CUST1261,SESS102504,2026-02-22 07:53:03.000000,product,remove_from_cart,4.0,novel,organic_search,False,False
+EVT210133,CUST1106,SESS102505,2026-02-25 20:44:21.000000,search_results,view_page,4.0,phone case,social,False,False
+EVT210134,CUST1419,SESS102505,2026-02-23 00:42:11.000000,cart,view_page,11.0,,paid_ads,False,False
+,CUST1418,SESS102505,2026-02-22 10:08:31.000000,cart,purchase,9.0,,paid_ads,False,False
+,CUST1156,SESS102505,2026-02-22 04:05:34.000000,category,search,9.0,phone case,paid_ads,False,False
+EVT210137,CUST1351,SESS102505,,search_results,view_page,,water bottle,organic_search,False,False
+EVT210138,CUST1340,SESS102505,2026-02-25 04:03:52.000000,search_results,remove_from_cart,2.0,novel,organic_search,False,False
+EVT210139,CUST1397,SESS102505,2026-02-24 03:11:04.000000,checkout,search,6.0,,email,False,False
+EVT210140,CUST1128,SESS102505,,home,purchase,,,email,False,False
+EVT210141,CUST1294,SESS102505,2026-02-24 18:30:17.000000,category,view_page,12.0,,paid_ads,False,
+EVT210142,CUST1428,SESS102506,2026-02-23 09:45:00.000000,product,view_page,11.0,,paid_ads,False,False
+EVT210143,CUST1358,SESS102507,2026-02-23 17:45:07.000000,home,purchase,7.0,,organic_search,False,False
+EVT210144,CUST1297,SESS102507,2026-02-27 02:00:19.000000,product,ADD_TO_CART,10.0,,social,True,True
+EVT210145,CUST1454,SESS102507,,search_results,view_page,12.0,backpack,paid_ads,False,
+EVT210146,CUST1308,SESS102507,2026-02-22 01:04:04.000000,search_results,remove_from_cart,1.0,,social,False,False
+EVT210147,CUST1315,SESS102507,2026-02-25 15:27:24.000000,,add_to_cart,5.0,,direct,True,True
+EVT210148,CUST1017,SESS102507,2026-02-24 16:53:00.000000,checkout,add_to_cart,9.0,,organic_search,True,True
+EVT210149,CUST1073,SESS102508,2026-02-24 04:16:24.000000,product,add_to_cart,7.0,,email,True,
+EVT210150,CUST1324,SESS102508,2026-02-27 17:27:38.000000,checkout,search,8.0,headphones,email,False,False
+EVT210151,CUST1109,SESS102508,2026-02-24 22:31:16.000000,home,add_to_cart,12.0,,direct,True,
+EVT210152,CUST1130,SESS102509,2026-02-26 18:34:40.000000,category,view_page,9.0,,direct,False,False
+EVT210153,CUST1370,SESS102509,2026-02-24 09:27:26.000000,home,purchase,12.0,water bottle,paid_ads,False,False
+EVT210154,CUST1085,SESS102510,2026-02-23 18:21:25.000000,product,search,13.0,winter jacket,,False,False
+EVT210155,CUST1428,SESS102510,2026-02-22 21:46:07.000000,home,search,14.0,,direct,False,False
+EVT210156,CUST1027,SESS102510,2026-02-28 21:19:46.000000,product,,13.0,,direct,False,False
+EVT210157,CUST1066,SESS102510,2026-02-28 08:42:25.000000,cart,remove_from_cart,7.0,,paid_ads,False,False
+EVT210158,CUST1335,SESS102511,,search_results,purchase,7.0,, organic_search ,False,False
+EVT210159,CUST1268,SESS102511,2026-02-24 01:47:45.000000,category,,3.0,,paid_ads,False,False
+EVT210160,CUST1030,SESS102511,2026-02-26 05:37:56.000000,,search,14.0,,direct,False,False
+EVT210161,CUST1018,SESS102511,2026-02-28 07:35:12.000000,,purchase,,,organic_search,False,False
+EVT210162,CUST1173,SESS102511,2026-02-27 12:26:27.000000,checkout,view_page,6.0,backpack,direct,False,False
+EVT210163,CUST1103,SESS102511,,checkout,remove_from_cart,5.0,,organic_search,False,False
+EVT210164,CUST1027,SESS102511,2026-02-24 02:46:22.000000,checkout,view_page,6.0,,paid_ads,False,False
+EVT210165,CUST1050,SESS102512,2026-02-24 15:49:30.000000,checkout,view_page,6.0,,direct,False,False
+EVT210166,CUST1149,SESS102512,2026-02-28 16:37:50.000000,category,search,9.0,,organic_search,False,False
+EVT210167,CUST1418,SESS102512,2026-02-27 20:22:53.000000,checkout,search,7.0,protein powder,email,False,False
+EVT210168,CUST1474,SESS102512,2026-02-25 18:51:21.000000,search_results,add_to_cart,6.0,,paid_ads,True,False
+EVT210169,CUST1291,SESS102512,2026-02-24 19:09:33.000000,checkout,view_page,9.0,winter jacket,email,False,False
+EVT210170,CUST1072,SESS102512,2026-02-23 14:11:16.000000,search_results,view_page,15.0,backpack,social,False,False
+EVT210171,CUST1450,,2026-02-27 19:24:08.000000,home,search,9.0,,social,False,False
+EVT210172,CUST1334,SESS102512,2026-02-27 15:12:29.000000,cart,search,5.0,,email,False,False
+EVT210173,CUST1091,SESS102512,2026-02-25 07:34:10.000000,checkout, remove_from_cart ,10.0,,organic_search,False,False
+EVT210174,CUST1459,SESS102512,2026-02-26 22:55:12.000000,product,remove_from_cart,14.0,,direct,False,False
+EVT210175,CUST1507,SESS102512,2026-02-25 10:45:25.000000,cart,purchase,2.0,,social,False,False
+EVT210176,CUST1425,SESS102512,2026-02-24 07:24:59.000000,search_results,remove_from_cart,14.0,,social,False,
+EVT210177,CUST1328,SESS102512,2026-02-23 09:35:10.000000,checkout,view_page,3.0,,social,False,False
+EVT210178,CUST1408,SESS102513,2026-02-22 16:08:01.000000,category,remove_from_cart,7.0,,social,False,False
+EVT210179,CUST1055,SESS102513,2026-02-21 22:53:34.000000,search_results,view_page,1.0,,social,False,False
+EVT210180,CUST1120,SESS102513,2026-02-26 07:10:58.000000,category,purchase,9.0,,email,,False
+EVT210181,CUST1102,SESS102513,2026-02-24 05:49:32.000000,product,purchase,11.0,,,False,False
+EVT210182,CUST1384,SESS102513,2026-02-28 10:55:30.000000,checkout,purchase,1.0,, organic_search ,False,False
+EVT210183,CUST1323,SESS102513,2026-02-22 17:01:20.000000,cart,search,2.0,,organic_search,False,False
+EVT210184,CUST1076,SESS102514,2026-02-26 12:11:46.000000,home,add_to_cart,10.0,,social,True,False
+EVT210185,CUST1217,SESS102514,2026-02-25 14:22:15.000000,home,add_to_cart,10.0,,organic_search,True,False
+EVT210186,CUST1060,SESS102514,2026-02-24 11:41:15.000000,category,purchase,1.0, desk lamp ,organic_search,False,False
+EVT210187,CUST1360,SESS102514,2026-02-24 14:54:46.000000,checkout,add_to_cart,8.0,,organic_search,True,False
+EVT210188,CUST1368,SESS102514,2026-02-25 12:36:44.000000,search_results,remove_from_cart,4.0,,organic_search,False,False
+EVT210189,CUST1391,SESS102514,2026-02-22 00:07:09.000000,HOME, add_to_cart ,13.0,coffee maker,direct,True,True
+EVT210190,CUST1127,SESS102514,2026-02-22 05:45:04.000000,cart,view_page,6.0,,direct,False,False
+EVT210191,CUST1400,SESS102514,2026-02-22 14:36:19.000000,search_results,search,1.0,backpack,organic_search,False,False
+EVT210192,CUST1392,SESS102514,2026-02-27 10:24:51.000000,checkout,add_to_cart,15.0,,direct,True,True
+EVT210193,CUST1096,SESS102514,2026-02-28 06:18:05.000000,home,view_page,6.0,,organic_search,False,False
+EVT210194,CUST1343,SESS102514,2026-02-28 09:03:44.000000,cart,purchase,13.0,,direct,False,False
+EVT210195,CUST1086,SESS102514,2026-02-22 10:37:35.000000,checkout,add_to_cart,1.0,,social,True,False
+EVT210196,CUST1214,SESS102515,2026-02-25 12:43:38.000000,category,add_to_cart,13.0,,direct,True,False
+EVT210197,CUST1163,SESS102515,2026-02-24 07:28:54.000000,product,purchase,14.0,,paid_ads,False,False
+EVT210198,CUST1030,SESS102515,2026-02-26 04:58:47.000000,cart,purchase,7.0,desk lamp,social,False,False
+EVT210199,CUST1251, SESS102515 ,2026-02-24 01:34:53.000000,search_results,view_page,5.0,protein powder,social,,
+EVT210200,CUST1139,SESS102515,,category,purchase,8.0,,social,False,False
+EVT210201,CUST1010,SESS102515,2026-02-26 07:50:12.000000,CATEGORY,add_to_cart,11.0,desk lamp,email,True,False
+EVT210202,CUST1366,SESS102515,2026-02-27 19:52:38.000000,product,view_page,15.0,,paid_ads,False,False
+EVT210203,CUST1491,SESS102515,2026-02-27 07:21:50.000000,checkout,view_page,12.0,protein powder,email,False,False
+EVT210204,CUST1416,SESS102515,2026-02-22 15:54:09.000000,,view_page,10.0,, email ,False,False
+EVT210205,CUST1186,SESS102515,2026-02-22 02:42:48.000000,search_results,search,12.0,backpack,paid_ads,False,False
+EVT210206,CUST1524,SESS102516,2026-02-23 06:46:19.000000,cart,,6.0,,email,False,False
+EVT210207,CUST1455,,2026-02-27 21:50:35.000000,cart,add_to_cart,7.0,,organic_search,True,False
+EVT210208,CUST1213,SESS102517,2026-02-26 19:13:02.000000,search_results,add_to_cart,13.0,coffee maker, organic_search ,True,
+EVT210209,CUST1096,SESS102518,2026-02-28 06:05:10.000000,cart,search,6.0,,direct,False,False
+,CUST1454,SESS102519,2026-02-23 22:27:02.000000,product,purchase,8.0,,social,False,False
+EVT210211,CUST1312,SESS102520,2026-02-23 11:58:50.000000,category,search,7.0,,email,False,False
+EVT210212,CUST1046,SESS102520,2026-02-27 01:41:40.000000,cart,remove_from_cart,7.0,,social,False,False
+EVT210213,CUST1406,SESS102520,2026-02-28 10:42:47.000000,category,add_to_cart,2.0,,email,True,False
+EVT210214,CUST1422,SESS102520,2026-02-24 23:49:35.000000,cart,remove_from_cart,9.0,,social,False,False
+EVT210215,CUST1485,SESS102521,2026-02-25 14:06:06.000000,cart,search,7.0,winter jacket,social,,False
+EVT210216,CUST1164,SESS102522,,category,purchase,8.0,,paid_ads,False,False
+EVT210217,CUST1357,SESS102522,2026-02-23 09:46:47.000000,checkout,purchase,4.0,,paid_ads,False,False
+EVT210218,CUST1116,SESS102522,2026-02-27 21:28:03.000000,search_results,view_page,5.0,,,False,False
+EVT210219,CUST1447,SESS102522,2026-02-28 10:26:39.000000,cart,add_to_cart,5.0,,email,True,True
+EVT210220,CUST1470,SESS102523,2026-02-25 23:33:09.000000,home,view_page,10.0,,direct,False,False
+EVT210221,CUST1341,SESS102523,2026-02-28 05:02:33.000000,search_results,view_page,6.0,,organic_search,False,False
+EVT210222,CUST1219,,2026-02-28 17:19:26.000000,search_results,add_to_cart,14.0,,email,True,True
+EVT210223,CUST1009,SESS102524,2026-02-25 04:10:38.000000,cart,purchase,14.0,,,False,False
+EVT210224,CUST1237,SESS102524,2026-02-26 18:26:11.000000,search_results,remove_from_cart,9.0,,email,False,False
+EVT210225,CUST1398,SESS102524,,product,view_page,3.0,,,False,False
+EVT210226,CUST1443,SESS102524,2026-02-25 03:27:55.000000,cart,remove_from_cart,3.0,,social,False,
+EVT210227,CUST1138,SESS102524,2026-02-28 18:00:03.000000,cart,purchase,4.0,winter jacket,paid_ads,False,False
+EVT210228,CUST1279,SESS102524,2026-02-25 09:26:35.000000,search_results,purchase,6.0,protein powder,,False,False
+EVT210229,CUST1508,SESS102525,2026-02-22 12:49:12.000000,category,remove_from_cart,7.0,laptop, direct ,False,False
+EVT210230,CUST1510,SESS102525,2026-02-23 12:52:49.000000,home,view_page,8.0,,social,False,False
+EVT210231,CUST1022,SESS102525,2026-02-28 07:27:49.000000,cart,purchase,3.0,,,False,
+EVT210232,CUST1058,SESS102526,2026-02-22 22:27:26.000000,home,purchase,,,email,False,False
+EVT210233,CUST1140,SESS102526,, home ,add_to_cart,12.0,,paid_ads,True,True
+EVT210234,CUST1160,,2026-02-27 18:46:32.000000,search_results,add_to_cart,2.0,,direct,True,True
+EVT210235,CUST1256,SESS102527,2026-02-22 13:28:20.000000,home,view_page,12.0,,direct,False,False
+EVT210236,CUST1361,SESS102528,2026-02-27 00:08:25.000000,home,add_to_cart,1.0,,social,True,False
+EVT210237,CUST1318,SESS102529,2026-02-26 07:34:20.000000,product,add_to_cart,3.0,coffee maker,social,,
+EVT210238,CUST1471,SESS102529,2026-02-26 01:00:45.000000,checkout,remove_from_cart,13.0,,organic_search,False,False
+EVT210239,CUST1027,SESS102530,2026-02-23 04:18:41.000000,home,purchase,6.0,coffee maker,direct,False,False
+,CUST1108,SESS102531,2026-02-24 00:31:26.000000,category,purchase,13.0,,social,False,False
+EVT210241,CUST1421,SESS102531,2026-02-26 01:10:42.000000,product,view_page,10.0,,paid_ads,False,False
+,CUST1466,SESS102531,2026-02-26 20:17:44.000000,product,remove_from_cart,6.0,,organic_search,False,False
+EVT210242,CUST1200,SESS102533,2026-03-05 05:01:47.000000,home,add_to_cart,1.0,,social,True,True
+EVT210243,CUST1291,SESS102534,2026-03-06 00:35:18.000000,CHECKOUT,add_to_cart,2.0,,direct,True,False
+EVT210244,CUST1274,SESS102534,2026-03-06 00:48:42.000000,search_results,search,10.0,,direct,False,False
+EVT210245,CUST1206,SESS102534,2026-03-04 17:17:30.000000,category, add_to_cart ,4.0,,social,True,False
+EVT210246,CUST1272,SESS102534,2026-03-07 10:09:39.000000,category,view_page,15.0,,organic_search,False,False
+EVT210247,CUST1429,SESS102534,2026-03-05 16:30:50.000000,cart,view_page,8.0,headphones,email,False,False
+EVT210248,CUST1110,SESS102534,2026-03-01 21:34:41.000000,checkout,view_page,4.0,,,False,False
+EVT210249,CUST1346,SESS102535,2026-03-07 10:24:30.000000,checkout,purchase,11.0,,paid_ads,False,False
+evt210250,CUST1165,,2026-03-06 20:36:53.000000,cart,view_page,,,paid_ads,False,False
+EVT210251,CUST1402,SESS102535,2026-03-04 04:30:57.000000,search_results,remove_from_cart,3.0,,email,False,False
+EVT210252,CUST1024,,2026-03-03 12:35:24.000000,category,view_page,1.0,,direct,False,False
+EVT210253,CUST1265,SESS102536,2026-03-01 07:05:24.000000,search_results,view_page,11.0,,direct,False,False
+EVT210254,CUST1315,SESS102536,,category,remove_from_cart,10.0,,email,False,False
+EVT210255,CUST1360,SESS102536,2026-03-04 17:35:11.000000,search_results,view_page,12.0,,direct,False,False
+EVT210256,CUST1200,SESS102536,2026-03-07 14:50:42.000000,checkout,search,1.0,,direct,False,False
+EVT210257,CUST1068,SESS102537,2026-03-02 05:30:16.000000,search_results,add_to_cart,4.0,headphones,social,True,False
+EVT210258,CUST1076,SESS102537,2026-03-05 22:29:04.000000,search_results,add_to_cart,14.0,,direct,True,False
+EVT210259,CUST1263,SESS102537,2026-03-06 10:56:29.000000,cart,search,6.0,,email,False,False
+EVT210260,CUST1438,SESS102538,2026-03-03 23:20:17.000000,cart,remove_from_cart,,,email,False,False
+EVT210261,CUST1292,SESS102538,2026-03-03 17:11:38.000000,category,view_page,12.0,,paid_ads,False,
+EVT210262,CUST1405,SESS102538,2026-03-02 08:26:21.000000,product,view_page,11.0,,paid_ads,False,False
+EVT210263,CUST1417,SESS102539,2026-03-04 23:14:43.000000,checkout,search,7.0,winter jacket,social,False,False
+EVT210264,CUST1261,SESS102539,2026-03-05 21:47:38.000000,category,view_page,3.0,,social,False,False
+EVT210265,CUST1397,SESS102539,,search_results,view_page,12.0,backpack,paid_ads,False,
+EVT210266,CUST1047,SESS102539,2026-03-01 16:43:38.000000,category,add_to_cart,5.0,,social,True,True
+EVT210267, cust1095 ,SESS102539,2026-03-05 15:54:55.000000,home,add_to_cart,9.0,skincare,direct,True,False
+EVT210268,CUST1417,SESS102539,2026-03-05 22:53:11.000000,product,view_page,3.0,backpack,organic_search,False,False
+EVT210269,CUST1153,SESS102539,2026-03-02 15:42:57.000000,category,remove_from_cart,15.0,,organic_search,False,False
+EVT210270,CUST1283,SESS102539,2026-03-06 23:38:31.000000,cart,search,3.0,,email,False,False
+EVT210271,CUST1216,SESS102539,2026-03-03 21:12:37.000000,home,add_to_cart,12.0,,direct,True,
+EVT210272,CUST1260,SESS102540,2026-03-05 17:16:01.000000,category,view_page,9.0,,direct,False,False
+,CUST1143,SESS102541,2026-03-06 09:45:55.000000,category,purchase,2.0,,direct,False,False
+EVT210274,CUST1169,SESS102542,2026-03-02 17:02:46.000000,product,search,13.0,winter jacket,,False,False
+EVT210275,CUST1006,,2026-03-07 12:45:15.000000,search_results, add_to_cart ,1.0,sunglasses,DIRECT,True,True
+,CUST1187,SESS102544,2026-03-01 17:02:19.000000,checkout,search,6.0,,paid_ads,False,False
+EVT210277,CUST1094,SESS102545,2026-03-07 06:21:38.000000,checkout,search,11.0,,organic_search,,
+EVT210278,CUST1125,SESS102545,2026-03-01 00:37:12.000000,search_results,search,6.0,yoga mat,paid_ads,False,False
+EVT210279,CUST1512,SESS102546,2026-03-04 22:56:13.000000,cart,view_page,11.0,,email,False,False
+EVT210280,CUST1297,SESS102546,2026-03-02 07:21:46.000000,category,REMOVE_FROM_CART,4.0,,paid_ads,False,False
+EVT210281,CUST1099,SESS102547,2026-03-07 05:50:49.000000,category,search,11.0,headphones,paid_ads,,False
+EVT210282,CUST1094,,2026-03-04 16:14:51.000000,product,purchase,8.0,,paid_ads,False,False
+EVT210283,CUST1287,SESS102547,2026-03-01 12:06:16.000000,cart,remove_from_cart,7.0,,social,False,False
+EVT210284,CUST1084,SESS102548,2026-03-06 12:53:09.000000,product,search,3.0,,,False,False
+EVT210285,CUST1494,SESS102548,2026-03-02 04:29:24.000000,search_results,remove_from_cart,4.0,,social,False,False
+EVT210286, CUST1463 ,SESS102548,2026-03-06 19:04:14.000000,checkout,search,7.0,protein powder,email,False,False
+EVT210287,CUST1001,SESS102548,2026-03-04 12:38:01.000000,search_results,add_to_cart,6.0,,paid_ads,True,False
+EVT210288,CUST1057,SESS102548,2026-03-05 16:10:06.000000,search_results,search,8.0,,email,False,False
+EVT210289, CUST1142 ,SESS102548,2026-03-02 12:52:37.000000,search_results,view_page,15.0,backpack,social,False,False
+EVT210290,CUST1250,SESS102548,2026-03-05 08:41:08.000000,cart,purchase,14.0,,direct,False,False
+EVT210291,CUST1083,SESS102548,2026-03-06 14:00:11.000000,category,search,1.0,,paid_ads,False,False
+EVT210292,CUST1308,SESS102548,2026-03-04 07:10:06.000000, category ,remove_from_cart,8.0,desk lamp,paid_ads,False,False
+EVT210293,CUST1163,SESS102549,2026-03-05 01:50:24.000000,category,purchase,5.0,,organic_search,False,False
+EVT210294, CUST1463 ,SESS102549,2026-03-01 09:16:36.000000,checkout,remove_from_cart,14.0,desk lamp,social,False,False
+ evt210295 ,CUST1205,SESS102549,2026-03-05 03:42:57.000000,,add_to_cart,10.0,,direct,True,True
+EVT210296,CUST1195,SESS102549,2026-03-06 01:41:50.000000,search_results,add_to_cart,13.0,,email,True,True
+EVT210297,CUST1211,SESS102550,2026-03-06 05:56:57.000000, home ,,8.0,,social,True,False
+EVT210298,CUST1524,SESS102551,2026-03-05 13:18:03.000000,cart,purchase,5.0,,direct,False,False
+EVT210299,CUST1306,SESS102551,2026-03-05 05:58:18.000000,search_results, add_to_cart ,4.0,backpack,,True,False
+EVT210300,CUST1046,SESS102552,2026-03-07 09:36:51.000000,checkout,view_page,1.0,, organic_search ,False,False
+EVT210301,CUST1180,SESS102552,2026-03-04 23:35:15.000000,search_results,view_page,3.0,,direct,False,False
+EVT210302,CUST1441,SESS102552,2026-03-05 10:53:07.000000,home,remove_from_cart,10.0,,social,False,False
+EVT210303,CUST1437,SESS102552,2026-03-04 13:03:36.000000,home,add_to_cart,10.0,,organic_search,True,False
+EVT210304,CUST1120,SESS102552,2026-03-03 10:22:36.000000,category,purchase,1.0, desk lamp ,organic_search,False,False
+EVT210305,CUST1346,SESS102552,2026-03-03 13:36:07.000000,checkout,view_page,8.0,,organic_search,False,False
+EVT210306,CUST1065,SESS102552,2026-03-02 18:59:50.000000,search_results,add_to_cart,4.0,,organic_search,True,True
+EVT210307,CUST1261,SESS102552,2026-02-28 22:48:30.000000,HOME, remove_from_cart ,13.0,coffee maker,direct,False,False
+EVT210308,CUST1252,SESS102552,2026-03-01 04:26:25.000000,cart,view_page,6.0,,direct,False,False
+EVT210309,CUST1286,SESS102552,2026-03-05 07:20:57.000000,home,VIEW_PAGE,12.0,,email,False,False
+EVT210310,CUST1221,SESS102552,2026-03-05 01:53:02.000000,checkout,remove_from_cart,9.0,,direct,False,False
+EVT210311,CUST1189,SESS102552,2026-03-07 04:59:26.000000,home,view_page,6.0,,organic_search,False,False
+EVT210312,CUST1357,SESS102553,2026-03-07 13:04:57.000000,category,search,4.0,,direct,False,False
+EVT210313,CUST1170,SESS102553,2026-03-01 09:18:56.000000,checkout,add_to_cart,1.0,,social,True,False
+EVT210314,CUST1429,SESS102554,2026-03-04 11:24:59.000000,category,add_to_cart,13.0,,direct,True,False
+EVT210315,CUST1326,SESS102554,2026-03-03 06:10:15.000000,product,purchase,14.0,,paid_ads,False,False
+EVT210316,CUST1060,SESS102554,2026-03-05 03:40:08.000000,cart,purchase,7.0,desk lamp,social,False,False
+EVT210317,CUST1508, SESS102554 ,2026-03-03 00:16:14.000000,search_results,view_page,5.0,protein powder,social,,
+EVT210318,CUST1278,SESS102554,,category,purchase,8.0,,social,False,False
+EVT210319,CUST1019,SESS102554,2026-03-05 06:31:33.000000,CATEGORY,add_to_cart,11.0,desk lamp,email,True,False
+EVT210320, CUST1386 ,SESS102554,2026-03-05 00:27:10.000000,product,search,15.0,,paid_ads,False,False
+EVT210321,CUST1082,SESS102554,2026-03-07 05:41:58.000000,category,add_to_cart,3.0,laptop,direct,True,
+,CUST1517,SESS102555,,category,view_page,4.0,phone case,email,False,False
+EVT210323,CUST1255,SESS102555,2026-03-02 23:21:43.000000, checkout ,view_page,8.0,,direct,False,False
+EVT210324,CUST1241,SESS102556,2026-03-05 06:33:04.000000,checkout,view_page,8.0,,social,False,False
+EVT210325,CUST1075,SESS102557,2026-03-01 22:05:21.000000,cart,remove_from_cart,3.0,,paid_ads,False,False
+EVT210326,CUST1533,SESS102557,2026-03-05 19:07:55.000000,checkout,search,8.0,,direct,,False
+EVT210327,CUST1347,SESS102557,2026-03-06 13:04:05.000000,search_results,remove_from_cart,9.0,,social,False,False
+EVT210328,CUST1473,SESS102558,2026-03-06 20:28:59.000000,category,view_page,11.0,,paid_ads,False,False
+,CUST1401,SESS102558,2026-03-01 05:09:52.000000,search_results,remove_from_cart,6.0,laptop,direct,False,False
+EVT210330,CUST1041,SESS102559,2026-03-04 17:31:15.000000,cart,purchase,4.0,,email,False,False
+EVT210331,CUST1081,SESS102559,2026-03-02 00:06:50.000000,checkout,remove_from_cart,8.0,,email,False,False
+EVT210332,CUST1440,,2026-03-07 03:41:26.000000,checkout,remove_from_cart,5.0,,social,False,False
+EVT210333,CUST1495,SESS102560,2026-03-01 16:05:43.000000,cart,add_to_cart,4.0,laptop,social,True,
+EVT210334,CUST1169,,2026-03-06 18:50:28.000000,home,add_to_cart,15.0,,direct,True,True
+EVT210335,CUST1534,SESS102560,2026-03-01 23:36:58.000000,home,search,13.0,novel,organic_search,False,False
+EVT210336,CUST1524,SESS102560,2026-03-02 15:32:16.000000,search_results,view_page,1.0,,organic_search,False,False
+EVT210337,CUST1129,SESS102560,2026-03-01 23:37:00.000000,product,purchase,6.0,,direct,False,False
+EVT210338,CUST1438,SESS102560,2026-03-05 03:48:54.000000,search_results,,1.0,coffee maker,social,False,False
+EVT210339,CUST1264,SESS102560,2026-03-04 01:15:28.000000,checkout,search,3.0,,paid_ads,False,False
+EVT210340,CUST1242,SESS102560,2026-03-04 01:06:21.000000,category, purchase ,15.0,,organic_search,False,False
+EVT210341,CUST1528,SESS102561,2026-03-03 01:51:57.000000,product,add_to_cart,10.0,,organic_search,True,False
+EVT210342,CUST1407,SESS102562,2026-03-05 04:31:38.000000,search_results,,5.0,,email,,False
+EVT210343,CUST1179,SESS102563,2026-03-02 07:21:43.000000,product,remove_from_cart,7.0,,email,False,False
+EVT210344,CUST1525,SESS102563,2026-03-03 16:16:52.000000,cart,search,15.0,,paid_ads,False,False
+EVT210345,CUST1131,SESS102563,2026-03-07 17:23:13.000000,checkout,view_page,15.0,, email ,False,False
+EVT210346,CUST1113,SESS102563,2026-02-28 23:01:13.000000,home,add_to_cart,12.0,,direct,True,True
+EVT210347,CUST1405,,2026-03-03 09:58:43.000000,cart,purchase,8.0,,paid_ads,False,False
+EVT210348,CUST1523,SESS102564,2026-03-03 03:36:34.000000,cart,purchase,11.0,coffee maker,direct,False,False
+EVT210349,CUST1157,SESS102564,2026-03-01 10:27:51.000000,checkout,remove_from_cart,5.0,,direct,False,False
+EVT210350,CUST1417,SESS102564,2026-03-06 08:23:10.000000,category,view_page,2.0,,,False,
+EVT210351,CUST1510,SESS102565,2026-03-05 06:23:57.000000,search_results,purchase,4.0,laptop,organic_search,False,False
+EVT210352,CUST1201,SESS102565,2026-03-06 07:01:21.000000,CART,remove_from_cart,7.0,phone case,social,False,False
+EVT210353, CUST1307 ,SESS102565,2026-03-06 19:26:27.000000,home,purchase,15.0,,paid_ads,False,
+EVT210354,CUST1304,SESS102565,2026-03-06 13:46:49.000000,category,purchase,11.0,,organic_search,False,False
+EVT210355,CUST1137,SESS102565,,home,add_to_cart,14.0,running shoes,organic_search,True,True
+EVT210356,CUST1377,SESS102565,2026-03-01 12:00:57.000000,cart,search,13.0,, paid_ads ,False,False
+EVT210357,CUST1166,SESS102565,2026-03-02 13:27:30.000000,product,purchase,13.0,winter jacket,social,False,False
+EVT210358,CUST1448,SESS102565,2026-03-05 06:42:13.000000,,add_to_cart,2.0,,social,True,False
+EVT210359,CUST1062,SESS102565,,category,purchase,11.0,,social,False,False
+EVT210360,CUST1208,SESS102565,2026-03-07 10:50:45.000000,home,view_page,,,organic_search,False,False
+EVT210361,CUST1065,SESS102565,2026-03-04 12:07:00.000000,home,remove_from_cart,10.0,,paid_ads,False,False
+EVT210362,CUST1148,SESS102566,2026-03-06 09:39:24.000000,search_results,search,3.0,,paid_ads,False,False
+EVT210363,CUST1532,SESS102567,2026-03-07 00:39:00.000000,search_results,purchase,12.0,,paid_ads,False,False
+EVT210364,CUST1128,SESS102567,2026-03-04 10:57:27.000000,product,search,4.0,,paid_ads,False,False
+EVT210365,CUST1484,SESS102567,2026-03-06 11:35:12.000000,search_results,purchase,11.0,,email,False,False
+EVT210366,CUST1095,SESS102567,2026-03-07 16:15:09.000000,checkout,view_page,13.0,,,False,False
+EVT210367,CUST1474,,2026-03-06 04:37:11.000000,home,search,2.0,winter jacket,email,False,False
+EVT210368,CUST1191,SESS102567,2026-03-02 08:33:48.000000,product,view_page,7.0,yoga mat, social ,,False
+EVT210369,CUST1108,SESS102567,2026-03-06 23:05:27.000000,product,search,7.0,,social,False,False
+EVT210370,CUST1065,SESS102568,2026-03-07 01:58:24.000000,product,remove_from_cart,2.0,,social,False,False
+EVT210371,CUST1364,SESS102568,,search_results,,1.0,,social,False,False
+EVT210372,CUST1083,SESS102568,2026-03-03 00:56:19.000000,search_results,purchase,1.0,skincare,organic_search,False,False
+EVT210373,CUST1247,,2026-03-05 16:41:52.000000,category,remove_from_cart,10.0,,paid_ads,False,False
+EVT210374,CUST1241,SESS102569,,cart,add_to_cart,7.0,,paid_ads,True,False
+EVT210375,CUST1236,SESS102569,2026-03-07 19:53:02.000000,search_results,remove_from_cart,4.0,,,False,False
+EVT210376,CUST1265,SESS102569,2026-03-03 18:17:09.000000,checkout,view_page,2.0,,direct,False,False
+EVT210377,CUST1460,SESS102569,2026-03-05 21:04:23.000000,checkout,view_page,7.0,,direct,False,False
+EVT210378,CUST1073,SESS102569,2026-03-03 03:29:00.000000,home,search,13.0,,organic_search,False,False
+EVT210379,CUST1010,SESS102569,2026-03-03 07:41:31.000000,product,view_page,8.0,,email,False,False
+EVT210380,CUST1046,SESS102570,2026-03-04 21:53:24.000000,cart,add_to_cart,2.0,,social,True,
+EVT210381,CUST1032,SESS102570,,,add_to_cart,13.0,,social,True,True
+EVT210382,CUST1462,SESS102570,2026-03-05 10:20:21.000000,cart, view_page ,9.0,laptop,organic_search,False,False
+EVT210383,CUST1087,SESS102571,2026-03-06 22:33:13.000000,product,search,8.0,,paid_ads,False,False
+EVT210384,CUST1248,SESS102572,2026-03-02 12:27:21.000000,category,add_to_cart,10.0,,email,True,True
+EVT210385,CUST1247,SESS102572,2026-03-04 05:50:38.000000,home,view_page,11.0,,email,False,False
+EVT210386,CUST1277,SESS102572,2026-03-01 00:47:34.000000,checkout,remove_from_cart,12.0,,paid_ads,False,False
+EVT210387,CUST1332,SESS102572,2026-03-05 10:28:07.000000,product,purchase,6.0,,social,False,False
+EVT210388,CUST1034,SESS102572,2026-03-05 15:10:59.000000,product,add_to_cart,6.0,,direct,True,False
+EVT210389,CUST1522,SESS102572,2026-03-06 09:45:35.000000,CHECKOUT,add_to_cart,3.0,,organic_search,True,True
+EVT210390,CUST1508,SESS102572,,product,search,6.0,, paid_ads ,False,False
+EVT210391,CUST1314,SESS102573,2026-03-06 03:10:51.000000,search_results,search,4.0,,email,False,False
+EVT210392,CUST1527,SESS102574,2026-03-05 20:46:42.000000,, search ,8.0,,SOCIAL,False,False
+EVT210393,CUST1483,SESS102576,2026-03-08 09:31:12.000000,category,view_page,3.0,,social,False,False
+EVT210394,CUST1168,SESS102577,2026-03-16 15:26:54.000000,search_results,search,9.0,novel,social,False,
+EVT210395,CUST1356,SESS102578,2026-03-08 12:48:05.000000,product,add_to_cart,7.0,,paid_ads,True,
+EVT210396,CUST1413,SESS102578,2026-03-11 01:09:29.000000,home,add_to_cart,4.0,,direct,True,False
+ evt210397 ,CUST1259,SESS102579,2026-03-09 12:52:29.000000,category,view_page,9.0,,direct,False,False
+EVT210398,CUST1387,SESS102580,2026-03-10 13:00:09.000000,category,search,4.0,,social,False,False
+EVT210399,CUST1312,SESS102581,2026-03-11 10:06:50.000000,home,remove_from_cart,12.0,,social,False,False
+,CUST1309,SESS102582,2026-03-14 03:00:27.000000,checkout,remove_from_cart,3.0,,paid_ads,False,False
+EVT210401,CUST1179,SESS102583,2026-03-11 11:19:00.000000,search_results,add_to_cart,15.0,water bottle,paid_ads,True,
+EVT210402,CUST1106,SESS102583,2026-03-09 04:29:29.000000,checkout,search,11.0,,paid_ads,False,False
+EVT210403,CUST1069,SESS102583,2026-03-10 05:07:49.000000,home,search,2.0,sunglasses,PAID_ADS,False,False
+EVT210404,CUST1205,SESS102584,2026-03-19 13:24:52.000000,search_results,view_page,9.0,,organic_search,False,False
+EVT210405,CUST1173,SESS102584,2026-03-20 21:38:07.000000,product,view_page,6.0,,paid_ads,False,False
+EVT210406,CUST1420,SESS102584,2026-03-14 08:48:39.000000,category,add_to_cart,6.0,,email,True,False
+EVT210407,CUST1428,,2026-03-12 17:40:53.000000,search_results,PURCHASE,9.0,laptop,email,False,False
+EVT210408,CUST1503,SESS102584,2026-03-16 22:20:53.000000,home,purchase,2.0,,social,False,False
+EVT210409,CUST1095,SESS102585,2026-03-11 05:42:43.000000,home,add_to_cart,6.0,,organic_search,True,True
+,CUST1274,SESS102585,2026-03-19 15:12:27.000000,checkout,search,1.0,,paid_ads,False,False
+EVT210411,CUST1099,SESS102585,2026-03-12 11:05:02.000000,search_results,search,12.0,,paid_ads,False,False
+,CUST1460, sess102585 ,2026-03-14 02:40:35.000000,checkout,purchase,13.0,,paid_ads,False,False
+EVT210413,CUST1028,SESS102585,2026-03-15 04:21:11.000000,category,,15.0,,social,True,
+EVT210414,CUST1469,SESS102586,2026-03-20 08:45:53.000000,product,add_to_cart,6.0,running shoes,email,,True
+EVT210415,CUST1447,SESS102587,2026-03-15 03:03:03.000000,search_results,view_page,5.0,,,False,False
+EVT210416,CUST1503,SESS102587,2026-03-11 15:37:27.000000,product,view_page,3.0,,direct,False,False
+EVT210417,CUST1281,SESS102587,,cart,view_page,6.0,running shoes,social,False,False
+EVT210418,CUST1001,SESS102587,2026-03-10 04:02:23.000000,search_results,purchase,13.0,running shoes,email,False,False
+EVT210419,CUST1318,SESS102587,2026-03-11 00:36:31.000000,category,,15.0,, organic_search ,False,False
+EVT210420,CUST1013,SESS102588,2026-03-13 01:02:06.000000,category,purchase,15.0,,email,False,False
+EVT210421, CUST1364 ,SESS102588,2026-03-10 12:37:33.000000,search_results,view_page,2.0,,paid_ads,False,
+EVT210422,CUST1376,SESS102588,2026-03-20 17:08:17.000000,product,search,14.0,,paid_ads,,False
+EVT210423,CUST1425,SESS102588,,category,purchase,10.0,novel,organic_search,False,False
+EVT210424,CUST1169,SESS102589,2026-03-11 05:41:46.000000,home,purchase,3.0,,direct,False,False
+EVT210425,CUST1245,SESS102590,2026-03-16 02:45:01.000000,home,remove_from_cart,10.0,,social,False,False
+EVT210426,CUST1386,SESS102590,2026-03-14 15:06:51.000000,search_results,purchase,14.0,,social,False,False
+EVT210427,CUST1111,SESS102591,2026-03-08 20:24:34.000000,checkout,search,13.0,,paid_ads,False,False
+,CUST1470,SESS102592,2026-03-18 07:25:26.000000,home,search,5.0,,email,False,False
+EVT210429,CUST1293,SESS102593,2026-03-21 09:13:14.000000,checkout,view_page,3.0,,paid_ads,False,False
+EVT210430,CUST1324,SESS102593,2026-03-14 06:04:17.000000,cart,view_page,3.0,sunglasses,paid_ads,False,False
+EVT210431,CUST1081,SESS102593,2026-03-16 02:02:37.000000,cart,view_page,15.0,sunglasses,,False,False
+EVT210432,CUST1290,SESS102593,2026-03-13 01:41:39.000000,,purchase,7.0,,organic_search,False,False
+EVT210433,CUST1411,SESS102593,2026-03-15 14:23:15.000000,home,remove_from_cart,4.0,,paid_ads,False,False
+EVT210434,CUST1241,SESS102593,2026-03-18 10:57:43.000000,cart,SEARCH,15.0,,email,False,False
+EVT210435,CUST1030,SESS102594,2026-03-20 21:31:19.000000,category,purchase,3.0,,direct,False,False
+EVT210436,CUST1076,SESS102594,2026-03-12 04:21:26.000000,home,search,7.0,,social,False,False
+EVT210437,CUST1329,SESS102594,2026-03-09 19:24:03.000000,,add_to_cart,1.0,headphones,direct,True,False
+EVT210438,CUST1398,SESS102594,2026-03-11 13:59:10.000000,checkout,add_to_cart,9.0,,direct,True,True
+EVT210439,CUST1331,SESS102594,2026-03-11 14:19:30.000000,category,view_page,8.0,,organic_search,False,False
+EVT210440,CUST1428,SESS102594,2026-03-10 05:25:39.000000,home,remove_from_cart,9.0,,email,False,False
+EVT210441,CUST1454,SESS102595,2026-03-17 06:22:52.000000,category,,2.0,,paid_ads,,
+EVT210442,CUST1321,SESS102596,2026-03-12 03:44:43.000000,search_results,add_to_cart,15.0,,social,,True
+ evt210443 ,CUST1217,SESS102596,2026-03-13 08:55:12.000000, cart ,remove_from_cart,7.0,,email,False,False
+EVT210444,CUST1012,SESS102597,2026-03-08 01:57:34.000000,cart,purchase,2.0,,organic_search,False,False
+EVT210445,CUST1422,SESS102597,2026-03-12 17:37:51.000000,checkout,,8.0,protein powder,direct,False,False
+,CUST1045,SESS102597,2026-03-12 02:08:13.000000,product,add_to_cart,9.0,laptop,direct,True,False
+EVT210447,CUST1170,SESS102597,2026-03-11 22:52:00.000000,category,search,,novel,,False,
+EVT210448,CUST1509,SESS102598,2026-03-13 21:32:38.000000,search_results,remove_from_cart,6.0,water bottle,email,,False
+EVT210449,CUST1152,SESS102598,2026-03-16 09:29:13.000000,cart,purchase,7.0,,organic_search,False,False
+EVT210450,CUST1205,SESS102598,2026-03-11 06:12:55.000000,checkout,purchase,10.0,yoga mat,social,False,
+EVT210451,CUST1218,SESS102599,2026-03-17 13:59:38.000000,product,search,13.0,,paid_ads,,False
+evt210452,CUST1070,SESS102599,2026-03-12 18:08:38.000000,product,view_page,15.0,,email,False,False
+EVT210453,CUST1173,SESS102600,2026-03-14 15:42:53.000000,product,view_page,,,,False,False
+EVT210454,CUST1471,SESS102600,2026-03-09 21:24:21.000000,home,purchase,2.0,,email,False,False
+EVT210455,CUST1528,SESS102600,2026-03-14 15:08:20.000000,home,search,5.0,,email,False,False
+ EVT210456 ,CUST1034,SESS102600,2026-03-14 09:20:07.000000,category,search,12.0,,paid_ads,False,False
+,CUST1091,SESS102600,2026-03-12 03:03:22.000000,product,search,,,paid_ads,False,False
+EVT210458,CUST1352,SESS102600,2026-03-10 01:18:18.000000,home, search ,9.0,,social,False,False
+EVT210459,CUST1066,SESS102601,2026-03-12 10:11:08.000000,search_results,add_to_cart,4.0,,paid_ads,True,False
+evt210460,CUST1367,SESS102601,2026-03-19 19:36:53.000000,search_results,search,15.0,water bottle,email,False,False
+EVT210461,CUST1339,SESS102602,2026-03-12 10:43:58.000000,PRODUCT,remove_from_cart,14.0,,social,False,False
+EVT210462,CUST1027,SESS102602,2026-03-12 00:32:07.000000,,remove_from_cart,,,paid_ads,False,False
+EVT210463, CUST1463 ,SESS102602,2026-03-19 09:34:54.000000,product,purchase,1.0,,email,False,False
+EVT210464,CUST1298,SESS102602,2026-03-18 16:19:32.000000,product,remove_from_cart,6.0,,email,False,False
+EVT210465,CUST1135,SESS102602,2026-03-19 16:30:25.000000,home,search,6.0,,email,False,False
+EVT210466,CUST1151,SESS102602,2026-03-14 10:46:36.000000,cart,view_page,11.0,,email,False,False
+EVT210467,CUST1299,,2026-03-18 01:22:50.000000,cart,purchase,3.0,,email,False,False
+EVT210468,CUST1136,SESS102602,2026-03-16 22:21:14.000000,search_results,view_page,,,paid_ads,False,False
+EVT210469,CUST1073,SESS102602,2026-03-09 19:09:44.000000,home,add_to_cart,7.0,,organic_search,True,True
+EVT210470,CUST1253,,2026-03-13 11:25:17.000000,product,search,1.0,headphones,paid_ads,,False
+EVT210471,CUST1525,SESS102602,2026-03-12 23:50:10.000000,home,remove_from_cart,9.0,,email,False,False
+EVT210472,CUST1302,SESS102603,,home,view_page,12.0,,paid_ads,False,False
+,CUST1267,SESS102603,2026-03-17 06:14:35.000000,cart,search,9.0,,organic_search,,
+EVT210474,CUST1054,SESS102603,2026-03-09 03:04:18.000000,search_results,remove_from_cart,7.0,headphones,email,False,False
+EVT210475,CUST1128,SESS102603,2026-03-21 08:37:08.000000,home,purchase,2.0,,social,False,False
+EVT210476,CUST1048,SESS102603,2026-03-12 09:26:32.000000,cart, remove_from_cart ,9.0,,direct,False,False
+EVT210477,CUST1173,SESS102603,2026-03-17 13:56:14.000000,category,remove_from_cart,11.0,,paid_ads,False,False
+EVT210478,CUST1482,SESS102603,2026-03-11 16:45:26.000000,checkout,view_page,2.0,,,False,False
+EVT210479,CUST1174,SESS102603,2026-03-20 12:37:26.000000,cart,remove_from_cart,2.0,,organic_search,False,False
+EVT210480,CUST1529,SESS102603,2026-03-10 04:09:00.000000, product ,view_page,2.0,,,False,False
+EVT210481,CUST1398,,2026-03-19 18:06:22.000000,,remove_from_cart,7.0,,paid_ads,False,False
+EVT210482,CUST1029,SESS102604,2026-03-13 18:50:01.000000,search_results,view_page,10.0,skincare,social,,False
+EVT210483,CUST1030,SESS102605,2026-03-09 00:15:44.000000,home,view_page,,,organic_search,False,False
+EVT210484,CUST1411,SESS102605,2026-03-13 09:07:48.000000,search_results,purchase,10.0,, social ,False,False
+EVT210485,CUST1507,SESS102605,2026-03-16 12:13:32.000000,checkout,remove_from_cart,3.0,laptop,email,False,False
+EVT210486,CUST1439,SESS102605,2026-03-16 20:30:25.000000,home,,15.0,,social,False,False
+EVT210487,CUST1106,SESS102605,2026-03-20 04:54:12.000000,home,purchase,11.0,,organic_search,False,
+EVT210488,CUST1341,SESS102606,2026-03-13 06:47:36.000000,product,view_page,14.0,sunglasses,,False,False
+EVT210489,CUST1154,SESS102606,2026-03-20 19:42:48.000000,category,remove_from_cart,14.0,,paid_ads,False,False
+EVT210490,CUST1523,SESS102606,2026-03-14 20:12:27.000000,product,search,6.0,yoga mat,email,False,False
+EVT210491, cust1147 ,SESS102606,2026-03-12 00:54:20.000000,search_results,add_to_cart,14.0,,email,True,False
+EVT210492,CUST1363,SESS102606,2026-03-07 21:47:13.000000,category,remove_from_cart,5.0,,social,False,False
+EVT210493,CUST1332,SESS102606,2026-03-21 03:24:10.000000,product,add_to_cart,15.0,running shoes,email,True,True
+EVT210494,CUST1283,SESS102606,2026-03-12 18:13:19.000000,home,add_to_cart,5.0,laptop,social,True,True
+EVT210495,CUST1004,SESS102606,2026-03-09 19:39:02.000000,cart,remove_from_cart,,,social,False,
+EVT210496,CUST1541,SESS102607,2026-03-16 23:53:21.000000,cart,purchase,5.0,,direct,False,False
+EVT210497,CUST1024,SESS102608,2026-03-09 23:59:55.000000,category,search,3.0,,paid_ads,False,False
+EVT210498,CUST1242,SESS102608,2026-03-14 22:39:28.000000,cart,add_to_cart,9.0,,paid_ads,True,True
+EVT210499,CUST1186,sess102608,2026-03-09 16:46:02.000000,home,search,9.0,,,False,False
+EVT210500,CUST1547,SESS102608,2026-03-11 00:56:56.000000,checkout,search,3.0,,paid_ads,False,
+EVT210501,CUST1493,SESS102609,2026-03-20 10:36:19.000000,checkout,purchase,15.0,,direct,False,False
+,CUST1438,SESS102610,2026-03-11 09:37:00.000000,checkout,purchase,4.0,,email,False,False
+EVT210503,CUST1496,SESS102610,2026-03-16 21:46:31.000000,cart,purchase,5.0,,social,False,False
+EVT210504,CUST1013,SESS102610,2026-03-18 17:04:18.000000,checkout,add_to_cart,9.0,,,True,False
+EVT210505,CUST1540,SESS102610,2026-03-11 06:43:40.000000,product,,,novel,organic_search,True,False
+EVT210506,CUST1071,SESS102610,2026-03-19 19:21:29.000000,search_results,view_page,14.0,,paid_ads,False,False
+EVT210507,CUST1561,SESS102610,2026-03-08 08:49:51.000000,category,search,7.0,,email,False,False
+EVT210508,CUST1263,SESS102611,2026-03-15 02:06:47.000000,product,add_to_cart,15.0,,organic_search,True,False
+EVT210509,CUST1326,SESS102611,2026-03-13 12:50:46.000000,checkout,purchase,14.0,desk lamp,social,False,False
+,CUST1161,SESS102611,2026-03-16 11:59:50.000000,home, view_page ,,,social,False,False
+EVT210511,CUST1560,SESS102611,2026-03-20 07:49:47.000000,checkout,search,3.0,,paid_ads,False,False
+EVT210512,CUST1248,SESS102611,2026-03-10 16:27:34.000000,cart,remove_from_cart,6.0,,direct,False,False
+EVT210513,CUST1319,,2026-03-13 22:47:25.000000,cart,purchase,8.0,,social,False,False
+EVT210514,CUST1194,SESS102611,2026-03-13 15:42:27.000000,cart,add_to_cart,,,,True,False
+EVT210515,CUST1535,SESS102611,2026-03-20 15:53:39.000000,checkout,add_to_cart,1.0,,paid_ads,True,
+EVT210516,CUST1068,SESS102612,2026-03-13 05:43:56.000000,category,purchase,10.0,backpack,,,False
+EVT210517,CUST1290,SESS102613,2026-03-09 01:42:27.000000,checkout,view_page,4.0,,organic_search,False,False
+EVT210518,CUST1260,SESS102614,2026-03-14 01:39:04.000000,cart,view_page,5.0,,direct,False,
+EVT210519,CUST1253,SESS102614,2026-03-20 19:18:22.000000,home,remove_from_cart,2.0,,email,False,False
+EVT210520,CUST1093,SESS102614,,cart,add_to_cart,7.0,phone case,direct,True,True
+EVT210521,CUST1528,SESS102615,2026-03-21 16:28:48.000000,search_results,purchase,6.0,protein powder,direct,False,False
+EVT210522,CUST1362,SESS102615,2026-03-18 03:50:15.000000,home,search,5.0,,social,False,False
+EVT210523,CUST1317,SESS102616,2026-03-20 13:41:31.000000,home,view_page,15.0,,direct,False,False
+EVT210524,CUST1085,SESS102616,2026-03-18 00:39:04.000000,category,search,,,email,False,False
+EVT210525,CUST1262,SESS102616,2026-03-08 05:41:49.000000,search_results,remove_from_cart,9.0,,email,False,False
+EVT210526,CUST1251,SESS102616,2026-03-17 15:32:03.000000,cart,purchase,2.0,sunglasses,social,False,False
+EVT210527,CUST1127,SESS102616,2026-03-13 02:57:25.000000,home,add_to_cart,1.0,,organic_search,True,False
+EVT210528,CUST1436,SESS102617,2026-03-16 09:37:30.000000,search_results,search,,coffee maker,direct,False,False
+EVT210529,cust1304,SESS102617,2026-03-16 06:31:01.000000,product,remove_from_cart,7.0,, organic_search ,False,False
+EVT210530,CUST1543,SESS102617,2026-03-20 08:45:20.000000,search_results,view_page,15.0,,paid_ads,False,False
+EVT210531,CUST1530,,2026-03-12 12:33:31.000000,search_results,add_to_cart,10.0,,paid_ads,True,False
+EVT210532,CUST1259,SESS102617,2026-03-18 06:51:23.000000,home,view_page,,,direct,False,False
+,CUST1233,SESS102617,2026-03-18 17:55:58.000000,home,add_to_cart,13.0,, organic_search ,True,True
+EVT210534,CUST1008,SESS102618,2026-03-07 19:56:16.000000,category,add_to_cart,12.0,,email,True,
+EVT210535,CUST1189,,2026-03-12 18:49:04.000000,category,add_to_cart,3.0, yoga mat ,social,True,True
+EVT210536,CUST1116,SESS102619,2026-03-15 20:09:05.000000,product,add_to_cart,8.0,,email,True,False
+EVT210537,CUST1022,SESS102619,2026-03-10 21:44:16.000000,product,purchase,7.0,,organic_search,False,False
+EVT210538,CUST1254,SESS102619,2026-03-20 13:45:45.000000,category,,8.0,desk lamp,direct,False,False
+EVT210539,CUST1086,SESS102619,2026-03-08 11:47:59.000000,,purchase,13.0,water bottle,direct,False,False
+EVT210540,CUST1028,SESS102619,2026-03-14 22:03:59.000000,home,remove_from_cart,5.0,,organic_search,False,
+EVT210541,CUST1403,SESS102620,2026-03-13 18:57:49.000000,search_results,view_page,7.0,novel,organic_search,,False
+,CUST1180,SESS102621,2026-03-21 09:05:43.000000,,view_page,14.0,running shoes,direct,False,False
+EVT210543,CUST1563,SESS102621,2026-03-19 22:15:01.000000,product,remove_from_cart,2.0,phone case,paid_ads,False,False
+EVT210544,CUST1325,SESS102622,2026-03-20 15:39:11.000000,home,remove_from_cart,14.0,,organic_search,False,False
+EVT210545,CUST1046,SESS102622,2026-03-12 11:32:27.000000, search_results ,purchase,5.0,,direct,False,False
+EVT210546,CUST1534,SESS102622,,search_results,remove_from_cart,4.0,,paid_ads,False,False
+EVT210547,CUST1234,SESS102622,2026-03-10 19:59:24.000000,checkout,view_page,8.0,,,False,False
+EVT210548,CUST1539,SESS102623,2026-03-20 13:24:43.000000,home,remove_from_cart,6.0,winter jacket,direct,False,False
+EVT210549,CUST1280, SESS102623 ,2026-03-16 18:12:14.000000,category,search,2.0,,direct,False,False
+EVT210550,CUST1029,SESS102623,2026-03-11 10:01:53.000000,cart,purchase,1.0,,paid_ads,,False
+EVT210551,CUST1023,SESS102623,2026-03-10 15:45:26.000000,, add_to_cart ,9.0,,paid_ads,,False
+EVT210552,CUST1487,SESS102623,2026-03-16 02:15:32.000000,cart,remove_from_cart,14.0,,organic_search,False,False
+EVT210553,CUST1044,SESS102623,2026-03-13 14:11:39.000000,search_results,add_to_cart,4.0,,direct,True,
+EVT210554,CUST1051,SESS102623,2026-03-18 19:50:18.000000,checkout,search,11.0,,email,False,False
+EVT210555,CUST1488,SESS102623,2026-03-13 20:28:16.000000,,search,10.0,,organic_search,False,False
+EVT210556,CUST1149,,2026-03-21 08:53:21.000000,cart,purchase,11.0,,organic_search,False,False
+EVT210557,CUST1385,SESS102624,2026-03-07 21:40:24.000000,cart,search,10.0,desk lamp,paid_ads,False,False
+EVT210558,CUST1100,,2026-03-19 12:37:40.000000,home,search,9.0,,direct,False,False
+EVT210559,CUST1254,SESS102625,,search_results,search,2.0,desk lamp,direct,False,False
+EVT210560,CUST1028,SESS102625,2026-03-09 14:30:15.000000,category,view_page,4.0,,organic_search,False,False
+EVT210561,CUST1529,SESS102626,2026-03-17 14:46:34.000000,cart,purchase,2.0,,social,False,False
+EVT210562,CUST1072,SESS102626,2026-03-12 17:56:44.000000,home,view_page,3.0,,social,,False
+,CUST1174,SESS102626,2026-03-20 06:53:58.000000,category,view_page,2.0,,paid_ads,,False
+,CUST1343,SESS102626,2026-03-09 02:42:01.000000,product,add_to_cart,15.0,,paid_ads,,False
+EVT210565,CUST1099,SESS102627,2026-03-18 00:28:28.000000,checkout,search,8.0,,paid_ads,False,False
+EVT210566,CUST1339,SESS102628,2026-03-21 01:08:07.000000,cart,view_page,1.0,,social,False,
+EVT210567,CUST1003,SESS102629,2026-03-11 16:38:04.000000,cart,SEARCH,15.0,sunglasses,organic_search,False,False
+EVT210568,CUST1488,SESS102629,2026-03-14 20:07:28.000000,home,search,,,paid_ads,False,False
+EVT210569,CUST1308,SESS102629,2026-03-09 20:49:32.000000,cart,remove_from_cart,1.0,,organic_search,False,False
+EVT210570,CUST1197,SESS102629,2026-03-19 00:40:20.000000,checkout,search,7.0,,organic_search,False,False
+EVT210571,CUST1338,SESS102629,2026-03-08 13:18:02.000000,category,purchase,8.0,running shoes,organic_search,False,False
+EVT210572,CUST1558,SESS102630,2026-03-13 19:33:11.000000,product,purchase,14.0,,paid_ads,False,False
+EVT210573,CUST1349,SESS102630,2026-03-17 06:32:14.000000,checkout,search,6.0,,organic_search,False,False
+EVT210574,CUST1393,SESS102630,,category,view_page,1.0,,paid_ads,False,False
+EVT210575,CUST1517,SESS102630,2026-03-09 21:59:18.000000,product,view_page,14.0,water bottle,organic_search,False,False
+,CUST1251,SESS102631,2026-03-10 11:26:31.000000,HOME,purchase,2.0,,paid_ads,False,False
+EVT210577,CUST1137,SESS102631,2026-03-15 20:38:35.000000,cart,search,7.0,,email,False,False
+EVT210578,CUST1296,SESS102631,2026-03-14 19:40:30.000000,product,search,12.0,,,False,False
+EVT210579,CUST1243,SESS102631,2026-03-15 17:46:48.000000,home,view_page,11.0,,direct,False,False
+EVT210580,CUST1410,SESS102632,2026-03-18 12:49:19.000000,category,ADD_TO_CART,12.0,,direct,True,False
+EVT210581,CUST1113,SESS102632,2026-03-10 01:49:46.000000, search_results ,add_to_cart,12.0,,social,True,False
+EVT210582,CUST1191,SESS102632,2026-03-11 02:54:55.000000,checkout,purchase,13.0,,paid_ads,False,False
+EVT210583,CUST1470,SESS102632,2026-03-13 02:27:10.000000,search_results,,3.0,,paid_ads,False,False
+EVT210584,CUST1455,SESS102632,2026-03-15 17:16:11.000000,search_results,search,6.0,,social,False,False
+,CUST1171,SESS102633,2026-03-19 22:03:29.000000,search_results,remove_from_cart,10.0,winter jacket,email,False,False
+EVT210586,CUST1531,SESS102633,2026-03-13 17:27:26.000000,home,add_to_cart,7.0,,organic_search,True,False
+EVT210587,CUST1498,SESS102634,2026-03-16 12:03:49.000000,search_results,remove_from_cart,13.0,,email,False,False
+EVT210588,CUST1341,SESS102634,,product,purchase,12.0,skincare,paid_ads,False,
+EVT210589,CUST1441,SESS102635,2026-03-09 00:05:18.000000,search_results,view_page,12.0,,organic_search,False,False
+EVT210590,CUST1120,,2026-03-11 03:06:06.000000,search_results,purchase,15.0,,paid_ads,False,
+EVT210591,CUST1189,SESS102637,,checkout,remove_from_cart,1.0,,paid_ads,False,False
+EVT210592,CUST1390,SESS102637,2026-03-13 00:54:28.000000,checkout,purchase,1.0,coffee maker,social,False,False
+EVT210593,CUST1138,SESS102637,2026-03-19 12:34:59.000000,cart,view_page,5.0,,direct,,False
+EVT210594,CUST1134,SESS102637,2026-03-08 00:17:53.000000,,,6.0,,social,False,False
+EVT210595,CUST1473,SESS102637,2026-03-11 03:36:36.000000,, remove_from_cart ,13.0,headphones,social,False,False
+,CUST1097,SESS102638,2026-03-10 10:27:00.000000,home,add_to_cart,2.0,coffee maker,organic_search,True,False
+EVT210597,CUST1565,,2026-03-21 13:05:48.000000,category,purchase,7.0,, paid_ads ,False,False
+EVT210598,CUST1427,SESS102638,2026-03-16 09:39:26.000000,checkout,,1.0,,email,,False
+EVT210599,CUST1124,,2026-03-14 04:54:51.000000,checkout,purchase,12.0,,direct,False,False
+EVT210600,CUST1182,SESS102638,2026-03-19 21:21:09.000000,cart,remove_from_cart,2.0,,social,False,False
+,CUST1406,SESS102638,2026-03-12 01:21:36.000000,cart,add_to_cart,10.0,,,True,True
+EVT210602,CUST1175,SESS102639,2026-03-09 23:44:36.000000,product,add_to_cart,5.0,,direct,True,True
+EVT210603,cust1538,SESS102640,2026-03-14 20:41:06.000000,checkout,add_to_cart,5.0,desk lamp,email,True,False
+EVT210604,CUST1541,SESS102640,2026-03-17 23:50:43.000000,cart,purchase,10.0,,direct,False,False
+EVT210605,CUST1286,SESS102640,2026-03-19 09:50:08.000000,home,search,15.0,,email,False,False
+EVT210606,CUST1521,SESS102640,2026-03-17 11:49:40.000000, search_results ,search,7.0,skincare,email,False,
+EVT210607,CUST1360,SESS102640,2026-03-17 16:45:48.000000,checkout,purchase,4.0,,organic_search,False,False
+EVT210608,CUST1513,SESS102640,2026-03-15 02:35:17.000000,home,search,13.0,,organic_search,False,False
+EVT210609,CUST1001,SESS102640,2026-03-08 08:39:34.000000,category,add_to_cart,2.0,,organic_search,True,False
+EVT210610,CUST1068,SESS102641,2026-03-20 21:25:53.000000,checkout,purchase,14.0,,email,False,False
+EVT210611,CUST1238,SESS102641,2026-03-20 21:31:36.000000,product,search,5.0,,direct,False,False
+EVT210612,CUST1053,SESS102641,2026-03-19 10:11:50.000000,product,view_page,2.0,,organic_search,False,False
+EVT210613,CUST1219,SESS102642,2026-03-15 18:45:21.000000,, remove_from_cart ,13.0,,organic_search,False,False
+EVT210614, CUST1463 ,SESS102643,2026-03-15 08:54:15.000000,category,,8.0,,organic_search,False,False
+EVT210615,CUST1256,SESS102643,2026-03-17 23:48:50.000000,category,remove_from_cart,4.0,,organic_search,False,False
+EVT210616,CUST1483,SESS102644,,home,purchase,14.0,,paid_ads,,False
+EVT210617,CUST1017,SESS102644,2026-03-12 13:59:40.000000,product,purchase,,,social,False,False
+EVT210618,CUST1155,SESS102644,2026-03-16 05:16:47.000000,search_results, add_to_cart ,11.0,,organic_search,True,True
+EVT210619,CUST1537,SESS102644,2026-03-18 05:55:57.000000,search_results,remove_from_cart,4.0,winter jacket,social,False,False
+EVT210620,CUST1525,SESS102644,2026-03-11 20:47:39.000000,home,purchase,14.0,,paid_ads,False,False
+EVT210621,CUST1261,SESS102644,2026-03-13 09:36:11.000000,checkout,remove_from_cart,14.0,,direct,False,False
+EVT210622,CUST1303,SESS102644,2026-03-14 04:18:27.000000,home,purchase,2.0,,paid_ads,False,False
+EVT210623,CUST1341,SESS102644,2026-03-20 21:47:47.000000,checkout,search,3.0,,email,False,False
+EVT210624,CUST1512,SESS102644,2026-03-20 22:43:01.000000,cart,remove_from_cart,9.0,,organic_search,False,False
+EVT210625,CUST1533,SESS102644,2026-03-20 07:42:32.000000,search_results,purchase,14.0,,paid_ads,False,False
+EVT210626,CUST1542,SESS102645,2026-03-10 02:01:32.000000,search_results,purchase,11.0,,social,False,False
+EVT210627,CUST1146,SESS102645,,,remove_from_cart,,,email,False,False
+EVT210628,CUST1022,SESS102645,2026-03-17 08:48:56.000000,category,purchase,4.0,coffee maker,paid_ads,False,False
+EVT210629,CUST1045,SESS102645,2026-03-11 05:55:17.000000,search_results,remove_from_cart,,novel,paid_ads,False,False
+EVT210630,CUST1078,SESS102645,2026-03-18 20:37:56.000000,home, view_page ,12.0,,paid_ads,False,
+EVT210631,CUST1084,SESS102645,2026-03-15 11:00:31.000000,home,search,3.0,,direct,False,False
+EVT210632,CUST1297,SESS102645,2026-03-19 10:03:50.000000,checkout,search,15.0,,organic_search,False,False
+EVT210633,CUST1049,SESS102645,2026-03-16 17:46:30.000000,,purchase,7.0,,email,False,False
+EVT210634,CUST1503,SESS102645,2026-03-07 22:49:47.000000,cart,search,12.0,,social,False,False
+EVT210635,CUST1397,SESS102645,2026-03-09 06:15:17.000000,,purchase,13.0,,organic_search,,False
+,CUST1471,SESS102645,,cart,search,9.0,,email,False,False
+EVT210637,CUST1439,SESS102645,2026-03-09 23:12:01.000000,search_results,purchase,13.0,desk lamp,email,False,False
+EVT210638,CUST1427,SESS102645,2026-03-14 01:02:03.000000,product,add_to_cart,14.0,,social,True,True
+EVT210639,CUST1266,SESS102645,2026-03-15 01:25:55.000000,product,search,15.0,yoga mat,direct,False,False
+EVT210640,CUST1011,SESS102645,2026-03-15 08:09:54.000000,search_results,search,2.0,,,False,False
+EVT210641,CUST1475,SESS102646,2026-03-13 12:05:12.000000,category,,2.0,,paid_ads,,False
+EVT210642,CUST1054,SESS102646,2026-03-14 03:07:44.000000,checkout,remove_from_cart,8.0,,PAID_ADS,False,False
+EVT210643,CUST1244,SESS102646,2026-03-08 02:59:37.000000,checkout,,4.0,,email,False,False
+EVT210644,CUST1233,SESS102646,2026-03-16 21:38:17.000000,category,search,8.0,,social,False,False
+,CUST1079,SESS102647,2026-03-14 07:27:18.000000,product,purchase,5.0,,ORGANIC_SEARCH,False,False
+EVT210646,CUST1356,SESS102647,2026-03-17 00:56:55.000000,product,view_page,3.0,,paid_ads,False,False
+,CUST1102,SESS102647,2026-03-08 22:54:39.000000,home,view_page,5.0,,social,False,False
+EVT210648,CUST1298,SESS102647,2026-03-15 16:12:24.000000,product,purchase,3.0,protein powder,organic_search,False,False
+EVT210649,CUST1555,SESS102647,2026-03-18 15:04:01.000000,category,,4.0,,paid_ads,False,False
+EVT210650,CUST1132,SESS102648,2026-03-12 23:03:15.000000,category,view_page,12.0,,direct,False,False
+EVT210651,CUST1361,SESS102648,2026-03-16 22:35:31.000000,product,purchase,5.0,,direct,False,False
+EVT210652,CUST1002,SESS102648,2026-03-11 14:27:42.000000,home,add_to_cart,3.0,,direct,True,False
+EVT210653,CUST1206,SESS102648,2026-03-11 10:50:19.000000,product,add_to_cart,12.0,water bottle,organic_search,True,False
+EVT210654,CUST1420,SESS102648,2026-03-18 12:11:06.000000,category,view_page,13.0,winter jacket,direct,False,False
+,CUST1168,SESS102648,2026-03-14 12:36:38.000000,cart,view_page,2.0,headphones,email,False,False
+EVT210656,CUST1044,SESS102649,2026-03-15 04:30:31.000000,,add_to_cart,4.0,,organic_search,True,False
+EVT210657,CUST1177,SESS102650,2026-03-11 09:26:05.000000,cart,add_to_cart,9.0,winter jacket,paid_ads,True,True
+EVT210658,CUST1105,SESS102651,2026-03-17 01:24:18.000000,product,add_to_cart,5.0,,email,True,False
+EVT210659,CUST1214,,2026-03-14 07:28:01.000000,cart,add_to_cart,8.0,,email,True,True
+EVT210660,CUST1210,SESS102651,2026-03-20 00:46:48.000000,home,add_to_cart,5.0,,paid_ads,True,False
+EVT210661,CUST1542,SESS102651,2026-03-17 01:59:58.000000,cart,remove_from_cart,5.0,,direct,False,False
+EVT210662,CUST1281,SESS102651,2026-03-13 00:15:05.000000,home,add_to_cart,2.0,,paid_ads,True,False
+EVT210663,CUST1378,SESS102651,2026-03-15 13:19:40.000000,category,add_to_cart,15.0,,SOCIAL,True,False
+EVT210664,CUST1027,SESS102652,2026-03-18 06:21:44.000000,category,REMOVE_FROM_CART,,,organic_search,False,False
+, cust1391 ,SESS102652,2026-03-10 22:27:46.000000,product,search,1.0,sunglasses,organic_search,False,False
+EVT210666,CUST1174,SESS102652,2026-03-08 11:29:22.000000,product,add_to_cart,3.0,,organic_search,True,True
+EVT210667,CUST1473,SESS102652,2026-03-13 05:14:34.000000,product,search,1.0,headphones,paid_ads,False,False
+EVT210668,CUST1539,SESS102652,2026-03-21 06:23:31.000000,checkout,add_to_cart,14.0,,email,True,True
+EVT210669,CUST1473,SESS102652,2026-03-11 17:53:52.000000, checkout ,add_to_cart,9.0,,organic_search,True,True
+EVT210670,CUST1359,SESS102652,2026-03-19 10:47:54.000000,product,remove_from_cart,11.0,protein powder,email,False,False
+EVT210671,CUST1344,SESS102652,2026-03-20 04:14:00.000000,search_results,view_page,7.0,,direct,False,False
+EVT210672,CUST1072,SESS102652,2026-03-16 03:14:31.000000,category,view_page,4.0,,organic_search,False,
+EVT210673,CUST1178,SESS102653,2026-03-11 11:04:25.000000,product,add_to_cart,7.0,,direct,True,False
+EVT210674,CUST1524,SESS102654,2026-03-08 12:22:49.000000,category,add_to_cart,9.0,phone case,paid_ads,True,True
+,CUST1098,SESS102655,2026-03-15 22:57:37.000000,home,remove_from_cart,1.0,,email,False,False
+EVT210676,CUST1054,SESS102655,2026-03-17 13:25:58.000000,cart,add_to_cart,14.0,,direct,,False
+EVT210677,CUST1334,SESS102655,2026-03-12 08:30:41.000000,cart,purchase,10.0,LAPTOP,direct,False,False
+EVT210678,CUST1439,SESS102655,2026-03-21 09:52:09.000000,category,purchase,4.0,,email,False,False
+EVT210679,CUST1323,SESS102655,2026-03-14 02:27:31.000000,cart,purchase,1.0,,paid_ads,False,False
+EVT210680,CUST1136,SESS102656,2026-03-14 08:56:32.000000,,add_to_cart,3.0,,email,True,False
+EVT210681,CUST1438,SESS102656,2026-03-08 20:52:52.000000,checkout,remove_from_cart,10.0,headphones,email,False,False
+EVT210682,CUST1355,SESS102657,2026-03-19 06:28:01.000000,checkout,remove_from_cart,4.0,yoga mat,email,False,False
+EVT210683,CUST1394,SESS102657,2026-03-13 20:44:21.000000,cart,add_to_cart,5.0,,paid_ads,True,True
+EVT210684,CUST1030,SESS102657,2026-03-21 15:23:51.000000,cart,search,2.0,,email,False,False
+EVT210685,CUST1339,SESS102657,2026-03-14 15:11:18.000000,category,add_to_cart,13.0,backpack, organic_search ,True,True
+EVT210686,CUST1216,SESS102657,2026-03-18 05:04:53.000000,,add_to_cart,8.0,,organic_search,True,True
+EVT210687,CUST1060,SESS102657,2026-03-13 02:10:12.000000, product ,add_to_cart,13.0,,direct,True,False
+EVT210688,CUST1309,SESS102657,2026-03-21 02:13:21.000000,home,remove_from_cart,14.0,desk lamp,organic_search,False,False
+EVT210689,CUST1471,SESS102657,2026-03-08 19:14:44.000000,checkout,purchase,12.0,,organic_search,False,False
+EVT210690,CUST1082,SESS102657,2026-03-08 20:19:46.000000,category,view_page,1.0,,social,False,False
+EVT210691,CUST1237,SESS102657,2026-03-15 13:19:48.000000,home,remove_from_cart,7.0,backpack,email,False,False
+EVT210692,CUST1341,SESS102657,2026-03-07 20:45:43.000000,product,search,,,paid_ads,,False
+EVT210693,CUST1176,SESS102657,2026-03-15 10:20:55.000000,search_results,remove_from_cart,7.0,,email,False,False
+,CUST1339,SESS102657,2026-03-11 06:27:54.000000,PRODUCT,add_to_cart,2.0,,social,True,False
+EVT210695,CUST1426,SESS102657,2026-03-15 00:42:00.000000,PRODUCT,purchase,11.0,,direct,False,
+EVT210696,CUST1236,SESS102657,2026-03-09 16:18:50.000000,category,view_page,3.0,,,False,False
+EVT210697,CUST1347,SESS102657,,cart,search,11.0,yoga mat,social,False,False
+EVT210698,CUST1126,SESS102658,2026-03-12 04:11:08.000000,,add_to_cart,4.0,water bottle,paid_ads,True,True
+EVT210699,CUST1477,SESS102658,2026-03-11 17:36:19.000000,product,purchase,7.0,,direct,False,False
+EVT210700, CUST1358 ,SESS102658,2026-03-13 18:10:57.000000,,search,15.0,,paid_ads,False,False
+EVT210701,CUST1460,SESS102658,2026-03-12 20:21:32.000000,checkout,purchase,4.0,,paid_ads,False,False
+EVT210702,CUST1427,SESS102658,2026-03-09 15:12:59.000000,search_results,purchase,3.0,,organic_search,False,False
+EVT210703,CUST1068,sess102659,2026-03-17 04:32:13.000000,home,remove_from_cart,1.0,,email,False,False
+EVT210704,CUST1435,SESS102659,2026-03-20 18:31:09.000000,checkout,purchase,1.0,,social,False,False
+EVT210705,CUST1180,SESS102659,2026-03-21 13:18:50.000000,product,search,,,organic_search,False,False
+EVT210706,CUST1151,SESS102660,,home,purchase,5.0,,email,False,False
+EVT210707,CUST1538,SESS102660,2026-03-12 20:02:16.000000,checkout,view_page,10.0, yoga mat ,paid_ads,False,False
+EVT210708,CUST1034,SESS102660,,checkout,purchase,13.0,,paid_ads,,False
+EVT210709,CUST1250,SESS102661,,cart, remove_from_cart ,12.0,,paid_ads,False,False
+EVT210710,CUST1411,SESS102661,2026-03-14 23:15:42.000000,checkout,view_page,11.0,, direct ,False,False
+EVT210711,CUST1051,SESS102661,2026-03-08 21:05:17.000000,category,remove_from_cart,14.0,headphones,organic_search,False,False
+EVT210712,CUST1511,SESS102661,2026-03-08 00:29:39.000000,product,remove_from_cart,5.0,,paid_ads,False,False
+EVT210713,CUST1466,sess102661,2026-03-14 19:20:49.000000,category,add_to_cart,,winter jacket,direct,True,True
+EVT210714,CUST1151,SESS102662,2026-03-16 05:44:15.000000,search_results,purchase,5.0,,email,False,False
+EVT210715,CUST1091,SESS102663,2026-03-10 01:54:44.000000,cart,view_page,6.0,protein powder,email,False,False
+EVT210716,CUST1317,SESS102664,2026-03-08 13:31:34.000000,home,add_to_cart,4.0,,,True,True
+EVT210717,CUST1185,sess102664,2026-03-15 11:56:58.000000,category,remove_from_cart,11.0,,paid_ads,False,False
+EVT210718,CUST1511,SESS102664,2026-03-11 18:35:48.000000,cart,remove_from_cart,7.0,,social,False,False
+EVT210719,CUST1031,,2026-03-13 12:10:16.000000,search_results,view_page,7.0,skincare,email,False,False
+EVT210720,CUST1489,SESS102664,2026-03-21 16:31:26.000000,checkout,purchase,3.0,,paid_ads,False,False
+EVT210721, CUST1145 ,SESS102664,2026-03-08 04:15:57.000000,checkout,search,2.0,,social,False,False
+EVT210722,CUST1112,SESS102664,2026-03-10 14:20:18.000000,checkout,add_to_cart,5.0,,direct,True,False
+,CUST1176,SESS102664,2026-03-18 02:16:30.000000,product,purchase,12.0,,,False,False
+EVT210724,CUST1134,SESS102665,2026-03-13 20:42:55.000000,checkout,view_page,14.0,water bottle,paid_ads,False,False
+EVT210725,CUST1130,SESS102665,2026-03-09 12:28:29.000000,search_results,remove_from_cart,3.0,water bottle,social,False,False
+EVT210726,CUST1009,SESS102665,2026-03-14 21:55:38.000000,product,search,10.0,yoga mat,social,False,
+EVT210727, CUST1142 ,SESS102665,2026-03-17 00:12:26.000000,category,purchase,5.0,, direct ,False,False
+EVT210728,CUST1216,,2026-03-16 21:20:59.000000,home,SEARCH,5.0,,paid_ads,False,False
+EVT210729,CUST1123,SESS102665,2026-03-17 14:08:33.000000,search_results,,3.0,,paid_ads,False,False
+EVT210730,CUST1373,SESS102665,2026-03-18 20:04:27.000000,product,add_to_cart,13.0,,email,,False
+EVT210731,CUST1220,SESS102665,2026-03-13 05:28:02.000000,product,search,2.0,headphones,email,False,False
+EVT210732,CUST1196,SESS102665,2026-03-11 23:08:26.000000,product,purchase,8.0,skincare,social,False,False
+EVT210733,CUST1169,SESS102665,2026-03-15 08:13:09.000000,search_results,remove_from_cart,1.0,,social,False,False
+EVT210734,CUST1187,,2026-03-13 00:32:20.000000,home,view_page,7.0,novel,organic_search,False,False
+EVT210735,CUST1161,SESS102665,2026-03-11 02:50:34.000000,category,,8.0,,social,False,False
+EVT210736,CUST1028,SESS102666,2026-03-10 11:28:20.000000,cart,add_to_cart,7.0,headphones,email,True,False
+EVT210737,CUST1177,SESS102666,2026-03-11 08:10:39.000000,category,purchase,3.0,,organic_search,False,False
+EVT210738,CUST1019,SESS102666,2026-03-08 09:03:05.000000,product,remove_from_cart,3.0,coffee maker,paid_ads,False,False
+EVT210739,CUST1382,SESS102666,2026-03-20 20:43:23.000000,home,view_page,12.0,,social,False,False
+EVT210740, CUST1548 ,SESS102667,2026-03-20 05:39:47.000000,cart,add_to_cart,,protein powder,EMAIL,True,True
+EVT210741,CUST1213,SESS102668,2026-03-14 14:10:53.000000,checkout,search,2.0,,email,False,False
+EVT210742,CUST1176,SESS102668,2026-03-12 21:07:57.000000,,purchase,5.0,,,False,False
+EVT210743,cust1097,SESS102668,2026-03-11 12:35:11.000000,product,remove_from_cart,11.0,, paid_ads ,False,False
+EVT210744,CUST1088,SESS102669,2026-03-20 07:55:20.000000,product,purchase,8.0,,direct,False,False
+EVT210745,CUST1535,SESS102669,2026-03-08 02:53:48.000000,product,,6.0,,email,False,False
+EVT210746,CUST1156,SESS102669,2026-03-20 21:55:03.000000,search_results,view_page,10.0,headphones,ORGANIC_SEARCH,False,False
+EVT210747, cust1144 ,SESS102670,2026-03-16 04:32:06.000000, home ,add_to_cart,3.0,,social,True,False
+EVT210748,CUST1368,SESS102670,2026-03-12 00:36:04.000000,,remove_from_cart,9.0,running shoes,organic_search,False,False
+,CUST1455,SESS102670,2026-03-08 02:35:58.000000,cart,remove_from_cart,12.0,,direct,False,False
+EVT210750, CUST1470 ,,2026-03-19 22:42:03.000000,search_results,add_to_cart,5.0,,social,True,False
+EVT210751,CUST1108,SESS102671,2026-03-17 05:34:34.000000,search_results,purchase,2.0,,social,False,False
+EVT210752,CUST1310,SESS102672,2026-03-08 17:08:46.000000,home,purchase,3.0,,organic_search,False,False
+EVT210753,CUST1402,SESS102672,2026-03-16 11:25:56.000000,category,view_page,5.0,,direct,False,False
+EVT210754,CUST1086,SESS102672,2026-03-14 19:21:53.000000,checkout,purchase,13.0,novel,direct,False,
+EVT210755,CUST1098,SESS102672,2026-03-08 12:57:24.000000,cart,remove_from_cart,14.0,,paid_ads,False,False
+EVT210756,CUST1213,,2026-03-10 00:00:04.000000,home,search,2.0,,direct,False,False
+EVT210757,CUST1112,SESS102673,2026-03-20 03:25:23.000000,checkout,add_to_cart,6.0,,direct,True,False
+EVT210758,CUST1127,SESS102673,2026-03-07 21:54:04.000000,cart,purchase,7.0,water bottle,social,False,False
+EVT210759,CUST1408,SESS102673,2026-03-18 16:31:06.000000,checkout,purchase,11.0,,social,,False
+EVT210760,CUST1310,SESS102673,2026-03-17 03:50:35.000000,cart,add_to_cart,1.0,,direct,True,True
+EVT210761,CUST1388,SESS102673,2026-03-17 06:08:25.000000,cart,view_page,14.0,,organic_search,False,False
+EVT210762,CUST1234,SESS102673,2026-03-10 10:17:44.000000,checkout,,2.0,coffee maker,paid_ads,False,False
+, cust1244 ,SESS102673,2026-03-18 00:54:27.000000,product,add_to_cart,2.0,yoga mat,direct,True,True
+EVT210763,CUST1200,SESS102675,2026-03-26 00:13:27.000000,home,add_to_cart,1.0,,social,True,True
+EVT210764,CUST1291,SESS102676,2026-03-26 19:46:58.000000,CHECKOUT,add_to_cart,2.0,,direct,True,False
+EVT210765,CUST1274,SESS102676,2026-03-26 20:00:22.000000,search_results,search,10.0,,direct,False,False
+EVT210766,CUST1206,SESS102676,2026-03-25 12:29:10.000000,category, add_to_cart ,4.0,,social,True,False
+EVT210767,CUST1272,SESS102676,2026-03-28 05:21:19.000000,category,view_page,15.0,,organic_search,False,False
+EVT210768,CUST1429,SESS102676,2026-03-26 11:42:30.000000,cart,view_page,8.0,headphones,email,False,False
+EVT210769,CUST1110,SESS102676,2026-03-22 16:46:21.000000,checkout,view_page,4.0,,,False,False
+EVT210770,CUST1346,SESS102677,2026-03-28 05:36:10.000000,checkout,purchase,11.0,,paid_ads,False,False
+evt210771,CUST1165,,2026-03-27 15:48:33.000000,cart,view_page,,,paid_ads,False,False
+EVT210772,CUST1402,SESS102677,2026-03-24 23:42:37.000000,search_results,remove_from_cart,3.0,,email,False,False
+EVT210773,CUST1569,,2026-03-24 07:47:04.000000,category,add_to_cart,1.0,,direct,True,False
+EVT210774,CUST1265,SESS102678,2026-03-22 02:17:04.000000,search_results,view_page,11.0,,direct,False,False
+EVT210775,CUST1315,SESS102678,,category,remove_from_cart,10.0,,email,False,False
+EVT210776,CUST1360,SESS102678,2026-03-25 12:46:51.000000,search_results,view_page,12.0,,direct,False,False
+EVT210777,CUST1200,SESS102678,2026-03-28 10:02:22.000000,checkout,search,1.0,,direct,False,False
+EVT210778,CUST1068,SESS102679,2026-03-23 00:41:56.000000,search_results,add_to_cart,4.0,headphones,social,True,False
+EVT210779,CUST1076,SESS102679,2026-03-26 17:40:44.000000,search_results,add_to_cart,14.0,,direct,True,False
+EVT210780,CUST1263,SESS102679,2026-03-27 06:08:09.000000,cart,search,6.0,,email,False,False
+EVT210781,CUST1438,SESS102680,2026-03-24 18:31:57.000000,cart,remove_from_cart,,,email,False,False
+EVT210782,CUST1292,SESS102680,2026-03-24 12:23:18.000000,category,view_page,12.0,,paid_ads,False,
+EVT210783,CUST1405,SESS102680,2026-03-23 03:38:01.000000,product,view_page,11.0,,paid_ads,False,False
+EVT210784,CUST1417,SESS102681,2026-03-25 18:26:23.000000,checkout,search,7.0,winter jacket,social,False,False
+EVT210785,CUST1261,SESS102681,2026-03-26 16:59:18.000000,category,view_page,3.0,,social,False,False
+EVT210786,CUST1397,SESS102681,,search_results,view_page,12.0,backpack,paid_ads,False,
+EVT210787,CUST1561,SESS102681,2026-03-21 18:57:05.000000,search_results,remove_from_cart,1.0,,social,False,False
+EVT210788,CUST1566,SESS102681,2026-03-25 09:20:25.000000,,add_to_cart,5.0,,direct,True,True
+EVT210789,CUST1032,SESS102681,2026-03-24 10:46:01.000000,checkout,add_to_cart,9.0,,organic_search,True,True
+EVT210790,CUST1143,SESS102682,2026-03-23 22:09:25.000000,product,add_to_cart,7.0,,email,True,
+EVT210791,CUST1283,SESS102682,2026-03-27 18:50:11.000000,cart,search,3.0,,email,False,False
+EVT210792,CUST1216,SESS102682,2026-03-24 16:24:17.000000,home,add_to_cart,12.0,,direct,True,
+EVT210793,CUST1260,SESS102683,2026-03-26 12:27:41.000000,category,view_page,9.0,,direct,False,False
+,CUST1143,SESS102684,2026-03-27 04:57:35.000000,category,purchase,2.0,,direct,False,False
+EVT210795,CUST1169,SESS102685,2026-03-23 12:14:26.000000,product,search,13.0,winter jacket,,False,False
+EVT210796,CUST1006,,2026-03-28 07:56:55.000000,search_results, add_to_cart ,1.0,sunglasses,DIRECT,True,True
+,CUST1187,SESS102687,2026-03-22 12:13:59.000000,checkout,search,6.0,,paid_ads,False,False
+EVT210798,CUST1094,SESS102688,2026-03-28 01:33:18.000000,checkout,search,11.0,,organic_search,,
+EVT210799,CUST1125,SESS102688,2026-03-21 19:48:52.000000,search_results,search,6.0,yoga mat,paid_ads,False,False
+EVT210800,CUST1512,SESS102689,2026-03-25 18:07:53.000000,cart,view_page,11.0,,email,False,False
+EVT210801,CUST1297,SESS102689,2026-03-23 02:33:26.000000,category,REMOVE_FROM_CART,4.0,,paid_ads,False,False
+EVT210802,CUST1099,SESS102690,2026-03-28 01:02:29.000000,category,search,11.0,headphones,paid_ads,,False
+EVT210803,CUST1094,,2026-03-25 11:26:31.000000,product,purchase,8.0,,paid_ads,False,False
+EVT210804,CUST1287,SESS102690,2026-03-22 07:17:56.000000,cart,remove_from_cart,7.0,,social,False,False
+EVT210805,CUST1568,SESS102690,2026-03-25 10:55:55.000000,search_results,purchase,15.0,,email,False,
+EVT210806,CUST1508,SESS102690,2026-03-27 20:28:29.000000,search_results,remove_from_cart,9.0,,organic_search,False,False
+EVT210807,CUST1459,SESS102691,2026-03-28 15:46:06.000000,home,search,3.0,,paid_ads,False,False
+EVT210808, cust1097 ,SESS102691,2026-03-26 10:06:52.000000,cart,add_to_cart,15.0,,email,True,False
+EVT210809,CUST1135,SESS102691,2026-03-26 01:09:41.000000,category,view_page,6.0,,organic_search,False,False
+EVT210810, CUST1383 ,SESS102692,2026-03-26 23:43:55.000000,product,add_to_cart,13.0,,social,True,True
+EVT210811,CUST1196,SESS102693,2026-03-28 16:23:55.000000,home,search,12.0,,email,False,False
+EVT210812,CUST1505,SESS102693,2026-03-27 09:05:30.000000,cart,search,5.0,,email,False,False
+EVT210813,CUST1179,SESS102693,2026-03-25 01:27:11.000000,checkout, remove_from_cart ,10.0,,organic_search,False,False
+EVT210814,CUST1035,SESS102693,2026-03-26 16:48:13.000000,product,view_page,14.0,,direct,False,False
+EVT210815,CUST1567,SESS102693,2026-03-25 04:38:26.000000,cart,purchase,2.0,,social,False,False
+EVT210816,CUST1105,SESS102693,2026-03-24 01:18:00.000000,search_results,search,14.0,,social,False,
+EVT210817,CUST1099,SESS102693,2026-03-23 03:28:11.000000,checkout,search,3.0,,social,False,False
+EVT210818,CUST1455,SESS102693,2026-03-22 10:01:02.000000,category,remove_from_cart,7.0,,social,False,False
+EVT210819,CUST1110,SESS102693,2026-03-21 16:46:35.000000,search_results,view_page,1.0,,social,False,False
+EVT210820,CUST1238,SESS102693,2026-03-26 01:03:59.000000,category,purchase,9.0,,email,,False
+EVT210821,CUST1201,SESS102693,2026-03-23 23:42:33.000000,product,purchase,11.0,,,False,False
+EVT210822,CUST1046,SESS102694,2026-03-28 04:48:31.000000,checkout,view_page,1.0,, organic_search ,False,False
+EVT210823,CUST1180,SESS102694,2026-03-25 18:46:55.000000,search_results,view_page,3.0,,direct,False,False
+EVT210824,CUST1441,SESS102694,2026-03-26 06:04:47.000000,home,remove_from_cart,10.0,,social,False,False
+EVT210825,CUST1437,SESS102694,2026-03-25 08:15:16.000000,home,add_to_cart,10.0,,organic_search,True,False
+EVT210826,CUST1120,SESS102694,2026-03-24 05:34:16.000000,category,purchase,1.0, desk lamp ,organic_search,False,False
+EVT210827,CUST1346,SESS102694,2026-03-24 08:47:47.000000,checkout,view_page,8.0,,organic_search,False,False
+EVT210828,CUST1065,SESS102694,2026-03-23 14:11:30.000000,search_results,add_to_cart,4.0,,organic_search,True,True
+EVT210829,CUST1261,SESS102694,2026-03-21 18:00:10.000000,HOME, remove_from_cart ,13.0,coffee maker,direct,False,False
+EVT210830,CUST1252,SESS102694,2026-03-21 23:38:05.000000,cart,view_page,6.0,,direct,False,False
+EVT210831,CUST1286,SESS102694,2026-03-26 02:32:37.000000,home,VIEW_PAGE,12.0,,email,False,False
+EVT210832,CUST1221,SESS102694,2026-03-25 21:04:42.000000,checkout,remove_from_cart,9.0,,direct,False,False
+EVT210833,CUST1189,SESS102694,2026-03-28 00:11:06.000000,home,view_page,6.0,,organic_search,False,False
+EVT210834,CUST1357,SESS102695,2026-03-28 08:16:37.000000,category,search,4.0,,direct,False,False
+EVT210835,CUST1170,SESS102695,2026-03-22 04:30:36.000000,checkout,add_to_cart,1.0,,social,True,False
+EVT210836,CUST1429,SESS102696,2026-03-25 06:36:39.000000,category,add_to_cart,13.0,,direct,True,False
+EVT210837,CUST1326,SESS102696,2026-03-24 01:21:55.000000,product,purchase,14.0,,paid_ads,False,False
+EVT210838,CUST1060,SESS102696,2026-03-25 22:51:48.000000,cart,purchase,7.0,desk lamp,social,False,False
+EVT210839,CUST1508, SESS102696 ,2026-03-23 19:27:54.000000,search_results,view_page,5.0,protein powder,social,,
+EVT210840,CUST1278,SESS102696,,category,purchase,8.0,,social,False,False
+EVT210841,CUST1019,SESS102696,2026-03-26 01:43:13.000000,CATEGORY,add_to_cart,11.0,desk lamp,email,True,False
+EVT210842, CUST1386 ,SESS102696,2026-03-25 19:38:50.000000,product,search,15.0,,paid_ads,False,False
+EVT210843,CUST1082,SESS102696,2026-03-28 00:53:38.000000,category,add_to_cart,3.0,laptop,direct,True,
+,CUST1517,SESS102697,,category,view_page,4.0,phone case,email,False,False
+EVT210845,CUST1255,SESS102697,2026-03-23 18:33:23.000000, checkout ,view_page,8.0,,direct,False,False
+EVT210846,CUST1241,SESS102698,2026-03-26 01:44:44.000000,checkout,view_page,8.0,,social,False,False
+EVT210847,CUST1075,SESS102699,2026-03-22 17:17:01.000000,cart,remove_from_cart,3.0,,paid_ads,False,False
+EVT210848,CUST1533,SESS102699,2026-03-26 14:19:35.000000,checkout,search,8.0,,direct,,False
+EVT210849,CUST1347,SESS102699,2026-03-27 08:15:45.000000,search_results,remove_from_cart,9.0,,social,False,False
+EVT210850,CUST1473,SESS102700,2026-03-27 15:40:39.000000,category,view_page,11.0,,paid_ads,False,False
+,CUST1401,SESS102700,2026-03-22 00:21:32.000000,search_results,remove_from_cart,6.0,laptop,direct,False,False
+EVT210852,CUST1041,SESS102701,2026-03-25 12:42:55.000000,cart,purchase,4.0,,email,False,False
+EVT210853,CUST1081,SESS102701,2026-03-22 19:18:30.000000,checkout,remove_from_cart,8.0,,email,False,False
+EVT210854,CUST1440,,2026-03-27 22:53:06.000000,checkout,remove_from_cart,5.0,,social,False,False
+EVT210855,CUST1495,SESS102702,2026-03-22 11:17:23.000000,cart,add_to_cart,4.0,laptop,social,True,
+EVT210856,CUST1169,,2026-03-27 14:02:08.000000,home,add_to_cart,15.0,,direct,True,True
+EVT210857,CUST1534,SESS102702,2026-03-22 18:48:38.000000,home,search,13.0,novel,organic_search,False,False
+EVT210858,CUST1524,SESS102702,2026-03-23 10:43:56.000000,search_results,view_page,1.0,,organic_search,False,False
+EVT210859,CUST1129,SESS102702,2026-03-22 18:48:40.000000,product,purchase,6.0,,direct,False,False
+EVT210860,CUST1438,SESS102702,2026-03-25 23:00:34.000000,search_results,,1.0,coffee maker,social,False,False
+EVT210861,CUST1264,SESS102702,2026-03-24 20:27:08.000000,checkout,search,3.0,,paid_ads,False,False
+EVT210862,CUST1242,SESS102702,2026-03-24 20:18:01.000000,category, purchase ,15.0,,organic_search,False,False
+EVT210863,CUST1528,SESS102703,2026-03-23 21:03:37.000000,product,add_to_cart,10.0,,organic_search,True,False
+EVT210864,CUST1407,SESS102704,2026-03-25 23:43:18.000000,search_results,,5.0,,email,,False
+EVT210865,CUST1179,SESS102705,2026-03-23 02:33:23.000000,product,remove_from_cart,7.0,,email,False,False
+EVT210866,CUST1525,SESS102705,2026-03-24 11:28:32.000000,cart,search,15.0,,paid_ads,False,False
+EVT210867,CUST1131,SESS102705,2026-03-28 12:34:53.000000,checkout,view_page,15.0,, email ,False,False
+EVT210868,CUST1113,SESS102705,2026-03-21 18:12:53.000000,home,add_to_cart,12.0,,direct,True,True
+EVT210869,CUST1405,,2026-03-24 05:10:23.000000,cart,purchase,8.0,,paid_ads,False,False
+EVT210870,CUST1523,SESS102706,2026-03-23 22:48:14.000000,cart,purchase,11.0,coffee maker,direct,False,False
+EVT210871,CUST1157,SESS102706,2026-03-22 05:39:31.000000,checkout,remove_from_cart,5.0,,direct,False,False
+EVT210872,CUST1417,SESS102706,2026-03-27 03:34:50.000000,category,view_page,2.0,,,False,
+EVT210873,CUST1510,SESS102707,2026-03-26 01:35:37.000000,search_results,purchase,4.0,laptop,organic_search,False,False
+EVT210874,CUST1201,SESS102707,2026-03-27 02:13:01.000000,CART,remove_from_cart,7.0,phone case,social,False,False
+EVT210875, CUST1307 ,SESS102707,2026-03-27 14:38:07.000000,home,purchase,15.0,,paid_ads,False,
+EVT210876,CUST1304,SESS102707,2026-03-27 08:58:29.000000,category,purchase,11.0,,organic_search,False,False
+EVT210877,CUST1137,SESS102707,,home,add_to_cart,14.0,running shoes,organic_search,True,True
+EVT210878,CUST1377,SESS102707,2026-03-22 07:12:37.000000,cart,search,13.0,, paid_ads ,False,False
+EVT210879,CUST1166,SESS102707,2026-03-23 08:39:10.000000,product,purchase,13.0,winter jacket,social,False,False
+EVT210880,CUST1448,SESS102707,2026-03-26 01:53:53.000000,,add_to_cart,2.0,,social,True,False
+EVT210881,CUST1062,SESS102707,,category,purchase,11.0,,social,False,False
+EVT210882,CUST1208,SESS102707,2026-03-28 06:02:25.000000,home,view_page,,,organic_search,False,False
+EVT210883,CUST1065,SESS102707,2026-03-25 07:18:40.000000,home,remove_from_cart,10.0,,paid_ads,False,False
+EVT210884,CUST1148,SESS102708,2026-03-27 04:51:04.000000,search_results,search,3.0,,paid_ads,False,False
+EVT210885,CUST1532,SESS102709,2026-03-27 19:50:40.000000,search_results,purchase,12.0,,paid_ads,False,False
+EVT210886,CUST1128,SESS102709,2026-03-25 06:09:07.000000,product,search,4.0,,paid_ads,False,False
+EVT210887,CUST1484,SESS102709,2026-03-27 06:46:52.000000,search_results,purchase,11.0,,email,False,False
+EVT210888,CUST1095,SESS102709,2026-03-28 11:26:49.000000,checkout,view_page,13.0,,,False,False
+EVT210889,CUST1474,,2026-03-26 23:48:51.000000,home,search,2.0,winter jacket,email,False,False
+EVT210890,CUST1191,SESS102709,2026-03-23 03:45:28.000000,product,view_page,7.0,yoga mat, social ,,False
+EVT210891,CUST1108,SESS102709,2026-03-27 18:17:07.000000,product,search,7.0,,social,False,False
+EVT210892,CUST1065,SESS102710,2026-03-27 21:10:04.000000,product,remove_from_cart,2.0,,social,False,False
+EVT210893,CUST1364,SESS102710,,search_results,,1.0,,social,False,False
+EVT210894,CUST1083,SESS102710,2026-03-23 20:07:59.000000,search_results,purchase,1.0,skincare,organic_search,False,False
+EVT210895,CUST1247,,2026-03-26 11:53:32.000000,category,remove_from_cart,10.0,,paid_ads,False,False
+EVT210896,CUST1241,SESS102711,,cart,add_to_cart,7.0,,paid_ads,True,False
+EVT210897,CUST1236,SESS102711,2026-03-28 15:04:42.000000,search_results,remove_from_cart,4.0,,,False,False
+EVT210898,CUST1265,SESS102711,2026-03-24 13:28:49.000000,checkout,view_page,2.0,,direct,False,False
+EVT210899,CUST1460,SESS102711,2026-03-26 16:16:03.000000,checkout,view_page,7.0,,direct,False,False
+EVT210900,CUST1073,SESS102711,2026-03-23 22:40:40.000000,home,search,13.0,,organic_search,False,False
+EVT210901,CUST1010,SESS102711,2026-03-24 02:53:11.000000,product,view_page,8.0,,email,False,False
+EVT210902,CUST1046,SESS102712,2026-03-25 17:05:04.000000,cart,add_to_cart,2.0,,social,True,
+EVT210903,CUST1032,SESS102712,,,add_to_cart,13.0,,social,True,True
+EVT210904,CUST1462,SESS102712,2026-03-26 05:32:01.000000,cart, view_page ,9.0,laptop,organic_search,False,False
+EVT210905,CUST1087,SESS102713,2026-03-27 17:44:53.000000,product,search,8.0,,paid_ads,False,False
+EVT210906,CUST1248,SESS102714,2026-03-23 07:39:01.000000,category,add_to_cart,10.0,,email,True,True
+EVT210907,CUST1247,SESS102714,2026-03-25 01:02:18.000000,home,view_page,11.0,,email,False,False
+EVT210908,CUST1578,SESS102714,2026-03-21 19:59:14.000000,checkout,view_page,12.0,,paid_ads,False,False
+EVT210909,CUST1332,SESS102714,2026-03-26 05:39:47.000000,product,purchase,6.0,,social,False,False
+EVT210910,CUST1034,SESS102714,2026-03-26 10:22:39.000000,product,add_to_cart,6.0,,direct,True,False
+EVT210911,CUST1522,SESS102714,2026-03-27 04:57:15.000000,CHECKOUT,add_to_cart,3.0,,organic_search,True,True
+EVT210912,CUST1508,SESS102714,,product,search,6.0,, paid_ads ,False,False
+EVT210913,CUST1314,SESS102715,2026-03-26 22:22:31.000000,search_results,search,4.0,,email,False,False
+EVT210914,CUST1014,SESS102716,2026-04-10 14:27:03.000000,search_results,remove_from_cart,2.0,,organic_search,False,False
+EVT210915,CUST1483,SESS102717,2026-03-29 06:02:05.000000,category,view_page,3.0,,social,False,False
+EVT210916,CUST1168,SESS102718,2026-04-06 11:57:47.000000,search_results,search,9.0,novel,social,False,
+EVT210917,CUST1356,SESS102719,2026-03-29 09:18:58.000000,product,add_to_cart,7.0,,paid_ads,True,
+EVT210918,CUST1413,SESS102719,2026-03-31 21:40:22.000000,home,add_to_cart,4.0,,direct,True,False
+ evt210919 ,CUST1259,SESS102720,2026-03-30 09:23:22.000000,category,view_page,9.0,,direct,False,False
+EVT210920,CUST1387,SESS102721,2026-03-31 09:31:02.000000,category,search,4.0,,social,False,False
+EVT210921,CUST1312,SESS102722,2026-04-01 06:37:43.000000,home,remove_from_cart,12.0,,social,False,False
+,CUST1309,SESS102723,2026-04-03 23:31:20.000000,checkout,remove_from_cart,3.0,,paid_ads,False,False
+EVT210923,CUST1179,SESS102724,2026-04-01 07:49:53.000000,search_results,add_to_cart,15.0,water bottle,paid_ads,True,
+EVT210924,CUST1106,SESS102724,2026-03-30 01:00:22.000000,checkout,search,11.0,,paid_ads,False,False
+EVT210925,CUST1069,SESS102724,2026-03-31 01:38:42.000000,home,search,2.0,sunglasses,PAID_ADS,False,False
+EVT210926,CUST1205,SESS102725,2026-04-09 09:55:45.000000,search_results,view_page,9.0,,organic_search,False,False
+EVT210927,CUST1173,SESS102725,2026-04-10 18:09:00.000000,product,view_page,6.0,,paid_ads,False,False
+EVT210928,CUST1420,SESS102725,2026-04-04 05:19:32.000000,category,add_to_cart,6.0,,email,True,False
+EVT210929,CUST1428,,2026-04-02 14:11:46.000000,search_results,PURCHASE,9.0,laptop,email,False,False
+EVT210930,CUST1503,SESS102725,2026-04-06 18:51:46.000000,home,purchase,2.0,,social,False,False
+EVT210931,CUST1597,SESS102725,2026-04-04 18:09:45.000000,product,purchase,6.0,,organic_search,False,False
+,CUST1274,SESS102725,2026-04-09 11:43:20.000000,checkout,search,1.0,,paid_ads,False,False
+EVT210933,CUST1600,SESS102725,2026-04-09 01:17:19.000000,product,search,8.0,,email,False,False
+,CUST1460, sess102725 ,2026-04-03 23:11:28.000000,checkout,purchase,13.0,,paid_ads,False,False
+EVT210935,CUST1028,SESS102725,2026-04-05 00:52:04.000000,category,,15.0,,social,True,
+EVT210936,CUST1469,SESS102726,2026-04-10 05:16:46.000000,product,add_to_cart,6.0,running shoes,email,,True
+EVT210937,CUST1447,SESS102727,2026-04-04 23:33:56.000000,search_results,view_page,5.0,,,False,False
+EVT210938,CUST1503,SESS102727,2026-04-01 12:08:20.000000,product,view_page,3.0,,direct,False,False
+EVT210939,CUST1281,SESS102727,,cart,view_page,6.0,running shoes,social,False,False
+EVT210940,CUST1001,SESS102727,2026-03-31 00:33:16.000000,search_results,purchase,13.0,running shoes,email,False,False
+EVT210941,CUST1318,SESS102727,2026-03-31 21:07:24.000000,category,,15.0,, organic_search ,False,False
+EVT210942,CUST1013,SESS102728,2026-04-02 21:32:59.000000,category,purchase,15.0,,email,False,False
+EVT210943, CUST1364 ,SESS102728,2026-03-31 09:08:26.000000,search_results,view_page,2.0,,paid_ads,False,
+EVT210944,CUST1376,SESS102728,2026-04-10 13:39:10.000000,product,search,14.0,,paid_ads,,False
+EVT210945,CUST1425,SESS102728,,category,purchase,10.0,novel,organic_search,False,False
+EVT210946,CUST1169,SESS102729,2026-04-01 02:12:39.000000,home,purchase,3.0,,direct,False,False
+EVT210947,CUST1245,SESS102730,2026-04-05 23:15:54.000000,home,remove_from_cart,10.0,,social,False,False
+EVT210948,CUST1386,SESS102730,2026-04-04 11:37:44.000000,search_results,purchase,14.0,,social,False,False
+EVT210949,CUST1111,SESS102731,2026-03-29 16:55:27.000000,checkout,search,13.0,,paid_ads,False,False
+,CUST1470,SESS102732,2026-04-08 03:56:19.000000,home,search,5.0,,email,False,False
+EVT210951,CUST1293,SESS102733,2026-04-11 05:44:07.000000,checkout,view_page,3.0,,paid_ads,False,False
+EVT210952,CUST1324,SESS102733,2026-04-04 02:35:10.000000,cart,view_page,3.0,sunglasses,paid_ads,False,False
+EVT210953,CUST1081,SESS102733,2026-04-05 22:33:30.000000,cart,view_page,15.0,sunglasses,,False,False
+EVT210954,CUST1290,SESS102733,2026-04-02 22:12:32.000000,,purchase,7.0,,organic_search,False,False
+EVT210955,CUST1411,SESS102733,2026-04-05 10:54:08.000000,home,remove_from_cart,4.0,,paid_ads,False,False
+EVT210956,CUST1241,SESS102733,2026-04-08 07:28:36.000000,cart,SEARCH,15.0,,email,False,False
+EVT210957,CUST1030,SESS102734,2026-04-10 18:02:12.000000,category,purchase,3.0,,direct,False,False
+EVT210958,CUST1076,SESS102734,2026-04-02 00:52:19.000000,home,search,7.0,,social,False,False
+EVT210959,CUST1329,SESS102734,2026-03-30 15:54:56.000000,,add_to_cart,1.0,headphones,direct,True,False
+EVT210960,CUST1398,SESS102734,2026-04-01 10:30:03.000000,checkout,add_to_cart,9.0,,direct,True,True
+EVT210961,CUST1331,SESS102734,2026-04-01 10:50:23.000000,category,view_page,8.0,,organic_search,False,False
+EVT210962,CUST1428,SESS102734,2026-03-31 01:56:32.000000,home,remove_from_cart,9.0,,email,False,False
+EVT210963,CUST1454,SESS102735,2026-04-07 02:53:45.000000,category,,2.0,,paid_ads,,
+EVT210964,CUST1321,SESS102736,2026-04-02 00:15:36.000000,search_results,add_to_cart,15.0,,social,,True
+ evt210965 ,CUST1217,SESS102736,2026-04-03 05:26:05.000000, cart ,remove_from_cart,7.0,,email,False,False
+EVT210966,CUST1012,SESS102737,2026-03-28 22:28:27.000000,cart,purchase,2.0,,organic_search,False,False
+EVT210967,CUST1422,SESS102737,2026-04-02 14:08:44.000000,checkout,,8.0,protein powder,direct,False,False
+,CUST1045,SESS102737,2026-04-01 22:39:06.000000,product,add_to_cart,9.0,laptop,direct,True,False
+EVT210969,CUST1592,,2026-04-01 19:22:53.000000,category,add_to_cart,,novel,,True,
+EVT210970,CUST1509,SESS102738,2026-04-03 18:03:31.000000,search_results,remove_from_cart,6.0,water bottle,email,,False
+EVT210971,CUST1152,SESS102738,2026-04-06 06:00:06.000000,cart,purchase,7.0,,organic_search,False,False
+EVT210972,CUST1205,SESS102738,2026-04-01 02:43:48.000000,checkout,purchase,10.0,yoga mat,social,False,
+EVT210973,CUST1218,SESS102739,2026-04-07 10:30:31.000000,product,search,13.0,,paid_ads,,False
+evt210974,CUST1070,SESS102739,2026-04-02 14:39:31.000000,product,view_page,15.0,,email,False,False
+EVT210975,CUST1173,SESS102740,2026-04-04 12:13:46.000000,product,view_page,,,,False,False
+EVT210976,CUST1471,SESS102740,2026-03-30 17:55:14.000000,home,purchase,2.0,,email,False,False
+EVT210977,CUST1528,SESS102740,2026-04-04 11:39:13.000000,home,search,5.0,,email,False,False
+,CUST1586,SESS102740,2026-04-09 02:15:50.000000,home,add_to_cart,9.0,,email,True,False
+EVT210979,CUST1298,SESS102740,2026-04-10 00:47:27.000000,home,view_page,6.0,,,,False
+EVT210980,CUST1076,SESS102740,2026-03-31 06:03:02.000000,home,search,2.0,novel,direct,False,False
+EVT210981,CUST1208,SESS102741,2026-04-08 10:10:59.000000,home,search,10.0,,direct,False,False
+EVT210982,CUST1419,SESS102741,2026-04-03 12:39:27.000000,search_results,search,1.0,,paid_ads,False,False
+EVT210983,CUST1476,SESS102741,2026-03-30 06:46:32.000000,search_results,view_page,8.0,,organic_search,False,False
+EVT210984,CUST1494,SESS102741,2026-04-07 20:49:54.000000,product,purchase,,,organic_search,False,
+,CUST1505,SESS102741,2026-04-11 00:24:20.000000,product,remove_from_cart,3.0,,direct,False,False
+EVT210986,CUST1248,SESS102742,2026-03-31 15:22:47.000000,checkout,add_to_cart,6.0,,email,True,False
+EVT210987,CUST1332,SESS102743,2026-04-05 11:52:47.000000,checkout,remove_from_cart,14.0,,email,False,False
+EVT210988,CUST1087,SESS102744,2026-04-02 08:56:06.000000,category,purchase,4.0,,social,False,False
+EVT210989,CUST1333,SESS102744,2026-04-09 22:04:30.000000,cart,ADD_TO_CART,,,email,True,False
+EVT210990,CUST1590,SESS102744,2026-04-08 16:29:04.000000,checkout,search,9.0,protein powder,social,False,False
+EVT210991,CUST1038,SESS102744,2026-03-31 21:12:59.000000,home,remove_from_cart,2.0,,social,False,False
+EVT210992,CUST1442,SESS102745,2026-04-03 04:51:59.000000,,add_to_cart,,laptop,organic_search,True,False
+EVT210993,CUST1021,SESS102745,2026-03-29 13:22:24.000000,checkout,purchase,9.0,,paid_ads,False,False
+EVT210994,CUST1213,SESS102745,2026-04-08 11:56:47.000000,search_results,remove_from_cart,7.0,,organic_search,False,False
+EVT210995,CUST1226,SESS102745,2026-04-02 22:41:50.000000,category,remove_from_cart,7.0,,organic_search,False,False
+,CUST1263,,2026-04-04 08:08:59.000000,category,search,6.0,novel,,False,False
+EVT210997,CUST1319,SESS102745,2026-03-29 10:05:20.000000,cart,remove_from_cart,15.0,,paid_ads,False,False
+EVT210998,CUST1401,SESS102745,2026-03-29 18:03:00.000000,category,view_page,11.0,,social,,False
+EVT210999, CUST1463 ,SESS102746,2026-04-10 21:38:44.000000,search_results,add_to_cart,11.0,novel,email,True,False
+EVT211000,CUST1432,SESS102746,2026-04-08 14:59:25.000000,,purchase,11.0,,organic_search,False,False
+EVT211001,CUST1420,SESS102746,2026-04-03 20:46:55.000000,search_results,purchase,8.0,,paid_ads,False,False
+EVT211002,CUST1373,SESS102747,2026-03-28 16:44:45.000000,checkout,view_page,5.0,,paid_ads,False,
+EVT211003,CUST1312,SESS102747,2026-04-06 08:39:56.000000,home,add_to_cart,7.0,,,True,
+EVT211004,CUST1506,SESS102748,2026-04-09 14:01:26.000000,CART,search,2.0,,direct,False,False
+EVT211005,CUST1038,SESS102748,2026-03-31 19:11:16.000000,search_results,remove_from_cart,8.0,,,False,False
+EVT211006,CUST1524,SESS102748,2026-04-01 10:34:26.000000,home,purchase,15.0,,organic_search,False,False
+EVT211007,CUST1475,,2026-04-09 17:25:27.000000,search_results,view_page,9.0,,paid_ads,False,False
+EVT211008,CUST1381,,2026-03-30 18:43:01.000000,search_results,purchase,8.0,,,False,False
+EVT211009,CUST1415,SESS102749,2026-03-28 21:33:30.000000,product,remove_from_cart,11.0,,social,False,False
+EVT211010,CUST1135,SESS102749,2026-04-07 17:17:05.000000,category,view_page,1.0,,email,False,False
+EVT211011,CUST1135,SESS102750,2026-04-03 12:59:22.000000,category,search,9.0,,direct,False,False
+EVT211012,CUST1363,SESS102750,2026-04-11 06:43:53.000000,checkout,search,12.0,,direct,False,False
+EVT211013,CUST1547,SESS102750,2026-04-02 08:09:26.000000,checkout,remove_from_cart,4.0,,email,False,False
+EVT211014,CUST1216,SESS102751,2026-04-05 20:55:55.000000,search_results,search,15.0,,paid_ads,False,False
+EVT211015,CUST1417,SESS102751,2026-04-04 09:48:58.000000,cart,view_page,10.0,,organic_search,False,False
+EVT211016,CUST1075,SESS102751,,,view_page,5.0,laptop,email,False,
+EVT211017,CUST1336,SESS102751,2026-04-04 05:31:38.000000,home,add_to_cart,3.0,,direct,True,False
+EVT211018,CUST1410,SESS102752,,category,add_to_cart,6.0,,social,True,True
+EVT211019,CUST1401,SESS102752,2026-04-03 06:54:17.000000,cart,purchase,2.0,,,False,False
+EVT211020,CUST1451,SESS102752,2026-04-01 18:34:52.000000,checkout,purchase,7.0,,organic_search,False,False
+EVT211021,CUST1270,SESS102753,2026-04-10 07:36:59.000000,home,add_to_cart,14.0,backpack,organic_search,True,True
+EVT211022,CUST1072,SESS102753,2026-04-02 00:37:45.000000,,remove_from_cart,9.0,,,False,False
+EVT211023,CUST1391,SESS102753,2026-03-29 17:01:29.000000,cart,purchase,13.0,,paid_ads,False,False
+EVT211024,CUST1429,,2026-03-30 11:10:01.000000,category,search,5.0,,direct,False,False
+,CUST1148,SESS102753,2026-04-09 00:03:59.000000,category,purchase,3.0,,direct,False,False
+EVT211026,CUST1083,SESS102753,2026-03-30 07:52:08.000000,product, remove_from_cart ,9.0,laptop,social,False,False
+EVT211027,CUST1301,SESS102753,,checkout,view_page,15.0,,email,False,False
+EVT211028,CUST1292,SESS102754,2026-04-01 08:44:20.000000,checkout, add_to_cart ,5.0,,organic_search,True,True
+EVT211029,CUST1364,SESS102754,2026-04-05 16:59:13.000000,category,purchase,11.0,,organic_search,False,False
+EVT211030,CUST1317,SESS102755,2026-04-11 03:43:03.000000,product,purchase,12.0,,social,False,False
+EVT211031,CUST1071,,2026-04-06 16:09:38.000000,product,view_page,4.0,,paid_ads,False,False
+EVT211032,CUST1088,SESS102755,2026-04-01 08:52:46.000000,,view_page,11.0,,paid_ads,False,False
+evt211033,CUST1088,SESS102755,2026-04-04 04:07:47.000000,checkout,search,8.0,phone case,social,,False
+EVT211034,CUST1172,SESS102756,2026-04-03 09:22:08.000000,category,purchase,1.0,,direct,False,False
+EVT211035,CUST1354,SESS102756,2026-04-11 02:01:55.000000,category,,3.0,,email,False,False
+EVT211036,CUST1344,SESS102757,,product,add_to_cart,,backpack,organic_search,True,False
+EVT211037,CUST1365,SESS102757,2026-04-09 22:34:17.000000,cart,remove_from_cart,7.0,,paid_ads,False,
+EVT211038,CUST1354,SESS102757,2026-04-08 22:25:55.000000,checkout,purchase,5.0,,organic_search,False,
+EVT211039,CUST1242,SESS102757,2026-04-04 07:48:08.000000,,add_to_cart,13.0,,direct,True,False
+EVT211040,CUST1123,SESS102757,2026-03-30 14:48:49.000000,,purchase,5.0,skincare,organic_search,False,False
+EVT211041,CUST1577, sess102757 ,2026-04-04 05:42:53.000000,home,view_page,9.0,phone case,email,False,False
+EVT211042,CUST1265,SESS102757,2026-04-01 13:48:11.000000,search_results,search,1.0,,direct,False,False
+EVT211043,CUST1517,SESS102757,2026-04-06 15:16:53.000000, home , add_to_cart ,6.0,,social,True,False
+EVT211044,CUST1124,SESS102757,2026-03-29 11:19:10.000000,search_results,purchase,14.0,,organic_search,False,False
+EVT211045,CUST1437,,2026-04-04 14:30:48.000000,search_results,search,2.0,skincare,direct,False,False
+EVT211046,CUST1293,SESS102757,2026-04-10 22:30:15.000000,checkout,search,5.0,,email,False,False
+EVT211047,CUST1005,SESS102757,2026-04-11 07:18:56.000000,product,purchase,14.0,,organic_search,False,False
+EVT211048,CUST1432,SESS102757,2026-04-03 10:59:32.000000,product,search,3.0,,email,False,False
+EVT211049,CUST1270,SESS102758,2026-04-02 03:47:41.000000,checkout,,4.0,,organic_search,False,
+EVT211050,CUST1222,SESS102758,2026-03-31 16:11:36.000000,category,view_page,11.0,,email,False,False
+,CUST1522,SESS102758,2026-03-30 03:06:49.000000,checkout,purchase,5.0,,paid_ads,False,False
+EVT211052,CUST1211,SESS102758,2026-04-03 08:57:31.000000,cart,purchase,2.0,,direct,False,False
+EVT211053,CUST1022,SESS102758,2026-04-11 04:16:03.000000,checkout,search,,,paid_ads,False,False
+EVT211054,CUST1324,SESS102759,2026-04-11 09:39:38.000000,home,remove_from_cart,14.0,,email,False,False
+EVT211055,CUST1110,SESS102759,2026-04-10 23:57:45.000000,product,,1.0,,paid_ads,True,False
+EVT211056,CUST1126,,2026-04-04 09:48:37.000000,search_results,remove_from_cart,4.0,,paid_ads,False,False
+EVT211057,CUST1371,SESS102759,2026-04-04 08:44:52.000000,,purchase,4.0,,,False,False
+EVT211058,CUST1390,,,product,purchase,4.0,,organic_search,False,False
+EVT211059,CUST1351,SESS102760,2026-04-08 11:40:26.000000,category,add_to_cart,4.0,,direct,True,False
+EVT211060,CUST1243,SESS102760,2026-04-10 06:07:44.000000,product,search,9.0,backpack,direct,False,False
+EVT211061,CUST1455,SESS102761,2026-04-07 22:18:09.000000,checkout,add_to_cart,14.0,headphones,direct,True,True
+EVT211062,CUST1087,SESS102761,2026-03-29 07:27:08.000000,category,add_to_cart,5.0,running shoes,paid_ads,True,False
+EVT211063,CUST1160,SESS102761,, checkout ,remove_from_cart,2.0,,social,False,False
+,CUST1545,SESS102761,2026-03-29 16:47:29.000000,home,remove_from_cart,14.0,,direct,False,False
+,CUST1560,SESS102761,2026-03-31 16:47:16.000000,checkout,add_to_cart,11.0,,organic_search,True,True
+EVT211066,CUST1069,SESS102762,2026-04-01 19:56:17.000000,search_results,remove_from_cart,4.0,,paid_ads,False,False
+EVT211067,CUST1495,SESS102762,2026-04-04 17:41:32.000000,home,purchase,9.0,,direct,False,False
+EVT211068,CUST1547,SESS102762,2026-04-05 17:32:28.000000,product,add_to_cart,1.0,,email,True,False
+EVT211069,CUST1377,SESS102762,2026-04-01 02:46:46.000000,home,search,13.0,laptop,organic_search,False,False
+EVT211070,CUST1043,SESS102763,2026-04-05 15:08:48.000000,home,view_page,14.0,,,False,False
+,CUST1119,SESS102763,2026-04-09 18:07:37.000000,category,search,,,email,False,False
+EVT211072,CUST1076,SESS102763,2026-04-10 13:04:51.000000,home,search,12.0,sunglasses,social,False,False
+EVT211073,CUST1040,SESS102763,2026-04-05 21:00:06.000000,cart,add_to_cart,2.0,desk lamp,organic_search,True,False
+EVT211074,CUST1422,SESS102763,2026-04-01 22:38:22.000000,category,view_page,3.0,phone case,paid_ads,False,False
+EVT211075,CUST1280,SESS102763,2026-04-02 09:27:07.000000,product,view_page,3.0,phone case,direct,False,
+EVT211076,CUST1051,SESS102763,2026-04-08 16:21:11.000000,checkout,search,11.0,,email,False,False
+EVT211077,CUST1488,SESS102763,2026-04-03 16:59:09.000000,,search,10.0,,organic_search,False,False
+EVT211078,CUST1149,,2026-04-11 05:24:14.000000,cart,purchase,11.0,,organic_search,False,False
+EVT211079,CUST1385,SESS102764,2026-03-28 18:11:17.000000,cart,search,10.0,desk lamp,paid_ads,False,False
+EVT211080,CUST1100,,2026-04-09 09:08:33.000000,home,search,9.0,,direct,False,False
+EVT211081,CUST1254,SESS102765,,search_results,search,2.0,desk lamp,direct,False,False
+EVT211082,CUST1028,SESS102765,2026-03-30 11:01:08.000000,category,view_page,4.0,,organic_search,False,False
+EVT211083,CUST1529,SESS102766,2026-04-07 11:17:27.000000,cart,purchase,2.0,,social,False,False
+EVT211084,CUST1072,SESS102766,2026-04-02 14:27:37.000000,home,view_page,3.0,,social,,False
+,CUST1174,SESS102766,2026-04-10 03:24:51.000000,category,view_page,2.0,,paid_ads,,False
+,CUST1343,SESS102766,2026-03-29 23:12:54.000000,product,add_to_cart,15.0,,paid_ads,,False
+EVT211087,CUST1099,SESS102767,2026-04-07 20:59:21.000000,checkout,search,8.0,,paid_ads,False,False
+EVT211088,CUST1339,SESS102768,2026-04-10 21:39:00.000000,cart,view_page,1.0,,social,False,
+EVT211089,CUST1003,SESS102769,2026-04-01 13:08:57.000000,cart,SEARCH,15.0,sunglasses,organic_search,False,False
+EVT211090,CUST1488,SESS102769,2026-04-04 16:38:21.000000,home,search,,,paid_ads,False,False
+EVT211091,CUST1308,SESS102769,2026-03-30 17:20:25.000000,cart,remove_from_cart,1.0,,organic_search,False,False
+EVT211092,CUST1574,SESS102769,2026-04-08 21:11:13.000000,checkout,view_page,7.0,,organic_search,False,False
+ EVT211093 ,CUST1566,SESS102769,2026-03-29 09:48:55.000000,category,search,8.0,running shoes,organic_search,False,False
+EVT211094,CUST1558,SESS102770,2026-04-03 16:04:04.000000,product,purchase,14.0,,paid_ads,False,False
+EVT211095,CUST1349,SESS102770,2026-04-07 03:03:07.000000,checkout,search,6.0,,organic_search,False,False
+EVT211096,CUST1393,SESS102770,,category,view_page,1.0,,paid_ads,False,False
+EVT211097,CUST1517,SESS102770,2026-03-30 18:30:11.000000,product,view_page,14.0,water bottle,organic_search,False,False
+,CUST1251,SESS102771,2026-03-31 07:57:24.000000,HOME,purchase,2.0,,paid_ads,False,False
+EVT211099,CUST1137,SESS102771,2026-04-05 17:09:28.000000,cart,search,7.0,,email,False,False
+EVT211100,CUST1296,SESS102771,2026-04-04 16:11:23.000000,product,search,12.0,,,False,False
+EVT211101,CUST1243,SESS102771,2026-04-05 14:17:41.000000,home,view_page,11.0,,direct,False,False
+EVT211102,CUST1410,SESS102772,2026-04-08 09:20:12.000000,category,ADD_TO_CART,12.0,,direct,True,False
+EVT211103,CUST1113,SESS102772,2026-03-30 22:20:39.000000, search_results ,add_to_cart,12.0,,social,True,False
+EVT211104,CUST1191,SESS102772,2026-03-31 23:25:48.000000,checkout,purchase,13.0,,paid_ads,False,False
+EVT211105,CUST1470,SESS102772,2026-04-02 22:58:03.000000,search_results,,3.0,,paid_ads,False,False
+EVT211106,CUST1455,SESS102772,2026-04-05 13:47:04.000000,search_results,search,6.0,,social,False,False
+,CUST1171,SESS102773,2026-04-09 18:34:22.000000,search_results,remove_from_cart,10.0,winter jacket,email,False,False
+EVT211108,CUST1531,SESS102773,2026-04-03 13:58:19.000000,home,add_to_cart,7.0,,organic_search,True,False
+EVT211109,CUST1498,SESS102774,2026-04-06 08:34:42.000000,search_results,remove_from_cart,13.0,,email,False,False
+EVT211110,CUST1341,SESS102774,,product,purchase,12.0,skincare,paid_ads,False,
+EVT211111,CUST1441,SESS102775,2026-03-29 20:36:11.000000,search_results,view_page,12.0,,organic_search,False,False
+EVT211112,CUST1120,,2026-03-31 23:36:59.000000,search_results,purchase,15.0,,paid_ads,False,
+EVT211113,CUST1189,SESS102777,,checkout,remove_from_cart,1.0,,paid_ads,False,False
+EVT211114,CUST1390,SESS102777,2026-04-02 21:25:21.000000,checkout,purchase,1.0,coffee maker,social,False,False
+EVT211115,CUST1138,SESS102777,2026-04-09 09:05:52.000000,cart,view_page,5.0,,direct,,False
+EVT211116,CUST1134,SESS102777,2026-03-28 20:48:46.000000,,,6.0,,social,False,False
+EVT211117,CUST1473,SESS102777,2026-04-01 00:07:29.000000,, remove_from_cart ,13.0,headphones,social,False,False
+,CUST1097,SESS102778,2026-03-31 06:57:53.000000,home,add_to_cart,2.0,coffee maker,organic_search,True,False
+EVT211119,CUST1565,,2026-04-11 09:36:41.000000,category,purchase,7.0,, paid_ads ,False,False
+EVT211120,CUST1427,SESS102778,2026-04-06 06:10:19.000000,checkout,,1.0,,email,,False
+EVT211121,CUST1124,,2026-04-04 01:25:44.000000,checkout,purchase,12.0,,direct,False,False
+EVT211122,CUST1182,SESS102778,2026-04-09 17:52:02.000000,cart,remove_from_cart,2.0,,social,False,False
+,CUST1406,SESS102778,2026-04-01 21:52:29.000000,cart,add_to_cart,10.0,,,True,True
+EVT211124,CUST1175,SESS102779,2026-03-30 20:15:29.000000,product,add_to_cart,5.0,,direct,True,True
+EVT211125,cust1538,SESS102780,2026-04-04 17:11:59.000000,checkout,add_to_cart,5.0,desk lamp,email,True,False
+EVT211126,CUST1541,SESS102780,2026-04-07 20:21:36.000000,cart,purchase,10.0,,direct,False,False
+EVT211127,CUST1286,SESS102780,2026-04-09 06:21:01.000000,home,search,15.0,,email,False,False
+EVT211128,CUST1521,SESS102780,2026-04-07 08:20:33.000000, search_results ,search,7.0,skincare,email,False,
+EVT211129,CUST1596,SESS102780,2026-04-07 13:16:41.000000,checkout,view_page,4.0,,organic_search,False,False
+EVT211130,CUST1513,SESS102780,2026-04-04 23:06:10.000000,home,search,13.0,,organic_search,False,False
+EVT211131,CUST1001,SESS102780,2026-03-29 05:10:27.000000,category,add_to_cart,2.0,,organic_search,True,False
+EVT211132,CUST1068,SESS102781,2026-04-10 17:56:46.000000,checkout,purchase,14.0,,email,False,False
+EVT211133,CUST1238,SESS102781,2026-04-10 18:02:29.000000,product,search,5.0,,direct,False,False
+EVT211134,CUST1053,SESS102781,2026-04-09 06:42:43.000000,product,view_page,2.0,,organic_search,False,False
+EVT211135,CUST1219,SESS102782,2026-04-05 15:16:14.000000,, remove_from_cart ,13.0,,organic_search,False,False
+EVT211136,CUST1592,,2026-04-05 05:25:08.000000,category,,8.0,,organic_search,False,False
+EVT211137,CUST1256,SESS102783,2026-04-07 20:19:43.000000,category,remove_from_cart,4.0,,organic_search,False,False
+EVT211138,CUST1483,SESS102784,,home,purchase,14.0,,paid_ads,,False
+EVT211139,CUST1571,SESS102784,2026-03-31 18:52:40.000000,home,view_page,13.0,,organic_search,False,False
+EVT211140,CUST1452,SESS102784,2026-04-09 07:16:27.000000,cart,add_to_cart,1.0,,organic_search,True,False
+EVT211141,CUST1131,SESS102784,2026-03-29 10:42:40.000000,cart,search,12.0,,organic_search,False,False
+EVT211142,CUST1572,SESS102785,2026-04-02 16:33:55.000000,category,search,4.0,,organic_search,False,
+EVT211143,CUST1577,SESS102785,,checkout,view_page,14.0,,,False,False
+EVT211144,CUST1111,SESS102785,2026-04-01 20:44:29.000000,category,purchase,14.0,,direct,False,False
+EVT211145,CUST1114,SESS102785,2026-04-03 21:12:46.000000,search_results,remove_from_cart,9.0,,paid_ads,False,False
+EVT211146,CUST1141,,2026-03-30 20:33:37.000000,checkout,view_page,3.0,,paid_ads,False,False
+EVT211147,CUST1160,SESS102786,2026-04-01 20:49:49.000000,checkout,search,3.0,,,False,False
+EVT211148,CUST1494,SESS102787,2026-04-11 05:31:13.000000,search_results, purchase ,6.0,headphones,paid_ads,False,False
+EVT211149,CUST1544,SESS102787,2026-04-05 07:49:08.000000,checkout,,12.0,protein powder,direct,False,False
+EVT211150,CUST1403,SESS102788,2026-04-07 03:33:05.000000,home,view_page,14.0,protein powder,EMAIL,False,False
+,CUST1285,SESS102789,2026-04-10 23:46:06.000000,checkout,view_page,3.0,,organic_search,False,False
+EVT211152,CUST1126,SESS102790,2026-04-06 16:31:09.000000,cart,search,,,direct,False,False
+evt211153,cust1556,SESS102790,2026-04-01 01:29:18.000000,cart,purchase,8.0,,organic_search,False,False
+EVT211154,CUST1576,SESS102790,2026-04-01 15:11:21.000000,cart,remove_from_cart,15.0,,email,False,False
+,CUST1310,,2026-04-01 02:50:57.000000,,purchase,1.0,,email,False,False
+EVT211156, cust1144 ,SESS102790,,home,purchase,3.0,,organic_search,False,False
+EVT211157,CUST1397,SESS102790,2026-03-30 02:46:10.000000,,purchase,13.0,,organic_search,,False
+,CUST1471,SESS102790,,cart,search,9.0,,email,False,False
+EVT211159,CUST1439,SESS102790,2026-03-30 19:42:54.000000,search_results,purchase,13.0,desk lamp,email,False,False
+EVT211160,CUST1427,SESS102790,2026-04-03 21:32:56.000000,product,add_to_cart,14.0,,social,True,True
+EVT211161,CUST1266,SESS102790,2026-04-04 21:56:48.000000,product,search,15.0,yoga mat,direct,False,False
+EVT211162,CUST1011,SESS102790,2026-04-05 04:40:47.000000,search_results,search,2.0,,,False,False
+EVT211163,CUST1475,SESS102791,2026-04-03 08:36:05.000000,category,,2.0,,paid_ads,,False
+EVT211164,CUST1054,SESS102791,2026-04-03 23:38:37.000000,checkout,remove_from_cart,8.0,,PAID_ADS,False,False
+EVT211165,CUST1244,SESS102791,2026-03-28 23:30:30.000000,checkout,,4.0,,email,False,False
+EVT211166,CUST1233,SESS102791,2026-04-06 18:09:10.000000,category,search,8.0,,social,False,False
+,CUST1079,SESS102792,2026-04-04 03:58:11.000000,product,purchase,5.0,,ORGANIC_SEARCH,False,False
+EVT211168,CUST1356,SESS102792,2026-04-06 21:27:48.000000,product,view_page,3.0,,paid_ads,False,False
+,CUST1102,SESS102792,2026-03-29 19:25:32.000000,home,view_page,5.0,,social,False,False
+EVT211170,CUST1298,SESS102792,2026-04-05 12:43:17.000000,product,purchase,3.0,protein powder,organic_search,False,False
+EVT211171,CUST1555,SESS102792,2026-04-08 11:34:54.000000,category,,4.0,,paid_ads,False,False
+EVT211172,CUST1132,SESS102793,2026-04-02 19:34:08.000000,category,view_page,12.0,,direct,False,False
+EVT211173,CUST1361,SESS102793,2026-04-06 19:06:24.000000,product,purchase,5.0,,direct,False,False
+EVT211174,CUST1002,SESS102793,2026-04-01 10:58:35.000000,home,add_to_cart,3.0,,direct,True,False
+EVT211175,CUST1206,SESS102793,2026-04-01 07:21:12.000000,product,add_to_cart,12.0,water bottle,organic_search,True,False
+EVT211176,CUST1420,SESS102793,2026-04-08 08:41:59.000000,category,view_page,13.0,winter jacket,direct,False,False
+,CUST1168,SESS102793,2026-04-04 09:07:31.000000,cart,view_page,2.0,headphones,email,False,False
+EVT211178,CUST1044,SESS102794,2026-04-05 01:01:24.000000,,add_to_cart,4.0,,organic_search,True,False
+EVT211179,CUST1177,SESS102795,2026-04-01 05:56:58.000000,cart,add_to_cart,9.0,winter jacket,paid_ads,True,True
+EVT211180,CUST1105,SESS102796,2026-04-06 21:55:11.000000,product,add_to_cart,5.0,,email,True,False
+EVT211181,CUST1214,,2026-04-04 03:58:54.000000,cart,add_to_cart,8.0,,email,True,True
+EVT211182,CUST1210,SESS102796,2026-04-09 21:17:41.000000,home,add_to_cart,5.0,,paid_ads,True,False
+EVT211183,CUST1542,SESS102796,2026-04-06 22:30:51.000000,cart,remove_from_cart,5.0,,direct,False,False
+EVT211184,CUST1281,SESS102796,2026-04-02 20:45:58.000000,home,add_to_cart,2.0,,paid_ads,True,False
+EVT211185,CUST1378,SESS102796,2026-04-05 09:50:33.000000,category,add_to_cart,15.0,,SOCIAL,True,False
+EVT211186,CUST1027,SESS102797,2026-04-08 02:52:37.000000,category,REMOVE_FROM_CART,,,organic_search,False,False
+, cust1391 ,SESS102797,2026-03-31 18:58:39.000000,product,search,1.0,sunglasses,organic_search,False,False
+EVT211188,CUST1174,SESS102797,2026-03-29 08:00:15.000000,product,add_to_cart,3.0,,organic_search,True,True
+EVT211189,CUST1473,SESS102797,2026-04-03 01:45:27.000000,product,search,1.0,headphones,paid_ads,False,False
+EVT211190,CUST1539,SESS102797,2026-04-11 02:54:24.000000,checkout,add_to_cart,14.0,,email,True,True
+EVT211191,CUST1473,SESS102797,2026-04-01 14:24:45.000000, checkout ,add_to_cart,9.0,,organic_search,True,True
+EVT211192,CUST1359,SESS102797,2026-04-09 07:18:47.000000,product,remove_from_cart,11.0,protein powder,email,False,False
+EVT211193,CUST1597,SESS102797,2026-04-04 15:29:08.000000,product,add_to_cart,6.0,,email,True,True
+EVT211194,CUST1072,SESS102797,2026-04-05 23:45:24.000000,category,view_page,4.0,,organic_search,False,
+EVT211195,CUST1178,SESS102798,2026-04-01 07:35:18.000000,product,add_to_cart,7.0,,direct,True,False
+EVT211196,CUST1524,SESS102799,2026-03-29 08:53:42.000000,category,add_to_cart,9.0,phone case,paid_ads,True,True
+,CUST1098,SESS102800,2026-04-05 19:28:30.000000,home,remove_from_cart,1.0,,email,False,False
+EVT211198,CUST1054,SESS102800,2026-04-07 09:56:51.000000,cart,add_to_cart,14.0,,direct,,False
+EVT211199,CUST1334,SESS102800,2026-04-02 05:01:34.000000,cart,purchase,10.0,LAPTOP,direct,False,False
+EVT211200,CUST1439,SESS102800,2026-04-11 06:23:02.000000,category,purchase,4.0,,email,False,False
+EVT211201,CUST1323,SESS102800,2026-04-03 22:58:24.000000,cart,purchase,1.0,,paid_ads,False,False
+EVT211202,CUST1136,SESS102801,2026-04-04 05:27:25.000000,,add_to_cart,3.0,,email,True,False
+EVT211203,CUST1438,SESS102801,2026-03-29 17:23:45.000000,checkout,remove_from_cart,10.0,headphones,email,False,False
+EVT211204,CUST1355,SESS102802,2026-04-09 02:58:54.000000,checkout,remove_from_cart,4.0,yoga mat,email,False,False
+EVT211205,CUST1585,SESS102802,,product,view_page,11.0,,paid_ads,False,False
+EVT211206,CUST1575,SESS102802,2026-04-01 02:27:37.000000,category,view_page,11.0,,email,False,False
+EVT211207,CUST1339,SESS102802,2026-04-04 11:42:11.000000,category,add_to_cart,13.0,backpack, organic_search ,True,True
+EVT211208,CUST1216,SESS102802,2026-04-08 01:35:46.000000,,add_to_cart,8.0,,organic_search,True,True
+EVT211209,CUST1060,SESS102802,2026-04-02 22:41:05.000000, product ,add_to_cart,13.0,,direct,True,False
+EVT211210,CUST1309,SESS102802,2026-04-10 22:44:14.000000,home,remove_from_cart,14.0,desk lamp,organic_search,False,False
+EVT211211,CUST1571,SESS102803,2026-04-05 08:51:54.000000,checkout,add_to_cart,12.0,,organic_search,True,False
+EVT211212,CUST1082,SESS102803,2026-03-29 16:50:39.000000,category,view_page,1.0,,social,False,False
+EVT211213,CUST1237,SESS102803,2026-04-05 09:50:41.000000,home,remove_from_cart,7.0,backpack,email,False,False
+EVT211214,CUST1341,SESS102803,2026-03-28 17:16:36.000000,product,search,,,paid_ads,,False
+EVT211215,CUST1176,SESS102803,2026-04-05 06:51:48.000000,search_results,remove_from_cart,7.0,,email,False,False
+,CUST1339,SESS102803,2026-04-01 02:58:47.000000,PRODUCT,add_to_cart,2.0,,social,True,False
+EVT211217,CUST1426,SESS102803,2026-04-04 21:12:53.000000,PRODUCT,purchase,11.0,,direct,False,
+EVT211218,CUST1569,SESS102803,2026-03-30 12:49:43.000000,category,add_to_cart,3.0,,,True,True
+EVT211219,CUST1347,SESS102803,,cart,search,11.0,yoga mat,social,False,False
+EVT211220,CUST1126,SESS102804,2026-04-02 00:42:01.000000,,add_to_cart,4.0,water bottle,paid_ads,True,True
+EVT211221,CUST1477,SESS102804,2026-04-01 14:07:12.000000,product,purchase,7.0,,direct,False,False
+EVT211222, CUST1358 ,SESS102804,2026-04-03 14:41:50.000000,,search,15.0,,paid_ads,False,False
+EVT211223,CUST1460,SESS102804,2026-04-02 16:52:25.000000,checkout,purchase,4.0,,paid_ads,False,False
+EVT211224,CUST1427,SESS102804,2026-03-30 11:43:52.000000,search_results,purchase,3.0,,organic_search,False,False
+EVT211225,CUST1068,sess102805,2026-04-07 01:03:06.000000,home,remove_from_cart,1.0,,email,False,False
+EVT211226,CUST1435,SESS102805,2026-04-10 15:02:02.000000,checkout,purchase,1.0,,social,False,False
+EVT211227,CUST1180,SESS102805,2026-04-11 09:49:43.000000,product,search,,,organic_search,False,False
+EVT211228,CUST1151,SESS102806,,home,purchase,5.0,,email,False,False
+EVT211229,CUST1538,SESS102806,2026-04-02 16:33:09.000000,checkout,view_page,10.0, yoga mat ,paid_ads,False,False
+EVT211230,CUST1034,SESS102806,,checkout,purchase,13.0,,paid_ads,,False
+EVT211231,CUST1575,SESS102806,2026-04-06 02:54:34.000000,product,,1.0,,social,False,False
+EVT211232,CUST1215,SESS102806,2026-04-10 19:45:54.000000,category,remove_from_cart,12.0,,organic_search,,False
+EVT211233,CUST1215,SESS102807,2026-04-03 19:14:13.000000,checkout,remove_from_cart,7.0,,email,False,False
+EVT211234,CUST1134,SESS102807,2026-04-08 00:15:10.000000,product,remove_from_cart,4.0,,direct,False,False
+EVT211235,CUST1305,SESS102807,2026-04-03 07:24:31.000000,category,remove_from_cart,4.0,,paid_ads,False,False
+EVT211236,CUST1098,SESS102807,2026-04-08 00:19:40.000000,checkout,purchase,12.0,,paid_ads,False,False
+EVT211237,CUST1332,SESS102807,2026-03-30 00:17:11.000000,home,purchase,5.0,,email,False,False
+EVT211238,CUST1563,SESS102807,2026-04-11 13:04:28.000000,category,view_page,8.0,laptop,direct,False,False
+EVT211239,CUST1555,SESS102807,2026-04-11 04:46:03.000000,product,purchase,6.0,,email,False,False
+EVT211240,CUST1238,SESS102808,2026-04-02 05:54:41.000000,cart,search,3.0,,email,False,False
+EVT211241,CUST1272,SESS102809,2026-03-29 09:17:18.000000, home ,,15.0,,organic_search,False,False
+EVT211242, CUST1307 ,SESS102809,2026-04-08 19:05:55.000000,cart,add_to_cart,8.0,,paid_ads,True,False
+EVT211243,CUST1189,SESS102809,2026-03-30 11:29:39.000000,category,view_page,15.0,yoga mat,email,False,False
+EVT211244,CUST1218,SESS102810,2026-04-02 02:33:08.000000, search_results ,purchase,13.0,coffee maker,email,,False
+,CUST1176,SESS102810,2026-04-07 22:47:23.000000,product,purchase,12.0,,,False,False
+EVT211246,CUST1134,SESS102811,2026-04-03 17:13:48.000000,checkout,view_page,14.0,water bottle,paid_ads,False,False
+EVT211247,CUST1130,SESS102811,2026-03-30 08:59:22.000000,search_results,remove_from_cart,3.0,water bottle,social,False,False
+EVT211248,CUST1009,SESS102811,2026-04-04 18:26:31.000000,product,search,10.0,yoga mat,social,False,
+EVT211249, CUST1142 ,SESS102811,2026-04-06 20:43:19.000000,category,purchase,5.0,, direct ,False,False
+EVT211250,CUST1216,,2026-04-06 17:51:52.000000,home,SEARCH,5.0,,paid_ads,False,False
+EVT211251,CUST1123,SESS102811,2026-04-07 10:39:26.000000,search_results,,3.0,,paid_ads,False,False
+EVT211252,CUST1373,SESS102811,2026-04-08 16:35:20.000000,product,add_to_cart,13.0,,email,,False
+EVT211253,CUST1220,SESS102811,2026-04-03 01:58:55.000000,product,search,2.0,headphones,email,False,False
+EVT211254,CUST1196,SESS102811,2026-04-01 19:39:19.000000,product,purchase,8.0,skincare,social,False,False
+EVT211255,CUST1169,SESS102811,2026-04-05 04:44:02.000000,search_results,remove_from_cart,1.0,,social,False,False
+EVT211256,CUST1187,,2026-04-02 21:03:13.000000,home,view_page,7.0,novel,organic_search,False,False
+EVT211257,CUST1161,SESS102811,2026-03-31 23:21:27.000000,category,,8.0,,social,False,False
+EVT211258,CUST1028,SESS102812,2026-03-31 07:59:13.000000,cart,add_to_cart,7.0,headphones,email,True,False
+EVT211259,CUST1177,SESS102812,2026-04-01 04:41:32.000000,category,purchase,3.0,,organic_search,False,False
+EVT211260,CUST1019,SESS102812,2026-03-29 05:33:58.000000,product,remove_from_cart,3.0,coffee maker,paid_ads,False,False
+EVT211261,CUST1382,SESS102812,2026-04-10 17:14:16.000000,home,view_page,12.0,,social,False,False
+EVT211262, CUST1548 ,SESS102813,2026-04-10 02:10:40.000000,cart,add_to_cart,,protein powder,EMAIL,True,True
+EVT211263,CUST1213,SESS102814,2026-04-04 10:41:46.000000,checkout,search,2.0,,email,False,False
+EVT211264,CUST1176,SESS102814,2026-04-02 17:38:50.000000,,purchase,5.0,,,False,False
+EVT211265, CUST1603 ,SESS102814,2026-04-11 11:07:04.000000,search_results,view_page,8.0,,paid_ads,False,False
+EVT211266,CUST1576,SESS102814,2026-04-08 00:07:44.000000,, remove_from_cart ,10.0,,direct,False,False
+EVT211267,CUST1103,SESS102814,2026-04-01 02:50:27.000000,,remove_from_cart,,,organic_search,False,False
+EVT211268,CUST1265,SESS102814,2026-03-31 00:01:33.000000,product, search ,15.0,,organic_search,False,False
+EVT211269,CUST1157,SESS102815,2026-04-09 00:46:38.000000,category,add_to_cart,4.0,,direct,True,True
+EVT211270,CUST1586,SESS102815,2026-04-05 15:06:07.000000,home,view_page,1.0,headphones,direct,False,False
+EVT211271,CUST1032,SESS102815,2026-03-30 20:34:39.000000,search_results,,12.0,,email,True,True
+EVT211272,CUST1187,SESS102815,2026-03-31 06:46:19.000000,category,purchase,4.0,,email,False,False
+EVT211273,CUST1435,SESS102815,2026-04-07 06:03:38.000000,home,add_to_cart,6.0,,organic_search,True,False
+EVT211274,CUST1433,SESS102816,2026-04-01 13:23:52.000000,,search,13.0,,email,False,False
+EVT211275,CUST1221,SESS102816,2026-03-31 08:44:52.000000,category,view_page,6.0,desk lamp,email,False,False
+EVT211276,CUST1526, SESS102816 ,2026-04-03 03:40:22.000000,checkout,search,12.0,,social,False,False
+EVT211277,CUST1020,SESS102816,2026-04-05 05:34:13.000000,search_results,view_page,2.0,sunglasses,direct,False,False
+EVT211278,CUST1539,SESS102817,2026-04-08 12:37:58.000000,checkout, view_page ,1.0,,direct,False,False
+EVT211279,CUST1499,SESS102818,2026-04-06 07:04:19.000000,checkout,view_page,10.0,,paid_ads,,False
+EVT211280,CUST1217,SESS102819,2026-04-11 05:31:20.000000,,remove_from_cart,13.0,running shoes,direct,False,False
+EVT211281,CUST1164,SESS102819,2026-03-31 14:39:41.000000,cart,add_to_cart,14.0,,email,True,False
+EVT211282,CUST1374,SESS102820,2026-03-31 23:00:52.000000,cart,search,1.0,,social,False,False
+EVT211283,CUST1022,SESS102821,2026-04-06 12:50:18.000000,product,purchase,5.0,,direct,False,False
+EVT211284,CUST1557,SESS102821,2026-04-01 00:10:47.000000,category,add_to_cart,10.0,headphones,organic_search,True,True
+EVT211285,CUST1585,SESS102822,2026-04-05 16:38:04.000000,, remove_from_cart ,15.0,winter jacket,paid_ads,False,False
+EVT211286,CUST1587,SESS102822,2026-04-08 13:59:00.000000,category,remove_from_cart,8.0,,social,False,False
+EVT211287,CUST1494,SESS102822,2026-04-04 11:37:02.000000,,add_to_cart,8.0,,email,True,False
+EVT211288,CUST1243,,2026-04-02 04:35:02.000000,category,view_page,8.0,,organic_search,False,False
+EVT211289,CUST1156,SESS102824,2026-04-08 11:48:57.000000,cart,add_to_cart,12.0,,social,True,False
+EVT211290,CUST1563,,2026-04-04 01:45:02.000000,checkout,search,6.0,,email,False,False
+EVT211291,CUST1153,SESS102826,2026-04-03 22:19:43.000000,category,add_to_cart,12.0,,email,True,False
+EVT211292,CUST1030,SESS102826,2026-03-31 20:16:03.000000,product,search,8.0,,email,False,False
+EVT211293,CUST1114,SESS102827,2026-04-11 02:14:44.000000,checkout,add_to_cart,,, organic_search ,True,True
+EVT211294,CUST1584,SESS102827,2026-03-30 13:30:22.000000, checkout ,,4.0,,direct,False,False
+EVT211295,CUST1209,SESS102827,2026-04-08 09:02:56.000000,category,add_to_cart,9.0,,email,True,False
+EVT211296,CUST1585,SESS102827,2026-04-09 15:44:28.000000,home,view_page,,,social,False,False
+EVT211297,CUST1353,SESS102827,2026-04-04 02:38:28.000000,,purchase,9.0,,social,False,
+EVT211298,CUST1048,SESS102827,2026-03-30 13:41:37.000000,category,VIEW_PAGE,1.0,winter jacket,organic_search,False,False
+EVT211299,CUST1163,SESS102827,2026-04-05 21:05:27.000000,,remove_from_cart,14.0,,organic_search,False,False
+EVT211300,CUST1311,,2026-04-11 09:08:42.000000,checkout,purchase,5.0,,social,False,False
+EVT211301, CUST1142 ,SESS102827,2026-04-06 16:55:36.000000,home,view_page,11.0,coffee maker,direct,False,False
+EVT211302,CUST1107,SESS102828,2026-04-05 09:56:21.000000,checkout,remove_from_cart,3.0,,social,,False
+EVT211303,CUST1567,SESS102828,2026-04-03 06:32:29.000000, category ,remove_from_cart,11.0,protein powder,paid_ads,False,False
+EVT211304,CUST1398,SESS102828,2026-04-05 11:35:25.000000,checkout,add_to_cart,5.0,,social,True,True
+EVT211305,CUST1248,SESS102828,2026-03-30 01:41:47.000000,cart,search,15.0,,email,False,False
+EVT211306, CUST1341 ,SESS102829,2026-04-01 18:25:47.000000,product,purchase,13.0,winter jacket,direct,False,False
+EVT211307,CUST1430,SESS102829,2026-03-28 23:48:14.000000,product,remove_from_cart,10.0,headphones,social,,False
+EVT211308,CUST1001,SESS102829,2026-04-09 06:23:45.000000, search_results ,remove_from_cart,4.0,sunglasses,social,False,False
+EVT211309,CUST1050,SESS102830,2026-04-07 09:33:05.000000,search_results,view_page,14.0,water bottle,DIRECT,False,False
+EVT211310,CUST1475,SESS102831,2026-03-28 23:38:24.000000,checkout,add_to_cart,4.0,,email,True,False
+EVT211311,CUST1412,SESS102831,2026-04-03 18:37:16.000000,,purchase,2.0,,paid_ads,False,False
+EVT211312,CUST1600,SESS102831,2026-04-04 04:07:23.000000,cart,add_to_cart,4.0,,,True,True
+EVT211313,CUST1570,SESS102831,2026-04-02 11:39:37.000000,search_results,add_to_cart,4.0,,social,True,True
+EVT211314,CUST1248,SESS102831,2026-03-30 13:38:04.000000,CART,search,4.0,,email,False,False
+EVT211315,CUST1483,SESS102831,2026-04-03 08:37:13.000000,home,purchase,14.0,,direct,False,False
+,CUST1117,SESS102831,2026-03-29 04:18:07.000000,product,search,1.0,skincare,organic_search,False,False
+EVT211317,CUST1024,SESS102832,2026-04-02 03:14:33.000000,cart,purchase,13.0,,email,False,False
+EVT211318,CUST1050,SESS102833,2026-04-10 04:25:46.000000,checkout,purchase,11.0,phone case,organic_search,False,False
+EVT211319,CUST1596,SESS102834,2026-04-02 05:13:42.000000,home,view_page,,desk lamp,paid_ads,False,False
+EVT211320,CUST1169,SESS102835,2026-04-03 08:21:09.000000,cart,view_page,5.0,,paid_ads,False,False
+EVT211321,CUST1251,SESS102835,2026-04-11 09:52:23.000000,cart,remove_from_cart,6.0,,email,False,False
+EVT211322,CUST1596,SESS102835,2026-04-10 18:15:32.000000,cart,add_to_cart,11.0,running shoes,paid_ads,True,False
+,CUST1267,SESS102835,2026-03-30 00:05:18.000000,product,,1.0,,direct,False,False
+EVT211324,CUST1440,SESS102835,2026-03-29 03:36:25.000000,checkout,remove_from_cart,11.0,,social,False,False
+EVT211325,CUST1409,SESS102835,2026-04-03 12:16:17.000000,cart,add_to_cart,4.0,,organic_search,True,False
+EVT211326,CUST1268,,2026-04-04 20:23:07.000000,search_results,search,,,organic_search,False,False
+EVT211327,CUST1605,SESS102836,,category,purchase,,,social,False,False
+EVT211328,CUST1391,SESS102836,2026-04-10 01:30:26.000000,home,view_page,9.0,,organic_search,False,
+EVT211329,CUST1427,SESS102837,2026-04-05 05:13:36.000000,cart,search,12.0,sunglasses,social,False,False
+EVT211330,CUST1485,SESS102838,2026-04-01 10:17:47.000000,search_results,add_to_cart,13.0,,paid_ads,True,True
+EVT211331,CUST1462,SESS102838,2026-04-03 18:53:23.000000,product,remove_from_cart,13.0,,,False,False
+EVT211332,CUST1423,SESS102838,2026-04-03 04:32:09.000000,category,search,4.0,,,False,False
+EVT211333,CUST1349,SESS102839,2026-04-05 16:21:00.000000,search_results,remove_from_cart,,,social,False,False
+EVT211334,CUST1425,SESS102839,2026-04-06 15:57:06.000000,product,search,,,paid_ads,False,False
+EVT211335, CUST1307 ,SESS102839,2026-04-03 03:47:03.000000,search_results,remove_from_cart,1.0,,organic_search,False,False
+EVT211336,CUST1093,SESS102839,2026-03-30 09:44:56.000000,checkout,VIEW_PAGE,5.0,,,False,False
+EVT211337,CUST1474,sess102840,2026-03-30 12:47:52.000000,checkout,add_to_cart,13.0,water bottle,paid_ads,True,False
+EVT211338,CUST1270,SESS102840,2026-03-30 23:59:39.000000,cart,search,4.0,NOVEL,direct,False,False
+EVT211339,cust1329,SESS102840,2026-04-10 22:25:36.000000,,remove_from_cart,13.0,,organic_search,False,False
+,CUST1295,SESS102840,2026-03-30 21:08:37.000000,cart,purchase,12.0,,direct,False,False
+EVT211341,CUST1023,SESS102840,2026-03-29 17:11:30.000000,home,purchase,9.0,,email,False,False
+EVT211342,CUST1153,,2026-04-01 15:21:30.000000,product,purchase,5.0,,organic_search,False,False
+EVT211343,CUST1009,SESS102842,2026-03-30 01:25:54.000000,search_results,purchase,2.0,novel,paid_ads,False,False
+EVT211344,CUST1519,SESS102843,2026-03-28 18:00:56.000000,home,purchase,3.0,,direct,False,False
+EVT211345, cust1056 ,SESS102844,2026-03-30 19:30:18.000000,,add_to_cart,14.0,running shoes,organic_search,True,True
+EVT211346,CUST1361,SESS102844,2026-03-31 09:42:34.000000,,add_to_cart,1.0,,social,True,False
+EVT211347, CUST1145 ,SESS102844,2026-04-03 03:32:44.000000,home,remove_from_cart,7.0,,email,False,False
+EVT211348,CUST1394,,2026-04-07 14:18:08.000000,cart,view_page,5.0,, social ,False,False
+EVT211349,CUST1029,SESS102844,2026-03-30 20:55:27.000000,home,remove_from_cart,6.0,running shoes,email,False,False
+EVT211350,CUST1389,SESS102844,2026-04-05 10:24:53.000000,home,view_page,11.0,,email,False,False
+EVT211351,CUST1131,SESS102844,2026-03-28 20:25:38.000000, cart ,add_to_cart,8.0,,direct,True,False
+EVT211352,CUST1255,SESS102844,2026-04-02 18:55:35.000000,,add_to_cart,6.0,novel,social,True,False
+EVT211353,CUST1469,SESS102845,2026-04-01 00:00:33.000000, product ,ADD_TO_CART,13.0,,organic_search,True,False
+EVT211354,CUST1157,SESS102845,2026-03-31 18:17:12.000000,home,purchase,10.0,,direct,False,False
+EVT211355,CUST1164,SESS102845,2026-04-09 00:21:55.000000,home,,7.0,,paid_ads,False,False
+EVT211356,CUST1332,SESS102845,2026-04-09 03:53:33.000000,category,,11.0,,paid_ads,False,False
+EVT211357,CUST1003,SESS102846,2026-04-07 11:28:39.000000,category,add_to_cart,6.0,,paid_ads,True,True
+EVT211358,CUST1518,,2026-04-05 07:53:45.000000,home,search,14.0,,organic_search,False,False
+EVT211359,CUST1108,SESS102846,2026-03-30 11:52:25.000000,home,view_page,,phone case,organic_search,False,False
+EVT211360,CUST1322,SESS102847,2026-04-09 22:00:32.000000,home,remove_from_cart,3.0,,social,False,False
+EVT211361,CUST1412,SESS102847,2026-04-06 15:59:04.000000,cart,purchase,5.0,,social,False,False
+EVT211362,CUST1203,SESS102847,2026-03-29 21:55:50.000000,home,view_page,1.0,,social,False,False
+EVT211363,CUST1557,SESS102848,2026-04-01 20:40:55.000000,,remove_from_cart,9.0,,organic_search,False,False
+EVT211364,CUST1270,SESS102848,2026-04-09 03:32:19.000000,home,view_page,15.0,,organic_search,False,False
+EVT211365,CUST1484,SESS102848,2026-04-10 03:03:53.000000,home,,10.0,sunglasses,direct,,False
+EVT211366,CUST1071,SESS102849,2026-04-04 07:16:43.000000,product,search,,,organic_search,False,False
+EVT211367,CUST1543,SESS102849,2026-04-05 20:35:18.000000,,search,3.0,winter jacket,direct,False,False
+EVT211368, cust1148 ,,2026-03-31 00:32:15.000000,cart,search,10.0,,direct,False,False
+EVT211369,CUST1557,SESS102849,2026-04-07 07:20:12.000000,category,add_to_cart,3.0,,email,True,True
+EVT211370,CUST1492,SESS102850,2026-03-28 17:50:52.000000,product,purchase,2.0,,direct,False,False
+EVT211371,CUST1405,SESS102850,2026-04-01 09:23:21.000000,cart,remove_from_cart,9.0,winter jacket,paid_ads,False,False
+EVT211372,CUST1335,SESS102850,2026-04-08 12:34:42.000000,search_results,search,6.0,,paid_ads,False,False
+EVT211373,CUST1495,SESS102850,2026-04-10 01:27:11.000000,search_results,remove_from_cart,5.0,,direct,False,False
+EVT211374,CUST1160,SESS102850,2026-03-29 08:37:36.000000,category,search,15.0,,social,False,False
+EVT211375,CUST1029,,,checkout,view_page,7.0,,paid_ads,False,False
+EVT211376,CUST1486,SESS102851,2026-04-03 03:38:14.000000,product,ADD_TO_CART,2.0,,organic_search,True,False
+EVT211377,CUST1338,SESS102852,2026-04-03 02:05:52.000000,search_results,view_page,9.0,,email,False,False
+EVT211378,CUST1162,SESS102852,2026-04-07 05:39:16.000000,checkout,remove_from_cart,14.0,,organic_search,False,False
+EVT211379,CUST1379,,2026-04-03 07:29:29.000000,cart,,7.0,yoga mat,paid_ads,False,False
+EVT211380,CUST1389,SESS102854,2026-04-11 06:21:57.000000,product,add_to_cart,6.0,,organic_search,True,False
+EVT211381,CUST1396,SESS102854,2026-03-29 06:21:35.000000,product,search,7.0,water bottle,email,False,False
+EVT211382,CUST1122,SESS102855,2026-03-30 23:10:58.000000,checkout,view_page,4.0,skincare,direct,False,False
+EVT211383,CUST1481,SESS102855,2026-04-04 16:31:45.000000,product, view_page ,11.0,,paid_ads,False,False
+EVT211384,CUST1441,SESS102856,,category,purchase,,,organic_search,False,False
+EVT211385,CUST1043,SESS102856,2026-03-29 01:48:14.000000,cart,add_to_cart,7.0,sunglasses,email,True,False
+EVT211386,CUST1325,SESS102856,2026-04-02 23:30:02.000000,checkout,purchase,10.0,,organic_search,False,False
+EVT211387,CUST1099,SESS102856,,product,search,4.0,,email,False,False
+EVT211388,CUST1190,SESS102856,2026-04-06 20:34:56.000000,search_results,search,3.0,water bottle,paid_ads,False,False
+EVT211389,CUST1010,SESS102856,2026-04-10 03:43:40.000000,search_results,view_page,12.0,,organic_search,False,False
+EVT211390,CUST1461,sess102857,2026-04-08 18:06:01.000000,checkout,search,6.0,,,False,False
+EVT211391,CUST1208,SESS102857,2026-03-29 23:09:11.000000,home,view_page,12.0,,email,False,False
+EVT211392,CUST1306,SESS102857,2026-04-11 10:20:40.000000,home,view_page,12.0,,email,False,False
+,CUST1051,SESS102857,2026-03-30 12:23:43.000000,product,purchase,4.0,,direct,False,False
+EVT211394,CUST1437,SESS102857,2026-04-08 10:18:02.000000,home,remove_from_cart,3.0,,email,False,False
+EVT211395,CUST1256,SESS102857,2026-04-07 12:11:30.000000,home,search,6.0,,social,False,False
+EVT211396,CUST1545,SESS102857,2026-04-03 00:04:39.000000,checkout,search,5.0,,organic_search,False,False
+EVT211397,CUST1432,SESS102857,2026-04-07 02:34:29.000000,checkout,search,8.0,,organic_search,False,False
+EVT211398,CUST1303,SESS102858,2026-03-31 03:23:29.000000,checkout,search,10.0,,direct,False,False
+EVT211399,CUST1089,,2026-03-29 05:52:04.000000,product,purchase,14.0,,paid_ads,False,False
+EVT211400,CUST1591,SESS102858,2026-04-07 08:23:07.000000,checkout,purchase,11.0,sunglasses,social,False,False
+EVT211401,CUST1201,SESS102858,2026-03-28 23:00:33.000000,checkout,purchase,3.0,,email,False,False
+EVT211402,CUST1028,SESS102859,2026-03-31 06:59:04.000000,CHECKOUT,search,,,organic_search,False,False
+EVT211403,CUST1515,SESS102859,2026-04-04 02:56:54.000000,home,remove_from_cart,2.0,,SOCIAL,False,False
+EVT211404,CUST1027,SESS102859,2026-04-07 19:27:07.000000,home,remove_from_cart,,running shoes,email,False,False
+EVT211405,CUST1165,SESS102859,2026-03-31 02:28:18.000000,checkout,add_to_cart,12.0,,organic_search,True,True
+EVT211406,cust1018,SESS102859,2026-03-30 19:48:59.000000,home,remove_from_cart,3.0,,paid_ads,False,False
+EVT211407,CUST1404,,2026-04-09 19:16:18.000000,home,purchase,3.0,,organic_search,False,False
+EVT211408,CUST1461,SESS102859,2026-04-01 22:38:05.000000,cart, purchase ,12.0,,paid_ads,False,False

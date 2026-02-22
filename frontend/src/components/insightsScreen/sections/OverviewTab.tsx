@@ -16,12 +16,6 @@ import {
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Badge } from "../../ui/badge";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "../../ui/chart";
 import type {
   KpiCardRow,
   RevenueForecastPoint,
@@ -31,10 +25,31 @@ import type {
 } from "../dashboard/types";
 import { fmtCurrency } from "../dashboard/formatters";
 import { RevenueLineChart } from "../charts/RevenueLineChart";
+import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
 
 /* ------------------------------------------------------------------ */
 /* Chart colors                                                        */
 /* ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------ */
+/* Evidence formatter                                                  */
+/* ------------------------------------------------------------------ */
+
+function formatEvidence(evidence: unknown): string | null {
+  if (!evidence) return null;
+  if (typeof evidence === "string") return evidence;
+  if (typeof evidence === "object") {
+    return Object.entries(evidence as Record<string, unknown>)
+      .filter(([, v]) => v !== null && v !== undefined)
+      .map(([k, v]) => {
+        const label = k.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+        const val = typeof v === "number" ? (v % 1 !== 0 ? v.toFixed(2) : v) : v;
+        return `${label}: ${val}`;
+      })
+      .join(" · ");
+  }
+  return String(evidence);
+}
 
 const CHANNEL_COLORS = [
   "var(--chart-1)",
@@ -43,10 +58,6 @@ const CHANNEL_COLORS = [
   "var(--chart-4)",
   "var(--chart-5)",
 ];
-
-const channelChartConfig = {
-  revenue: { label: "Revenue" },
-} satisfies ChartConfig;
 
 /* ------------------------------------------------------------------ */
 /* Severity helpers                                                     */
@@ -149,15 +160,9 @@ export function OverviewTab({
                 No channel data
               </div>
             ) : (
-              <ChartContainer config={channelChartConfig} className="h-[250px] w-full">
+              <ChartEnlargeWrapper title="Revenue by Channel">
+              <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
-                  <ChartTooltip
-                    content={
-                      <ChartTooltipContent
-                        formatter={(value) => fmtCurrency(Number(value))}
-                      />
-                    }
-                  />
                   <Pie
                     data={pieData}
                     dataKey="revenue"
@@ -166,13 +171,17 @@ export function OverviewTab({
                     outerRadius={90}
                     paddingAngle={2}
                     strokeWidth={2}
+                    label={({ channel, revenue }) =>
+                      `${fmtCurrency(revenue)}`
+                    }
                   >
-                    {pieData.map((entry, idx) => (
+                    {pieData.map((entry) => (
                       <Cell key={entry.channel} fill={entry.fill} />
                     ))}
                   </Pie>
                 </PieChart>
-              </ChartContainer>
+              </ResponsiveContainer>
+              </ChartEnlargeWrapper>
             )}
             {/* Legend */}
             {pieData.length > 0 && (
@@ -325,11 +334,9 @@ export function OverviewTab({
                         <p className="text-sm font-medium leading-snug">
                           {risk.title}
                         </p>
-                        {risk.evidence && (
+                        {risk.evidence && formatEvidence(risk.evidence) && (
                           <p className="text-xs text-muted-foreground mt-0.5">
-                            {typeof risk.evidence === "string"
-                              ? risk.evidence
-                              : JSON.stringify(risk.evidence)}
+                            {formatEvidence(risk.evidence)}
                           </p>
                         )}
                       </div>
@@ -358,11 +365,9 @@ export function OverviewTab({
                         <p className="text-sm font-medium leading-snug">
                           {opp.title}
                         </p>
-                        {opp.evidence && (
+                        {opp.evidence && formatEvidence(opp.evidence) && (
                           <p className="text-xs text-muted-foreground mt-0.5">
-                            {typeof opp.evidence === "string"
-                              ? opp.evidence
-                              : JSON.stringify(opp.evidence)}
+                            {formatEvidence(opp.evidence)}
                           </p>
                         )}
                       </div>

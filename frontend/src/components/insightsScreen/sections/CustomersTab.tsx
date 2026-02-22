@@ -47,6 +47,7 @@ import {
   getCardValue,
   safeNum,
 } from "../dashboard/formatters";
+import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
 
 /* ------------------------------------------------------------------ */
 /* Chart configs                                                       */
@@ -266,34 +267,36 @@ export function CustomersTab({
               </div>
             ) : (
               <>
-                <ChartContainer config={segmentChartConfig} className="h-[280px] w-full">
-                  <PieChart>
-                    <ChartTooltip
-                      content={
-                        <ChartTooltipContent
-                          formatter={(value, name) => (
-                            <span>
-                              {Number(value).toLocaleString()} customers
-                            </span>
-                          )}
-                        />
-                      }
-                    />
-                    <Pie
-                      data={segmentData}
-                      dataKey="value"
-                      nameKey="name"
-                      innerRadius={55}
-                      outerRadius={95}
-                      paddingAngle={3}
-                      strokeWidth={2}
-                    >
-                      {segmentData.map((entry) => (
-                        <Cell key={entry.name} fill={entry.fill} />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ChartContainer>
+                <ChartEnlargeWrapper title="Customer Segments">
+                  <ChartContainer config={segmentChartConfig} className="w-full" style={{ height: 280 }}>
+                    <PieChart>
+                      <ChartTooltip
+                        content={
+                          <ChartTooltipContent
+                            formatter={(value, name) => (
+                              <span>
+                                {Number(value).toLocaleString()} customers
+                              </span>
+                            )}
+                          />
+                        }
+                      />
+                      <Pie
+                        data={segmentData}
+                        dataKey="value"
+                        nameKey="name"
+                        innerRadius={55}
+                        outerRadius={95}
+                        paddingAngle={3}
+                        strokeWidth={2}
+                      >
+                        {segmentData.map((entry) => (
+                          <Cell key={entry.name} fill={entry.fill} />
+                        ))}
+                      </Pie>
+                    </PieChart>
+                  </ChartContainer>
+                </ChartEnlargeWrapper>
                 {/* Legend */}
                 <div className="flex flex-wrap gap-4 justify-center mt-2">
                   {segmentData.map((seg) => (
@@ -326,41 +329,43 @@ export function CustomersTab({
                 No churn data
               </div>
             ) : (
-              <ChartContainer config={churnDistConfig} className="h-[280px] w-full">
-                <BarChart
-                  data={churnBuckets}
-                  margin={{ top: 8, right: 12, bottom: 0, left: 12 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis
-                    dataKey="range"
-                    tick={{ fontSize: 12 }}
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                  />
-                  <YAxis
-                    tick={{ fontSize: 12 }}
-                    tickLine={false}
-                    axisLine={false}
-                    width={40}
-                  />
-                  <ChartTooltip
-                    content={
-                      <ChartTooltipContent
-                        formatter={(value) =>
-                          `${Number(value).toLocaleString()} customers`
-                        }
-                      />
-                    }
-                  />
-                  <Bar dataKey="count" radius={[4, 4, 0, 0]}>
-                    {churnBuckets.map((bucket, idx) => (
-                      <Cell key={bucket.range} fill={bucket.fill} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ChartContainer>
+              <ChartEnlargeWrapper title="Churn Risk Distribution">
+                <ChartContainer config={churnDistConfig} className="w-full" style={{ height: 280 }}>
+                  <BarChart
+                    data={churnBuckets}
+                    margin={{ top: 8, right: 12, bottom: 0, left: 12 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                    <XAxis
+                      dataKey="range"
+                      tick={{ fontSize: 12 }}
+                      tickLine={false}
+                      axisLine={false}
+                      tickMargin={8}
+                    />
+                    <YAxis
+                      tick={{ fontSize: 12 }}
+                      tickLine={false}
+                      axisLine={false}
+                      width={40}
+                    />
+                    <ChartTooltip
+                      content={
+                        <ChartTooltipContent
+                          formatter={(value) =>
+                            `${Number(value).toLocaleString()} customers`
+                          }
+                        />
+                      }
+                    />
+                    <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+                      {churnBuckets.map((bucket, idx) => (
+                        <Cell key={bucket.range} fill={bucket.fill} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ChartContainer>
+              </ChartEnlargeWrapper>
             )}
           </CardContent>
         </Card>

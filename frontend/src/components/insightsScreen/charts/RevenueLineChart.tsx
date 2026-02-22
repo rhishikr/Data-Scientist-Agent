@@ -16,6 +16,7 @@ import {
 } from "../../ui/chart";
 import type { RevenueForecastPoint } from "../dashboard/types";
 import { fmtCurrency } from "../dashboard/formatters";
+import { ChartEnlargeWrapper } from "./ChartEnlargeWrapper";
 
 /* ------------------------------------------------------------------ */
 /* Chart config                                                        */
@@ -70,6 +71,7 @@ export function RevenueLineChart({
   }
 
   return (
+    <ChartEnlargeWrapper title="Revenue Trend">
     <ChartContainer config={chartConfig} className="w-full" style={{ height }}>
       <ComposedChart
         data={data}
@@ -138,5 +140,6 @@ export function RevenueLineChart({
         />
       </ComposedChart>
     </ChartContainer>
+    </ChartEnlargeWrapper>
   );
 }

@@ -556,12 +556,14 @@ def get_demand_forecast(run_id: Optional[str] = None):
         demand_csv = demand_csv.merge(inv_csv[inv_cols], on="sku", how="left")
 
     if prod_csv is not None and not prod_csv.empty:
-        prod_csv["sku"] = prod_csv["sku"].astype(str)
-        prod_cols = ["sku"]
-        for c in ["name", "category", "brand"]:
-            if c in prod_csv.columns:
-                prod_cols.append(c)
-        demand_csv = demand_csv.merge(prod_csv[prod_cols], on="sku", how="left")
+        sku_col_prod = "sku" if "sku" in prod_csv.columns else ("product_id" if "product_id" in prod_csv.columns else None)
+        if sku_col_prod:
+            prod_csv["sku"] = prod_csv[sku_col_prod].astype(str)
+            prod_cols = ["sku"]
+            for c in ["name", "category", "brand"]:
+                if c in prod_csv.columns:
+                    prod_cols.append(c)
+            demand_csv = demand_csv.merge(prod_csv[prod_cols], on="sku", how="left")
 
     # Compute days until stockout
     stock_col = "stock_level" if "stock_level" in demand_csv.columns else None

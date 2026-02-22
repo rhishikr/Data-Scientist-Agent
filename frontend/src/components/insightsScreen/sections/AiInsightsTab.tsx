@@ -48,11 +48,11 @@ const severityOptions: { value: SeverityFilter; label: string }[] = [
   { value: "low", label: "Low" },
 ];
 
-const severityColorMap: Record<SeverityFilter, string> = {
-  all: "bg-primary text-primary-foreground",
-  high: "bg-red-600 text-white",
-  medium: "bg-amber-500 text-white",
-  low: "bg-blue-600 text-white",
+const severityColorMap: Record<SeverityFilter, { bg: string; text: string }> = {
+  all: { bg: "var(--primary)", text: "var(--primary-foreground)" },
+  high: { bg: "#dc2626", text: "#ffffff" },
+  medium: { bg: "#f59e0b", text: "#ffffff" },
+  low: { bg: "#2563eb", text: "#ffffff" },
 };
 
 // ---------------------------------------------------------------------------
@@ -140,10 +140,15 @@ export function AiInsightsTab({
                   text-xs font-medium transition-colors
                   ${
                     isActive
-                      ? `${severityColorMap[opt.value]} border-transparent`
+                      ? "border-transparent"
                       : "border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground"
                   }
                 `}
+                style={
+                  isActive
+                    ? { backgroundColor: severityColorMap[opt.value].bg, color: severityColorMap[opt.value].text }
+                    : undefined
+                }
               >
                 {opt.label}
                 <span

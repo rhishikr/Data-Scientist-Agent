@@ -8,7 +8,6 @@ import {
   TrendingUp,
 } from "lucide-react";
 
-import { Card, CardContent } from "../../ui/card";
 import type { KpiCardRow } from "../dashboard/types";
 import { getCardValue, fmtCurrency, fmtPercent, safeNum } from "../dashboard/formatters";
 
@@ -36,7 +35,7 @@ const KPI_DEFS: KpiDef[] = [
   },
   {
     id: "aov",
-    label: "Average Order Value",
+    label: "Avg Order Value",
     icon: ShoppingCart,
     color: "text-blue-600",
     bgColor: "bg-blue-50",
@@ -86,27 +85,26 @@ interface KpiStripProps {
 
 export function KpiStrip({ cards }: KpiStripProps) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-      {KPI_DEFS.map((def) => {
+    <div className="flex rounded-xl border bg-card text-card-foreground">
+      {KPI_DEFS.map((def, idx) => {
         const value = getCardValue(cards, def.id);
         const Icon = def.icon;
 
         return (
-          <Card key={def.id} className="py-3 px-4 gap-0">
-            <CardContent className="p-0">
-              <div className="flex items-center gap-2 mb-2">
-                <div className={`rounded-md p-1.5 ${def.bgColor}`}>
-                  <Icon className={`size-3.5 ${def.color}`} />
-                </div>
-              </div>
-              <div className="text-xl font-semibold tracking-tight leading-none mb-1">
+          <div
+            key={def.id}
+            className="flex-1 px-4 py-3 text-center"
+          >
+            <div className="flex items-center justify-center gap-1.5 mb-0.5">
+              <Icon className={`size-3.5 ${def.color}`} />
+              <span className="text-base font-semibold tracking-tight">
                 {def.format(value)}
-              </div>
-              <p className="text-xs text-muted-foreground leading-tight">
-                {def.label}
-              </p>
-            </CardContent>
-          </Card>
+              </span>
+            </div>
+            <p className="whitespace-nowrap" style={{ fontSize: 12, lineHeight: 1.2, color: "#6b7280" }}>
+              {def.label}
+            </p>
+          </div>
         );
       })}
     </div>

@@ -132,7 +132,7 @@ def run_forecasting(paths: ForecastPaths | None = None) -> Dict[str, Any]:
 
         for sku in top_skus:
             g = daily_sku[daily_sku["sku"].astype(str) == str(sku)].copy().sort_values("date")
-            if len(g) < 45:
+            if len(g) < 14:
                 continue
 
             # Ensure daily continuity for this SKU (missing days => 0)

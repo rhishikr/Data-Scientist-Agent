@@ -57,14 +57,13 @@ export function RunSelector({ selectedRunId, onSelectRun }: Props) {
         Pipeline Run:
       </span>
       <Select
-        value={selectedRunId ?? "latest"}
-        onValueChange={(v) => onSelectRun(v === "latest" ? null : v)}
+        value={selectedRunId ?? runOptions[0]?.id ?? ""}
+        onValueChange={(v) => onSelectRun(v)}
       >
         <SelectTrigger className="w-[320px]">
           <SelectValue placeholder="Select a run" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="latest">Latest Run</SelectItem>
           {runOptions.map((run) => (
             <SelectItem key={run.id} value={run.id}>
               <div className="flex items-center gap-2">
