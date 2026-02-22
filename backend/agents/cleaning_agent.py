@@ -146,6 +146,23 @@ class CleaningAgent(BaseAgent):
             "files_cleaned": list(Path(cleaned_dir).glob("*.csv")),
         }
 
+        # Store cleaned data + report to Supabase
+        run_id = blackboard.config.get("run_id")
+        if run_id:
+            try:
+                import pandas as _pd
+                from db.store import store_cleaned_dataset, store_cleaning_report
+
+                for csv_file in sorted(Path(cleaned_dir).glob("*.csv")):
+                    table_name = csv_file.stem.replace("_cleaned", "").replace("_dirty", "")
+                    df = _pd.read_csv(csv_file)
+                    store_cleaned_dataset(run_id, table_name, df)
+
+                if report:
+                    store_cleaning_report(run_id, report)
+            except Exception as e:
+                print(f"[CleaningAgent] Warning: Supabase storage failed: {e}")
+
         self.log(
             MessageType.DATA_READY,
             {"agent": self.name, "output": "cleaned_data"},

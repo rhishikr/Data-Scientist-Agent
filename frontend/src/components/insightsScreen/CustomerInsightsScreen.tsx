@@ -31,8 +31,11 @@ import {
   safeNum,
   fmtCurrency2,
 } from "./dashboard/formatters";
+import { RunSelector } from "./RunSelector";
 
 export function CustomerInsightsScreen() {
+  const [selectedRunId, setSelectedRunId] = useState<string | null>(null);
+
   const {
     snapshot,
     cards,
@@ -41,7 +44,7 @@ export function CustomerInsightsScreen() {
     error,
     refresh,
     forecastSnapshot,
-  } = useDashboardData();
+  } = useDashboardData(selectedRunId);
 
   const [isCustomizing, setIsCustomizing] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
@@ -284,17 +287,10 @@ export function CustomerInsightsScreen() {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* <Select defaultValue="30">
-              <SelectTrigger className="w-[160px]">
-                <SelectValue placeholder="Date range" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="7">Last 7 days</SelectItem>
-                <SelectItem value="30">Last 30 days</SelectItem>
-                <SelectItem value="90">Last 90 days</SelectItem>
-                <SelectItem value="365">Last year</SelectItem>
-              </SelectContent>
-            </Select> */}
+            <RunSelector
+              selectedRunId={selectedRunId}
+              onSelectRun={setSelectedRunId}
+            />
 
             <Button
               variant={isCustomizing ? "default" : "outline"}

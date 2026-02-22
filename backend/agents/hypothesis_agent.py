@@ -104,6 +104,15 @@ class HypothesisAgent(BaseAgent):
             "interpretation": interpretation,
         }
 
+        # Store hypothesis results to Supabase
+        run_id = blackboard.config.get("run_id")
+        if run_id:
+            try:
+                from db.store import store_hypothesis_snapshot
+                store_hypothesis_snapshot(run_id, payload)
+            except Exception as e:
+                print(f"[HypothesisAgent] Warning: Supabase storage failed: {e}")
+
         return AgentResult(
             agent_id=self.agent_id,
             success=True,

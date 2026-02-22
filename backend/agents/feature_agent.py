@@ -129,6 +129,24 @@ class FeatureAgent(BaseAgent):
             "strategy": plan,
         }
 
+        # Store featured data + report to Supabase
+        run_id = blackboard.config.get("run_id")
+        if run_id:
+            try:
+                import pandas as _pd
+                from db.store import store_featured_dataset, store_feature_report
+
+                featured_dir = Path(blackboard.paths["featured_dir"])
+                for csv_file in sorted(featured_dir.glob("*.csv")):
+                    table_name = csv_file.stem  # e.g. customers_features
+                    df = _pd.read_csv(csv_file)
+                    store_featured_dataset(run_id, table_name, df)
+
+                if report:
+                    store_feature_report(run_id, report)
+            except Exception as e:
+                print(f"[FeatureAgent] Warning: Supabase storage failed: {e}")
+
         self.log(
             MessageType.DATA_READY,
             {"agent": self.name, "output": "featured_data"},

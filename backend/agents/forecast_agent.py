@@ -105,6 +105,15 @@ class ForecastAgent(BaseAgent):
             "strategic_assessment": strategic_assessment,
         }
 
+        # Store forecast snapshot to Supabase
+        run_id = blackboard.config.get("run_id")
+        if run_id:
+            try:
+                from db.store import store_forecast_snapshot
+                store_forecast_snapshot(run_id, snapshot)
+            except Exception as e:
+                print(f"[ForecastAgent] Warning: Supabase storage failed: {e}")
+
         return AgentResult(
             agent_id=self.agent_id,
             success=True,

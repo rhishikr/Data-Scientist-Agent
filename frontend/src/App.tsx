@@ -20,6 +20,7 @@ import {
   FileText,
   Settings,
   ChevronDown,
+  Table2,
 } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
@@ -39,12 +40,14 @@ import { InventorySalesScreen } from "./components/mockScreens/InventorySalesScr
 import { LLMAssistantScreen } from "./components/mockScreens/LLMAssistantScreen";
 import { ReportsScreen } from "./components/mockScreens/ReportsScreen";
 import { SettingsScreen } from "./components/mockScreens/SettingsScreen";
+import { DataExplorerScreen } from "./components/insightsScreen/DataExplorerScreen";
 
 const menuItems = [
   // { id: "home", label: "Home", icon: Home },
   // { id: "data-sources", label: "Data Sources", icon: Database },
   { id: "pipelines", label: "Agent Pipeline", icon: GitBranch },
   { id: "customer-insights", label: "Insights and Predictions", icon: Users },
+  { id: "data-explorer", label: "Data Explorer", icon: Table2 },
   // { id: "inventory-sales", label: "Inventory & Sales", icon: Package },
   { id: "llm-assistant", label: "LLM Assistant", icon: MessageSquare },
   // { id: "reports", label: "Reports", icon: FileText },
@@ -65,6 +68,8 @@ export default function App() {
         return <PipelineScreen />;
       case "customer-insights":
         return <CustomerInsightsScreen />;
+      case "data-explorer":
+        return <DataExplorerScreen />;
       // case "inventory-sales":
       //   return <InventorySalesScreen />;
       case "llm-assistant":

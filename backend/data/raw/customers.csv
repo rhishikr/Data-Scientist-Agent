@@ -1,0 +1,514 @@
+customer_id,name,location,device_type,account_creation_date,avg_session_time_min,wishlist_items_count
+,Customer 0,"Sydney, Australia",tablet,2024-03-10 03:27:37.000000,7.4,8.0
+CUST1001,Customer 1,"Toronto, Canada",mobile,2024-06-15 18:20:52.000000,23.0,6.0
+CUST1002,Customer 2,"Berlin, Germany",mobile,2025-06-10 10:02:37.000000,11.2,
+CUST1003,Customer 3,"Los Angeles, USA",desktop,2025-07-20 12:58:14.000000,28.1,9.0
+CUST1004,Customer 4,"Dubai, UAE",tablet,2024-03-30 10:45:32.000000,1.4,4.0
+CUST1005,Customer 5,"London, UK",desktop,2025-09-16 15:36:04.000000,8.3,9.0
+CUST1006,Customer 6,"New York, USA",mobile,2024-04-05 08:14:32.000000,18.1,4.0
+,Customer 7,"Berlin, Germany",desktop,,21.8,8.0
+CUST1008,Customer 8,"Berlin, Germany",mobile,2025-04-02 22:30:32.000000,18.2,1.0
+CUST1009,Customer 9,"Dubai, UAE",tablet,2025-09-28 18:39:07.000000,4.2,8.0
+CUST1010,Customer 10,"Toronto, Canada",desktop,2024-12-02 01:03:45.000000,15.8,3.0
+CUST1011,,"Sydney, Australia",mobile,2024-08-18 20:43:40.000000,14.8,9.0
+CUST1012,Customer 12,"Tokyo, Japan",desktop,2025-07-07 13:17:35.000000,3.4,5.0
+CUST1013,Customer 13,"Chicago, USA",mobile,2025-04-18 10:48:26.000000,19.7,0.0
+CUST1014,Customer 14,"Houston, USA",mobile,2024-09-08 23:44:35.000000,23.7,8.0
+CUST1015,Customer 15,"Sydney, Australia",mobile,2026-01-30 02:37:05.000000,5.1,1.0
+CUST1016,Customer 16,"Dubai, UAE",mobile,2025-05-14 08:26:24.000000,9.8,10.0
+CUST1017,Customer 17,"Delhi, India",mobile,2024-05-03 15:47:08.000000,6.8,5.0
+CUST1018,Customer 18,"Sydney, Australia",tablet,2025-04-21 18:32:09.000000,20.1,2.0
+CUST1019,Customer 19,"Houston, USA",tablet,2024-08-29 01:14:21.000000,25.5,6.0
+CUST1020,Customer 20,"Chicago, USA",desktop,2026-01-01 22:17:46.000000,,5.0
+CUST1021,Customer 21,,desktop,2024-05-05 20:12:43.000000,17.0,9.0
+CUST1022,Customer 22,,tablet,2024-12-31 18:53:22.000000,26.0,4.0
+CUST1023,Customer 23,"Houston, USA",desktop,,6.2,1.0
+CUST1024,Customer 24,,desktop,,18.1,5.0
+CUST1025,Customer 25,,tablet,2025-09-10 11:22:42.000000,11.2,10.0
+CUST1026,Customer 26,"Berlin, Germany",desktop,2024-07-14 00:09:30.000000,28.2,2.0
+CUST1027,CUSTOMER 27,"Paris, France",desktop,2025-02-17 12:49:47.000000,28.8,10.0
+CUST1028,Customer 28,"Toronto, Canada",,2025-02-19 01:11:00.000000,23.2,10.0
+CUST1029,Customer 29,"sydney, australia",mobile,2025-11-01 13:41:38.000000,15.8,3.0
+CUST1030,Customer 30,"Berlin, Germany",desktop,2025-03-14 01:44:49.000000,27.3,2.0
+CUST1031,Customer 31,"Toronto, Canada",mobile,2024-09-24 22:21:31.000000,10.4,1.0
+CUST1032,Customer 32,"Bangalore, India",mobile,2026-01-18 19:24:42.000000,,9.0
+CUST1033,Customer 33,"Bangalore, India",tablet,2024-09-14 23:52:58.000000,1.4,10.0
+CUST1034,Customer 34,"BERLIN, GERMANY",mobile,2025-12-20 07:16:49.000000,2.0,3.0
+CUST1035,Customer 35,"Bangalore, India",mobile,2024-11-13 19:44:01.000000,2.5,0.0
+CUST1036, customer 36 ,"Tokyo, Japan",desktop,2024-06-25 07:48:58.000000,28.9,2.0
+,Customer 37,"Bangalore, India",mobile,2024-08-22 15:02:26.000000,23.3,9.0
+CUST1038,Customer 38,"Tokyo, Japan",DESKTOP,2025-01-17 17:27:42.000000,19.2,2.0
+CUST1039,Customer 39,"Berlin, Germany",tablet,2024-08-24 16:21:41.000000,3.1,3.0
+CUST1040,Customer 40,"Delhi, India",desktop,2025-08-13 15:00:44.000000,16.9,3.0
+CUST1041,Customer 41,"Tokyo, Japan",mobile,2025-08-06 07:50:50.000000,20.1,8.0
+CUST1042,Customer 42,"Mumbai, India",tablet,2025-04-07 05:13:41.000000,20.9,7.0
+CUST1043,Customer 43,"São Paulo, Brazil",mobile,2024-05-24 07:40:38.000000,29.2,2.0
+CUST1044,CUSTOMER 44,"Delhi, India",desktop,2025-03-03 22:49:13.000000,19.1,2.0
+CUST1045,Customer 45,"Bangalore, India",mobile,2026-01-21 15:44:56.000000,25.9,4.0
+CUST1046,Customer 46,"Tokyo, Japan",mobile,,13.8,
+CUST1047,Customer 47,"Houston, USA",tablet,2024-07-18 15:37:02.000000,16.6,4.0
+CUST1048,Customer 48,"Paris, France",desktop,2024-09-14 11:02:12.000000,15.1,0.0
+CUST1049, customer 49 ,"São Paulo, Brazil",tablet,2025-09-30 17:22:58.000000,14.4,4.0
+CUST1050,Customer 50,"Delhi, India",mobile,2025-08-07 19:00:52.000000,20.0,
+CUST1051,Customer 51,"São Paulo, Brazil",tablet,2024-03-29 02:26:14.000000,11.2,10.0
+CUST1052,Customer 52,"Dubai, UAE",tablet,2024-06-18 00:22:58.000000,0.9,3.0
+CUST1053,Customer 53,"London, UK",tablet,2025-02-16 18:48:53.000000,16.8,9.0
+CUST1054,Customer 54,"Bangalore, India",desktop,2024-10-04 21:29:03.000000,17.6,2.0
+CUST1055,Customer 55,"Dubai, UAE",tablet,2025-12-11 21:14:18.000000,1.8,6.0
+CUST1056,Customer 56,"New York, USA",desktop,2025-01-22 23:54:09.000000,,2.0
+CUST1057,Customer 57,"Delhi, India",mobile,2025-12-14 11:17:57.000000,28.6,7.0
+CUST1058,Customer 58,"Houston, USA",mobile,2024-05-04 01:35:26.000000,21.0,0.0
+CUST1059,Customer 59,"Bangalore, India",mobile,2024-12-09 03:08:33.000000,7.6,2.0
+CUST1060,Customer 60,"London, UK",mobile,2025-05-17 09:07:49.000000,28.9,7.0
+CUST1061,Customer 61,"Paris, France",tablet,2025-07-11 06:17:35.000000,0.7,0.0
+CUST1062,Customer 62,"Houston, USA",tablet,2025-09-24 20:58:55.000000,19.9,10.0
+,,"Delhi, India",desktop,2024-07-20 23:05:10.000000,16.4,8.0
+CUST1064,Customer 64,"Toronto, Canada",mobile,2025-09-23 18:24:09.000000,25.9,6.0
+CUST1065,,"Berlin, Germany",tablet,2025-11-15 18:58:10.000000,11.5,
+CUST1066,Customer 66,"Los Angeles, USA",tablet,,1.6,1.0
+CUST1067,Customer 67,"Sydney, Australia",tablet,2025-01-03 06:00:29.000000,25.1,
+CUST1068,Customer 68,"Los Angeles, USA",tablet,2024-07-12 10:17:16.000000,28.5,1.0
+CUST1069,customer 69,"Chicago, USA",tablet,2025-12-22 12:17:52.000000,23.3,
+CUST1070,Customer 70,"Chicago, USA",mobile,,8.3,6.0
+CUST1071,Customer 71,"Los Angeles, USA",tablet,2025-03-27 00:33:18.000000,,7.0
+CUST1072,Customer 72,"Dubai, UAE",mobile,2025-05-15 15:59:19.000000,10.1,8.0
+CUST1073,Customer 73,"Tokyo, Japan",tablet,2026-01-05 19:12:59.000000,10.5,6.0
+CUST1074,Customer 74,"Tokyo, Japan",mobile,2025-09-11 20:09:20.000000,4.3,8.0
+CUST1075,Customer 75,"Bangalore, India",desktop,2025-05-09 21:10:55.000000,5.1,1.0
+CUST1076,Customer 76,"Bangalore, India",tablet,2024-03-07 09:24:24.000000,19.9,0.0
+CUST1077,,"São Paulo, Brazil",mobile,2024-03-10 19:29:23.000000,16.1,7.0
+CUST1078,Customer 78,"Los Angeles, USA", tablet ,2025-01-10 08:12:29.000000,13.5,8.0
+CUST1079,Customer 79,"Tokyo, Japan",tablet,2024-07-29 01:41:12.000000,23.0,
+CUST1080,Customer 80,"Berlin, Germany",desktop,2024-03-19 20:34:16.000000,14.1,5.0
+CUST1081,Customer 81,"New York, USA",tablet,2024-11-23 01:25:23.000000,25.4,9.0
+CUST1082,Customer 82,"Toronto, Canada",mobile,2025-10-10 21:56:34.000000,22.0,2.0
+CUST1083,Customer 83,"Tokyo, Japan",tablet,2025-09-28 05:08:12.000000,20.6,10.0
+CUST1084,Customer 84,"Los Angeles, USA",desktop,2024-04-13 15:00:50.000000,13.8,4.0
+CUST1085,Customer 85,"London, UK",tablet,2025-11-06 00:03:46.000000,6.1,8.0
+CUST1086,Customer 86,"Sydney, Australia",mobile,2025-01-22 07:24:57.000000,18.5,4.0
+CUST1087,Customer 87,"Delhi, India",tablet,2025-12-08 10:20:44.000000,27.2,5.0
+CUST1088,Customer 88,"Tokyo, Japan",mobile,2025-10-22 21:38:54.000000,4.3,10.0
+CUST1089,,"Mumbai, India",desktop,2024-06-15 08:23:14.000000,25.4,8.0
+,Customer 90,"Chicago, USA",mobile,2025-11-05 09:40:04.000000,,5.0
+CUST1091,Customer 91,"London, UK",desktop,2025-07-26 20:33:20.000000,29.5,4.0
+CUST1092,Customer 92,"Paris, France",tablet,2026-02-10 16:29:39.000000,25.5,4.0
+CUST1093,Customer 93,"Los Angeles, USA",desktop,2025-01-03 06:14:20.000000,15.3,1.0
+CUST1094,Customer 94,,desktop,2025-08-17 00:08:51.000000,18.7,0.0
+CUST1095,Customer 95,"Los Angeles, USA",MOBILE,2025-02-05 01:12:55.000000,25.2,
+CUST1096,Customer 96,"Paris, France",mobile,2024-11-22 02:08:28.000000,16.0,8.0
+CUST1097,Customer 97,"Mumbai, India",mobile,2025-06-17 23:33:31.000000,17.7,
+CUST1098,Customer 98,"London, UK",mobile,2025-10-10 21:14:15.000000,1.6,3.0
+CUST1099,Customer 99,"London, UK",mobile,2024-03-24 03:07:54.000000,10.3,5.0
+CUST1100,Customer 100,"Chicago, USA",tablet,2025-01-10 17:14:50.000000,18.3,8.0
+CUST1101,Customer 101,"Sydney, Australia",desktop,2026-01-24 01:35:25.000000,29.9,0.0
+CUST1102,Customer 102,"New York, USA", desktop ,2024-11-26 12:51:27.000000,,2.0
+CUST1103,Customer 103,"Berlin, Germany",desktop,2025-09-09 09:58:24.000000,15.8,1.0
+CUST1104,Customer 104,"Dubai, UAE",mobile,2026-01-14 00:35:28.000000,29.9,5.0
+CUST1105,Customer 105,"Chicago, USA",tablet,2024-08-08 04:10:00.000000,6.4,
+CUST1106,Customer 106,"Paris, France",desktop,2025-03-30 07:40:38.000000,12.6,2.0
+CUST1107,Customer 107,"Dubai, UAE",tablet,2025-01-17 00:35:21.000000,26.1,8.0
+CUST1108,Customer 108,"Berlin, Germany",desktop,2024-09-16 04:08:17.000000,9.4,8.0
+CUST1109,Customer 109,"Dubai, UAE",tablet,2025-06-28 05:33:51.000000,8.3,9.0
+CUST1110,Customer 110,"Mumbai, India",tablet,2025-08-03 20:41:14.000000,13.5,3.0
+CUST1111,Customer 111,"Delhi, India",desktop,2024-08-21 18:19:13.000000,8.4,1.0
+CUST1112,Customer 112,"Dubai, UAE",tablet,2024-06-18 18:21:28.000000,15.7,4.0
+CUST1113,Customer 113,"Paris, France",desktop,2025-07-22 08:41:33.000000,16.3,6.0
+CUST1114,,"New York, USA",tablet,2025-01-30 19:12:50.000000,8.8,10.0
+CUST1115,Customer 115,"Berlin, Germany",mobile,,4.5,7.0
+CUST1116,Customer 116,"Delhi, India",tablet,2025-03-16 01:02:12.000000,16.2,4.0
+CUST1117,Customer 117,"Dubai, UAE",mobile,2025-07-09 05:06:05.000000,23.4,0.0
+CUST1118,Customer 118,"Chicago, USA",tablet,2024-03-01 17:01:05.000000,12.9,3.0
+CUST1119,Customer 119,"New York, USA",tablet,2025-03-30 03:36:14.000000,28.7,8.0
+CUST1120,Customer 120,"Sydney, Australia",mobile,2024-10-04 03:56:15.000000,21.3,7.0
+CUST1121,Customer 121,"Los Angeles, USA",desktop,2025-11-01 23:07:34.000000,1.7,1.0
+CUST1122,Customer 122,"Berlin, Germany",desktop,2025-05-16 19:18:48.000000,2.0,3.0
+CUST1123,Customer 123,"Toronto, Canada",mobile,2025-12-29 06:33:20.000000,19.7,4.0
+CUST1124,Customer 124,"Berlin, Germany",mobile,2026-01-01 06:14:17.000000,,6.0
+CUST1125,Customer 125," New York, USA ",desktop,2025-04-12 23:51:18.000000,26.7,8.0
+CUST1126,Customer 126,,desktop,2025-09-26 04:46:25.000000,18.5,6.0
+CUST1127,Customer 127,"Chicago, USA",mobile,2025-09-23 11:02:32.000000,10.2,
+CUST1128,Customer 128,"Mumbai, India",tablet,2025-06-26 02:26:31.000000,9.2,3.0
+CUST1129,Customer 129,"Sydney, Australia",tablet,2025-09-29 18:05:33.000000,22.8,1.0
+CUST1130,Customer 130,"São Paulo, Brazil",tablet,2025-12-10 16:46:25.000000,3.9,9.0
+CUST1131,Customer 131,"Bangalore, India",desktop,2024-03-03 21:49:50.000000,24.6,9.0
+CUST1132,Customer 132,"Dubai, UAE",mobile,2024-05-31 04:34:37.000000,29.4,6.0
+CUST1133,Customer 133,"Los Angeles, USA",tablet,2024-05-18 03:28:57.000000,16.3,3.0
+CUST1134,Customer 134,"Bangalore, India",mobile,2024-07-11 09:31:48.000000,21.9,10.0
+CUST1135, customer 135 ,"New York, USA",,2025-01-21 22:51:35.000000,6.9,0.0
+CUST1136,Customer 136,"Paris, France",desktop,2025-07-12 19:15:05.000000,12.7,8.0
+CUST1137,Customer 137,"LONDON, UK",desktop,2025-01-04 08:51:13.000000,9.3,8.0
+CUST1138,Customer 138,"Dubai, UAE",desktop,2024-08-22 15:12:39.000000,10.2,7.0
+CUST1139,Customer 139,,mobile,2025-08-31 14:01:41.000000,6.9,5.0
+CUST1140,Customer 140,"Sydney, Australia",mobile,2024-12-20 01:45:26.000000,16.8,6.0
+CUST1141,Customer 141,"London, UK",desktop,2024-07-22 18:34:15.000000,12.7,3.0
+ CUST1142 ,Customer 142,"Houston, USA",mobile,2025-07-31 22:27:58.000000,23.0,10.0
+CUST1143,Customer 143,"Berlin, Germany",tablet,,25.5,
+ cust1144 ,Customer 144,"Houston, USA",tablet,2026-01-24 22:55:13.000000,,8.0
+ CUST1145 ,Customer 145,"Sydney, Australia",mobile,2024-06-10 15:39:01.000000,18.8,5.0
+CUST1146,Customer 146,"Sydney, Australia",mobile,,12.5,7.0
+ cust1147 ,Customer 147,"Paris, France",tablet,2026-01-16 00:56:44.000000,26.7,0.0
+CUST1148,Customer 148,"Chicago, USA",mobile,2025-08-22 13:54:12.000000,27.9,9.0
+CUST1149,Customer 149,"Toronto, Canada",tablet,2024-11-10 15:17:18.000000,13.4,5.0
+CUST1150,Customer 150,"Tokyo, Japan",desktop,2024-12-03 14:27:59.000000,20.6,1.0
+CUST1151,Customer 151,"Bangalore, India",tablet,,9.6,4.0
+CUST1152,Customer 152,"LOS ANGELES, USA",tablet,2024-02-25 14:02:44.000000,11.9,8.0
+CUST1153,Customer 153,"Chicago, USA",mobile,2025-01-08 01:54:59.000000,23.6,3.0
+CUST1154,Customer 154,"New York, USA",tablet,2025-01-22 22:21:00.000000,24.6,9.0
+CUST1155,Customer 155,"Bangalore, India",tablet,2025-10-15 09:03:31.000000,11.6,6.0
+CUST1156,Customer 156,"Toronto, Canada",desktop,2025-10-27 13:56:09.000000,20.9,6.0
+CUST1157,Customer 157,"Bangalore, India",tablet,2025-03-15 11:56:38.000000,26.2,0.0
+CUST1158,Customer 158,"Los Angeles, USA",tablet,2024-03-21 09:45:00.000000,19.5,5.0
+,Customer 159,"Berlin, Germany",mobile,2025-10-07 21:30:09.000000,20.9,0.0
+CUST1160,Customer 160,"Sydney, Australia",desktop,2024-11-12 12:47:17.000000,13.4,5.0
+CUST1161,CUSTOMER 161,"Toronto, Canada",mobile,2024-10-30 02:05:39.000000,28.8,6.0
+CUST1162,Customer 162,"Dubai, UAE", desktop ,2025-08-15 15:01:56.000000,2.3,8.0
+CUST1163,Customer 163,"Berlin, Germany",desktop,2024-11-12 05:47:07.000000,14.0,10.0
+CUST1164,Customer 164,"Los Angeles, USA",desktop,2025-01-05 20:32:31.000000,17.5,7.0
+CUST1165,Customer 165,"London, UK",desktop,2024-02-23 10:38:53.000000,6.3,8.0
+CUST1166,Customer 166,"London, UK",mobile,2025-04-08 13:45:03.000000,23.5,7.0
+CUST1167,Customer 167,"Delhi, India",tablet,2025-01-11 05:27:28.000000,25.0,4.0
+CUST1168,Customer 168,"São Paulo, Brazil",mobile,2025-08-04 06:22:52.000000,21.5,2.0
+CUST1169,Customer 169,"Berlin, Germany",desktop,2025-05-05 20:33:54.000000,25.8,10.0
+CUST1170,Customer 170,"Mumbai, India",mobile,2025-11-20 12:01:12.000000,25.4,2.0
+CUST1171,Customer 171,"Dubai, UAE",tablet,2024-11-28 15:59:07.000000,14.9,1.0
+CUST1172,Customer 172,"Berlin, Germany",mobile,2024-09-23 06:33:29.000000,17.5,7.0
+CUST1173,Customer 173,"São Paulo, Brazil",,2025-01-13 06:45:25.000000,20.8,10.0
+CUST1174,Customer 174,"Los Angeles, USA",mobile,2025-09-01 21:24:14.000000,7.4,
+CUST1175,Customer 175,"NEW YORK, USA",desktop,2024-08-11 19:52:44.000000,22.1,5.0
+CUST1176,Customer 176,"Tokyo, Japan",tablet,2024-06-22 11:21:15.000000,21.8,2.0
+CUST1177,Customer 177,"Chicago, USA",desktop,2025-10-22 10:44:16.000000,8.7,8.0
+CUST1178,,"São Paulo, Brazil",tablet,2024-12-16 06:46:05.000000,2.1,3.0
+CUST1179,Customer 179,"New York, USA",mobile,2025-01-07 21:27:53.000000,20.6,
+CUST1180,Customer 180,"Toronto, Canada",tablet,2025-08-14 02:41:54.000000,19.4,2.0
+CUST1181,Customer 181,"Berlin, Germany",tablet,2025-08-11 16:15:44.000000,28.6,3.0
+CUST1182,Customer 182,"Sydney, Australia",mobile,2024-06-22 06:03:41.000000,10.7,4.0
+CUST1183,Customer 183,"Toronto, Canada",desktop,2025-08-22 06:40:03.000000,19.0,8.0
+CUST1184,Customer 184,"Los Angeles, USA",mobile,2024-03-21 04:55:33.000000,,5.0
+CUST1185,Customer 185,"Dubai, UAE",mobile,2025-08-28 11:08:24.000000,24.9,1.0
+CUST1186,Customer 186,"Bangalore, India",desktop,2024-04-23 02:20:34.000000,0.7,9.0
+CUST1187,Customer 187,"Toronto, Canada",tablet,2024-02-20 22:53:32.000000,1.2,10.0
+CUST1188, Customer 188 ,"Sydney, Australia",mobile,2024-06-05 14:02:02.000000,3.2,8.0
+CUST1189,Customer 189,"Berlin, Germany",mobile,2025-07-14 12:50:59.000000,7.5,5.0
+CUST1190,Customer 190,"Houston, USA",tablet,2025-01-30 04:31:53.000000,12.5,3.0
+CUST1191,Customer 191,"Mumbai, India",mobile,2024-06-10 04:57:21.000000,7.8,
+CUST1192,Customer 192,"São Paulo, Brazil",mobile,2025-10-24 13:41:10.000000,0.9,3.0
+CUST1193,Customer 193,"Paris, France", mobile ,2025-01-25 10:09:32.000000,3.2,5.0
+CUST1194,Customer 194,,tablet,2026-01-21 12:01:04.000000,8.8,0.0
+CUST1195,Customer 195,"London, UK",mobile,2025-10-27 04:50:48.000000,19.1,0.0
+CUST1196,Customer 196,"Dubai, UAE",desktop,,24.4,7.0
+CUST1197,Customer 197,"Tokyo, Japan",tablet,2024-08-04 10:07:42.000000,29.5,2.0
+CUST1198,Customer 198,"New York, USA",tablet,2024-07-11 04:55:47.000000,24.4,8.0
+CUST1199,Customer 199,"Berlin, Germany",tablet,2025-08-25 20:41:10.000000,24.2,
+CUST1200,Customer 200,"São Paulo, Brazil",tablet,2024-05-04 11:22:34.000000,10.0,6.0
+CUST1201,Customer 201,"Sydney, Australia",desktop,2024-07-01 04:47:28.000000,22.2,2.0
+CUST1202,Customer 202," Paris, France ",tablet,2026-02-12 13:07:33.000000,10.3,5.0
+CUST1203,Customer 203,"Tokyo, Japan",mobile,2024-04-08 15:47:10.000000,23.7,0.0
+CUST1204,Customer 204,"Bangalore, India",desktop,2025-09-26 22:41:02.000000,5.3,0.0
+CUST1205,Customer 205,"Bangalore, India",mobile,2026-01-09 18:56:33.000000,1.4,2.0
+CUST1206,Customer 206,"Bangalore, India",tablet,2024-10-03 23:56:59.000000,2.0,7.0
+CUST1207,Customer 207,"Paris, France",mobile,2024-04-19 15:23:58.000000,3.9,7.0
+CUST1208,Customer 208,"Dubai, UAE",mobile,2024-08-09 17:27:42.000000,17.1,10.0
+CUST1209,Customer 209,"Houston, USA",tablet,2025-12-20 08:04:32.000000,17.4,4.0
+CUST1210,Customer 210,"Toronto, Canada",mobile,2024-06-29 06:41:51.000000,5.4,3.0
+CUST1211,Customer 211,"Tokyo, Japan",desktop,2024-04-08 01:11:36.000000,16.9,4.0
+,Customer 212,"Toronto, Canada",mobile,2026-02-14 20:20:43.000000,3.6,4.0
+CUST1213,Customer 213,,desktop,2025-07-28 19:16:17.000000,1.6,5.0
+CUST1214,Customer 214,"Delhi, India",desktop,2025-07-31 22:34:01.000000,26.1,7.0
+CUST1215,Customer 215,"London, UK",tablet,2024-12-02 10:11:29.000000,15.7,4.0
+CUST1216,Customer 216,"Chicago, USA",mobile,2026-01-29 01:20:22.000000,6.4,7.0
+CUST1217,Customer 217,"Paris, France",desktop,2024-06-22 00:06:52.000000,8.1,1.0
+CUST1218,Customer 218,"São Paulo, Brazil",mobile,2024-03-02 13:48:10.000000,29.0,7.0
+CUST1219,CUSTOMER 219,"Mumbai, India",desktop,2024-11-12 20:24:38.000000,6.9,8.0
+CUST1220,Customer 220,"São Paulo, Brazil",tablet,2024-05-09 23:12:52.000000,10.4,5.0
+CUST1221,Customer 221,"Chicago, USA",mobile,2025-05-27 01:25:53.000000,9.9,0.0
+CUST1222,Customer 222,"New York, USA",mobile,2025-08-02 01:53:48.000000,23.7,10.0
+CUST1223,Customer 223,"Mumbai, India",desktop,2026-01-24 20:33:31.000000,20.6,1.0
+CUST1224,Customer 224,"Delhi, India",mobile,2025-05-14 06:37:09.000000,18.8,3.0
+CUST1225,Customer 225,"São Paulo, Brazil",desktop,2026-01-20 04:38:20.000000,4.7,2.0
+CUST1226,Customer 226,"New York, USA",mobile,2025-10-17 21:23:31.000000,3.1,10.0
+CUST1227, Customer 227 ,"New York, USA",tablet,2025-06-16 18:17:27.000000,7.2,4.0
+CUST1228,Customer 228,"Mumbai, India",tablet,2026-01-05 17:02:09.000000,4.4,7.0
+CUST1229,Customer 229,"Houston, USA",mobile,2024-06-26 06:06:14.000000,21.5,6.0
+CUST1230,Customer 230,"Tokyo, Japan",mobile,2024-12-07 08:26:38.000000,8.0,3.0
+CUST1231,Customer 231,"Mumbai, India",desktop,2025-08-27 06:46:24.000000,8.8,7.0
+CUST1232,Customer 232,"Sydney, Australia",tablet,2026-02-09 18:41:54.000000,,1.0
+CUST1233,Customer 233,"Berlin, Germany",desktop,2024-10-02 22:15:12.000000,2.0,0.0
+CUST1234,Customer 234,,mobile,2024-11-19 16:47:37.000000,28.7,1.0
+CUST1235,Customer 235,"São Paulo, Brazil",desktop,2024-05-13 19:31:37.000000,21.9,2.0
+CUST1236,Customer 236,"Paris, France",mobile,2025-09-02 21:27:22.000000,4.4,1.0
+CUST1237,,"São Paulo, Brazil",tablet,2025-07-20 06:48:13.000000,15.8,9.0
+CUST1238,Customer 238,"Bangalore, India",tablet,2024-06-16 21:20:17.000000,14.3,2.0
+CUST1239,Customer 239,"Houston, USA",mobile,2025-05-06 02:08:43.000000,25.8,1.0
+,," berlin, germany ",tablet,2025-04-27 18:38:20.000000,20.3,5.0
+CUST1241,Customer 241,"Paris, France",tablet,2025-07-11 18:58:38.000000,10.6,4.0
+CUST1242,Customer 242,"São Paulo, Brazil",mobile,2024-05-19 18:51:53.000000,12.1,3.0
+CUST1243,Customer 243,"Paris, France",desktop,2024-05-30 13:47:49.000000,0.6,8.0
+CUST1244,Customer 244,"Chicago, USA",mobile,2025-05-31 19:39:20.000000,15.4,9.0
+CUST1245,Customer 245,"London, UK",tablet,2024-10-05 04:08:40.000000,16.7,8.0
+CUST1246,Customer 246,"Tokyo, Japan",mobile,2024-10-23 09:37:29.000000,22.9,9.0
+CUST1247,Customer 247,"Mumbai, India",,2024-06-07 21:05:10.000000,2.2,2.0
+CUST1248,Customer 248,,desktop,2025-09-12 09:08:20.000000,7.1,6.0
+CUST1249,Customer 249,"Dubai, UAE",tablet,2024-02-26 01:41:22.000000,6.5,7.0
+CUST1250,Customer 250,"Berlin, Germany",tablet,2024-07-02 19:27:30.000000,2.7,8.0
+CUST1251,Customer 251,"São Paulo, Brazil",,2026-02-06 06:53:06.000000,2.0,9.0
+CUST1252,Customer 252,"Sydney, Australia",mobile,2024-06-18 18:52:52.000000,16.3,3.0
+CUST1253,Customer 253,"Paris, France", tablet ,2026-01-18 13:02:09.000000,27.6,0.0
+CUST1254,Customer 254,,tablet,2025-10-31 13:35:19.000000,14.9,10.0
+CUST1255,Customer 255,"Berlin, Germany",mobile,2025-12-18 19:51:09.000000,25.2,6.0
+CUST1256,Customer 256," delhi, india ",desktop,2024-08-10 19:37:19.000000,12.5,6.0
+ CUST1257 ,Customer 257,,mobile,2024-09-28 02:56:44.000000,9.4,7.0
+,Customer 258,"Sydney, Australia",tablet,2024-10-04 12:10:33.000000,27.5,10.0
+CUST1259,Customer 259,"New York, USA",tablet,2025-09-19 05:15:33.000000,21.9,10.0
+CUST1260,Customer 260,"Los Angeles, USA",mobile,2025-04-17 07:19:34.000000,16.7,1.0
+CUST1261,Customer 261,"Tokyo, Japan",tablet,2025-02-27 09:06:35.000000,18.7,9.0
+CUST1262,Customer 262,"Delhi, India",tablet,2024-11-21 05:18:17.000000,22.1,7.0
+CUST1263,Customer 263,"Los Angeles, USA",mobile,2025-09-07 18:15:45.000000,2.8,0.0
+CUST1264,Customer 264,"Houston, USA",tablet,2025-07-07 21:43:52.000000,11.3,9.0
+CUST1265,Customer 265," berlin, germany ",tablet,2024-06-04 00:41:57.000000,5.8,10.0
+CUST1266,,"Toronto, Canada",desktop,2025-03-24 06:04:49.000000,11.2,7.0
+CUST1267,Customer 267,"Tokyo, Japan",desktop,2024-12-04 13:26:35.000000,11.3,1.0
+CUST1268,Customer 268,"São Paulo, Brazil",tablet,2024-08-12 15:20:19.000000,19.5,2.0
+CUST1269,Customer 269,"Delhi, India",desktop,2025-07-02 17:47:11.000000,,9.0
+CUST1270,Customer 270,"Chicago, USA",desktop,2024-03-01 11:06:09.000000,22.0,1.0
+CUST1271,Customer 271,"Bangalore, India",mobile,2024-06-25 06:33:32.000000,10.6,9.0
+CUST1272, Customer 272 ,"Tokyo, Japan",mobile,,23.6,1.0
+CUST1273,,"Toronto, Canada",,2025-04-02 12:29:44.000000,28.2,6.0
+CUST1274,Customer 274,"Bangalore, India",mobile,2025-05-25 16:58:39.000000,12.6,0.0
+,Customer 275,"Delhi, India",desktop,2025-12-11 01:55:30.000000,17.2,10.0
+CUST1276,Customer 276,"Berlin, Germany",desktop,2024-12-21 05:40:35.000000,25.7,3.0
+CUST1277,Customer 277,"Delhi, India",tablet,,3.2,9.0
+CUST1278,,"Bangalore, India",tablet,2025-05-25 01:41:45.000000,23.3,7.0
+CUST1279,Customer 279,"New York, USA",tablet,2024-03-15 00:13:41.000000,19.8,1.0
+CUST1280,Customer 280," Berlin, Germany ",tablet,2026-01-26 17:00:12.000000,10.8,3.0
+CUST1281,Customer 281,"Bangalore, India",tablet,2025-10-31 15:55:41.000000,8.1,9.0
+CUST1282,Customer 282,"Delhi, India",desktop,2025-02-24 08:34:30.000000,2.5,3.0
+CUST1283,Customer 283,"New York, USA",desktop,2025-11-14 17:56:29.000000,16.9,5.0
+CUST1284,Customer 284,"Dubai, UAE",mobile,2024-07-25 14:37:59.000000,25.1,5.0
+CUST1285,Customer 285,"paris, france",desktop,2026-01-13 14:11:33.000000,27.0,7.0
+CUST1286,Customer 286,"Chicago, USA",,2024-11-11 17:56:07.000000,20.7,1.0
+CUST1287, customer 287 ,"Delhi, India",mobile,2025-02-16 02:30:51.000000,10.6,6.0
+CUST1288,Customer 288,"Chicago, USA",tablet,2024-09-12 16:12:57.000000,16.9,3.0
+CUST1289,Customer 289,"London, UK",tablet,2025-10-17 23:40:01.000000,7.9,0.0
+CUST1290,Customer 290,"Tokyo, Japan",desktop,2026-02-08 18:50:30.000000,10.7,5.0
+CUST1291,Customer 291,"Chicago, USA",desktop,2025-09-10 01:50:34.000000,2.8,7.0
+CUST1292,Customer 292,"Tokyo, Japan",mobile,2024-10-16 11:43:45.000000,9.1,10.0
+CUST1293,Customer 293,"Berlin, Germany",mobile,2024-08-16 05:46:04.000000,28.2,1.0
+CUST1294,Customer 294,"NEW YORK, USA",mobile,2024-04-21 11:40:33.000000,26.6,3.0
+CUST1295,Customer 295,"New York, USA",desktop,2025-12-23 10:43:13.000000,8.5,8.0
+CUST1296,Customer 296,"Berlin, Germany",desktop,2024-04-25 13:24:28.000000,11.3,
+CUST1297,Customer 297,"berlin, germany",desktop,2025-10-27 19:08:29.000000,,5.0
+CUST1298,Customer 298,"Tokyo, Japan",desktop,2025-03-23 06:18:34.000000,27.3,10.0
+CUST1299,Customer 299,"Los Angeles, USA",tablet,2025-08-13 01:45:20.000000,,0.0
+CUST1300,Customer 300,"London, UK", mobile ,2025-10-18 06:58:54.000000,29.9,0.0
+CUST1301,Customer 301,"Los Angeles, USA",desktop,2024-05-20 17:31:41.000000,21.6,7.0
+CUST1302,Customer 302,"Tokyo, Japan",tablet,2024-06-18 04:43:53.000000,1.7,8.0
+CUST1303,Customer 303,"Tokyo, Japan",,2025-10-25 00:30:37.000000,4.0,0.0
+CUST1304,Customer 304,"Toronto, Canada",mobile,2025-09-27 23:13:39.000000,2.3,8.0
+CUST1305,Customer 305,"Toronto, Canada",tablet,2024-11-20 04:43:33.000000,,7.0
+CUST1306,Customer 306,"Delhi, India",tablet,2024-04-09 11:57:09.000000,13.8,8.0
+ CUST1307 ,,"São Paulo, Brazil",desktop,2025-04-09 14:52:39.000000,6.1,8.0
+CUST1308,Customer 308,"Tokyo, Japan",,2024-05-09 03:39:10.000000,3.4,6.0
+CUST1309,Customer 309,,mobile,2025-11-23 07:03:09.000000,24.1,8.0
+CUST1310,Customer 310,,mobile,2024-08-01 16:40:07.000000,3.4,8.0
+CUST1311,Customer 311,"Berlin, Germany",mobile,2025-07-23 21:27:09.000000,20.1,2.0
+CUST1312,Customer 312,"Paris, France",desktop,2025-12-03 05:13:13.000000,23.0,5.0
+CUST1313,Customer 313,"Mumbai, India", desktop ,2024-02-28 15:53:58.000000,29.8,4.0
+CUST1314,Customer 314,"São Paulo, Brazil",tablet,,11.0,5.0
+CUST1315,Customer 315,"Paris, France",tablet,2025-03-01 06:07:54.000000,20.8,1.0
+CUST1316,Customer 316,"New York, USA",desktop,2025-12-22 13:59:44.000000,22.6,0.0
+CUST1317,Customer 317,"Paris, France",mobile,2024-12-17 03:51:51.000000,22.7,1.0
+CUST1318,Customer 318,"Paris, France",desktop,2025-10-09 01:08:45.000000,23.0,3.0
+CUST1319,Customer 319,"Houston, USA",desktop,2024-04-25 14:09:55.000000,12.7,3.0
+,Customer 320,"Paris, France",,2025-11-12 11:49:48.000000,20.7,1.0
+CUST1321,Customer 321,"São Paulo, Brazil",mobile,2024-10-30 18:37:49.000000,16.4,8.0
+CUST1322,Customer 322," Tokyo, Japan ",mobile,2024-07-20 21:14:44.000000,18.7,10.0
+CUST1323,Customer 323,,tablet,2025-03-16 23:52:43.000000,3.4,9.0
+CUST1324,Customer 324,"new york, usa",desktop,2024-11-11 08:26:45.000000,11.0,8.0
+CUST1325,Customer 325,"New York, USA",mobile,2025-07-10 06:05:44.000000,22.0,10.0
+CUST1326,Customer 326,"Mumbai, India",tablet,2025-05-12 07:11:50.000000,24.1,4.0
+CUST1327,Customer 327,"Toronto, Canada",mobile,2025-08-27 19:20:35.000000,9.9,0.0
+CUST1328,Customer 328,"Dubai, UAE",tablet,2024-05-08 22:21:49.000000,1.3,9.0
+CUST1329,Customer 329,"Delhi, India",mobile,2025-08-22 00:59:54.000000,5.9,7.0
+,,"Mumbai, India",tablet,2024-04-07 08:52:13.000000,28.7,9.0
+CUST1331,Customer 331,"New York, USA",tablet,2025-09-14 16:36:14.000000,16.3,0.0
+CUST1332,Customer 332,"Berlin, Germany",mobile,2025-06-19 20:08:27.000000,6.1,4.0
+CUST1333,Customer 333,"Sydney, Australia",tablet,2024-05-13 21:40:16.000000,17.8,8.0
+CUST1334,Customer 334,"Sydney, Australia",mobile,2026-01-20 14:44:02.000000,5.3,1.0
+CUST1335,Customer 335,"Toronto, Canada",mobile,2025-10-04 17:24:37.000000,10.4,2.0
+CUST1336,Customer 336,"Sydney, Australia",tablet,,,7.0
+,Customer 337,"Paris, France",desktop,2024-08-24 01:47:02.000000,8.7,
+CUST1338,Customer 338,"Tokyo, Japan",,2025-01-04 20:38:25.000000,5.3,10.0
+CUST1339,Customer 339,,desktop,2025-11-14 02:50:35.000000,13.1,4.0
+CUST1340,Customer 340,"Houston, USA",mobile,2025-04-01 20:16:46.000000,14.8,4.0
+CUST1341,Customer 341,"Dubai, UAE",tablet,2025-11-04 13:50:44.000000,18.5,
+CUST1342,Customer 342,"Toronto, Canada",mobile,2025-06-25 03:55:38.000000,19.4,4.0
+CUST1343,,"Tokyo, Japan",,2024-07-01 09:57:48.000000,25.1,7.0
+CUST1344,Customer 344,"Dubai, UAE",desktop,2025-09-14 18:46:52.000000,15.9,10.0
+CUST1345,Customer 345,"Dubai, UAE",,2024-12-03 10:59:42.000000,25.4,6.0
+CUST1346,Customer 346,"SYDNEY, AUSTRALIA",mobile,2024-10-08 01:24:28.000000,9.4,0.0
+CUST1347,CUSTOMER 347,"Houston, USA",tablet,2025-10-05 16:10:22.000000,24.8,10.0
+,Customer 348,"los angeles, usa",tablet,,15.9,
+CUST1349,Customer 349,"Mumbai, India",desktop,2024-06-17 07:56:18.000000,1.0,8.0
+CUST1350,Customer 350,"Toronto, Canada",mobile,2025-04-10 21:05:15.000000,4.3,10.0
+CUST1351,Customer 351,"Dubai, UAE",tablet,2024-10-31 03:07:09.000000,21.5,8.0
+CUST1352,Customer 352,"Toronto, Canada",desktop,2025-10-03 08:28:27.000000,7.3,9.0
+CUST1353,Customer 353,"São Paulo, Brazil",mobile,2025-02-21 18:43:17.000000,5.5,9.0
+CUST1354,Customer 354,"Berlin, Germany",tablet,2024-08-19 07:21:56.000000,16.7,6.0
+CUST1355,Customer 355,"Paris, France",mobile,2025-09-12 06:48:02.000000,17.4,9.0
+CUST1356,Customer 356,"Bangalore, India",tablet,2025-03-05 22:19:45.000000,2.3,2.0
+CUST1357, customer 357 ,"Berlin, Germany",desktop,2024-10-18 21:48:33.000000,23.9,6.0
+CUST1358,Customer 358,"Berlin, Germany",desktop,,17.0,1.0
+CUST1359,Customer 359,"Delhi, India",desktop,2025-02-18 20:14:41.000000,16.9,5.0
+CUST1360,Customer 360,"Los Angeles, USA",desktop,2024-05-31 11:02:36.000000,19.4,7.0
+CUST1361,Customer 361,"Bangalore, India",desktop,2024-02-21 18:30:18.000000,25.5,8.0
+CUST1362,,"London, UK",desktop,2025-09-05 03:38:37.000000,29.5,4.0
+CUST1363,Customer 363,"Sydney, Australia",tablet,2024-10-15 17:25:01.000000,27.2,0.0
+CUST1364,Customer 364,"Toronto, Canada",tablet,2025-09-02 15:44:05.000000,8.2,9.0
+CUST1365,Customer 365,"Mumbai, India",mobile,2024-05-28 22:42:05.000000,8.6,1.0
+CUST1366,Customer 366,"Chicago, USA",desktop,2024-03-12 16:51:07.000000,3.0,2.0
+CUST1367,Customer 367,"Sydney, Australia",tablet,2024-09-08 08:41:21.000000,3.9,6.0
+CUST1368,Customer 368,"Tokyo, Japan",mobile,2024-09-27 07:28:37.000000,13.7,8.0
+CUST1369,Customer 369,"Bangalore, India",desktop,2024-05-02 08:00:43.000000,17.7,10.0
+CUST1370,Customer 370,"Sydney, Australia",mobile,2024-02-25 06:58:36.000000,16.0,5.0
+CUST1371, customer 371 ,"Tokyo, Japan",tablet,2024-05-19 04:32:07.000000,18.3,10.0
+CUST1372,Customer 372,"London, UK",desktop,2025-01-12 15:32:50.000000,20.2,4.0
+CUST1373,Customer 373,"New York, USA",mobile,2026-02-06 06:06:11.000000,12.1,1.0
+CUST1374,Customer 374,,mobile,,15.2,0.0
+CUST1375,Customer 375," Paris, France ",desktop,2025-10-14 13:43:17.000000,2.6,6.0
+CUST1376,Customer 376,"Delhi, India",mobile,2024-04-26 10:09:17.000000,25.7,7.0
+CUST1377,Customer 377,"Tokyo, Japan",mobile,2024-04-21 21:57:04.000000,13.4,0.0
+CUST1378,Customer 378,"Berlin, Germany",,2024-11-05 12:43:58.000000,,1.0
+CUST1379,Customer 379,"Berlin, Germany", mobile ,2025-02-16 00:10:14.000000,18.7,10.0
+,Customer 380,"London, UK",mobile,2025-03-08 03:25:35.000000,18.7,3.0
+CUST1381,Customer 381,"Tokyo, Japan",mobile,2024-11-02 14:14:34.000000,8.6,2.0
+CUST1382,,"Los Angeles, USA",,2025-02-28 05:43:54.000000,0.7,10.0
+CUST1383,Customer 383,"Chicago, USA",tablet,2024-06-30 13:49:40.000000,1.6,7.0
+CUST1384,Customer 384,"Berlin, Germany",tablet,2025-12-17 02:28:21.000000,16.4,10.0
+CUST1385,Customer 385,"Dubai, UAE",tablet,2024-11-24 21:03:03.000000,13.3,
+CUST1386,Customer 386,"London, UK",mobile,2024-10-26 04:33:51.000000,22.5,3.0
+CUST1387,Customer 387,"Bangalore, India",tablet,2024-06-07 13:54:04.000000,18.5,5.0
+CUST1388,Customer 388," Chicago, USA ",mobile,2024-06-27 23:25:25.000000,7.0,2.0
+CUST1389,Customer 389,"São Paulo, Brazil",tablet,2025-05-20 11:52:00.000000,,6.0
+CUST1390,Customer 390,"Paris, France",,2025-02-15 13:36:03.000000,15.4,6.0
+CUST1391,Customer 391,"Berlin, Germany",desktop,2024-10-02 17:55:59.000000,,10.0
+CUST1392,,"London, UK",tablet,2024-11-29 17:08:16.000000,,10.0
+CUST1393,Customer 393,"Mumbai, India",tablet,2024-04-18 21:11:09.000000,10.4,8.0
+CUST1394,Customer 394,"PARIS, FRANCE",tablet,2024-07-24 00:07:09.000000,10.4,10.0
+CUST1395,Customer 395,"Sydney, Australia",desktop,2024-03-29 07:12:28.000000,10.7,8.0
+CUST1396,Customer 396,"London, UK",tablet,2024-04-06 23:23:13.000000,26.6,6.0
+CUST1397,Customer 397,"Sydney, Australia",mobile,2024-09-30 17:04:28.000000,20.6,7.0
+CUST1398,Customer 398,"São Paulo, Brazil",tablet,2024-11-08 06:06:53.000000,23.7,10.0
+CUST1399,Customer 399,"Toronto, Canada",mobile,2025-10-05 21:10:30.000000,4.9,2.0
+CUST1400,Customer 400,"Sydney, Australia",mobile,2024-10-18 22:20:00.000000,13.5,3.0
+CUST1401,Customer 401,"Berlin, Germany",mobile,2025-03-09 21:48:21.000000,28.5,
+CUST1402,Customer 402,"London, UK",tablet,2025-09-03 21:02:25.000000,13.5,7.0
+CUST1403,Customer 403,"São Paulo, Brazil",desktop,2025-05-14 03:57:01.000000,23.5,
+CUST1404,Customer 404,"Berlin, Germany",tablet,2026-01-21 14:40:42.000000,12.2,6.0
+CUST1405,Customer 405,"São Paulo, Brazil",desktop,2025-01-24 16:52:45.000000,24.3,6.0
+CUST1406,Customer 406,"Mumbai, India",desktop,2025-09-25 06:59:15.000000,0.7,4.0
+CUST1407,Customer 407,"Chicago, USA",desktop,2024-10-09 01:22:28.000000,22.3,0.0
+CUST1408,Customer 408,"Tokyo, Japan",desktop,2024-03-09 02:12:29.000000,8.7,1.0
+CUST1409,Customer 409,"Tokyo, Japan",mobile,2024-02-29 15:03:50.000000,5.3,5.0
+CUST1410,Customer 410,"Tokyo, Japan",desktop,2024-04-15 16:09:11.000000,23.1,1.0
+CUST1411,Customer 411,"Toronto, Canada",tablet,2024-11-15 02:50:47.000000,0.9,5.0
+CUST1412,Customer 412,"Berlin, Germany",tablet,2025-03-30 06:52:43.000000,21.5,1.0
+CUST1413,,"Delhi, India",desktop,2025-10-01 02:20:26.000000,5.6,1.0
+CUST1414,Customer 414,"Chicago, USA",mobile,2025-09-26 05:43:46.000000,,10.0
+CUST1415,Customer 415," tokyo, japan ",tablet,2024-07-08 12:34:58.000000,1.4,4.0
+CUST1416,Customer 416,"Houston, USA",tablet,2025-08-24 23:41:45.000000,8.8,
+CUST1417,Customer 417,"London, UK",desktop,2025-11-25 08:43:17.000000,11.7,3.0
+CUST1418,Customer 418,"London, UK",tablet,2025-03-05 11:28:25.000000,8.9,4.0
+CUST1419,Customer 419,"Bangalore, India",desktop,2024-02-25 22:20:43.000000,15.0,7.0
+CUST1420,Customer 420,"Los Angeles, USA",mobile,2024-11-05 00:33:05.000000,25.4,3.0
+CUST1421,Customer 421,"Mumbai, India",desktop,2024-12-26 03:22:30.000000,15.6,7.0
+CUST1422,Customer 422,"Los Angeles, USA",desktop,2024-12-09 04:47:44.000000,10.1,9.0
+CUST1423,Customer 423,"Houston, USA",tablet,2025-12-14 17:27:12.000000,1.0,6.0
+CUST1424,Customer 424," New York, USA ",desktop,2025-01-15 12:28:40.000000,21.6,1.0
+CUST1425,Customer 425,"Berlin, Germany",desktop,2024-12-05 10:39:34.000000,10.9,5.0
+CUST1426,Customer 426,"paris, france",mobile,2024-12-31 22:55:27.000000,20.0,10.0
+CUST1427,Customer 427,"CHICAGO, USA",desktop,,,5.0
+CUST1428,Customer 428,"Tokyo, Japan",tablet,2024-11-24 05:02:32.000000,6.5,1.0
+CUST1429,Customer 429,"Bangalore, India",mobile,2025-05-20 17:09:24.000000,2.5,7.0
+CUST1430,Customer 430,"Mumbai, India",mobile,2025-03-22 07:10:43.000000,23.0,0.0
+CUST1431,Customer 431,"São Paulo, Brazil",tablet,2025-10-05 09:25:13.000000,28.1,0.0
+CUST1432,Customer 432,"Mumbai, India",mobile,2024-09-10 08:01:28.000000,19.6,9.0
+CUST1433,customer 433,"London, UK",tablet,2024-09-14 19:43:10.000000,8.1,10.0
+,Customer 434,"New York, USA",tablet,2024-12-28 03:09:27.000000,20.3,6.0
+CUST1435,Customer 435,"Dubai, UAE",tablet,2024-08-29 14:02:32.000000,3.2,5.0
+CUST1436,Customer 436,"Bangalore, India",mobile,2024-08-31 12:36:21.000000,2.1,1.0
+CUST1437,Customer 437,"Dubai, UAE",,2026-01-19 02:41:58.000000,25.3,0.0
+CUST1438,Customer 438,"Sydney, Australia",mobile,2025-01-24 14:59:09.000000,27.3,4.0
+CUST1439,Customer 439,"Chicago, USA",,2025-12-19 23:41:52.000000,23.5,6.0
+CUST1440,Customer 440,"Chicago, USA",desktop,2025-04-16 10:23:05.000000,,0.0
+CUST1441,,"Houston, USA",mobile,2025-08-23 05:47:45.000000,25.0,9.0
+CUST1442,Customer 442,"Mumbai, India",desktop,2025-01-02 22:46:24.000000,12.1,9.0
+CUST1443,Customer 443,"Dubai, UAE",desktop,2024-12-23 11:49:57.000000,18.2,5.0
+,Customer 444,"Dubai, UAE",mobile,2025-12-16 11:39:54.000000,8.4,6.0
+CUST1445,Customer 445,"Tokyo, Japan",mobile,2025-01-31 06:48:53.000000,11.4,7.0
+CUST1446,Customer 446,"Houston, USA",tablet,2025-04-23 15:13:55.000000,10.3,5.0
+CUST1447,Customer 447," New York, USA ",desktop,2026-01-09 00:17:49.000000,17.6,8.0
+CUST1448,Customer 448,"Bangalore, India",mobile,2025-11-25 09:52:30.000000,11.1,4.0
+CUST1449,Customer 449,"Delhi, India",mobile,2025-06-24 12:03:25.000000,2.1,3.0
+CUST1450,Customer 450,,desktop,2025-02-05 13:15:33.000000,25.5,1.0
+CUST1451,Customer 451,"São Paulo, Brazil",tablet,2024-02-19 04:54:32.000000,17.3,1.0
+CUST1452,Customer 452,"Tokyo, Japan",mobile,2024-04-18 23:07:41.000000,21.4,10.0
+,Customer 453,"London, UK",tablet,2024-05-26 10:42:11.000000,1.9,5.0
+CUST1454,Customer 454,"Mumbai, India",desktop,2024-06-21 13:26:04.000000,12.4,10.0
+CUST1455,Customer 455,"Dubai, UAE",tablet,2024-07-20 05:52:13.000000,26.6,9.0
+CUST1456,Customer 456,,desktop,2025-07-03 00:20:12.000000,5.1,10.0
+CUST1457,Customer 457,"Mumbai, India",desktop,2024-10-02 12:10:36.000000,16.8,8.0
+CUST1458,Customer 458,"Mumbai, India", tablet ,2025-10-18 15:24:11.000000,12.1,4.0
+CUST1459,Customer 459,"Delhi, India",mobile,2025-05-30 04:21:42.000000,20.4,
+CUST1460,Customer 460,"São Paulo, Brazil",tablet,2025-06-09 00:57:24.000000,20.4,6.0
+CUST1461,Customer 461,"Sydney, Australia",mobile,2024-08-21 19:06:35.000000,19.0,3.0
+CUST1462,Customer 462,"Dubai, UAE",desktop,2025-05-15 13:24:30.000000,9.2,6.0
+ CUST1463 ,Customer 463,"Sydney, Australia",DESKTOP,2025-08-31 19:47:14.000000,20.5,7.0
+,Customer 464,"Mumbai, India",desktop,2025-07-01 21:39:53.000000,,4.0
+CUST1465,Customer 465,"Tokyo, Japan",tablet,2024-09-30 21:15:40.000000,12.0,10.0
+CUST1466,Customer 466,"Houston, USA",tablet,2024-06-16 09:54:21.000000,3.5,7.0
+,customer 467,"Chicago, USA", tablet ,2025-06-09 16:12:26.000000,17.1,5.0
+CUST1468,Customer 468,"São Paulo, Brazil",tablet,2025-01-21 01:40:52.000000,28.9,1.0
+CUST1469,Customer 469,"Berlin, Germany",mobile,2024-09-29 21:34:01.000000,23.0,1.0
+CUST1470,Customer 470,,desktop,2024-04-22 04:52:27.000000,21.6,10.0
+CUST1471,Customer 471,"Toronto, Canada",desktop,2025-07-29 21:06:15.000000,1.4,0.0
+CUST1472,Customer 472,"Toronto, Canada",mobile,2026-01-17 00:01:36.000000,29.3,10.0
+CUST1473,Customer 473,"São Paulo, Brazil",DESKTOP,2026-01-30 22:26:33.000000,12.4,8.0
+CUST1474,Customer 474,"Tokyo, Japan",desktop,2024-12-14 22:00:23.000000,22.3,8.0
+CUST1475,Customer 475,"chicago, usa",desktop,2025-09-02 07:06:50.000000,15.4,5.0
+CUST1476,Customer 476,"London, UK",desktop,2025-09-17 05:56:16.000000,17.2,10.0
+CUST1477,Customer 477,"São Paulo, Brazil",tablet,2024-05-07 17:34:19.000000,17.7,5.0
+CUST1478,Customer 478,"Bangalore, India",desktop,2024-12-24 19:52:23.000000,15.8,4.0
+CUST1479,Customer 479,"Sydney, Australia",mobile,2025-02-05 12:23:06.000000,21.3,1.0
+,Customer 480,"Dubai, UAE",desktop,,5.0,5.0
+CUST1481,Customer 481,"New York, USA",desktop,,16.7,0.0
+CUST1482,Customer 482,"London, UK",mobile,2025-02-08 00:28:22.000000,20.2,5.0
+CUST1483,Customer 483,"Delhi, India",desktop,2025-12-19 14:32:40.000000,1.2,4.0
+CUST1484,Customer 484,"Paris, France",tablet,,19.9,0.0
+CUST1485,Customer 485,"Los Angeles, USA",desktop,,13.4,8.0
+CUST1486,Customer 486,"Chicago, USA",mobile,2024-06-26 09:56:59.000000,28.9,0.0
+CUST1487,Customer 487,"São Paulo, Brazil",mobile,2025-03-04 21:48:10.000000,15.4,4.0
+CUST1488,Customer 488,,tablet,2024-08-25 07:39:53.000000,19.7,9.0
+CUST1489,Customer 489,"Delhi, India",mobile,2026-01-23 23:27:21.000000,1.7,9.0
+,Customer 490,"Paris, France",desktop,2025-11-29 23:29:21.000000,1.8,9.0
+CUST1491,Customer 491,"Mumbai, India",tablet,2025-07-29 19:17:02.000000,19.2,7.0
+CUST1492,Customer 492," Delhi, India ",,2024-02-23 10:33:29.000000,12.7,7.0
+CUST1493,Customer 493,"New York, USA",desktop,2025-11-08 07:20:26.000000,18.2,0.0
+CUST1494, Customer 494 ,"Tokyo, Japan",mobile,2025-11-04 21:56:18.000000,7.4,
+CUST1495,,"São Paulo, Brazil",desktop,2025-04-19 14:01:17.000000,22.3,9.0
+CUST1496,Customer 496,"Paris, France",tablet,,29.1,9.0
+CUST1497,Customer 497,"Tokyo, Japan",desktop,2024-05-20 12:58:56.000000,14.3,0.0
+CUST1498,Customer 498,"New York, USA",tablet,2024-08-09 06:00:38.000000,13.0,3.0
+CUST1499,,"Bangalore, India",tablet,2024-08-25 23:16:35.000000,7.5,0.0
+CUST1500,Customer 1500,"Los Angeles, USA",,2026-02-15 23:38:09.000000,,3.0
+CUST1501,Customer 1501,"são paulo, brazil",desktop,2026-02-18 22:23:07.000000,11.7,5.0
+CUST1502,Customer 1502,"Bangalore, India",tablet,2026-02-17 04:21:12.000000,1.9,4.0
+CUST1503,Customer 1503,"São Paulo, Brazil",mobile,2026-02-15 17:08:33.000000,5.5,2.0
+CUST1504,Customer 1504,"Delhi, India",mobile,2026-02-19 17:11:34.000000,6.7,5.0
+CUST1505,Customer 1505,"Chicago, USA",desktop,2026-02-19 16:40:44.000000,29.9,7.0
+CUST1506,Customer 1506,"Bangalore, India",tablet,2026-02-21 13:29:02.000000,0.8,10.0
+CUST1507,Customer 1507,"Chicago, USA",tablet,2026-02-17 00:22:53.000000,3.6,10.0
+CUST1508,Customer 1508,,desktop,2026-02-19 06:04:15.000000,25.0,0.0
+CUST1509,Customer 1509,"Toronto, Canada",tablet,2026-02-18 01:32:55.000000,18.4,8.0
+CUST1510,Customer 1510,"Delhi, India",mobile,2026-02-15 02:28:19.000000,7.3,1.0
+CUST1511,Customer 1511,"Berlin, Germany",mobile,2026-02-21 18:40:25.000000,7.7,6.0
+CUST1512,Customer 1512,"Sydney, Australia",tablet,2026-02-18 23:10:27.000000,3.7,8.0

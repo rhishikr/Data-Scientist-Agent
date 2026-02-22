@@ -9,16 +9,16 @@
   "loaded_tables": [
     "customers",
     "inventory",
-    "marketing_dirty",
-    "payments_dirty",
+    "marketing",
+    "payments",
     "products",
     "transactions",
     "web_analytics"
   ],
   "rows": {
-    "customers_features.csv": 327,
-    "products_features.csv": 134,
-    "transactions_features.csv": 683
+    "customers_features.csv": 470,
+    "products_features.csv": 156,
+    "transactions_features.csv": 3704
   },
   "cols": {
     "customers_features.csv": 15,

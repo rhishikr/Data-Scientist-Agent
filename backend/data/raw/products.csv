@@ -1,0 +1,201 @@
+sku,name,category,brand,color,material,cost_price,retail_price,discount_percent,average_rating,stock_available
+SKU10000,Product 0,Clothing,Terra,Blue,Glass,106.34,181.04,0.0,3.24,205.0
+SKU10001,Product 1,Clothing,Terra,,Wood,125.37,250.6,0.0,2.03,381.0
+SKU10002,Product 2,Home,Zenith,Grey,Polyester,41.26,63.29,0.0,4.43,110.0
+SKU10003,Product 3,Home,Apex,Green,Cotton,129.91,213.33,0.0,1.85,403.0
+SKU10004, product 4 ,Clothing, apex ,Green,Plastic,69.65,,5.0,,356.0
+SKU10005,Product 5,Beauty,Vibe,Green,Plastic,132.7,372.16,15.0,,325.0
+SKU10006,Product 6,Food,Pulse,Green,Wood,171.61,308.92,0.0,3.1,499.0
+SKU10007,Product 7,Sports,Zenith,Blue,Leather,,113.61,0.0,2.8,198.0
+SKU10008,Product 8,Books,Helios,Blue,Polyester,66.82,130.3,0.0,3.73,371.0
+,Product 9,Toys,Terra,Green,Wood,31.88,87.78,30.0,3.89,415.0
+SKU10010,Product 10,Beauty,Pulse,Grey,Glass,169.93,344.78,,4.14,88.0
+SKU10011,Product 11,Sports,Pulse,Green,Cotton,,450.65,20.0,2.54,159.0
+SKU10012,Product 12,Beauty,Helios,Black,Leather,18.65,26.07,30.0,1.81,244.0
+SKU10013,Product 13,Food,Helios,Yellow,Glass,6.45,9.95,0.0,4.6,244.0
+SKU10014,Product 14,Books,Helios,Black,Glass,133.52,332.13,0.0,2.3,139.0
+SKU10015,Product 15,Electronics,Zenith,Yellow,Wood,13.7,18.43,25.0,,61.0
+SKU10016,Product 16,Home,,Blue,,29.21,74.79,0.0,4.64,18.0
+SKU10017,Product 17,,Helios,Black,Leather,197.91,370.7,5.0,2.61,209.0
+SKU10018,Product 18,Books,Helios,Green,Metal,47.92,115.9,10.0,2.33,462.0
+SKU10019,Product 19,Sports,Terra,Blue,Glass,195.71,476.13,0.0,2.5,131.0
+SKU10020,,Toys,Terra,Grey,Wood,121.62,353.67,15.0,3.09,
+SKU10021,Product 21,Beauty,Orion,Yellow,Plastic,174.62,247.78,5.0,1.81,256.0
+SKU10022,Product 22,Beauty,Terra,Blue,Polyester,194.65,384.83,0.0,2.13,256.0
+,Product 23,Home,Vibe,Yellow,,31.65,66.39,0.0,1.78,140.0
+SKU10024,Product 24,Toys,Terra,Red,Metal,151.56,286.84,25.0,3.65,69.0
+SKU10025,Product 25,Toys,Nova,Pink,Glass,130.66,373.52,20.0,2.38,393.0
+SKU10026, product 26 ,Toys,Zenith,Green,Cotton,150.92,375.54,0.0,4.04,471.0
+SKU10027,Product 27,,Orion,BLUE,Wood,90.94,259.37,,3.41,399.0
+SKU10028,Product 28,Sports,Vibe,,Glass,99.76,258.05,20.0,4.48,368.0
+SKU10029, Product 29 ,,Apex,Yellow,Cotton,53.46,110.57,25.0,3.8,207.0
+SKU10030,,Food,Pulse,Blue,Plastic,43.04,66.43,30.0,3.86,485.0
+SKU10031,Product 31,Food,Orion,Blue,Wood,79.78,141.74,10.0,2.75,142.0
+SKU10032,Product 32,,Terra,Pink,Metal,22.1,32.08,5.0,,446.0
+SKU10033,Product 33,Electronics,Helios,Yellow,Metal,33.22,96.43,5.0,1.84,424.0
+SKU10034,Product 34,Beauty,Apex,Grey,Polyester,148.47,426.02,0.0,1.39,415.0
+SKU10035,Product 35,Books,,Blue,Plastic,161.99,444.61,10.0,2.42,493.0
+SKU10036,,Sports,Zenith,Blue,Wood,196.15,,20.0,1.49,475.0
+SKU10037,Product 37,Food,Nova,Blue,Polyester,,21.58,25.0,4.25,275.0
+SKU10038,Product 38,BEAUTY,Terra,Green,glass,110.1,296.39,0.0,,
+SKU10039,Product 39,Home,,Red,Glass,189.43,537.57,10.0,3.92,291.0
+SKU10040,Product 40,Beauty,Nova,Black,Wood,79.45,225.34,20.0,,319.0
+SKU10041,Product 41,Books,NOVA,Pink,Cotton,57.67,127.08,30.0,3.12,453.0
+SKU10042,Product 42,Toys,Terra,Green,Metal,57.86,84.96,0.0,3.43,103.0
+SKU10043,Product 43,Sports,Nova,Blue,Plastic,74.03,155.22,10.0,2.97,495.0
+SKU10044,Product 44,Clothing,Terra,Grey,Glass,104.19,,25.0,1.67,401.0
+SKU10045,Product 45,Home,Orion,Blue,Metal,48.89,69.8,0.0,4.73,432.0
+,Product 46,clothing,APEX,Green,Cotton,187.41,527.98,25.0,2.71,425.0
+SKU10047,Product 47,Sports,Zenith,Red,Leather,197.93,478.13,25.0,3.73,394.0
+SKU10048,Product 48,Home,Orion,Pink,Leather,176.94,380.98,20.0,3.92,153.0
+SKU10049,Product 49,Clothing,Zenith,Green,Cotton,173.51,,5.0,4.46,278.0
+SKU10050,Product 50,Clothing,Apex,,Wood,128.5,217.61,15.0,1.74,196.0
+SKU10051,Product 51,Home,Vibe,blue,Glass,26.75,65.2,30.0,2.37,399.0
+SKU10052,Product 52,Home,Helios,Pink, Glass ,145.55,,5.0,4.18,389.0
+SKU10053,Product 53,Toys, Zenith ,Red,Leather,101.53,223.89,30.0,2.07,
+SKU10054,Product 54,Electronics,,Grey,Metal,51.45,70.3,0.0,3.45,39.0
+SKU10055,Product 55,Clothing,Nova,Black,Metal,7.03,13.39,10.0,3.92,85.0
+SKU10056,Product 56,,Zenith,Black,Plastic,23.27,37.43,0.0,,61.0
+SKU10057,Product 57,,Helios,Blue,Polyester,9.04,24.45,0.0,3.17,288.0
+SKU10058,,SPORTS,Nova,Pink,Cotton,165.86,244.61,10.0,1.31,194.0
+SKU10059,Product 59,Beauty,Nova,Yellow,Glass,184.38,520.41,0.0,4.11,85.0
+SKU10060,Product 60,Beauty,Zenith,Yellow,Leather,145.66,383.88,25.0,2.53,285.0
+SKU10061,Product 61,Sports,Terra,Grey,Cotton,108.83,293.45,20.0,2.18,446.0
+SKU10062,Product 62,,Vibe,Blue,PLASTIC,186.61,376.17,5.0,1.6,390.0
+SKU10063,Product 63,Books,Terra,green,Leather,107.85,314.16,25.0,2.69,57.0
+SKU10064,Product 64,Clothing,Apex,Pink,Wood,195.7,296.04,5.0,2.34,93.0
+SKU10065,Product 65,Clothing,PULSE,Red,Leather,17.74,41.07,10.0,3.7,469.0
+SKU10066,Product 66,Electronics,Pulse,Black,Wood,24.7,66.02,0.0,3.43,403.0
+SKU10067,Product 67,Toys,Helios,,Glass,158.14,296.72,15.0,1.38,488.0
+SKU10068,Product 68,Food,Pulse,Blue,Metal,18.29,41.7,15.0,2.47,497.0
+SKU10069,Product 69,Electronics,Terra,Pink,Cotton,21.28,42.61,25.0,3.14,65.0
+SKU10070,Product 70,Food,,Green,,147.7,422.38,20.0,2.45,252.0
+SKU10071,Product 71,Toys,Pulse,White,Leather,46.24,61.92,20.0,2.9,92.0
+SKU10072,Product 72,Beauty,apex,Yellow,Wood,,257.11,20.0,1.5,306.0
+SKU10073,Product 73,Sports,Terra,White,Glass,47.63,141.19,20.0,4.31,401.0
+SKU10074,Product 74,Toys,Helios,,Leather,185.64,386.13,15.0,3.01,351.0
+SKU10075,Product 75,Home,Vibe,PINK,Metal,87.02,146.1,25.0,,475.0
+SKU10076,Product 76,Beauty,Orion,Pink,Polyester,8.03,12.53,15.0,2.27,128.0
+SKU10077,Product 77,Home,vibe,,Wood,161.23,347.81,20.0,4.59,284.0
+SKU10078,Product 78,Electronics,Helios,Blue,Plastic,146.63,391.8,20.0,,47.0
+SKU10079,Product 79,Beauty,Terra,Grey, Polyester ,127.01,210.52,20.0,3.07,120.0
+SKU10080,Product 80,Books,Apex,Yellow,Polyester,27.38,45.69,15.0,3.87,62.0
+SKU10081,Product 81,Books,Vibe,Grey,,154.46,282.61,5.0,4.31,281.0
+SKU10082,Product 82,Home, Helios ,Black,Plastic,10.84,17.41,15.0,2.11,462.0
+SKU10083,Product 83,Electronics,Nova,Green,Plastic,135.91,309.29,20.0,4.65,440.0
+SKU10084,Product 84,Toys,Apex,,Metal,12.22,26.97,30.0,2.5,24.0
+SKU10085,Product 85,Home,Terra,,Cotton,165.96,254.89,15.0,2.08,80.0
+SKU10086,Product 86,Food,Orion,White,Plastic,28.38,52.3,0.0,1.97,448.0
+SKU10087,Product 87,Food,Apex,Yellow,Cotton,20.21,59.66,0.0,3.05,106.0
+SKU10088,Product 88,,Pulse,Blue,Leather,87.5,215.83,0.0,3.59,226.0
+SKU10089,Product 89,Sports,Terra,Black,Plastic,41.94,67.12,10.0,4.3,263.0
+SKU10090, product 90 ,Food,Orion,Green,Plastic,158.22,,10.0,4.53,399.0
+SKU10091,Product 91,Books,Zenith,Blue,Leather,120.83,356.23,0.0,2.84,164.0
+SKU10092,,Toys,,Pink,Plastic,178.82,467.92,25.0,3.18,500.0
+SKU10093,Product 93,Books,Apex,Yellow,Metal,39.12,111.4,15.0,1.6,329.0
+,Product 94,Clothing,Vibe,Red,Metal,36.71,78.1,0.0,3.85,385.0
+SKU10095,Product 95,Toys,Helios,White,Metal,119.12,171.2,5.0,1.8,162.0
+SKU10096,Product 96,Home,Apex,Pink,polyester,127.52,284.1,20.0,3.32,327.0
+SKU10097,Product 97,Food,Nova,Grey,Polyester,115.29,207.37,20.0,3.96,114.0
+SKU10098,Product 98,Books,Pulse, Blue ,Cotton,,337.43,0.0,4.7,257.0
+SKU10099,Product 99,Clothing,Zenith,Black,Polyester,164.95,450.47,30.0,2.47,207.0
+SKU10100,Product 100, Books ,pulse,Yellow,Cotton,25.93,52.09,20.0,3.82,42.0
+SKU10101,Product 101,Books,Pulse,Green,Glass,34.52,83.37,15.0,3.34,
+SKU10102,Product 102,Sports,Orion,Pink,Cotton,,268.81,0.0,2.5,25.0
+SKU10103,Product 103,Food,Orion,,,67.63,,20.0,3.27,184.0
+SKU10104,Product 104,Home,Zenith,Pink,Plastic,147.35,419.75,30.0,2.32,491.0
+SKU10105,Product 105,Sports,Nova,Blue,,166.49,326.94,15.0,1.24,428.0
+SKU10106,Product 106,Electronics,Vibe,Blue,,,449.63,0.0,2.73,445.0
+SKU10107,Product 107,Electronics,Vibe,Pink,Cotton,49.41,142.45,0.0,1.23,
+SKU10108, Product 108 ,Clothing,NOVA,Black,Leather,85.55,220.66,30.0,2.98,192.0
+SKU10109,Product 109,Books,Helios,Yellow,Plastic,172.46,354.24,10.0,3.9,28.0
+,Product 110,Toys,Terra,YELLOW,Plastic,141.18,339.52,25.0,3.17,23.0
+SKU10111,Product 111,Toys,Terra,White,Leather,152.12,284.7,10.0,2.87,131.0
+SKU10112,Product 112,TOYS,Nova,Red,Metal,7.96,,,1.15,336.0
+SKU10113,Product 113,Beauty,Nova,Green,Cotton,47.48,66.45,0.0,2.27,126.0
+sku10114,,Sports,Pulse,Black,Glass,144.34,251.21,,3.43,218.0
+SKU10115,Product 115,Electronics,Apex,Grey, Polyester ,78.07,226.58,10.0,4.74,267.0
+SKU10116,Product 116,Food,Apex,White,Glass,127.91,325.88,30.0,1.96,460.0
+SKU10117,Product 117,Toys,Zenith,Pink,Polyester,20.54,46.27,0.0,4.93,333.0
+ sku10118 ,Product 118,, vibe ,Pink,Leather,43.63,70.06,25.0,2.35,65.0
+SKU10119,Product 119,Toys,Zenith,,Polyester,13.82,35.32,15.0,3.35,59.0
+SKU10120,Product 120,Home,zenith,Black,Polyester,101.19,139.85,30.0,1.89,490.0
+SKU10121,Product 121,beauty,,Black,Leather,197.82,510.55,5.0,3.83,237.0
+SKU10122,Product 122,Clothing,Helios,White,Wood,101.18,146.48,0.0,4.73,172.0
+SKU10123,Product 123,Sports,Zenith,Yellow,Cotton,113.84,,0.0,3.23,
+SKU10124,Product 124,Books,Pulse,Grey,Plastic,139.16,326.02,5.0,2.3,69.0
+SKU10125,Product 125,Food,Terra,Pink,Metal,191.48,463.96,15.0,1.22,122.0
+SKU10126,Product 126,Clothing,Apex,Red,Wood,164.61,300.33,,1.84,90.0
+SKU10127,Product 127,,Terra,,Metal,82.13,206.99,10.0,1.49,345.0
+SKU10128,Product 128,electronics,Zenith,Pink,Metal,164.57,459.19,0.0,1.4,305.0
+SKU10129,Product 129,Sports,Vibe,Blue,Cotton,61.79,90.1,20.0,2.33,52.0
+SKU10130,Product 130,Sports,Vibe, Green , Glass ,38.0,105.27,25.0,3.61,372.0
+SKU10131,Product 131,Electronics,Zenith,BLUE,Glass,113.19,289.48,,1.47,378.0
+SKU10132,Product 132,Home,Pulse,Green,LEATHER,136.95,299.68,15.0,1.75,285.0
+SKU10133,Product 133,Electronics,Vibe,Pink,Wood,23.47,55.45,0.0,2.05,418.0
+SKU10134,Product 134,Sports,Orion,Green,Cotton,130.74,255.07,10.0,3.66,266.0
+SKU10135,Product 135,Clothing,Zenith,Green,Leather,51.95,102.26,20.0,1.71,447.0
+SKU10136,Product 136,Home,Terra,BLACK,Metal,,344.36,5.0,3.57,366.0
+SKU10137,Product 137,Food, helios ,Green,Glass,58.46,81.69,0.0,1.25,288.0
+SKU10138,Product 138,Beauty,Apex,Pink,Cotton,171.25,413.34,0.0,2.77,111.0
+SKU10139,Product 139,Clothing,Helios,Blue,Cotton,84.8,201.82,0.0,3.9,438.0
+SKU10140,Product 140,Home,Nova,White,Cotton,188.82,522.99,0.0,3.52,28.0
+SKU10141,Product 141,Books,Nova,White,Cotton,119.12,186.39,5.0,3.26,
+SKU10142,Product 142,Beauty,Pulse,Yellow,Polyester,141.75,335.96,0.0,3.4,215.0
+SKU10143,Product 143,Electronics,Nova,Black,Plastic,194.3,542.41,30.0,4.06,244.0
+SKU10144,Product 144,Sports,Zenith, grey ,Polyester,94.81,229.41,5.0,3.82,59.0
+SKU10145,Product 145,Toys,Apex,Red,Glass,67.08,,20.0,2.59,127.0
+SKU10146,Product 146,Books,Terra,Green,Glass,41.65,69.1,20.0,2.62,92.0
+ SKU10147 ,Product 147,Toys,Pulse,Grey,Cotton,117.06,228.59,25.0,1.6,488.0
+SKU10148,Product 148,Food,Apex,,Metal,,120.25,25.0,3.38,28.0
+SKU10149,Product 149,Books,Orion,,Polyester,82.26,131.44,30.0,1.32,393.0
+SKU10150,Product 150,Clothing,Nova,,Polyester,83.14,134.08,10.0,2.11,319.0
+,Product 151,Books,Apex,Grey,Wood,40.35,72.0,0.0,2.56,16.0
+SKU10152,Product 152,,Helios,Grey,Polyester,67.33,181.69,,3.5,190.0
+SKU10153,Product 153,Beauty,Helios,Blue,Plastic,86.0,223.63,10.0,1.87,152.0
+SKU10154,Product 154,Food,Zenith,white,Wood,75.82,112.18,15.0,2.64,326.0
+SKU10155,Product 155,Sports,,Pink,Glass,123.89,267.07,0.0,3.85,77.0
+SKU10156,Product 156,Beauty,Helios,Green, cotton ,179.42,296.39,25.0,1.28,143.0
+SKU10157,Product 157,Toys,Terra,Yellow,Plastic,109.78,276.3,30.0,2.47,82.0
+SKU10158,Product 158,Sports,Pulse,White,Glass,,265.36,0.0,3.86,376.0
+SKU10159,Product 159,Books, orion ,Red,Wood,128.61,271.11,25.0,3.58,266.0
+SKU10160,Product 160,toys,Nova,Blue,Leather,,216.15,25.0,4.15,389.0
+SKU10161,Product 161,Clothing,Orion,Green,Plastic,134.53,266.02,0.0,2.11,385.0
+SKU10162,Product 162,Food,Terra,Black,Leather,17.42,49.39,30.0,3.33,67.0
+SKU10163,Product 163,Beauty,Nova,Black,Polyester,91.32,218.48,25.0,2.28,250.0
+SKU10164,Product 164,Beauty,Orion,Grey,Wood,39.87,103.37,10.0,4.07,446.0
+SKU10165,Product 165,Books,Nova,Grey,Metal,134.21,248.78,30.0,4.87,422.0
+SKU10166,Product 166,Home,Orion,Yellow,Plastic,94.09,166.18,5.0,4.79,209.0
+SKU10167,Product 167,Home,Nova,Blue,Leather,182.23,387.78,10.0,2.75,289.0
+SKU10168,Product 168,Home,Pulse,Grey,Metal,55.84,123.0,10.0,1.56,228.0
+SKU10169,Product 169,Electronics,Apex,Grey,Polyester,99.84,137.94,30.0,4.41,249.0
+SKU10170,Product 170,Beauty,Apex,Pink,,198.63,512.12,20.0,1.89,177.0
+SKU10171,Product 171,Beauty,Terra,Red,Cotton,132.45,217.29,15.0,2.7,489.0
+SKU10172,product 172,Sports,Vibe,Blue,Polyester,155.61,209.51,25.0,3.42,172.0
+SKU10173,Product 173,Electronics,Helios,Blue,Metal,46.01,66.91,30.0,1.06,383.0
+,Product 174,Food,Orion,Grey,Leather,68.04,104.73,5.0,1.73,66.0
+SKU10175,Product 175,Electronics,Terra,PINK,Polyester,10.85,17.87,20.0,1.27,247.0
+SKU10176,PRODUCT 176,Books,Apex,Blue,Glass,171.95,380.43,0.0,3.64,377.0
+SKU10177,Product 177,Food,Nova,Pink,,177.95,263.17,,1.79,83.0
+SKU10178,Product 178,Toys,Nova,White,Metal,167.9,286.15,20.0,3.2,352.0
+,Product 179,Food,Nova,Yellow,Cotton,153.84,268.74,15.0,3.04,358.0
+SKU10180,Product 180,Electronics,Orion,Green,Plastic,8.26,21.04,15.0,3.16,227.0
+SKU10181,Product 181,Food,NOVA,White,Polyester,59.29,173.74,20.0,4.06,496.0
+SKU10182,Product 182,Books,Zenith,,Cotton,81.29,127.71,20.0,2.75,287.0
+SKU10183,Product 183,Books,Zenith,Yellow,Cotton,93.6,132.88,15.0,4.4,369.0
+SKU10184,Product 184,Home,Apex,Yellow,Polyester,87.23,208.02,10.0,3.43,320.0
+SKU10185,Product 185,Clothing,Vibe,Red,Glass,,361.64,0.0,3.98,
+SKU10186,Product 186,Books,Apex,Yellow,Wood,115.55,154.96,15.0,3.19,215.0
+SKU10187,Product 187,Sports,Helios,Yellow,Plastic,157.29,250.48,25.0,4.02,
+SKU10188,Product 188,Toys,Helios,Pink,Metal,42.01,76.79,30.0,4.26,160.0
+,Product 189, books ,Orion,Black,Cotton,194.3,359.56,5.0,1.77,275.0
+SKU10190,Product 190,Books,Orion,Green,Wood,127.31,357.82,20.0,3.03,170.0
+SKU10191,Product 191,Food,Pulse,Pink,Cotton,166.13,280.31,15.0,1.59,43.0
+SKU10192,Product 192,Toys,Nova,Pink,Wood,58.84,101.7,0.0,3.35,46.0
+SKU10193,Product 193,beauty,Apex,Pink,Leather,108.31,275.29,5.0,4.52,104.0
+SKU10194,,Electronics,,,Polyester,44.12,83.7,0.0,1.73,186.0
+SKU10195,Product 195,Beauty, pulse ,Blue,Metal,138.22,216.03,15.0,1.77,323.0
+SKU10196,Product 196,Clothing,Orion, pink ,Leather,187.87,540.81,30.0,3.08,174.0
+SKU10197,Product 197,Food,Vibe, yellow ,Polyester,114.78,286.23,30.0,1.22,106.0
+SKU10198,,Books,Terra,Pink,Plastic,,149.16,30.0,1.74,173.0
+SKU10199,Product 199, books ,Apex,Black,Cotton,44.7,73.82,0.0,3.72,471.0

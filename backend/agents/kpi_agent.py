@@ -100,6 +100,15 @@ class KPIAgent(BaseAgent):
             "commentary": commentary,
         }
 
+        # Store KPI snapshot to Supabase
+        run_id = blackboard.config.get("run_id")
+        if run_id:
+            try:
+                from db.store import store_kpi_snapshot
+                store_kpi_snapshot(run_id, snapshot)
+            except Exception as e:
+                print(f"[KPIAgent] Warning: Supabase storage failed: {e}")
+
         return AgentResult(
             agent_id=self.agent_id,
             success=True,

@@ -26,16 +26,16 @@ export type DashboardData = {
   cards: KpiCardRow[];
   customers: CustomerRow[];
   products: any[];
-  forecastSnapshot: ForecastSnapshot | null; 
+  forecastSnapshot: ForecastSnapshot | null;
 };
 
-export function useDashboardData() {
+export function useDashboardData(runId?: string | null) {
   const [data, setData] = useState<DashboardData>({
     snapshot: null,
     cards: [],
     customers: [],
     products: [],
-    forecastSnapshot: null, // ✅ add
+    forecastSnapshot: null,
   });
 
   const [loading, setLoading] = useState(true);
@@ -46,9 +46,10 @@ export function useDashboardData() {
     setError(null);
 
     try {
+      const qs = runId ? `?run_id=${runId}` : "";
       const [snap, forecastSnap] = await Promise.all([
-        fetchJson<Snapshot>(`${API_BASE}/api/kpi/snapshot`),
-        fetchJson<ForecastSnapshot>(`${API_BASE}/api/forecast/snapshot`),
+        fetchJson<Snapshot>(`${API_BASE}/api/kpi/snapshot${qs}`),
+        fetchJson<ForecastSnapshot>(`${API_BASE}/api/forecast/snapshot${qs}`),
       ]);
 
       const cards = Array.isArray(snap?.cards) ? snap.cards : [];
@@ -68,7 +69,7 @@ export function useDashboardData() {
         cards,
         customers,
         products,
-        forecastSnapshot: forecastSnap, 
+        forecastSnapshot: forecastSnap,
       });
     } catch (e: any) {
       setError(e?.message ?? "Failed to load dashboard data");
@@ -82,11 +83,121 @@ export function useDashboardData() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [runId]);
 
   useEffect(() => {
     refresh();
   }, [refresh]);
 
   return { ...data, loading, error, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Pipeline runs
+// ---------------------------------------------------------------------------
+
+export type PipelineRun = {
+  id: string;
+  started_at: string;
+  completed_at: string | null;
+  status: string;
+  duration_seconds: number | null;
+};
+
+export function useRuns() {
+  const [runs, setRuns] = useState<PipelineRun[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const data = await fetchJson<PipelineRun[]>(`${API_BASE}/api/runs`);
+      setRuns(data);
+    } catch {
+      setRuns([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
+
+  return { runs, loading, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Cleaned / Featured data
+// ---------------------------------------------------------------------------
+
+export type DatasetPreview = {
+  table_name: string;
+  row_count: number;
+  column_count: number;
+  preview_rows: Record<string, any>[];
+  column_stats: Record<string, any>;
+  storage_path: string;
+  download_url: string;
+};
+
+export type CleanedDataResponse = {
+  run_id?: string;
+  tables: DatasetPreview[];
+  report: Record<string, any>;
+  error?: string;
+};
+
+export type FeaturedDataResponse = CleanedDataResponse;
+
+export function useCleanedData(runId?: string | null) {
+  const [data, setData] = useState<CleanedDataResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<CleanedDataResponse>(
+        `${API_BASE}/api/cleaned-data${qs}`
+      );
+      setData(result);
+    } catch {
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
+
+  return { data, loading, refresh };
+}
+
+export function useFeaturedData(runId?: string | null) {
+  const [data, setData] = useState<FeaturedDataResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<FeaturedDataResponse>(
+        `${API_BASE}/api/featured-data${qs}`
+      );
+      setData(result);
+    } catch {
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
+
+  return { data, loading, refresh };
 }

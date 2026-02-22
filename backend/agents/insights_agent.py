@@ -113,6 +113,15 @@ class InsightsAgent(BaseAgent):
             "executive_narrative": narrative,
         }
 
+        # Store insights to Supabase
+        run_id = blackboard.config.get("run_id")
+        if run_id:
+            try:
+                from db.store import store_insight_snapshot
+                store_insight_snapshot(run_id, bundle_dict)
+            except Exception as e:
+                print(f"[InsightsAgent] Warning: Supabase storage failed: {e}")
+
         return AgentResult(
             agent_id=self.agent_id,
             success=True,

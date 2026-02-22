@@ -20,6 +20,8 @@ from .insights_agent import InsightsAgent
 from .kpi_agent import KPIAgent
 from .forecast_agent import ForecastAgent
 
+from db.store import create_pipeline_run, complete_pipeline_run
+
 
 @dataclass
 class PipelineOrchestrator:
@@ -90,6 +92,14 @@ class PipelineOrchestrator:
         """Execute the full multi-agent pipeline."""
         start = time.time()
         total_agents = len(self.agents)
+
+        # Create a new pipeline run in Supabase
+        try:
+            run_id = create_pipeline_run()
+            self.blackboard.config["run_id"] = run_id
+        except Exception as e:
+            print(f"[orchestrator] Warning: Could not create pipeline run in Supabase: {e}")
+            self.blackboard.config["run_id"] = None
 
         self._emit(
             {"event": "pipeline_started", "total_agents": total_agents}
@@ -171,5 +181,21 @@ class PipelineOrchestrator:
             "llm_decisions_log": self.blackboard.llm_decisions,
         }
 
+        # Complete the pipeline run in Supabase
+        run_id = self.blackboard.config.get("run_id")
+        if run_id:
+            any_failed = any(not r.success for r in results.values())
+            try:
+                complete_pipeline_run(
+                    run_id=run_id,
+                    status="failed" if any_failed else "completed",
+                    duration_seconds=total_time,
+                    agent_summary=summary.get("agents"),
+                    llm_decisions_log=self.blackboard.llm_decisions,
+                )
+            except Exception as e:
+                print(f"[orchestrator] Warning: Could not complete pipeline run in Supabase: {e}")
+
+        summary["run_id"] = run_id
         self._emit(summary)
         return summary

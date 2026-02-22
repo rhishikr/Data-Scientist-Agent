@@ -4,12 +4,12 @@
   "config_path": "E:\\Programming\\Projects\\Data-Scientist-Agent\\backend\\pipeline\\cleaning\\config\\defaults.yaml",
   "files": [
     {
-      "input_file": "customers_dirty.csv",
+      "input_file": "customers.csv",
       "table_type": "customers",
-      "output_file": "customers_dirty_cleaned.csv",
-      "rows_before": 500,
-      "rows_after": 327,
-      "duplicates_removed": 22,
+      "output_file": "customers_cleaned.csv",
+      "rows_before": 513,
+      "rows_after": 470,
+      "duplicates_removed": 0,
       "dtype_coercions": {
         "customer_id": 0,
         "signup_date": 0,
@@ -20,16 +20,14 @@
         "wishlist_items_count": 0
       },
       "na_filled": {
-        "wishlist_items_count": 24
+        "wishlist_items_count": 22
       },
-      "dates_fixed": 377,
-      "dates_dropped": 565,
-      "rows_dropped_for_required": 139,
-      "outliers_removed": {
-        "wishlist_items_count": 12
-      },
+      "dates_fixed": 489,
+      "dates_dropped": 489,
+      "rows_dropped_for_required": 43,
+      "outliers_removed": {},
       "rule_violations": {
-        "avg_session_time_min>=0": 361
+        "avg_session_time_min>=0": 470
       },
       "rule_warnings": {},
       "pandera_errors": [
@@ -37,32 +35,32 @@
       ]
     },
     {
-      "input_file": "inventory_dirty.csv",
+      "input_file": "inventory.csv",
       "table_type": "inventory",
-      "output_file": "inventory_dirty_cleaned.csv",
-      "rows_before": 302,
-      "rows_after": 264,
-      "duplicates_removed": 15,
+      "output_file": "inventory_cleaned.csv",
+      "rows_before": 191,
+      "rows_after": 184,
+      "duplicates_removed": 0,
       "dtype_coercions": {
         "sku": 0,
         "warehouse_location": 0
       },
       "na_filled": {},
       "dates_fixed": 0,
-      "dates_dropped": 276,
-      "rows_dropped_for_required": 23,
+      "dates_dropped": 182,
+      "rows_dropped_for_required": 7,
       "outliers_removed": {},
       "rule_violations": {},
       "rule_warnings": {},
       "pandera_errors": []
     },
     {
-      "input_file": "marketing_dirty.csv",
+      "input_file": "marketing.csv",
       "table_type": "marketing",
-      "output_file": "marketing_dirty_cleaned.csv",
-      "rows_before": 1000,
-      "rows_after": 450,
-      "duplicates_removed": 17,
+      "output_file": "marketing_cleaned.csv",
+      "rows_before": 101,
+      "rows_after": 69,
+      "duplicates_removed": 0,
       "dtype_coercions": {
         "campaign_id": 0,
         "channel": 0,
@@ -73,27 +71,23 @@
       },
       "na_filled": {},
       "dates_fixed": 0,
-      "dates_dropped": 403,
-      "rows_dropped_for_required": 460,
+      "dates_dropped": 0,
+      "rows_dropped_for_required": 30,
       "outliers_removed": {
-        "impressions": 16,
-        "clicks": 19,
-        "conversions": 38
+        "clicks": 1,
+        "conversions": 1
       },
-      "rule_violations": {
-        "conversions<=clicks": 9,
-        "clicks<=impressions": 2
-      },
+      "rule_violations": {},
       "rule_warnings": {},
       "pandera_errors": []
     },
     {
-      "input_file": "payments_dirty.csv",
+      "input_file": "payments.csv",
       "table_type": "payments",
-      "output_file": "payments_dirty_cleaned.csv",
-      "rows_before": 1200,
-      "rows_after": 987,
-      "duplicates_removed": 64,
+      "output_file": "payments_cleaned.csv",
+      "rows_before": 5089,
+      "rows_after": 3927,
+      "duplicates_removed": 0,
       "dtype_coercions": {
         "payment_id": 0,
         "customer_id": 0,
@@ -102,19 +96,19 @@
       "na_filled": {},
       "dates_fixed": 0,
       "dates_dropped": 0,
-      "rows_dropped_for_required": 149,
+      "rows_dropped_for_required": 1162,
       "outliers_removed": {},
       "rule_violations": {},
       "rule_warnings": {},
       "pandera_errors": []
     },
     {
-      "input_file": "products_dirty.csv",
+      "input_file": "products.csv",
       "table_type": "products",
-      "output_file": "products_dirty_cleaned.csv",
+      "output_file": "products_cleaned.csv",
       "rows_before": 200,
-      "rows_after": 134,
-      "duplicates_removed": 6,
+      "rows_after": 156,
+      "duplicates_removed": 0,
       "dtype_coercions": {
         "product_id": 0,
         "name": 0,
@@ -125,21 +119,19 @@
       "na_filled": {},
       "dates_fixed": 0,
       "dates_dropped": 0,
-      "rows_dropped_for_required": 58,
-      "outliers_removed": {
-        "price": 2
-      },
+      "rows_dropped_for_required": 44,
+      "outliers_removed": {},
       "rule_violations": {},
       "rule_warnings": {},
       "pandera_errors": []
     },
     {
-      "input_file": "transactions_dirty.csv",
+      "input_file": "transactions.csv",
       "table_type": "transactions",
-      "output_file": "transactions_dirty_cleaned.csv",
-      "rows_before": 1200,
-      "rows_after": 683,
-      "duplicates_removed": 38,
+      "output_file": "transactions_cleaned.csv",
+      "rows_before": 5089,
+      "rows_after": 3704,
+      "duplicates_removed": 0,
       "dtype_coercions": {
         "transaction_id": 0,
         "customer_id": 0,
@@ -149,25 +141,23 @@
         "total_amount": 0
       },
       "na_filled": {},
-      "dates_fixed": 213,
-      "dates_dropped": 896,
-      "rows_dropped_for_required": 361,
+      "dates_fixed": 4863,
+      "dates_dropped": 0,
+      "rows_dropped_for_required": 1324,
       "outliers_removed": {
-        "quantity": 38,
-        "price_per_unit": 31,
-        "total_amount": 49
+        "total_amount": 61
       },
       "rule_violations": {},
       "rule_warnings": {},
       "pandera_errors": []
     },
     {
-      "input_file": "web_analytics_dirty.csv",
+      "input_file": "web_analytics.csv",
       "table_type": "web_analytics",
-      "output_file": "web_analytics_dirty_cleaned.csv",
-      "rows_before": 1500,
-      "rows_after": 977,
-      "duplicates_removed": 176,
+      "output_file": "web_analytics_cleaned.csv",
+      "rows_before": 10122,
+      "rows_after": 2421,
+      "duplicates_removed": 5834,
       "dtype_coercions": {
         "session_id": 0,
         "customer_id": 0,
@@ -176,9 +166,9 @@
         "abandoned_cart": 0
       },
       "na_filled": {},
-      "dates_fixed": 1150,
-      "dates_dropped": 283,
-      "rows_dropped_for_required": 347,
+      "dates_fixed": 9638,
+      "dates_dropped": 0,
+      "rows_dropped_for_required": 1867,
       "outliers_removed": {},
       "rule_violations": {},
       "rule_warnings": {},

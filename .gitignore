@@ -19,6 +19,18 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Pipeline output directories (stored in Supabase now)
+backend/data/cleaned_data/
+backend/data/featured_data/
+backend/data/hypothesis_outputs/
+backend/data/insight_outputs/
+backend/data/kpi_outputs/
+backend/data/forecast_outputs/
+backend/data/reports/
+
+# Model artifacts
+backend/models/*.joblib
+
 # Env files / secrets
 .env
 backend/.env

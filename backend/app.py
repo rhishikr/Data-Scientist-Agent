@@ -28,6 +28,25 @@ from pipeline.forecast.io import ForecastPaths
 from rag.api import router as rag_router
 from agents.orchestrator import PipelineOrchestrator
 
+from db.store import (
+    get_latest_kpi_snapshot as db_get_latest_kpi,
+    get_latest_forecast_snapshot as db_get_latest_forecast,
+    get_latest_insight_snapshot as db_get_latest_insight,
+    get_latest_hypothesis_snapshot as db_get_latest_hypothesis,
+    get_run_kpi_snapshot as db_get_run_kpi,
+    get_run_forecast_snapshot as db_get_run_forecast,
+    get_run_insight_snapshot as db_get_run_insight,
+    get_run_hypothesis_snapshot as db_get_run_hypothesis,
+    get_pipeline_runs,
+    get_latest_run_id,
+    get_run_snapshots,
+    get_cleaned_datasets,
+    get_featured_datasets,
+    get_cleaning_report,
+    get_feature_report,
+    get_signed_url,
+)
+
 
 # -----------------------------------------------------------------------------
 # Helpers (kept for backward-compat individual /run endpoints)
@@ -197,7 +216,7 @@ async def startup_run_pipeline():
     - USE_AGENTS=1 (default) to use multi-agent pipeline
     - USE_AGENTS=0 to fall back to legacy sequential pipeline
     """
-    run_on_start = os.getenv("RUN_PIPELINE_ON_START", "1") == "1"
+    run_on_start = os.getenv("RUN_PIPELINE_ON_START", "0") == "1"
     if not run_on_start:
         print("RUN_PIPELINE_ON_START=0 -> skipping pipeline on startup.")
         return
@@ -383,46 +402,77 @@ def run_forecast():
 
 
 # -----------------------------------------------------------------------------
-# Endpoints (SNAPSHOTS / READ OUTPUTS)
+# Endpoints (SNAPSHOTS / READ OUTPUTS) — now backed by Supabase
 # -----------------------------------------------------------------------------
 @app.get("/api/kpi/snapshot")
-def get_kpi_snapshot():
-    """
-    Returns the latest KPI snapshot JSON if it exists.
-    """
-    paths = DataPaths.default()
-    snap_path = Path(paths.out_dir) / "kpi_snapshot.json"
-    return _read_json_file(snap_path)
+def get_kpi_snapshot(run_id: Optional[str] = None):
+    """Returns KPI snapshot from Supabase (latest or for a specific run)."""
+    if run_id:
+        return db_get_run_kpi(run_id)
+    return db_get_latest_kpi()
 
 
 @app.get("/api/forecast/snapshot")
-def get_forecast_snapshot():
-    """
-    Returns latest forecast snapshot JSON if it exists.
-    """
-    paths = ForecastPaths.default()
-    snap_path = Path(paths.out_dir) / "forecast_snapshot.json"
-    return _read_json_file(snap_path)
+def get_forecast_snapshot(run_id: Optional[str] = None):
+    """Returns forecast snapshot from Supabase."""
+    if run_id:
+        return db_get_run_forecast(run_id)
+    return db_get_latest_forecast()
 
 
 @app.get("/api/insights/snapshot")
-def get_insights_snapshot():
-    """
-    Returns latest insights JSON if it exists.
-    """
-    project_root = Path(__file__).resolve().parent
-    snap_path = project_root / "data" / "insight_outputs" / "insights.json"
-    return _read_json_file(snap_path)
+def get_insights_snapshot(run_id: Optional[str] = None):
+    """Returns insights snapshot from Supabase."""
+    if run_id:
+        return db_get_run_insight(run_id)
+    return db_get_latest_insight()
 
 
 @app.get("/api/hypothesis/snapshot")
-def get_hypothesis_snapshot():
-    """
-    Returns latest hypothesis results JSON if it exists.
-    """
-    project_root = Path(__file__).resolve().parent
-    snap_path = project_root / "data" / "hypothesis_outputs" / "hypothesis_results.json"
-    return _read_json_file(snap_path)
+def get_hypothesis_snapshot(run_id: Optional[str] = None):
+    """Returns hypothesis results from Supabase."""
+    if run_id:
+        return db_get_run_hypothesis(run_id)
+    return db_get_latest_hypothesis()
+
+
+# -----------------------------------------------------------------------------
+# New endpoints: Runs, Cleaned/Featured data
+# -----------------------------------------------------------------------------
+@app.get("/api/runs")
+def list_runs():
+    """Returns list of all pipeline runs with timestamps and status."""
+    return get_pipeline_runs()
+
+
+@app.get("/api/runs/{run_id}")
+def get_run_detail(run_id: str):
+    """Returns all snapshots for a specific pipeline run."""
+    return get_run_snapshots(run_id)
+
+
+@app.get("/api/cleaned-data")
+def get_cleaned_data(run_id: Optional[str] = None):
+    """Returns cleaned dataset previews + column stats + download URLs."""
+    rid = run_id or get_latest_run_id()
+    if not rid:
+        return {"error": "No completed pipeline runs found.", "tables": [], "report": {}}
+    tables = get_cleaned_datasets(rid)
+    for t in tables:
+        t["download_url"] = get_signed_url(t["storage_path"])
+    return {"run_id": rid, "tables": tables, "report": get_cleaning_report(rid)}
+
+
+@app.get("/api/featured-data")
+def get_featured_data(run_id: Optional[str] = None):
+    """Returns featured dataset previews + column stats + download URLs."""
+    rid = run_id or get_latest_run_id()
+    if not rid:
+        return {"error": "No completed pipeline runs found.", "tables": [], "report": {}}
+    tables = get_featured_datasets(rid)
+    for t in tables:
+        t["download_url"] = get_signed_url(t["storage_path"])
+    return {"run_id": rid, "tables": tables, "report": get_feature_report(rid)}
 
 
 # -----------------------------------------------------------------------------

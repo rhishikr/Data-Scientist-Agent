@@ -19,6 +19,7 @@ pyarrow>=16.1.0
 matplotlib
 
 python-dotenv
+supabase
 
 # LLM / Agent dependencies
 langchain-openai
