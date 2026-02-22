@@ -88,7 +88,7 @@ export default function App() {
       <div className="flex min-h-screen w-full bg-slate-50">
         <Sidebar className="border-r bg-white">
           <SidebarContent>
-            <div className="px-4 py-6 border-b">
+            <div className="px-4 py-6">
               <div className="flex items-center gap-2">
                 <div className="size-8 rounded-lg bg-gradient-to-br from-teal-500 to-blue-600 flex items-center justify-center">
                   <GitBranch className="size-4 text-white" />
