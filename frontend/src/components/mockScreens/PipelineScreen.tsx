@@ -172,7 +172,7 @@ export function PipelineScreen() {
           duration: agentData.duration_seconds,
           phase: "idle",
         };
-      })
+      }),
     );
     if (status.llm_decisions_log) {
       setLlmDecisionsLog(status.llm_decisions_log);
@@ -205,7 +205,7 @@ export function PipelineScreen() {
     setExpandedAgent(null);
 
     const es = new EventSource(
-      `${API_BASE}/api/pipeline/stream?reset=true&alpha=0.05`
+      `${API_BASE}/api/pipeline/stream?reset=true&alpha=0.05`,
     );
     esRef.current = es;
 
@@ -222,8 +222,8 @@ export function PipelineScreen() {
                   progress: data.progress_pct || 0,
                   phase: "perceiving",
                 }
-              : s
-          )
+              : s,
+          ),
         );
       }
 
@@ -241,8 +241,8 @@ export function PipelineScreen() {
                   duration: data.duration || null,
                   phase: "idle",
                 }
-              : s
-          )
+              : s,
+          ),
         );
       }
 
@@ -330,9 +330,7 @@ export function PipelineScreen() {
       <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold">
-              Multi-Agent Pipeline
-            </h1>
+            <h1 className="text-xl font-semibold">Multi-Agent Pipeline</h1>
             <p className="text-xs text-muted-foreground">
               6 autonomous agents with LLM-driven perceive &rarr; reason &rarr;
               act cycles
@@ -352,267 +350,272 @@ export function PipelineScreen() {
       </div>
 
       <div className="p-6 space-y-6">
-      {/* Overall Progress */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle>Pipeline Status</CardTitle>
-              <CardDescription>
-                {pipelineRunning
-                  ? `Agent ${currentStep} of ${stages.length} is running...`
-                  : pipelineDone
-                    ? `Completed in ${totalDuration?.toFixed(1)}s`
-                    : "Ready to run"}
-              </CardDescription>
-            </div>
-            <Badge
-              variant="outline"
-              className={
-                pipelineRunning
-                  ? "text-blue-600 border-blue-200"
-                  : pipelineDone
-                    ? "text-green-600 border-green-200"
-                    : "text-slate-600 border-slate-200"
-              }
-            >
-              {pipelineRunning ? (
-                <>
-                  <Clock className="size-3 mr-1" /> In Progress
-                </>
-              ) : pipelineDone ? (
-                <>
-                  <CheckCircle2 className="size-3 mr-1" /> Complete
-                </>
-              ) : (
-                <>
-                  <Clock className="size-3 mr-1" /> Idle
-                </>
-              )}
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Overall Progress</span>
-              <span>
-                {completedCount} of {stages.length} agents complete &bull;{" "}
-                {overallProgress}%
-              </span>
-            </div>
-            <Progress value={overallProgress} className="h-2" />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Pipeline Stages */}
-      <div className="space-y-4">
-        {stages.map((stage, index) => {
-          const isExpanded = expandedAgent === stage.id;
-          const hasDecisions =
-            stage.llmReasoning || stage.llmDecisions.length > 0;
-
-          return (
-            <div key={stage.id}>
-              <Card
-                className={`border-2 transition-all ${
-                  stage.status === "running"
-                    ? "border-blue-200 shadow-md"
-                    : ""
-                }`}
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    {/* Stage Icon */}
-                    <div
-                      className={`flex size-14 shrink-0 items-center justify-center rounded-xl ${
-                        stage.status === "completed"
-                          ? "bg-green-100"
-                          : stage.status === "running"
-                            ? "bg-blue-100"
-                            : stage.status === "error"
-                              ? "bg-red-100"
-                              : "bg-slate-100"
-                      }`}
-                    >
-                      <stage.icon
-                        className={`size-7 ${
-                          stage.status === "completed"
-                            ? "text-green-600"
-                            : stage.status === "running"
-                              ? "text-blue-600"
-                              : stage.status === "error"
-                                ? "text-red-600"
-                                : "text-slate-400"
-                        }`}
-                      />
-                    </div>
-
-                    {/* Stage Details */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-base font-medium">{stage.name}</h3>
-                        <Badge
-                          variant="outline"
-                          className={getStatusColor(stage.status)}
-                        >
-                          {getStatusIcon(stage.status)}
-                          <span className="ml-1 capitalize">
-                            {stage.status}
-                          </span>
-                        </Badge>
-                        {stage.duration !== null && (
-                          <span className="text-xs text-muted-foreground">
-                            {stage.duration.toFixed(1)}s
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Phase indicator for running agents */}
-                      {stage.status === "running" && (
-                        <div className="mb-2">
-                          {getPhaseLabel(stage.phase)}
-                        </div>
-                      )}
-
-                      {/* Progress bar for running agents */}
-                      {stage.status === "running" && (
-                        <div className="space-y-1">
-                          <Progress value={stage.progress} className="h-1.5" />
-                        </div>
-                      )}
-
-                      {/* LLM Reasoning preview */}
-                      {stage.llmReasoning && stage.status !== "running" && (
-                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                          <Brain className="size-3 inline mr-1 text-amber-500" />
-                          {stage.llmReasoning}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex items-center gap-2">
-                      {hasDecisions && stage.status !== "running" && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="gap-1"
-                          onClick={() =>
-                            setExpandedAgent(isExpanded ? null : stage.id)
-                          }
-                        >
-                          <MessageSquare className="size-3" />
-                          LLM Decisions
-                          {isExpanded ? (
-                            <ChevronDown className="size-3" />
-                          ) : (
-                            <ChevronRight className="size-3" />
-                          )}
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Expanded LLM Decisions */}
-                  {isExpanded && hasDecisions && (
-                    <div className="mt-4 ml-[72px] rounded-lg border bg-slate-50 p-4">
-                      {stage.llmReasoning && (
-                        <div className="mb-3">
-                          <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
-                            LLM Reasoning
-                          </h4>
-                          <p className="text-sm text-slate-700">
-                            {stage.llmReasoning}
-                          </p>
-                        </div>
-                      )}
-                      {stage.llmDecisions.length > 0 && (
-                        <div>
-                          <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
-                            Decisions Made
-                          </h4>
-                          <ul className="space-y-1">
-                            {stage.llmDecisions.map((d, i) => (
-                              <li
-                                key={i}
-                                className="text-sm text-slate-700 flex items-start gap-2"
-                              >
-                                <span className="text-amber-500 mt-0.5">
-                                  &bull;
-                                </span>
-                                {d}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-
-              {/* Connector Arrow */}
-              {index < stages.length - 1 && (
-                <div className="flex justify-center py-2">
-                  <ArrowDown className="size-5 text-slate-300" />
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* LLM Decisions Log (shown after pipeline completes) */}
-      {pipelineDone && llmDecisionsLog.length > 0 && (
+        {/* Overall Progress */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Brain className="size-5 text-amber-500" />
-              Agent Decision Transparency Log
-            </CardTitle>
-            <CardDescription>
-              All LLM-driven decisions made during pipeline execution (
-              {llmDecisionsLog.length} decisions across{" "}
-              {stages.filter((s) => s.status === "completed").length} agents)
-            </CardDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Pipeline Status</CardTitle>
+                <CardDescription>
+                  {pipelineRunning
+                    ? `Agent ${currentStep} of ${stages.length} is running...`
+                    : pipelineDone
+                      ? `Completed in ${totalDuration?.toFixed(1)}s`
+                      : "Ready to run"}
+                </CardDescription>
+              </div>
+              <Badge
+                variant="outline"
+                className={
+                  pipelineRunning
+                    ? "text-blue-600 border-blue-200"
+                    : pipelineDone
+                      ? "text-green-600 border-green-200"
+                      : "text-slate-600 border-slate-200"
+                }
+              >
+                {pipelineRunning ? (
+                  <>
+                    <Clock className="size-3 mr-1" /> In Progress
+                  </>
+                ) : pipelineDone ? (
+                  <>
+                    <CheckCircle2 className="size-3 mr-1" /> Complete
+                  </>
+                ) : (
+                  <>
+                    <Clock className="size-3 mr-1" /> Idle
+                  </>
+                )}
+              </Badge>
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 max-h-80 overflow-y-auto">
-              {llmDecisionsLog.map((entry, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-3 rounded-lg border p-3 text-sm"
-                >
-                  <Badge variant="outline" className="shrink-0 text-xs">
-                    {entry.agent.replace(" Agent", "")}
-                  </Badge>
-                  <span className="text-slate-700">{entry.decision}</span>
-                </div>
-              ))}
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Overall Progress</span>
+                <span>
+                  {completedCount} of {stages.length} agents complete &bull;{" "}
+                  {overallProgress}%
+                </span>
+              </div>
+              <Progress value={overallProgress} className="h-2" />
             </div>
           </CardContent>
         </Card>
-      )}
 
-      {/* Pipeline Info */}
-      <div className="rounded-lg border border-teal-200 bg-teal-50 p-4">
-        <div className="flex gap-3">
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-teal-100">
-            <Sparkles className="size-4 text-teal-600" />
-          </div>
-          <div>
-            <p className="text-sm font-medium">Multi-Agent Architecture</p>
-            <p className="text-xs text-muted-foreground mt-1">
-              Each agent autonomously perceives its inputs, reasons about
-              strategy using an LLM, and executes the pipeline stage. Agents
-              communicate through a shared blackboard &mdash; decisions and
-              reasoning are logged for full transparency.
-            </p>
+        {/* Pipeline Stages */}
+        <div className="space-y-4">
+          {stages.map((stage, index) => {
+            const isExpanded = expandedAgent === stage.id;
+            const hasDecisions =
+              stage.llmReasoning || stage.llmDecisions.length > 0;
+
+            return (
+              <div key={stage.id}>
+                <Card
+                  className={`border-2 transition-all ${
+                    stage.status === "running"
+                      ? "border-blue-200 shadow-md"
+                      : ""
+                  }`}
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-4">
+                      {/* Stage Icon */}
+                      <div
+                        className={`flex size-14 shrink-0 items-center justify-center rounded-xl ${
+                          stage.status === "completed"
+                            ? "bg-green-100"
+                            : stage.status === "running"
+                              ? "bg-blue-100"
+                              : stage.status === "error"
+                                ? "bg-red-100"
+                                : "bg-slate-100"
+                        }`}
+                      >
+                        <stage.icon
+                          className={`size-7 ${
+                            stage.status === "completed"
+                              ? "text-green-600"
+                              : stage.status === "running"
+                                ? "text-blue-600"
+                                : stage.status === "error"
+                                  ? "text-red-600"
+                                  : "text-slate-400"
+                          }`}
+                        />
+                      </div>
+
+                      {/* Stage Details */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="text-base font-medium">
+                            {stage.name}
+                          </h3>
+                          <Badge
+                            variant="outline"
+                            className={getStatusColor(stage.status)}
+                          >
+                            {getStatusIcon(stage.status)}
+                            <span className="ml-1 capitalize">
+                              {stage.status}
+                            </span>
+                          </Badge>
+                          {stage.duration !== null && (
+                            <span className="text-xs text-muted-foreground">
+                              {stage.duration.toFixed(1)}s
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Phase indicator for running agents */}
+                        {stage.status === "running" && (
+                          <div className="mb-2">
+                            {getPhaseLabel(stage.phase)}
+                          </div>
+                        )}
+
+                        {/* Progress bar for running agents */}
+                        {stage.status === "running" && (
+                          <div className="space-y-1">
+                            <Progress
+                              value={stage.progress}
+                              className="h-1.5"
+                            />
+                          </div>
+                        )}
+
+                        {/* LLM Reasoning preview */}
+                        {stage.llmReasoning && stage.status !== "running" && (
+                          <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                            <Brain className="size-3 inline mr-1 text-amber-500" />
+                            {stage.llmReasoning}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center gap-2">
+                        {hasDecisions && stage.status !== "running" && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="gap-1"
+                            onClick={() =>
+                              setExpandedAgent(isExpanded ? null : stage.id)
+                            }
+                          >
+                            <MessageSquare className="size-3" />
+                            Agent Decisions
+                            {isExpanded ? (
+                              <ChevronDown className="size-3" />
+                            ) : (
+                              <ChevronRight className="size-3" />
+                            )}
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Expanded LLM Decisions */}
+                    {isExpanded && hasDecisions && (
+                      <div className="mt-4 ml-[72px] rounded-lg border bg-slate-50 p-4">
+                        {stage.llmReasoning && (
+                          <div className="mb-3">
+                            <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
+                              Reasoning
+                            </h4>
+                            <p className="text-sm text-slate-700">
+                              {stage.llmReasoning}
+                            </p>
+                          </div>
+                        )}
+                        {stage.llmDecisions.length > 0 && (
+                          <div>
+                            <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
+                              Decisions Made
+                            </h4>
+                            <ul className="space-y-1">
+                              {stage.llmDecisions.map((d, i) => (
+                                <li
+                                  key={i}
+                                  className="text-sm text-slate-700 flex items-start gap-2"
+                                >
+                                  <span className="text-amber-500 mt-0.5">
+                                    &bull;
+                                  </span>
+                                  {d}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Connector Arrow */}
+                {index < stages.length - 1 && (
+                  <div className="flex justify-center py-2">
+                    <ArrowDown className="size-5 text-slate-300" />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* LLM Decisions Log (shown after pipeline completes) */}
+        {pipelineDone && llmDecisionsLog.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Brain className="size-5 text-amber-500" />
+                Agent Decision Transparency Log
+              </CardTitle>
+              <CardDescription>
+                All LLM-driven decisions made during pipeline execution (
+                {llmDecisionsLog.length} decisions across{" "}
+                {stages.filter((s) => s.status === "completed").length} agents)
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2 max-h-80 overflow-y-auto">
+                {llmDecisionsLog.map((entry, i) => (
+                  <div
+                    key={i}
+                    className="flex items-start gap-3 rounded-lg border p-3 text-sm"
+                  >
+                    <Badge variant="outline" className="shrink-0 text-xs">
+                      {entry.agent.replace(" Agent", "")}
+                    </Badge>
+                    <span className="text-slate-700">{entry.decision}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Pipeline Info */}
+        <div className="rounded-lg border border-teal-200 bg-teal-50 p-4">
+          <div className="flex gap-3">
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-teal-100">
+              <Sparkles className="size-4 text-teal-600" />
+            </div>
+            <div>
+              <p className="text-sm font-medium">Multi-Agent Architecture</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Each agent autonomously perceives its inputs, reasons about
+                strategy using an LLM, and executes the pipeline stage. Agents
+                communicate through a shared blackboard &mdash; decisions and
+                reasoning are logged for full transparency.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );
