@@ -411,6 +411,29 @@ export function StockDemandTab({ cards, demandSkus }: StockDemandTabProps) {
                   />
                 </BarChart>
               </ChartContainer>
+              {/* Legend */}
+              <div className="flex flex-wrap gap-3 mt-3 justify-center">
+                {([
+                  { label: "Critical", color: "var(--chart-1)" },
+                  { label: "Warning", color: "var(--chart-2)" },
+                  { label: "Healthy", color: "var(--chart-4)" },
+                ]).map((item) => (
+                  <div key={item.label} className="flex items-center gap-1.5 text-xs">
+                    <span
+                      className="rounded-sm shrink-0"
+                      style={{
+                        backgroundColor: item.color,
+                        display: "inline-block",
+                        width: 12,
+                        height: 12,
+                        minWidth: 12,
+                        minHeight: 12,
+                      }}
+                    />
+                    <span className="text-muted-foreground">{item.label}</span>
+                  </div>
+                ))}
+              </div>
             </ChartEnlargeWrapper>
           </CardContent>
         </Card>

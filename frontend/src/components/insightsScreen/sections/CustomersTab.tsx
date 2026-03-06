@@ -100,17 +100,19 @@ interface MiniKpiProps {
 
 function MiniKpi({ icon: Icon, label, value, iconColor, iconBg }: MiniKpiProps) {
   return (
-    <Card className="py-3 px-4 gap-0">
+    <Card className="py-2.5 px-3 gap-0">
       <CardContent className="p-0">
-        <div className="flex items-center gap-2 mb-2">
+        <div className="flex items-center gap-2.5">
           <div className={`rounded-md p-1.5 ${iconBg}`}>
             <Icon className={`size-3.5 ${iconColor}`} />
           </div>
+          <div>
+            <div className="text-lg font-semibold tracking-tight leading-none">
+              {value}
+            </div>
+            <p className="text-[11px] text-muted-foreground mt-0.5">{label}</p>
+          </div>
         </div>
-        <div className="text-xl font-semibold tracking-tight leading-none mb-1">
-          {value}
-        </div>
-        <p className="text-xs text-muted-foreground leading-tight">{label}</p>
       </CardContent>
     </Card>
   );
@@ -145,27 +147,36 @@ export function CustomersTab({
 
   /* ---------- Customer Segments Donut data ---------- */
   const segmentData = useMemo(() => {
-    let topBuyer = 0;
-    let moderate = 0;
-    let atRisk = 0;
+    const counts: Record<string, number> = {};
 
-    customers.forEach((c) => {
-      const spend = safeNum(c.total_spend);
-      if (spend >= 3500) {
-        topBuyer++;
-      } else if (spend >= 1500) {
-        moderate++;
-      } else {
-        atRisk++;
-      }
+    churnPredictions.forEach((cp) => {
+      const seg = cp.segment ?? "Unknown";
+      counts[seg] = (counts[seg] || 0) + 1;
     });
 
-    return [
-      { name: "Top Buyer", value: topBuyer, fill: SEGMENT_COLORS[0] },
-      { name: "Moderate", value: moderate, fill: SEGMENT_COLORS[1] },
-      { name: "At-Risk", value: atRisk, fill: SEGMENT_COLORS[2] },
-    ].filter((s) => s.value > 0);
-  }, [customers]);
+    // Fallback to customers array if no churn predictions
+    if (Object.keys(counts).length === 0) {
+      customers.forEach((c) => {
+        const spend = safeNum(c.total_spend);
+        const seg = spend >= 3500 ? "Top Buyer" : spend >= 1500 ? "Moderate" : "At-Risk";
+        counts[seg] = (counts[seg] || 0) + 1;
+      });
+    }
+
+    const SEGMENT_COLOR_MAP: Record<string, string> = {
+      "Top Buyer": "#22c55e",
+      "Moderate": "#eab308",
+      "At-Risk": "#ef4444",
+    };
+
+    return Object.entries(counts)
+      .map(([name, value], i) => ({
+        name,
+        value,
+        fill: SEGMENT_COLOR_MAP[name] ?? SEGMENT_COLORS[i % SEGMENT_COLORS.length],
+      }))
+      .filter((s) => s.value > 0);
+  }, [customers, churnPredictions]);
 
   /* ---------- Churn Distribution histogram ---------- */
   const churnBuckets = useMemo(() => {
@@ -206,49 +217,30 @@ export function CustomersTab({
       {/* ============================================================
           Row 1: 6 KPI cards
           ============================================================ */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        <MiniKpi
-          icon={Users}
-          label="Active 30d"
-          value={Math.round(active30d).toLocaleString()}
-          iconColor="text-teal-600"
-          iconBg="bg-teal-50"
-        />
-        <MiniKpi
-          icon={UserPlus}
-          label="New 30d"
-          value={Math.round(new30d).toLocaleString()}
-          iconColor="text-blue-600"
-          iconBg="bg-blue-50"
-        />
-        <MiniKpi
-          icon={UserCheck}
-          label="Returning"
-          value={Math.round(returning).toLocaleString()}
-          iconColor="text-green-600"
-          iconBg="bg-green-50"
-        />
-        <MiniKpi
-          icon={DollarSign}
-          label="Avg CLV"
-          value={fmtCurrency(avgClv)}
-          iconColor="text-emerald-600"
-          iconBg="bg-emerald-50"
-        />
-        <MiniKpi
-          icon={AlertTriangle}
-          label="Churn Rate"
-          value={fmtPercent(churnRate)}
-          iconColor="text-orange-600"
-          iconBg="bg-orange-50"
-        />
-        <MiniKpi
-          icon={ShieldCheck}
-          label="Retention Rate"
-          value={fmtPercent(retentionRate)}
-          iconColor="text-purple-600"
-          iconBg="bg-purple-50"
-        />
+      <div className="flex rounded-xl border bg-card text-card-foreground">
+        {([
+          { icon: Users, label: "Active 30d", value: Math.round(active30d).toLocaleString(), color: "text-teal-600" },
+          { icon: UserPlus, label: "New 30d", value: Math.round(new30d).toLocaleString(), color: "text-blue-600" },
+          { icon: UserCheck, label: "Returning", value: Math.round(returning).toLocaleString(), color: "text-green-600" },
+          { icon: DollarSign, label: "Avg CLV", value: fmtCurrency(avgClv), color: "text-emerald-600" },
+          { icon: AlertTriangle, label: "Churn Rate", value: fmtPercent(churnRate), color: "text-orange-600" },
+          { icon: ShieldCheck, label: "Retention Rate", value: fmtPercent(retentionRate), color: "text-purple-600" },
+        ] as const).map((item) => {
+          const Icon = item.icon;
+          return (
+            <div key={item.label} className="flex-1 px-4 py-3 text-center">
+              <div className="flex items-center justify-center gap-1.5 mb-0.5">
+                <Icon className={`size-3.5 ${item.color}`} />
+                <span className="text-base font-semibold tracking-tight">
+                  {item.value}
+                </span>
+              </div>
+              <p className="whitespace-nowrap" style={{ fontSize: 12, lineHeight: 1.2, color: "#6b7280" }}>
+                {item.label}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
       {/* ============================================================
@@ -275,7 +267,7 @@ export function CustomersTab({
                           <ChartTooltipContent
                             formatter={(value, name) => (
                               <span>
-                                {Number(value).toLocaleString()} customers
+                                {name}: {Number(value).toLocaleString()} customers
                               </span>
                             )}
                           />
@@ -289,6 +281,7 @@ export function CustomersTab({
                         outerRadius={95}
                         paddingAngle={3}
                         strokeWidth={2}
+                        label={({ value }) => `${value}`}
                       >
                         {segmentData.map((entry) => (
                           <Cell key={entry.name} fill={entry.fill} />
@@ -296,21 +289,28 @@ export function CustomersTab({
                       </Pie>
                     </PieChart>
                   </ChartContainer>
+                  {/* Legend */}
+                  <div className="flex flex-wrap gap-3 mt-3 justify-center">
+                    {segmentData.map((seg) => (
+                      <div key={seg.name} className="flex items-center gap-1.5 text-xs">
+                        <span
+                          className="rounded-sm shrink-0"
+                          style={{
+                            backgroundColor: seg.fill,
+                            display: "inline-block",
+                            width: 12,
+                            height: 12,
+                            minWidth: 12,
+                            minHeight: 12,
+                          }}
+                        />
+                        <span className="text-muted-foreground">
+                          {seg.name} ({seg.value})
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </ChartEnlargeWrapper>
-                {/* Legend */}
-                <div className="flex flex-wrap gap-4 justify-center mt-2">
-                  {segmentData.map((seg) => (
-                    <div key={seg.name} className="flex items-center gap-1.5 text-xs">
-                      <span
-                        className="inline-block h-2.5 w-2.5 rounded-sm shrink-0"
-                        style={{ backgroundColor: seg.fill }}
-                      />
-                      <span className="text-muted-foreground">
-                        {seg.name} ({seg.value})
-                      </span>
-                    </div>
-                  ))}
-                </div>
               </>
             )}
           </CardContent>
@@ -432,9 +432,19 @@ export function CustomersTab({
                         </TableCell>
                         <TableCell>
                           {cp.segment ? (
-                            <Badge variant="outline" className="text-xs">
+                            <span
+                              className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${
+                                cp.segment === "Top Buyer"
+                                  ? "bg-green-100 text-green-800 ring-green-500/30"
+                                  : cp.segment === "Moderate"
+                                    ? "bg-amber-100 text-amber-800 ring-amber-500/30"
+                                    : cp.segment === "At-Risk"
+                                      ? "bg-red-100 text-red-800 ring-red-500/30"
+                                      : "bg-gray-100 text-gray-800 ring-gray-500/30"
+                              }`}
+                            >
                               {cp.segment}
-                            </Badge>
+                            </span>
                           ) : (
                             "-"
                           )}

@@ -181,21 +181,28 @@ export function OverviewTab({
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
-              </ChartEnlargeWrapper>
-            )}
-            {/* Legend */}
-            {pieData.length > 0 && (
-              <div className="flex flex-wrap gap-3 mt-2 justify-center">
+              {/* Legend */}
+              <div className="flex flex-wrap gap-3 mt-3 justify-center">
                 {pieData.map((entry) => (
                   <div key={entry.channel} className="flex items-center gap-1.5 text-xs">
                     <span
-                      className="inline-block h-2.5 w-2.5 rounded-sm shrink-0"
-                      style={{ backgroundColor: entry.fill }}
+                      className="rounded-sm shrink-0"
+                      style={{
+                        backgroundColor: entry.fill,
+                        display: "inline-block",
+                        width: 12,
+                        height: 12,
+                        minWidth: 12,
+                        minHeight: 12,
+                      }}
                     />
-                    <span className="text-muted-foreground">{entry.channel}</span>
+                    <span className="text-muted-foreground capitalize">
+                      {entry.channel.replace(/_/g, " ")}
+                    </span>
                   </div>
                 ))}
               </div>
+              </ChartEnlargeWrapper>
             )}
           </CardContent>
         </Card>
