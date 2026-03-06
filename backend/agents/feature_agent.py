@@ -15,7 +15,7 @@ from typing import Any, Dict
 
 from .base import BaseAgent, AgentResult, MessageType
 from .blackboard import SharedBlackboard
-from .llm import ask_llm
+from .llm import ask_llm, parse_llm_json
 
 
 class FeatureAgent(BaseAgent):
@@ -36,12 +36,25 @@ class FeatureAgent(BaseAgent):
         table_summaries = []
         for f in sorted(cleaned_dir.glob("*.csv")):
             try:
-                df = pd.read_csv(f, nrows=5)
+                df = pd.read_csv(f, nrows=100)
+                numeric_cols = df.select_dtypes(include="number").columns.tolist()
+                categorical_cols = df.select_dtypes(exclude="number").columns.tolist()
                 table_summaries.append(
                     {
                         "file": f.name,
                         "columns": list(df.columns),
                         "num_cols": len(df.columns),
+                        "rows_sampled": len(df),
+                        "dtypes": {col: str(df[col].dtype) for col in df.columns},
+                        "null_pct": {
+                            col: round(float(df[col].isna().mean()), 3)
+                            for col in df.columns
+                        },
+                        "numeric_columns": numeric_cols,
+                        "categorical_columns": categorical_cols,
+                        "unique_counts": {
+                            col: int(df[col].nunique()) for col in df.columns
+                        },
                         "sample_row": df.iloc[0].to_dict() if len(df) > 0 else {},
                     }
                 )
@@ -57,26 +70,28 @@ class FeatureAgent(BaseAgent):
         """Ask the LLM to suggest feature engineering strategies."""
         system_prompt = (
             "You are an expert data scientist specializing in feature engineering "
-            "for e-commerce/retail data. Given the cleaned table schemas, assess "
-            "what features would be most valuable. Return JSON:\n"
-            '{"assessment": "brief analysis of available data",\n'
-            ' "key_join_strategy": "how tables relate (e.g., customer_id, sku)",\n'
-            ' "high_value_features": ["top 3-5 feature ideas"],\n'
+            "for e-commerce/retail data. Given the cleaned table schemas (with data "
+            "types, null rates, and cardinality), assess what features would be most "
+            "valuable and how tables should be joined.\n\n"
+            "Return JSON:\n"
+            '{"assessment": "2-3 sentence analysis of the data landscape and feature potential",\n'
+            ' "key_join_strategy": "how tables relate (e.g., customer_id links customers<->transactions)",\n'
+            ' "high_value_features": ["top 5 specific feature ideas with rationale"],\n'
+            ' "data_quality_concerns": ["any issues that could affect feature quality"],\n'
             ' "proceed": true}\n'
-            "Return ONLY valid JSON."
+            "Return ONLY valid JSON, no markdown formatting."
         )
 
         tables_str = json.dumps(perception["cleaned_tables"], indent=2, default=str)[
-            :3000
+            :5000
         ]
         user_prompt = f"Cleaned tables:\n{tables_str}"
 
         llm_response = await ask_llm(system_prompt, user_prompt)
-
-        try:
-            plan = json.loads(llm_response)
-        except json.JSONDecodeError:
-            plan = {"assessment": llm_response[:200], "proceed": True}
+        plan = parse_llm_json(
+            llm_response,
+            fallback={"assessment": llm_response[:200], "proceed": True},
+        )
 
         self.log(
             MessageType.LLM_DECISION,
@@ -124,9 +139,49 @@ class FeatureAgent(BaseAgent):
         if report_path.exists():
             report = json.loads(report_path.read_text(encoding="utf-8"))
 
+        # POST-ACT LLM: Evaluate the features that were actually built
+        interpretation = "Feature engineering completed."
+        if report:
+            feature_summary = {
+                "tables_loaded": report.get("loaded_tables", []),
+                "output_files": {
+                    k: {"rows": report["rows"].get(k, 0), "cols": report["cols"].get(k, 0)}
+                    for k in report.get("rows", {})
+                },
+                "llm_suggested_features": plan.get("high_value_features", []),
+                "llm_join_strategy": plan.get("key_join_strategy", ""),
+            }
+
+            featured_dir = Path(blackboard.paths["featured_dir"])
+            for csv_file in sorted(featured_dir.glob("*.csv")):
+                try:
+                    import pandas as _pd
+                    cols = list(_pd.read_csv(csv_file, nrows=0).columns)
+                    feature_summary[f"{csv_file.stem}_columns"] = cols
+                except Exception:
+                    pass
+
+            eval_prompt = (
+                "You are a senior data scientist reviewing feature engineering output. "
+                "Analyze what was built and provide a 3-4 sentence evaluation covering:\n"
+                "1. Quality assessment of the engineered features\n"
+                "2. How well the features cover customer, product, and transaction dimensions\n"
+                "3. Any gaps or additional features that would add value\n\n"
+                f"Feature engineering results:\n{json.dumps(feature_summary, indent=2, default=str)[:3000]}"
+            )
+
+            try:
+                interpretation = await ask_llm(
+                    "You are a feature engineering specialist evaluating pipeline output.",
+                    eval_prompt,
+                )
+            except Exception as e:
+                interpretation = f"Feature evaluation skipped: {e}"
+
         blackboard.data_state["features"] = {
             "report": report,
             "strategy": plan,
+            "interpretation": interpretation,
         }
 
         # Store featured data + report to Supabase
@@ -156,7 +211,16 @@ class FeatureAgent(BaseAgent):
         return AgentResult(
             agent_id=self.agent_id,
             success=True,
-            outputs={"feature_report_keys": list(report.keys())},
+            outputs={
+                "feature_report_keys": list(report.keys()),
+                "tables_loaded": report.get("loaded_tables", []),
+                "output_rows": report.get("rows", {}),
+                "output_cols": report.get("cols", {}),
+            },
             llm_reasoning=plan.get("assessment", ""),
-            llm_decisions=plan.get("high_value_features", []),
+            llm_decisions=[
+                f"Join strategy: {plan.get('key_join_strategy', 'auto-detected')}",
+                f"Data concerns: {plan.get('data_quality_concerns', 'none identified')}",
+                f"Feature evaluation: {interpretation[:300]}",
+            ],
         )

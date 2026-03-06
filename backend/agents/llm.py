@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from typing import Any, Optional
+import json
+import re
+from typing import Any, Dict, Optional
 
 
 # Lazy imports to avoid crashing if langchain is not yet installed.
@@ -36,3 +38,17 @@ async def ask_llm(
         ]
     )
     return response.content
+
+
+def parse_llm_json(raw: str, fallback: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """Parse JSON from LLM response, stripping markdown code fences if present."""
+    text = raw.strip()
+    match = re.match(r"^```(?:json)?\s*\n?(.*?)```\s*$", text, re.DOTALL)
+    if match:
+        text = match.group(1).strip()
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        if fallback is not None:
+            return fallback
+        return {"assessment": raw[:200], "proceed": True}
