@@ -275,11 +275,11 @@ function DataStageSection({
         </Button>
       </div>
 
-      {activeTable && <DataPreviewTable dataset={activeTable} />}
-
       {showStats && activeTable && (
         <ColumnStatsPanel stats={activeTable.column_stats} />
       )}
+
+      {activeTable && <DataPreviewTable dataset={activeTable} />}
     </div>
   );
 }
@@ -293,7 +293,7 @@ export function DataExplorerScreen() {
     useFeaturedData(selectedRunId);
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
         <div className="flex items-center justify-between">
           <div>

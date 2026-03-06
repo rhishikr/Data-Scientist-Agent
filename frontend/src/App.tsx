@@ -101,8 +101,8 @@ export default function App() {
           </SidebarContent>
         </Sidebar>
 
-        <SidebarInset className="flex-1">
-          <main>{renderContent()}</main>
+        <SidebarInset className="flex-1 min-w-0">
+          <div>{renderContent()}</div>
         </SidebarInset>
       </div>
     </SidebarProvider>
