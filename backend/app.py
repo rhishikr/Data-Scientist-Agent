@@ -48,6 +48,8 @@ from db.store import (
     store_ai_analysis as db_store_ai_analysis,
     get_latest_action_plan_snapshot as db_get_latest_action_plan,
     get_run_action_plan_snapshot as db_get_run_action_plan,
+    upsert_prescription_status as db_upsert_prescription_status,
+    get_prescription_statuses as db_get_prescription_statuses,
     get_pipeline_runs,
     get_latest_run_id,
     get_run_snapshots,
@@ -573,7 +575,8 @@ def get_demand_forecast(run_id: Optional[str] = None):
         demand_csv["current_stock"] = pd.to_numeric(demand_csv[stock_col], errors="coerce").fillna(0)
         demand_csv["days_until_stockout"] = demand_csv.apply(
             lambda r: round(r["current_stock"] / r["avg_daily_forecast"], 1)
-            if r["avg_daily_forecast"] > 0 else None,
+            if r["avg_daily_forecast"] > 0
+            else (9999 if r["current_stock"] > 0 else None),
             axis=1,
         )
         demand_csv["reorder_threshold"] = pd.to_numeric(
@@ -849,6 +852,168 @@ def get_action_plan(run_id: Optional[str] = None):
     )
 
     return _safe_json(plan.to_dict())
+
+
+# -----------------------------------------------------------------------------
+# Location-level stock analysis
+# -----------------------------------------------------------------------------
+@app.get("/api/forecast/series/demand-by-location")
+def get_demand_by_location(run_id: Optional[str] = None):
+    """Returns per-SKU stock levels broken down by warehouse location,
+    with store transfer recommendations where stock imbalances exist."""
+    inv_csv = _read_local_csv(_CLEANED_DIR / "inventory_cleaned.csv")
+    if inv_csv is None or inv_csv.empty:
+        return {"locations": [], "transfers": [], "error": "No inventory data available."}
+
+    demand_csv = _read_local_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
+    prod_csv = _read_local_csv(_CLEANED_DIR / "products_cleaned.csv")
+
+    inv_csv["sku"] = inv_csv["sku"].astype(str)
+
+    # Normalize warehouse_location casing
+    loc_col = "warehouse_location" if "warehouse_location" in inv_csv.columns else None
+    if not loc_col:
+        return {"locations": [], "transfers": [], "error": "No warehouse_location column in inventory data."}
+
+    inv_csv[loc_col] = inv_csv[loc_col].str.upper().str.strip()
+    inv_csv = inv_csv[inv_csv[loc_col].notna() & (inv_csv[loc_col] != "")]
+
+    stock_col = "stock_level" if "stock_level" in inv_csv.columns else "quantity_available"
+    if stock_col not in inv_csv.columns:
+        return {"locations": [], "transfers": [], "error": "No stock level column found."}
+
+    inv_csv["stock"] = pd.to_numeric(inv_csv[stock_col], errors="coerce").fillna(0)
+
+    # Join with product names
+    if prod_csv is not None and not prod_csv.empty:
+        sku_col_prod = "sku" if "sku" in prod_csv.columns else ("product_id" if "product_id" in prod_csv.columns else None)
+        if sku_col_prod:
+            prod_csv["sku"] = prod_csv[sku_col_prod].astype(str)
+            name_cols = ["sku"]
+            for c in ["name", "category"]:
+                if c in prod_csv.columns:
+                    name_cols.append(c)
+            # Deduplicate product info
+            prod_info = prod_csv[name_cols].drop_duplicates(subset=["sku"])
+            inv_csv = inv_csv.merge(prod_info, on="sku", how="left")
+
+    # Join with demand forecast for avg_daily_forecast
+    if demand_csv is not None and not demand_csv.empty:
+        demand_csv["sku"] = demand_csv["sku"].astype(str)
+        demand_cols = ["sku", "avg_daily_forecast", "forecast_qty_30d"]
+        demand_cols = [c for c in demand_cols if c in demand_csv.columns]
+        inv_csv = inv_csv.merge(demand_csv[demand_cols], on="sku", how="left")
+    else:
+        inv_csv["avg_daily_forecast"] = 0
+        inv_csv["forecast_qty_30d"] = 0
+
+    inv_csv["avg_daily_forecast"] = pd.to_numeric(inv_csv.get("avg_daily_forecast", 0), errors="coerce").fillna(0)
+
+    # Build per-location summary
+    location_summary = (
+        inv_csv.groupby(loc_col)
+        .agg(
+            total_skus=("sku", "nunique"),
+            total_stock=("stock", "sum"),
+            avg_stock=("stock", "mean"),
+        )
+        .reset_index()
+        .rename(columns={loc_col: "location"})
+        .sort_values("total_stock", ascending=False)
+        .to_dict(orient="records")
+    )
+
+    # Identify store transfer opportunities:
+    # SKU present in multiple locations where one has excess and another is low
+    transfers = []
+    sku_groups = inv_csv.groupby("sku")
+    for sku_id, group in sku_groups:
+        if len(group) < 2:
+            continue  # Need at least 2 locations to transfer
+
+        avg_demand = group["avg_daily_forecast"].iloc[0]
+        if avg_demand <= 0:
+            continue
+
+        group = group.copy()
+        group["days_left"] = group["stock"] / avg_demand
+
+        low_stock = group[group["days_left"] < 14]
+        high_stock = group[group["days_left"] >= 30]
+
+        if low_stock.empty or high_stock.empty:
+            continue
+
+        for _, low_row in low_stock.iterrows():
+            best_source = high_stock.loc[high_stock["stock"].idxmax()]
+            surplus = int(best_source["stock"] - avg_demand * 30)  # Keep 30 days at source
+            if surplus <= 0:
+                continue
+
+            deficit = int(avg_demand * 14 - low_row["stock"])  # Bring to 14 days
+            transfer_qty = min(surplus, max(deficit, 1))
+
+            transfers.append({
+                "sku": str(sku_id),
+                "product_name": str(low_row.get("name", sku_id)),
+                "category": str(low_row.get("category", "")),
+                "from_location": str(best_source[loc_col]),
+                "from_stock": int(best_source["stock"]),
+                "to_location": str(low_row[loc_col]),
+                "to_stock": int(low_row["stock"]),
+                "transfer_qty": transfer_qty,
+                "to_days_left": round(low_row["days_left"], 1),
+                "urgency": "critical" if low_row["days_left"] < 7 else "warning",
+            })
+
+    # Sort transfers by urgency
+    transfers.sort(key=lambda t: t["to_days_left"])
+
+    # Build per-location per-SKU detail (top 100 rows)
+    detail_cols = ["sku", loc_col, "stock"]
+    for c in ["name", "category", "avg_daily_forecast"]:
+        if c in inv_csv.columns:
+            detail_cols.append(c)
+    detail = inv_csv[detail_cols].head(200).rename(columns={loc_col: "location"}).to_dict(orient="records")
+
+    return _safe_json({
+        "locations": location_summary,
+        "transfers": transfers[:50],
+        "detail": detail,
+    })
+
+
+# -----------------------------------------------------------------------------
+# Prescription status tracking (action checklist)
+# -----------------------------------------------------------------------------
+@app.patch("/api/action-plan/prescriptions/{prescription_id}/status")
+async def update_prescription_status(prescription_id: str, body: dict):
+    """Update the status of a prescription (done/dismissed/pending)."""
+    from pydantic import BaseModel
+
+    status = body.get("status", "pending")
+    if status not in ("pending", "done", "dismissed"):
+        return {"error": f"Invalid status: {status}. Must be pending, done, or dismissed."}
+
+    run_id = body.get("run_id") or get_latest_run_id()
+    if not run_id:
+        return {"error": "No pipeline run found."}
+
+    try:
+        db_upsert_prescription_status(run_id, prescription_id, status)
+        return {"ok": True, "prescription_id": prescription_id, "status": status}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.get("/api/action-plan/prescriptions/statuses")
+def get_prescription_statuses_endpoint(run_id: Optional[str] = None):
+    """Get all prescription statuses for a run."""
+    rid = run_id or get_latest_run_id()
+    if not rid:
+        return {"statuses": [], "run_id": None}
+    statuses = db_get_prescription_statuses(rid)
+    return {"statuses": statuses, "run_id": rid}
 
 
 # -----------------------------------------------------------------------------

@@ -4,6 +4,7 @@ import type {
   Snapshot, KpiCardRow, CustomerRow, ForecastSnapshot,
   InsightsSnapshot, RevenueForecastPoint, DemandForecastSku,
   ChurnPrediction, AiAnalysis, ActionPlan, ChartNarratives,
+  LocationSummary, StoreTransfer,
 } from "./types";
 
 const API_BASE = "http://127.0.0.1:8000";
@@ -415,4 +416,39 @@ export function useFeaturedData(runId?: string | null) {
   }, [refresh]);
 
   return { data, loading, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Location stock analysis
+// ---------------------------------------------------------------------------
+
+export type LocationStockData = {
+  locations: LocationSummary[];
+  transfers: StoreTransfer[];
+};
+
+export function useLocationStock(runId?: string | null) {
+  const [data, setData] = useState<LocationStockData>({ locations: [], transfers: [] });
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<LocationStockData & { error?: string }>(
+        `${API_BASE}/api/forecast/series/demand-by-location${qs}`
+      );
+      setData({
+        locations: result.locations || [],
+        transfers: result.transfers || [],
+      });
+    } catch {
+      setData({ locations: [], transfers: [] });
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { ...data, loading, refresh };
 }

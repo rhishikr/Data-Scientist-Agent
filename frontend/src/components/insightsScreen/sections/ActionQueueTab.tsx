@@ -1,41 +1,87 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
+import { Card, CardContent } from "../../ui/card";
 import { Badge } from "../../ui/badge";
 import { Input } from "../../ui/input";
-import type { ActionPlan, Prescription } from "../dashboard/types";
+import type { ActionPlan, Prescription, PrescriptionStatus } from "../dashboard/types";
 import { HealthGauge } from "../charts/HealthGauge";
 import { PrescriptionCard } from "../charts/PrescriptionCard";
 
+const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+
 const CATEGORY_FILTERS = ["all", "inventory", "customer", "revenue", "marketing", "product"] as const;
+const STATUS_FILTERS = ["all", "pending", "done", "dismissed"] as const;
 
 interface ActionQueueTabProps {
   actionPlan: ActionPlan | null;
   loading?: boolean;
+  runId?: string | null;
 }
 
-export function ActionQueueTab({ actionPlan, loading }: ActionQueueTabProps) {
+export function ActionQueueTab({ actionPlan, loading, runId }: ActionQueueTabProps) {
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
   const [search, setSearch] = useState("");
+  const [statuses, setStatuses] = useState<Record<string, PrescriptionStatus>>({});
 
-  const prescriptions = actionPlan?.prescriptions ?? [];
+  // Fetch saved statuses on mount
+  useEffect(() => {
+    const url = runId
+      ? `${API_BASE}/api/action-plan/prescriptions/statuses?run_id=${runId}`
+      : `${API_BASE}/api/action-plan/prescriptions/statuses`;
+    fetch(url)
+      .then((r) => r.json())
+      .then((data) => {
+        const map: Record<string, PrescriptionStatus> = {};
+        for (const s of data.statuses ?? []) {
+          map[s.prescription_id] = s.status as PrescriptionStatus;
+        }
+        setStatuses(map);
+      })
+      .catch(() => {});
+  }, [runId]);
+
+  // Merge statuses into prescriptions
+  const prescriptions: Prescription[] = useMemo(() => {
+    return (actionPlan?.prescriptions ?? []).map((p) => ({
+      ...p,
+      status: statuses[p.id] ?? p.status ?? "pending",
+    }));
+  }, [actionPlan, statuses]);
+
+  const handleStatusChange = useCallback(
+    (id: string, status: PrescriptionStatus) => {
+      // Optimistic update
+      setStatuses((prev) => ({ ...prev, [id]: status }));
+      // Persist to backend
+      fetch(`${API_BASE}/api/action-plan/prescriptions/${id}/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status, run_id: runId ?? undefined }),
+      }).catch(() => {});
+    },
+    [runId],
+  );
 
   const filtered = useMemo(() => {
     let result = prescriptions;
     if (categoryFilter !== "all") {
       result = result.filter((p) => p.category === categoryFilter);
     }
-if (search.trim()) {
+    if (statusFilter !== "all") {
+      result = result.filter((p) => (p.status ?? "pending") === statusFilter);
+    }
+    if (search.trim()) {
       const q = search.toLowerCase();
       result = result.filter(
         (p) =>
           p.title.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q)
+          p.description.toLowerCase().includes(q),
       );
     }
     return result;
-  }, [prescriptions, categoryFilter, search]);
+  }, [prescriptions, categoryFilter, statusFilter, search]);
 
   const urgencyCounts = useMemo(() => {
     const counts: Record<string, number> = { critical: 0, high: 0, medium: 0, low: 0 };
@@ -44,6 +90,11 @@ if (search.trim()) {
     }
     return counts;
   }, [prescriptions]);
+
+  const completedCount = useMemo(
+    () => prescriptions.filter((p) => p.status === "done").length,
+    [prescriptions],
+  );
 
   if (loading) {
     return (
@@ -75,10 +126,28 @@ if (search.trim()) {
               <HealthGauge score={actionPlan.health_score} size={110} />
             </div>
             <div className="flex-1 space-y-2">
-              <h3 className="text-lg font-semibold">Store Health</h3>
+              <div className="flex items-center gap-3">
+                <h3 className="text-lg font-semibold">Store Health</h3>
+                {prescriptions.length > 0 && (
+                  <span className="text-sm text-muted-foreground">
+                    {completedCount}/{prescriptions.length} completed
+                  </span>
+                )}
+              </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {actionPlan.health_summary}
               </p>
+              {/* Progress bar */}
+              {prescriptions.length > 0 && (
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-green-500 transition-all duration-300"
+                      style={{ width: `${(completedCount / prescriptions.length) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              )}
               <div className="flex items-center gap-2 flex-wrap">
                 {urgencyCounts.critical > 0 && (
                   <Badge color="red">
@@ -119,10 +188,29 @@ if (search.trim()) {
           />
         </div>
 
+        {/* Status filter */}
+        <div className="flex items-center gap-1">
+          {STATUS_FILTERS.map((s) => (
+            <button
+              type="button"
+              key={s}
+              onClick={() => setStatusFilter(s)}
+              className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors cursor-pointer ${
+                statusFilter === s
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+              }`}
+            >
+              {s === "all" ? "All" : s.charAt(0).toUpperCase() + s.slice(1)}
+            </button>
+          ))}
+        </div>
+
         {/* Category filter */}
         <div className="flex items-center gap-1">
           {CATEGORY_FILTERS.map((cat) => (
             <button
+              type="button"
               key={cat}
               onClick={() => setCategoryFilter(cat)}
               className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors cursor-pointer ${
@@ -146,7 +234,13 @@ if (search.trim()) {
             </CardContent>
           </Card>
         ) : (
-          filtered.map((p) => <PrescriptionCard key={p.id} prescription={p} />)
+          filtered.map((p) => (
+            <PrescriptionCard
+              key={p.id}
+              prescription={p}
+              onStatusChange={handleStatusChange}
+            />
+          ))
         )}
       </div>
     </div>

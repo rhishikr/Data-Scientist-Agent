@@ -287,6 +287,40 @@ def get_run_action_plan_snapshot(run_id: str) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# Prescription status tracking (action checklist)
+# ---------------------------------------------------------------------------
+
+def upsert_prescription_status(
+    run_id: str, prescription_id: str, status: str
+) -> None:
+    """Create or update the status of a prescription action."""
+    sb = get_supabase()
+    sb.table("prescription_statuses").upsert(
+        {
+            "run_id": run_id,
+            "prescription_id": prescription_id,
+            "status": status,
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        },
+        on_conflict="run_id,prescription_id",
+    ).execute()
+
+
+def get_prescription_statuses(run_id: str) -> List[dict]:
+    """Fetch all prescription statuses for a given run."""
+    def _query():
+        sb = get_supabase()
+        return (
+            sb.table("prescription_statuses")
+            .select("prescription_id, status, updated_at")
+            .eq("run_id", run_id)
+            .execute()
+        )
+    result = with_retry(_query)
+    return result.data or []
+
+
+# ---------------------------------------------------------------------------
 # Cleaned / Featured data reads
 # ---------------------------------------------------------------------------
 

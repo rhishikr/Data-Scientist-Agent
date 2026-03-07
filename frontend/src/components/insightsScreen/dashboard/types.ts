@@ -229,6 +229,8 @@ export type AiAnalysis = {
 // ------------------------
 // Prescription / Action Plan (Retail Doctor)
 // ------------------------
+export type PrescriptionStatus = "pending" | "done" | "dismissed";
+
 export type Prescription = {
   id: string;
   priority: number;
@@ -242,6 +244,7 @@ export type Prescription = {
   source: string;
   action_type: string;
   related_entities: string[];
+  status?: PrescriptionStatus;
 };
 
 export type ActionPlan = {
@@ -249,6 +252,30 @@ export type ActionPlan = {
   health_summary: string;
   prescriptions: Prescription[];
   generated_at: string;
+  segment_recommendations?: Record<string, string[]>;
+};
+
+// ------------------------
+// Location stock analysis
+// ------------------------
+export type LocationSummary = {
+  location: string;
+  total_skus: number;
+  total_stock: number;
+  avg_stock: number;
+};
+
+export type StoreTransfer = {
+  sku: string;
+  product_name: string;
+  category: string;
+  from_location: string;
+  from_stock: number;
+  to_location: string;
+  to_stock: number;
+  transfer_qty: number;
+  to_days_left: number;
+  urgency: "critical" | "warning";
 };
 
 // ------------------------

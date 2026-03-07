@@ -38,14 +38,18 @@ class ActionPlan:
     health_summary: str
     prescriptions: list[Prescription]
     generated_at: str
+    segment_recommendations: dict[str, list[str]] | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        d = {
             "health_score": self.health_score,
             "health_summary": self.health_summary,
             "prescriptions": [p.to_dict() for p in self.prescriptions],
             "generated_at": self.generated_at,
         }
+        if self.segment_recommendations:
+            d["segment_recommendations"] = self.segment_recommendations
+        return d
 
 
 def _make_id(*parts: str) -> str:
@@ -216,6 +220,58 @@ def prescriptions_from_executive_insights(
     return out
 
 
+def build_segment_recommendations(
+    churn_predictions: list[dict[str, Any]],
+) -> dict[str, list[str]]:
+    """Generate actionable recommendations for each customer segment."""
+    # Segment stats
+    segments: dict[str, dict[str, Any]] = {}
+    for c in churn_predictions:
+        seg = c.get("segment", "Unknown")
+        if seg not in segments:
+            segments[seg] = {"count": 0, "total_spend": 0, "high_churn": 0}
+        segments[seg]["count"] += 1
+        segments[seg]["total_spend"] += c.get("total_spend", 0)
+        if (c.get("churn_prob_30d") or 0) >= 0.6:
+            segments[seg]["high_churn"] += 1
+
+    recs: dict[str, list[str]] = {}
+
+    if "Top Buyer" in segments:
+        s = segments["Top Buyer"]
+        recs["Top Buyer"] = [
+            f"Protect your {s['count']} top buyers who drive ${s['total_spend']:,.0f} in revenue",
+            "Offer exclusive loyalty rewards, early access to new products, or VIP experiences",
+            "Assign dedicated account management for your highest-value customers",
+        ]
+        if s["high_churn"] > 0:
+            recs["Top Buyer"].append(
+                f"URGENT: {s['high_churn']} top buyers show high churn risk -- prioritize personal outreach"
+            )
+
+    if "Moderate" in segments:
+        s = segments["Moderate"]
+        recs["Moderate"] = [
+            f"Nurture {s['count']} moderate spenders to upgrade their spending",
+            "Use targeted cross-sell campaigns based on purchase history",
+            "Implement tiered rewards to incentivize higher order values",
+        ]
+
+    if "At-Risk" in segments:
+        s = segments["At-Risk"]
+        recs["At-Risk"] = [
+            f"Re-engage {s['count']} at-risk customers before they churn",
+            "Send win-back campaigns with personalized discounts",
+            "Survey churning customers to understand dissatisfaction drivers",
+        ]
+        if s["high_churn"] > 0:
+            recs["At-Risk"].append(
+                f"{s['high_churn']} at-risk customers have >60% churn probability -- act within 7 days"
+            )
+
+    return recs
+
+
 def compute_health_score(
     insights: list[dict[str, Any]],
     demand_skus: list[dict[str, Any]],
@@ -324,9 +380,12 @@ def build_action_plan(
         health_score, prescriptions, demand_skus, churn_predictions,
     )
 
+    segment_recs = build_segment_recommendations(churn_predictions)
+
     return ActionPlan(
         health_score=health_score,
         health_summary=health_summary,
         prescriptions=prescriptions,
         generated_at=generated_at,
+        segment_recommendations=segment_recs if segment_recs else None,
     )

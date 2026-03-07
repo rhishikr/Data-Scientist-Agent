@@ -27,6 +27,7 @@ import {
   useAiAnalysis,
   useActionPlan,
   useChartNarratives,
+  useLocationStock,
 } from "./dashboard/data";
 import {
   clamp01,
@@ -74,6 +75,8 @@ export function CustomerInsightsScreen() {
   const { data: actionPlan, loading: actionPlanLoading } =
     useActionPlan(selectedRunId);
   const { data: chartNarratives } = useChartNarratives(selectedRunId);
+  const { locations: locationSummary, transfers: storeTransfers } =
+    useLocationStock(selectedRunId);
 
   // Derive channel revenue data from KPI snapshot
   const channelRevenueData = useMemo(() => {
@@ -236,6 +239,7 @@ export function CustomerInsightsScreen() {
           <ActionQueueTab
             actionPlan={actionPlan}
             loading={actionPlanLoading}
+            runId={selectedRunId}
           />
         </TabsContent>
 
@@ -274,6 +278,8 @@ export function CustomerInsightsScreen() {
             cards={cards}
             demandSkus={demandSkus}
             chartNarrative={chartNarratives?.narratives?.stock_health}
+            locationSummary={locationSummary}
+            storeTransfers={storeTransfers}
           />
         </TabsContent>
 
@@ -283,11 +289,12 @@ export function CustomerInsightsScreen() {
             customers={customers}
             churnPredictions={churnPredictions}
             chartNarrative={chartNarratives?.narratives?.churn_distribution}
+            segmentRecommendations={actionPlan?.segment_recommendations}
           />
         </TabsContent>
 
         <TabsContent value="products">
-          <ProductsTab cards={cards} snapshot={snapshot} />
+          <ProductsTab cards={cards} snapshot={snapshot} demandSkus={demandSkus} />
         </TabsContent>
 
         <TabsContent value="marketing">

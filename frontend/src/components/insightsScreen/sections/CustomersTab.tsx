@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   PieChart,
   Pie,
@@ -16,6 +16,10 @@ import {
   DollarSign,
   AlertTriangle,
   ShieldCheck,
+  ChevronDown,
+  ChevronUp,
+  Lightbulb,
+  CheckCircle,
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
@@ -52,6 +56,12 @@ import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
 import { ChartNarrative } from "../charts/ChartNarrative";
 
 /* ------------------------------------------------------------------ */
+/* Constants                                                           */
+/* ------------------------------------------------------------------ */
+
+const COLLAPSED_ROW_COUNT = 10;
+
+/* ------------------------------------------------------------------ */
 /* Chart configs                                                       */
 /* ------------------------------------------------------------------ */
 
@@ -86,6 +96,14 @@ const BUCKET_COLORS = [
   "var(--chart-2)", // 40-60%
   "var(--chart-5)", // 60-80%
   "var(--chart-1)", // 80-100% orange-ish
+];
+
+const BUCKET_LABELS = [
+  "Very Low",
+  "Low",
+  "Moderate",
+  "High",
+  "Very High",
 ];
 
 /* ------------------------------------------------------------------ */
@@ -129,6 +147,7 @@ interface CustomersTabProps {
   customers: CustomerRow[];
   churnPredictions: ChurnPrediction[];
   chartNarrative?: ChartNarrativeData | null;
+  segmentRecommendations?: Record<string, string[]> | null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -140,7 +159,11 @@ export function CustomersTab({
   customers,
   churnPredictions,
   chartNarrative,
+  segmentRecommendations,
 }: CustomersTabProps) {
+  const [showAllAtRisk, setShowAllAtRisk] = useState(false);
+  const [showAllTopBuyers, setShowAllTopBuyers] = useState(false);
+
   /* ---------- KPI values ---------- */
   const active30d = getCardValue(cards, "active_customers_30d");
   const new30d = getCardValue(cards, "new_customers_30d");
@@ -185,11 +208,11 @@ export function CustomersTab({
   /* ---------- Churn Distribution histogram ---------- */
   const churnBuckets = useMemo(() => {
     const buckets = [
-      { range: "0-20%", min: 0, max: 0.2, count: 0 },
-      { range: "20-40%", min: 0.2, max: 0.4, count: 0 },
-      { range: "40-60%", min: 0.4, max: 0.6, count: 0 },
-      { range: "60-80%", min: 0.6, max: 0.8, count: 0 },
-      { range: "80-100%", min: 0.8, max: 1.01, count: 0 },
+      { range: "0-20%", label: BUCKET_LABELS[0], min: 0, max: 0.2, count: 0 },
+      { range: "20-40%", label: BUCKET_LABELS[1], min: 0.2, max: 0.4, count: 0 },
+      { range: "40-60%", label: BUCKET_LABELS[2], min: 0.4, max: 0.6, count: 0 },
+      { range: "60-80%", label: BUCKET_LABELS[3], min: 0.6, max: 0.8, count: 0 },
+      { range: "80-100%", label: BUCKET_LABELS[4], min: 0.8, max: 1.01, count: 0 },
     ];
 
     churnPredictions.forEach((cp) => {
@@ -203,10 +226,20 @@ export function CustomersTab({
     });
 
     return buckets.map((b, i) => ({
-      range: b.range,
+      range: `${b.label}\n(${b.range})`,
       count: b.count,
       fill: BUCKET_COLORS[i],
     }));
+  }, [churnPredictions]);
+
+  /* ---------- Churn risk summary stats ---------- */
+  const churnSummary = useMemo(() => {
+    const highRisk = churnPredictions.filter((cp) => safeNum(cp.churn_prob_30d) >= 0.6);
+    const totalSpendAtRisk = highRisk.reduce((sum, cp) => sum + safeNum(cp.total_spend), 0);
+    const pct = churnPredictions.length > 0
+      ? Math.round((highRisk.length / churnPredictions.length) * 100)
+      : 0;
+    return { count: highRisk.length, spend: totalSpendAtRisk, pct };
   }, [churnPredictions]);
 
   /* ---------- At-Risk Customers (top 20) ---------- */
@@ -215,6 +248,17 @@ export function CustomersTab({
       .sort((a, b) => b.churn_prob_30d - a.churn_prob_30d)
       .slice(0, 20);
   }, [churnPredictions]);
+
+  /* ---------- Top Buyers ---------- */
+  const topBuyers = useMemo(() => {
+    return [...churnPredictions]
+      .filter((cp) => cp.segment === "Top Buyer")
+      .sort((a, b) => safeNum(b.total_spend) - safeNum(a.total_spend))
+      .slice(0, 20);
+  }, [churnPredictions]);
+
+  const visibleAtRisk = showAllAtRisk ? atRiskCustomers : atRiskCustomers.slice(0, COLLAPSED_ROW_COUNT);
+  const visibleTopBuyers = showAllTopBuyers ? topBuyers : topBuyers.slice(0, COLLAPSED_ROW_COUNT);
 
   return (
     <div className="space-y-6">
@@ -253,7 +297,7 @@ export function CustomersTab({
       </div>
 
       {/* ============================================================
-          Row 2: Segments Donut + Churn Distribution
+          Row 2: Segments Donut + Churn Distribution (with summary)
           ============================================================ */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Customer Segments Donut */}
@@ -325,21 +369,44 @@ export function CustomersTab({
           </CardContent>
         </Card>
 
-        {/* Churn Risk Distribution Histogram */}
+        {/* Churn Risk Distribution Histogram — with summary card */}
         <Card>
           <CardHeader>
             <CardTitle className="text-base">
               Churn Risk Distribution
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
+            {/* Churn risk summary */}
+            {churnPredictions.length > 0 && (
+              <div className={`rounded-lg border p-3 ${
+                churnSummary.pct >= 30 ? "border-red-200 bg-red-50" :
+                churnSummary.pct >= 15 ? "border-orange-200 bg-orange-50" :
+                "border-green-200 bg-green-50"
+              }`}>
+                <div className="flex items-center gap-2 mb-1">
+                  <AlertTriangle className={`size-4 ${
+                    churnSummary.pct >= 30 ? "text-red-600" :
+                    churnSummary.pct >= 15 ? "text-orange-600" :
+                    "text-green-600"
+                  }`} />
+                  <span className="text-sm font-semibold">
+                    {churnSummary.count} customers at high risk ({churnSummary.pct}%)
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {fmtCurrency2(churnSummary.spend)} total spend at risk of churning in the next 30 days
+                </p>
+              </div>
+            )}
+
             {churnPredictions.length === 0 ? (
-              <div className="flex items-center justify-center h-[280px] text-sm text-muted-foreground">
+              <div className="flex items-center justify-center h-[220px] text-sm text-muted-foreground">
                 No churn data
               </div>
             ) : (
               <ChartEnlargeWrapper title="Churn Risk Distribution">
-                <ChartContainer config={churnDistConfig} className="w-full" style={{ height: 280 }}>
+                <ChartContainer config={churnDistConfig} className="w-full" style={{ height: 240 }}>
                   <BarChart
                     data={churnBuckets}
                     margin={{ top: 8, right: 12, bottom: 0, left: 12 }}
@@ -347,7 +414,7 @@ export function CustomersTab({
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis
                       dataKey="range"
-                      tick={{ fontSize: 12 }}
+                      tick={{ fontSize: 11 }}
                       tickLine={false}
                       axisLine={false}
                       tickMargin={8}
@@ -381,7 +448,132 @@ export function CustomersTab({
       </div>
 
       {/* ============================================================
-          Row 3: At-Risk Customers Table
+          Row 3: Segment Strategy Recommendations
+          ============================================================ */}
+      {segmentRecommendations && Object.keys(segmentRecommendations).length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {(["Top Buyer", "Moderate", "At-Risk"] as const).map((seg) => {
+            const recs = segmentRecommendations[seg];
+            if (!recs || recs.length === 0) return null;
+
+            const config: Record<string, { color: string; borderColor: string; icon: string }> = {
+              "Top Buyer": { color: "text-green-700", borderColor: "border-green-200", icon: "bg-green-50" },
+              "Moderate": { color: "text-blue-700", borderColor: "border-blue-200", icon: "bg-blue-50" },
+              "At-Risk": { color: "text-red-700", borderColor: "border-red-200", icon: "bg-red-50" },
+            };
+            const cfg = config[seg] ?? config["Moderate"];
+
+            return (
+              <Card key={seg} className={`border ${cfg.borderColor}`}>
+                <CardHeader className="pb-2">
+                  <div className="flex items-center gap-2">
+                    <div className={`rounded-md p-1.5 ${cfg.icon}`}>
+                      <Lightbulb className={`size-4 ${cfg.color}`} />
+                    </div>
+                    <CardTitle className={`text-sm ${cfg.color}`}>{seg} Strategy</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {recs.map((rec, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <CheckCircle className={`size-3.5 mt-0.5 shrink-0 ${cfg.color}`} />
+                        <span className="text-xs leading-relaxed text-muted-foreground">{rec}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      )}
+
+      {/* ============================================================
+          Row 4: Top Buyers Table
+          ============================================================ */}
+      {topBuyers.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Top Buyers</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Customer</TableHead>
+                    <TableHead className="text-right">Total Spend</TableHead>
+                    <TableHead className="text-right">Orders</TableHead>
+                    <TableHead className="text-right">Recency</TableHead>
+                    <TableHead>Churn Risk</TableHead>
+                    <TableHead>Segment</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {visibleTopBuyers.map((cp) => {
+                    const churnPct = Math.round(cp.churn_prob_30d * 100);
+                    return (
+                      <TableRow key={cp.customer_id}>
+                        <TableCell className="font-medium">
+                          {cp.name ?? cp.customer_id}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {cp.total_spend != null ? fmtCurrency2(cp.total_spend) : "-"}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {cp.total_orders != null ? cp.total_orders.toLocaleString() : "-"}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {cp.recency_days != null ? `${cp.recency_days}d` : "-"}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2 min-w-[120px]">
+                            <Progress
+                              value={churnPct}
+                              className={`h-2 w-16 ${churnPct >= 60 ? "[&>[data-slot=progress-indicator]]:bg-red-500" : churnPct >= 30 ? "[&>[data-slot=progress-indicator]]:bg-orange-400" : "[&>[data-slot=progress-indicator]]:bg-green-500"}`}
+                            />
+                            <span className="text-xs font-medium tabular-nums">
+                              {churnPct}%
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge color="green">Top Buyer</Badge>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </div>
+            {topBuyers.length > COLLAPSED_ROW_COUNT && (
+              <div className="mt-3 text-center">
+                <button
+                  type="button"
+                  onClick={() => setShowAllTopBuyers((v) => !v)}
+                  className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                >
+                  {showAllTopBuyers ? (
+                    <>
+                      <ChevronUp className="size-3.5" />
+                      Show less
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="size-3.5" />
+                      Show all {topBuyers.length} top buyers
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* ============================================================
+          Row 5: At-Risk Customers Table
           ============================================================ */}
       <Card>
         <CardHeader>
@@ -393,77 +585,100 @@ export function CustomersTab({
               No churn prediction data available
             </p>
           ) : (
-            <div className="overflow-x-auto max-h-[520px] overflow-y-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Customer</TableHead>
-                    <TableHead>Churn Probability</TableHead>
-                    <TableHead className="text-right">Spend</TableHead>
-                    <TableHead className="text-right">Recency</TableHead>
-                    <TableHead className="text-right">Orders</TableHead>
-                    <TableHead>Segment</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {atRiskCustomers.map((cp) => {
-                    const churnPct = Math.round(cp.churn_prob_30d * 100);
-                    return (
-                      <TableRow key={cp.customer_id}>
-                        <TableCell className="font-medium">
-                          {cp.name ?? cp.customer_id}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2 min-w-[140px]">
-                            <Progress
-                              value={churnPct}
-                              className="h-2 w-20 [&>[data-slot=progress-indicator]]:bg-red-500"
-                            />
-                            <span className="text-xs font-medium tabular-nums">
-                              {churnPct}%
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          {cp.total_spend != null
-                            ? fmtCurrency2(cp.total_spend)
-                            : "-"}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          {cp.recency_days != null
-                            ? `${cp.recency_days}d`
-                            : "-"}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          {cp.total_orders != null
-                            ? cp.total_orders.toLocaleString()
-                            : "-"}
-                        </TableCell>
-                        <TableCell>
-                          {cp.segment ? (
-                            <Badge
-                              color={
-                                cp.segment === "Top Buyer"
-                                  ? "green"
-                                  : cp.segment === "At-Risk"
-                                    ? "red"
-                                    : cp.segment === "Moderate"
-                                      ? "blue"
-                                      : "gray"
-                              }
-                            >
-                              {cp.segment}
-                            </Badge>
-                          ) : (
-                            "-"
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </div>
+            <>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Customer</TableHead>
+                      <TableHead>Churn Probability</TableHead>
+                      <TableHead className="text-right">Spend</TableHead>
+                      <TableHead className="text-right">Recency</TableHead>
+                      <TableHead className="text-right">Orders</TableHead>
+                      <TableHead>Segment</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {visibleAtRisk.map((cp) => {
+                      const churnPct = Math.round(cp.churn_prob_30d * 100);
+                      return (
+                        <TableRow key={cp.customer_id}>
+                          <TableCell className="font-medium">
+                            {cp.name ?? cp.customer_id}
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2 min-w-[140px]">
+                              <Progress
+                                value={churnPct}
+                                className="h-2 w-20 [&>[data-slot=progress-indicator]]:bg-red-500"
+                              />
+                              <span className="text-xs font-medium tabular-nums">
+                                {churnPct}%
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {cp.total_spend != null
+                              ? fmtCurrency2(cp.total_spend)
+                              : "-"}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {cp.recency_days != null
+                              ? `${cp.recency_days}d`
+                              : "-"}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {cp.total_orders != null
+                              ? cp.total_orders.toLocaleString()
+                              : "-"}
+                          </TableCell>
+                          <TableCell>
+                            {cp.segment ? (
+                              <Badge
+                                color={
+                                  cp.segment === "Top Buyer"
+                                    ? "green"
+                                    : cp.segment === "At-Risk"
+                                      ? "red"
+                                      : cp.segment === "Moderate"
+                                        ? "blue"
+                                        : "gray"
+                                }
+                              >
+                                {cp.segment}
+                              </Badge>
+                            ) : (
+                              "-"
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </div>
+              {atRiskCustomers.length > COLLAPSED_ROW_COUNT && (
+                <div className="mt-3 text-center">
+                  <button
+                    type="button"
+                    onClick={() => setShowAllAtRisk((v) => !v)}
+                    className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                  >
+                    {showAllAtRisk ? (
+                      <>
+                        <ChevronUp className="size-3.5" />
+                        Show less
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="size-3.5" />
+                        Show all {atRiskCustomers.length} at-risk customers
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </CardContent>
       </Card>

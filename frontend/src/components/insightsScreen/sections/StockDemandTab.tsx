@@ -11,6 +11,10 @@ import {
   ShieldAlert,
   Package,
   ArrowUpDown,
+  ChevronDown,
+  ChevronUp,
+  ArrowRightLeft,
+  MapPin,
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
@@ -30,14 +34,16 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "../../ui/chart";
-import type { KpiCardRow, DemandForecastSku, ChartNarrativeData } from "../dashboard/types";
+import type { KpiCardRow, DemandForecastSku, ChartNarrativeData, LocationSummary, StoreTransfer } from "../dashboard/types";
 import { getCardValue, fmtPercent, safeNum } from "../dashboard/formatters";
 import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
 import { ChartNarrative } from "../charts/ChartNarrative";
 
 /* ------------------------------------------------------------------ */
-/* Status badge helper                                                 */
+/* Constants                                                           */
 /* ------------------------------------------------------------------ */
+
+const COLLAPSED_ROW_COUNT = 5;
 
 const STATUS_BADGE: Record<string, { color: string; label: string }> = {
   critical: { color: "red", label: "Critical" },
@@ -94,6 +100,25 @@ function MiniKpi({ icon: Icon, label, value, iconColor, iconBg }: MiniKpiProps) 
 }
 
 /* ------------------------------------------------------------------ */
+/* Stockout display helper                                             */
+/* ------------------------------------------------------------------ */
+
+function StockoutDisplay({ days }: { days: number | null }) {
+  if (days === null || days === undefined) {
+    return <span className="text-xs text-muted-foreground">No forecast</span>;
+  }
+  if (days >= 9999) {
+    return <span className="text-xs text-green-600 font-medium">90+ days</span>;
+  }
+
+  let colorClass = "text-green-600";
+  if (days < 7) colorClass = "text-red-600 font-semibold";
+  else if (days < 14) colorClass = "text-orange-500 font-medium";
+
+  return <span className={`text-sm tabular-nums ${colorClass}`}>{days}d</span>;
+}
+
+/* ------------------------------------------------------------------ */
 /* Sort type                                                           */
 /* ------------------------------------------------------------------ */
 
@@ -115,16 +140,19 @@ interface StockDemandTabProps {
   cards: KpiCardRow[];
   demandSkus: DemandForecastSku[];
   chartNarrative?: ChartNarrativeData | null;
+  locationSummary?: LocationSummary[];
+  storeTransfers?: StoreTransfer[];
 }
 
 /* ------------------------------------------------------------------ */
 /* Component                                                           */
 /* ------------------------------------------------------------------ */
 
-export function StockDemandTab({ cards, demandSkus, chartNarrative }: StockDemandTabProps) {
+export function StockDemandTab({ cards, demandSkus, chartNarrative, locationSummary = [], storeTransfers = [] }: StockDemandTabProps) {
   /* ---------- Sort state ---------- */
   const [sortColumn, setSortColumn] = useState<SortColumn>("days_until_stockout");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+  const [showAllRows, setShowAllRows] = useState(false);
 
   const handleSort = (col: SortColumn) => {
     if (sortColumn === col) {
@@ -185,26 +213,23 @@ export function StockDemandTab({ cards, demandSkus, chartNarrative }: StockDeman
     });
   }, [demandSkus, sortColumn, sortDirection]);
 
-  /* ---------- Health chart data ---------- */
+  /* ---------- Visible rows (collapse/expand) ---------- */
+  const visibleSkus = showAllRows ? sortedSkus : sortedSkus.slice(0, COLLAPSED_ROW_COUNT);
+  const hasMoreRows = sortedSkus.length > COLLAPSED_ROW_COUNT;
+
+  /* ---------- Health chart data: per-category breakdown ---------- */
   const healthData = useMemo(() => {
-    const counts: Record<string, number> = {
-      critical: 0,
-      warning: 0,
-      healthy: 0,
-    };
+    const categoryMap: Record<string, { critical: number; warning: number; healthy: number }> = {};
     demandSkus.forEach((s) => {
-      if (s.status in counts) {
-        counts[s.status]++;
-      }
+      const cat = s.category ?? "Other";
+      if (!categoryMap[cat]) categoryMap[cat] = { critical: 0, warning: 0, healthy: 0 };
+      if (s.status === "critical") categoryMap[cat].critical++;
+      else if (s.status === "warning") categoryMap[cat].warning++;
+      else categoryMap[cat].healthy++;
     });
-    return [
-      {
-        name: "Inventory",
-        critical: counts.critical,
-        warning: counts.warning,
-        healthy: counts.healthy,
-      },
-    ];
+    return Object.entries(categoryMap)
+      .map(([name, counts]) => ({ name, ...counts }))
+      .sort((a, b) => (b.critical + b.warning) - (a.critical + a.warning));
   }, [demandSkus]);
 
   /* ---------- Top demand SKUs ---------- */
@@ -286,7 +311,7 @@ export function StockDemandTab({ cards, demandSkus, chartNarrative }: StockDeman
       </div>
 
       {/* ============================================================
-          Row 2: Stock Recommendation Table
+          Row 2: Stock Recommendation Table (collapsed by default)
           ============================================================ */}
       <Card>
         <CardHeader>
@@ -298,104 +323,129 @@ export function StockDemandTab({ cards, demandSkus, chartNarrative }: StockDeman
               No demand forecast data available
             </p>
           ) : (
-            <div className="overflow-x-auto max-h-[480px] overflow-y-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <SortableHeader column="sku" label="SKU" />
-                    <SortableHeader column="name" label="Product" />
-                    <SortableHeader column="category" label="Category" />
-                    <SortableHeader column="forecast_qty_30d" label="Predicted Demand (30d)" />
-                    <SortableHeader column="current_stock" label="Current Stock" />
-                    <SortableHeader column="days_until_stockout" label="Days Until Stockout" />
-                    <SortableHeader column="status" label="Status" />
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {sortedSkus.map((sku) => {
-                    const statusInfo =
-                      STATUS_BADGE[sku.status] ?? STATUS_BADGE.unknown;
-                    const stockPct =
-                      sku.forecast_qty_30d > 0
-                        ? Math.min(
-                            100,
-                            Math.round(
-                              (sku.current_stock / sku.forecast_qty_30d) * 100,
-                            ),
-                          )
-                        : 100;
+            <>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <SortableHeader column="sku" label="SKU" />
+                      <SortableHeader column="name" label="Product" />
+                      <SortableHeader column="category" label="Category" />
+                      <SortableHeader column="forecast_qty_30d" label="Predicted Demand (30d)" />
+                      <SortableHeader column="current_stock" label="Current Stock" />
+                      <SortableHeader column="days_until_stockout" label="Days Until Stockout" />
+                      <SortableHeader column="status" label="Status" />
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {visibleSkus.map((sku) => {
+                      const statusInfo =
+                        STATUS_BADGE[sku.status] ?? STATUS_BADGE.unknown;
+                      const stockPct =
+                        sku.forecast_qty_30d > 0
+                          ? Math.min(
+                              100,
+                              Math.round(
+                                (sku.current_stock / sku.forecast_qty_30d) * 100,
+                              ),
+                            )
+                          : 100;
 
-                    return (
-                      <TableRow key={sku.sku}>
-                        <TableCell className="font-mono text-xs">
-                          {sku.sku}
-                        </TableCell>
-                        <TableCell>{sku.name ?? "-"}</TableCell>
-                        <TableCell>{sku.category ?? "-"}</TableCell>
-                        <TableCell className="text-right">
-                          {sku.forecast_qty_30d.toLocaleString()}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm tabular-nums w-14 text-right">
-                              {sku.current_stock.toLocaleString()}
-                            </span>
-                            <Progress
-                              value={stockPct}
-                              className="h-1.5 w-16"
-                            />
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          {sku.days_until_stockout !== null
-                            ? sku.days_until_stockout
-                            : "N/A"}
-                        </TableCell>
-                        <TableCell>
-                          <Badge color={statusInfo.color}>
-                            {statusInfo.label}
-                          </Badge>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </div>
+                      return (
+                        <TableRow key={sku.sku}>
+                          <TableCell className="font-mono text-xs">
+                            {sku.sku}
+                          </TableCell>
+                          <TableCell>{sku.name ?? "-"}</TableCell>
+                          <TableCell>{sku.category ?? "-"}</TableCell>
+                          <TableCell className="text-right">
+                            {sku.forecast_qty_30d.toLocaleString()}
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm tabular-nums w-14 text-right">
+                                {sku.current_stock.toLocaleString()}
+                              </span>
+                              <Progress
+                                value={stockPct}
+                                className="h-1.5 w-16"
+                              />
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <StockoutDisplay days={sku.days_until_stockout} />
+                          </TableCell>
+                          <TableCell>
+                            <Badge color={statusInfo.color}>
+                              {statusInfo.label}
+                            </Badge>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </div>
+              {/* Expand / Collapse toggle */}
+              {hasMoreRows && (
+                <div className="mt-3 text-center">
+                  <button
+                    type="button"
+                    onClick={() => setShowAllRows((v) => !v)}
+                    className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                  >
+                    {showAllRows ? (
+                      <>
+                        <ChevronUp className="size-3.5" />
+                        Show less
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="size-3.5" />
+                        Show all {sortedSkus.length} items
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </CardContent>
       </Card>
 
       {/* ============================================================
-          Row 3: Health by Status + Top Demand SKUs
+          Row 3: Health by Status (per category) + Top Demand SKUs
           ============================================================ */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Inventory Health by Status (stacked bar) */}
+        {/* Inventory Health by Status — per category */}
         <Card>
           <CardHeader>
             <CardTitle className="text-base">
-              Inventory Health by Status
+              Inventory Health by Category
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ChartEnlargeWrapper title="Inventory Health by Status">
-              <ChartContainer config={healthChartConfig} className="w-full" style={{ height: 220 }}>
+            <ChartEnlargeWrapper title="Inventory Health by Category">
+              <ChartContainer config={healthChartConfig} className="w-full" style={{ height: Math.max(220, healthData.length * 40) }}>
                 <BarChart
                   data={healthData}
-                  margin={{ top: 8, right: 12, bottom: 0, left: 12 }}
+                  layout="vertical"
+                  margin={{ top: 8, right: 12, bottom: 0, left: 8 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" horizontal={false} />
                   <XAxis
-                    dataKey="name"
-                    tick={{ fontSize: 12 }}
+                    type="number"
+                    tick={{ fontSize: 11 }}
                     tickLine={false}
                     axisLine={false}
                   />
                   <YAxis
-                    tick={{ fontSize: 12 }}
+                    type="category"
+                    dataKey="name"
+                    tick={{ fontSize: 11 }}
                     tickLine={false}
                     axisLine={false}
-                    width={40}
+                    width={100}
                   />
                   <ChartTooltip content={<ChartTooltipContent />} />
                   <Bar
@@ -414,7 +464,7 @@ export function StockDemandTab({ cards, demandSkus, chartNarrative }: StockDeman
                     dataKey="healthy"
                     stackId="status"
                     fill="var(--chart-4)"
-                    radius={[4, 4, 0, 0]}
+                    radius={[0, 4, 4, 0]}
                   />
                 </BarChart>
               </ChartContainer>
@@ -491,6 +541,113 @@ export function StockDemandTab({ cards, demandSkus, chartNarrative }: StockDeman
           </CardContent>
         </Card>
       </div>
+
+      {/* ============================================================
+          Row 4: Stock by Location
+          ============================================================ */}
+      {locationSummary.length > 0 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <MapPin className="size-4 text-blue-600" />
+              <CardTitle className="text-base">Stock by Warehouse Location</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {locationSummary.map((loc) => (
+                <div
+                  key={loc.location}
+                  className="rounded-lg border p-3 space-y-1"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <MapPin className="size-3 text-muted-foreground" />
+                    <span className="text-sm font-semibold">{loc.location}</span>
+                  </div>
+                  <div className="text-lg font-bold tabular-nums">
+                    {loc.total_stock.toLocaleString()}
+                  </div>
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>{loc.total_skus} SKUs</span>
+                    <span>Avg: {Math.round(loc.avg_stock)}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* ============================================================
+          Row 5: Store Transfer Recommendations
+          ============================================================ */}
+      {storeTransfers.length > 0 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <ArrowRightLeft className="size-4 text-orange-600" />
+              <CardTitle className="text-base">
+                Store Transfer Recommendations
+              </CardTitle>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              {storeTransfers.length} product{storeTransfers.length > 1 ? "s" : ""} could benefit from stock redistribution between warehouses
+            </p>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Product</TableHead>
+                    <TableHead>From</TableHead>
+                    <TableHead>To</TableHead>
+                    <TableHead className="text-right">Transfer Qty</TableHead>
+                    <TableHead className="text-right">Days Left (To)</TableHead>
+                    <TableHead>Urgency</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {storeTransfers.slice(0, 10).map((t, i) => (
+                    <TableRow key={`${t.sku}-${t.to_location}-${i}`} className={t.urgency === "critical" ? "bg-red-50/50" : ""}>
+                      <TableCell className="font-medium">
+                        {t.product_name}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1">
+                          <MapPin className="size-3 text-green-600" />
+                          <span className="text-sm">{t.from_location}</span>
+                          <span className="text-xs text-muted-foreground">({t.from_stock})</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1">
+                          <MapPin className="size-3 text-red-500" />
+                          <span className="text-sm">{t.to_location}</span>
+                          <span className="text-xs text-muted-foreground">({t.to_stock})</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-right font-semibold tabular-nums">
+                        {t.transfer_qty.toLocaleString()}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <span className={`font-medium tabular-nums ${t.to_days_left < 7 ? "text-red-600" : "text-orange-500"}`}>
+                          {t.to_days_left}d
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        <Badge color={t.urgency === "critical" ? "red" : "orange"}>
+                          {t.urgency === "critical" ? "Critical" : "Warning"}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

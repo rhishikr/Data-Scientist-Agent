@@ -39,21 +39,38 @@ import {
   Sparkles,
   Megaphone,
   Lightbulb,
-  CheckCircle,
+  ArrowRight,
 } from "lucide-react";
 
-// ---------------------------------------------------------------------------
-// Props
-// ---------------------------------------------------------------------------
+/* ------------------------------------------------------------------ */
+/* Channel colors (assigned per-bar for visual variety)                 */
+/* ------------------------------------------------------------------ */
+
+const CHANNEL_COLORS = [
+  "var(--chart-1)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-4)",
+  "var(--chart-5)",
+  "#6366f1", // indigo
+  "#ec4899", // pink
+  "#14b8a6", // teal
+];
+
+/* ------------------------------------------------------------------ */
+/* Props                                                               */
+/* ------------------------------------------------------------------ */
+
 interface MarketingTabProps {
   cards: KpiCardRow[];
   channelRevenueData: Array<{ channel: string; revenue: number }>;
   forecastSnapshot: ForecastSnapshot | null;
 }
 
-// ---------------------------------------------------------------------------
-// Chart config
-// ---------------------------------------------------------------------------
+/* ------------------------------------------------------------------ */
+/* Chart config                                                        */
+/* ------------------------------------------------------------------ */
+
 const channelChartConfig: ChartConfig = {
   revenue: {
     label: "Revenue",
@@ -61,9 +78,40 @@ const channelChartConfig: ChartConfig = {
   },
 };
 
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
+/* ------------------------------------------------------------------ */
+/* MiniKpi card (consistent with other tabs)                           */
+/* ------------------------------------------------------------------ */
+
+interface MiniKpiProps {
+  icon: React.ElementType;
+  label: string;
+  value: string;
+  subtitle: string;
+  iconColor: string;
+  iconBg: string;
+}
+
+function MiniKpi({ icon: Icon, label, value, subtitle, iconColor, iconBg }: MiniKpiProps) {
+  return (
+    <Card className="gap-0">
+      <CardContent className="p-4">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-sm font-medium text-muted-foreground">{label}</span>
+          <div className={`rounded-md p-1.5 ${iconBg}`}>
+            <Icon className={`size-4 ${iconColor}`} />
+          </div>
+        </div>
+        <div className="text-2xl font-bold tracking-tight">{value}</div>
+        <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>
+      </CardContent>
+    </Card>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Component                                                           */
+/* ------------------------------------------------------------------ */
+
 export function MarketingTab({
   cards,
   channelRevenueData,
@@ -94,77 +142,59 @@ export function MarketingTab({
     return sortedChannelData[0];
   }, [sortedChannelData]);
 
+  // Top channel share
+  const topChannelShare = topChannel
+    ? Math.round((topChannel.revenue / Math.max(totalChannelRevenue, 1)) * 100)
+    : 0;
+
   return (
     <div className="space-y-6">
       {/* ------------------------------------------------------------------ */}
-      {/* Row 1: KPI Cards                                                    */}
+      {/* Row 1: KPI Cards (improved styling)                                 */}
       {/* ------------------------------------------------------------------ */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {/* CAC */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm">CAC</CardTitle>
-            <DollarSign className="size-4 text-blue-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{fmtCurrency2(cac)}</div>
-            <p className="text-xs text-muted-foreground">
-              Customer acquisition cost
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* ROAS */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm">ROAS</CardTitle>
-            <TrendingUp className="size-4 text-green-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{safeNum(roas).toFixed(1)}x</div>
-            <p className="text-xs text-muted-foreground">
-              Return on ad spend
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Campaign CR */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm">Campaign CR</CardTitle>
-            <Target className="size-4 text-teal-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{fmtPercent(campaignCr)}</div>
-            <p className="text-xs text-muted-foreground">
-              Campaign conversion rate
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Promo Uplift */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm">Promo Uplift</CardTitle>
-            <Sparkles className="size-4 text-purple-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{fmtPercent(promoUplift, 2)}</div>
-            <p className="text-xs text-muted-foreground">
-              Promotion-driven uplift (proxy)
-            </p>
-          </CardContent>
-        </Card>
+        <MiniKpi
+          icon={DollarSign}
+          label="CAC"
+          value={fmtCurrency2(cac)}
+          subtitle="Customer acquisition cost"
+          iconColor="text-blue-600"
+          iconBg="bg-blue-50"
+        />
+        <MiniKpi
+          icon={TrendingUp}
+          label="ROAS"
+          value={`${safeNum(roas).toFixed(1)}x`}
+          subtitle="Return on ad spend"
+          iconColor="text-green-600"
+          iconBg="bg-green-50"
+        />
+        <MiniKpi
+          icon={Target}
+          label="Campaign CR"
+          value={fmtPercent(campaignCr)}
+          subtitle="Campaign conversion rate"
+          iconColor="text-teal-600"
+          iconBg="bg-teal-50"
+        />
+        <MiniKpi
+          icon={Sparkles}
+          label="Promo Uplift"
+          value={fmtPercent(promoUplift, 2)}
+          subtitle="Promotion-driven uplift"
+          iconColor="text-purple-600"
+          iconBg="bg-purple-50"
+        />
       </div>
 
       {/* ------------------------------------------------------------------ */}
-      {/* Row 2: Revenue by Channel Bar Chart                                 */}
+      {/* Row 2: Revenue by Channel Bar Chart (color-coded bars)              */}
       {/* ------------------------------------------------------------------ */}
       <Card>
         <CardHeader>
           <CardTitle>Revenue by Channel</CardTitle>
           <CardDescription>
-            Marketing channel performance based on snapshot data
+            Marketing channel performance — {sortedChannelData.length} channels tracked
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -201,7 +231,7 @@ export function MarketingTab({
                   />
                   <Bar dataKey="revenue" radius={[4, 4, 0, 0]}>
                     {sortedChannelData.map((_, idx) => (
-                      <Cell key={idx} fill="var(--chart-2)" />
+                      <Cell key={idx} fill={CHANNEL_COLORS[idx % CHANNEL_COLORS.length]} />
                     ))}
                   </Bar>
                 </BarChart>
@@ -215,84 +245,50 @@ export function MarketingTab({
       {/* Row 3: Marketing Summary & Executive Recommendations                */}
       {/* ------------------------------------------------------------------ */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Marketing Summary */}
+        {/* Marketing Summary (improved card styling) */}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <Megaphone className="size-5 text-teal-600" />
+              <div className="rounded-md p-1.5 bg-teal-50">
+                <Megaphone className="size-4 text-teal-600" />
+              </div>
               <CardTitle>Marketing Summary</CardTitle>
             </div>
-            <CardDescription>Key marketing performance stats</CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center border-b pb-2">
-                <span className="text-sm text-muted-foreground">
-                  Total Channel Revenue
-                </span>
-                <span className="text-sm font-medium">
-                  {fmtCurrency(totalChannelRevenue)}
-                </span>
+          <CardContent className="space-y-0">
+            {([
+              { label: "Total Channel Revenue", value: fmtCurrency(totalChannelRevenue) },
+              {
+                label: "Top Channel",
+                value: topChannel
+                  ? `${topChannel.channel} (${topChannelShare}% share)`
+                  : "N/A",
+              },
+              { label: "Customer Acquisition Cost", value: fmtCurrency2(cac) },
+              { label: "Return on Ad Spend", value: `${safeNum(roas).toFixed(1)}x` },
+              { label: "Campaign Conversion Rate", value: fmtPercent(campaignCr) },
+              { label: "Promotion Uplift", value: fmtPercent(promoUplift, 2) },
+            ]).map((item, i, arr) => (
+              <div
+                key={item.label}
+                className={`flex justify-between items-center py-2.5 ${i < arr.length - 1 ? "border-b" : ""}`}
+              >
+                <span className="text-sm text-muted-foreground">{item.label}</span>
+                <span className="text-sm font-semibold">{item.value}</span>
               </div>
-
-              <div className="flex justify-between items-center border-b pb-2">
-                <span className="text-sm text-muted-foreground">
-                  Top Channel
-                </span>
-                <span className="text-sm font-medium">
-                  {topChannel
-                    ? `${topChannel.channel} (${fmtCurrency(topChannel.revenue)})`
-                    : "N/A"}
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center border-b pb-2">
-                <span className="text-sm text-muted-foreground">
-                  Customer Acquisition Cost
-                </span>
-                <span className="text-sm font-medium">{fmtCurrency2(cac)}</span>
-              </div>
-
-              <div className="flex justify-between items-center border-b pb-2">
-                <span className="text-sm text-muted-foreground">
-                  Return on Ad Spend
-                </span>
-                <span className="text-sm font-medium">
-                  {safeNum(roas).toFixed(1)}x
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center border-b pb-2">
-                <span className="text-sm text-muted-foreground">
-                  Campaign Conversion Rate
-                </span>
-                <span className="text-sm font-medium">
-                  {fmtPercent(campaignCr)}
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">
-                  Promotion Uplift
-                </span>
-                <span className="text-sm font-medium">
-                  {fmtPercent(promoUplift, 2)}
-                </span>
-              </div>
-            </div>
+            ))}
           </CardContent>
         </Card>
 
-        {/* Executive Recommendations */}
+        {/* Executive Recommendations (card-style list) */}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <Lightbulb className="size-5 text-amber-500" />
-              <CardTitle>Executive Recommendations</CardTitle>
+              <div className="rounded-md p-1.5 bg-amber-50">
+                <Lightbulb className="size-4 text-amber-600" />
+              </div>
+              <CardTitle>Recommendations</CardTitle>
             </div>
-            <CardDescription>
-              Rule-based recommended actions
-            </CardDescription>
           </CardHeader>
           <CardContent>
             {recommendedActions.length === 0 ? (
@@ -300,14 +296,19 @@ export function MarketingTab({
                 No recommendations available
               </p>
             ) : (
-              <ul className="space-y-3">
+              <div className="space-y-2.5">
                 {recommendedActions.map((action, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <CheckCircle className="size-4 mt-0.5 shrink-0 text-teal-600" />
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3 rounded-lg border bg-muted/30 p-3"
+                  >
+                    <div className="rounded-full bg-teal-100 p-1 mt-0.5">
+                      <ArrowRight className="size-3 text-teal-700" />
+                    </div>
                     <span className="text-sm leading-relaxed">{action}</span>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             )}
           </CardContent>
         </Card>
