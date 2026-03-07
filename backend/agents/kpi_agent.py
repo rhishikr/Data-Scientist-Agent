@@ -85,13 +85,16 @@ class KPIAgent(BaseAgent):
 
             if cards_summary:
                 context_prompt = (
-                    "You are an e-commerce analyst. Review these KPIs and provide "
-                    "a 2-3 sentence commentary highlighting what stands out "
-                    "(unusually high/low values, concerning trends, positive signals).\n\n"
+                    "You are a retail doctor reviewing a store's vital signs. For each notable KPI, provide:\n"
+                    "1. What it means in plain English (no jargon)\n"
+                    "2. Whether it requires action (and what specific action)\n"
+                    "3. The 'so what?' — business impact of this number\n\n"
+                    "Write 2-3 sentences as if advising a store owner who needs to decide what to do today. "
+                    "Start with the most important finding. Use imperative voice for any recommended actions.\n\n"
                     f"KPIs:\n{json.dumps(cards_summary, indent=2, default=str)}"
                 )
                 commentary = await ask_llm(
-                    "You are a business analyst providing KPI commentary.",
+                    "You are a retail doctor — you diagnose business health and prescribe actions from KPI data.",
                     context_prompt,
                 )
 

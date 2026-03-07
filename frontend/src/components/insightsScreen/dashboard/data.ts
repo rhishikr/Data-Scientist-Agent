@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import type {
   Snapshot, KpiCardRow, CustomerRow, ForecastSnapshot,
   InsightsSnapshot, RevenueForecastPoint, DemandForecastSku,
-  ChurnPrediction, AiAnalysis,
+  ChurnPrediction, AiAnalysis, ActionPlan, ChartNarratives,
 } from "./types";
 
 const API_BASE = "http://127.0.0.1:8000";
@@ -328,6 +328,63 @@ export function useAiAnalysis(runId?: string | null) {
 
   useEffect(() => { refresh(); }, [refresh]);
   return { data, loading, error, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Action Plan (Retail Doctor)
+// ---------------------------------------------------------------------------
+
+export function useActionPlan(runId?: string | null) {
+  const [data, setData] = useState<ActionPlan | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<ActionPlan>(
+        `${API_BASE}/api/action-plan${qs}`
+      );
+      setData(result);
+    } catch (e: any) {
+      setError(e?.message ?? "Failed to load action plan");
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { data, loading, error, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Chart Narratives
+// ---------------------------------------------------------------------------
+
+export function useChartNarratives(runId?: string | null) {
+  const [data, setData] = useState<ChartNarratives | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<ChartNarratives>(
+        `${API_BASE}/api/chart-narratives${qs}`
+      );
+      setData(result);
+    } catch {
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { data, loading, refresh };
 }
 
 // ---------------------------------------------------------------------------

@@ -107,18 +107,12 @@ export function DataSourcesScreen() {
                           </p>
                         </div>
                         {file.status === "validated" ? (
-                          <Badge
-                            variant="outline"
-                            className="text-green-600 border-green-200"
-                          >
+                          <Badge color="green">
                             <CheckCircle2 className="size-3 mr-1" />
                             Validated
                           </Badge>
                         ) : (
-                          <Badge
-                            variant="outline"
-                            className="text-orange-600 border-orange-200"
-                          >
+                          <Badge color="orange">
                             <AlertCircle className="size-3 mr-1" />
                             Needs Mapping
                           </Badge>

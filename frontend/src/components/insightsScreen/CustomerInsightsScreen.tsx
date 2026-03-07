@@ -12,9 +12,9 @@ import {
   ShoppingBag,
   Megaphone,
   Sparkles,
-  AlertCircle,
   RefreshCw,
   ServerOff,
+  ClipboardList,
 } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 
@@ -25,6 +25,8 @@ import {
   useDemandForecast,
   useChurnPredictions,
   useAiAnalysis,
+  useActionPlan,
+  useChartNarratives,
 } from "./dashboard/data";
 import {
   clamp01,
@@ -34,7 +36,8 @@ import {
 } from "./dashboard/formatters";
 import { RunSelector } from "./RunSelector";
 
-import { KpiStrip } from "./sections/KpiStrip";
+import { DiagnosisBanner } from "./sections/DiagnosisBanner";
+import { ActionQueueTab } from "./sections/ActionQueueTab";
 import { OverviewTab } from "./sections/OverviewTab";
 import { RevenueSalesTab } from "./sections/RevenueSalesTab";
 import { StockDemandTab } from "./sections/StockDemandTab";
@@ -68,6 +71,9 @@ export function CustomerInsightsScreen() {
     useChurnPredictions(selectedRunId);
   const { data: aiAnalysis, loading: aiAnalysisLoading } =
     useAiAnalysis(selectedRunId);
+  const { data: actionPlan, loading: actionPlanLoading } =
+    useActionPlan(selectedRunId);
+  const { data: chartNarratives } = useChartNarratives(selectedRunId);
 
   // Derive channel revenue data from KPI snapshot
   const channelRevenueData = useMemo(() => {
@@ -186,12 +192,20 @@ export function CustomerInsightsScreen() {
 
       {/* Content */}
       <div className="p-6 space-y-6">
-      {/* KPI Strip */}
-      <KpiStrip cards={cards} />
+      {/* Diagnosis Banner */}
+      <DiagnosisBanner cards={cards} actionPlan={actionPlan} />
 
       {/* Tabbed Content */}
-      <Tabs defaultValue="overview">
+      <Tabs defaultValue="actions">
         <TabsList className="w-full">
+          <TabsTrigger value="actions" className="flex-1">
+            <ClipboardList className="size-4 mr-1.5" />
+            Action Plan
+          </TabsTrigger>
+          <TabsTrigger value="insights" className="flex-1">
+            <Sparkles className="size-4 mr-1.5" />
+            AI Insights
+          </TabsTrigger>
           <TabsTrigger value="overview" className="flex-1">
             <LayoutDashboard className="size-4 mr-1.5" />
             Overview
@@ -216,11 +230,23 @@ export function CustomerInsightsScreen() {
             <Megaphone className="size-4 mr-1.5" />
             Marketing
           </TabsTrigger>
-          <TabsTrigger value="insights" className="flex-1">
-            <Sparkles className="size-4 mr-1.5" />
-            AI Insights
-          </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="actions">
+          <ActionQueueTab
+            actionPlan={actionPlan}
+            loading={actionPlanLoading}
+          />
+        </TabsContent>
+
+        <TabsContent value="insights">
+          <AiInsightsTab
+            insights={insights}
+            forecastSnapshot={forecastSnapshot}
+            aiAnalysis={aiAnalysis}
+            aiAnalysisLoading={aiAnalysisLoading}
+          />
+        </TabsContent>
 
         <TabsContent value="overview">
           <OverviewTab
@@ -239,11 +265,16 @@ export function CustomerInsightsScreen() {
             revenueSeries={revenueSeries}
             channelRevenueData={channelRevenueData}
             forecastSnapshot={forecastSnapshot}
+            chartNarrative={chartNarratives?.narratives?.revenue_trend}
           />
         </TabsContent>
 
         <TabsContent value="stock">
-          <StockDemandTab cards={cards} demandSkus={demandSkus} />
+          <StockDemandTab
+            cards={cards}
+            demandSkus={demandSkus}
+            chartNarrative={chartNarratives?.narratives?.stock_health}
+          />
         </TabsContent>
 
         <TabsContent value="customers">
@@ -251,6 +282,7 @@ export function CustomerInsightsScreen() {
             cards={cards}
             customers={customers}
             churnPredictions={churnPredictions}
+            chartNarrative={chartNarratives?.narratives?.churn_distribution}
           />
         </TabsContent>
 
@@ -266,14 +298,6 @@ export function CustomerInsightsScreen() {
           />
         </TabsContent>
 
-        <TabsContent value="insights">
-          <AiInsightsTab
-            insights={insights}
-            forecastSnapshot={forecastSnapshot}
-            aiAnalysis={aiAnalysis}
-            aiAnalysisLoading={aiAnalysisLoading}
-          />
-        </TabsContent>
       </Tabs>
       </div>
     </div>

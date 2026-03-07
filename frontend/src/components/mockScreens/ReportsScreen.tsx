@@ -253,12 +253,7 @@ export function ReportsScreen() {
                     Generated on {report.date} • {report.type}
                   </p>
                 </div>
-                <Badge
-                  variant="outline"
-                  className="text-green-600 border-green-200"
-                >
-                  {report.status}
-                </Badge>
+                <Badge color="green">{report.status}</Badge>
                 <Button variant="outline" size="sm">
                   <Download className="size-4 mr-2" />
                   Download
@@ -287,12 +282,7 @@ export function ReportsScreen() {
                   Every Monday at 9:00 AM
                 </p>
               </div>
-              <Badge
-                variant="outline"
-                className="text-blue-600 border-blue-200"
-              >
-                Active
-              </Badge>
+              <Badge color="blue">Active</Badge>
               <Button variant="ghost" size="sm">
                 Edit
               </Button>
@@ -308,12 +298,7 @@ export function ReportsScreen() {
                   First day of each month
                 </p>
               </div>
-              <Badge
-                variant="outline"
-                className="text-purple-600 border-purple-200"
-              >
-                Active
-              </Badge>
+              <Badge color="purple">Active</Badge>
               <Button variant="ghost" size="sm">
                 Edit
               </Button>

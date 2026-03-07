@@ -162,6 +162,11 @@ export type Insight = {
   hypothesis_support?: Array<Record<string, any>>;
   tags?: string[];
   created_at?: string;
+  // Action metadata (retail doctor)
+  action_type?: string;
+  impact_estimate?: string;
+  effort?: "quick-win" | "moderate" | "strategic";
+  priority?: number;
 };
 
 export type InsightsSnapshot = {
@@ -216,6 +221,46 @@ export type AiAnalysis = {
   key_findings: string[];
   recommendations: string[];
   risks: string[];
+  generated_at?: string;
+  cached?: boolean;
+  error?: string;
+};
+
+// ------------------------
+// Prescription / Action Plan (Retail Doctor)
+// ------------------------
+export type Prescription = {
+  id: string;
+  priority: number;
+  category: "inventory" | "customer" | "revenue" | "marketing" | "product";
+  urgency: "critical" | "high" | "medium" | "low";
+  title: string;
+  description: string;
+  impact_estimate: string;
+  effort: string;
+  evidence: Record<string, any>;
+  source: string;
+  action_type: string;
+  related_entities: string[];
+};
+
+export type ActionPlan = {
+  health_score: number;
+  health_summary: string;
+  prescriptions: Prescription[];
+  generated_at: string;
+};
+
+// ------------------------
+// Chart Narratives
+// ------------------------
+export type ChartNarrativeData = {
+  narrative: string;
+  action_hint: string;
+};
+
+export type ChartNarratives = {
+  narratives: Record<string, ChartNarrativeData>;
   generated_at?: string;
   cached?: boolean;
   error?: string;

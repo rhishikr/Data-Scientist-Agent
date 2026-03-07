@@ -65,10 +65,10 @@ const CHANNEL_COLORS = [
 
 const SEVERITY_ORDER: Record<string, number> = { high: 0, medium: 1, low: 2 };
 
-const SEVERITY_BADGE: Record<string, string> = {
-  high: "bg-red-100 text-red-700",
-  medium: "bg-amber-100 text-amber-700",
-  low: "bg-green-100 text-green-700",
+const SEVERITY_COLOR: Record<string, string> = {
+  high: "red",
+  medium: "orange",
+  low: "green",
 };
 
 /* ------------------------------------------------------------------ */
@@ -223,11 +223,11 @@ export function OverviewTab({
           <CardContent className="space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Critical</span>
-              <Badge className="bg-red-100 text-red-700">{criticalCount}</Badge>
+              <Badge color="red">{criticalCount}</Badge>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Warning</span>
-              <Badge className="bg-amber-100 text-amber-700">{warningCount}</Badge>
+              <Badge color="orange">{warningCount}</Badge>
             </div>
             <p className="text-xs text-muted-foreground pt-1">
               {criticalCount + warningCount === 0
@@ -298,7 +298,8 @@ export function OverviewTab({
                 {topInsights.map((ins) => (
                   <li key={ins.insight_id} className="flex items-start gap-2">
                     <Badge
-                      className={`mt-0.5 shrink-0 text-[10px] ${SEVERITY_BADGE[ins.severity] ?? SEVERITY_BADGE.low}`}
+                      color={SEVERITY_COLOR[ins.severity] ?? SEVERITY_COLOR.low}
+                      className="mt-0.5 shrink-0 text-[10px]"
                     >
                       {ins.severity}
                     </Badge>

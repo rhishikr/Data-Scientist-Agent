@@ -19,6 +19,7 @@ from .hypothesis_agent import HypothesisAgent
 from .insights_agent import InsightsAgent
 from .kpi_agent import KPIAgent
 from .forecast_agent import ForecastAgent
+from .action_agent import ActionAgent
 
 from db.store import create_pipeline_run, complete_pipeline_run
 
@@ -46,7 +47,7 @@ class PipelineOrchestrator:
     def create_default(
         cls, reset: bool = True, alpha: float = 0.05
     ) -> "PipelineOrchestrator":
-        """Factory method that creates the standard 6-agent pipeline."""
+        """Factory method that creates the standard 7-agent pipeline."""
         project_root = Path(__file__).resolve().parent.parent  # backend/
         data_dir = project_root / "data"
 
@@ -73,6 +74,7 @@ class PipelineOrchestrator:
             InsightsAgent(),
             KPIAgent(),
             ForecastAgent(),
+            ActionAgent(),
         ]
 
         return cls(agents=agents, blackboard=blackboard)

@@ -126,6 +126,10 @@ def store_ai_analysis(run_id: str, snapshot: dict) -> None:
     _store_snapshot("ai_analysis_snapshots", run_id, snapshot)
 
 
+def store_action_plan_snapshot(run_id: str, snapshot: dict) -> None:
+    _store_snapshot("action_plan_snapshots", run_id, snapshot)
+
+
 # ---------------------------------------------------------------------------
 # Cleaned / Featured dataset storage (DB metadata + Storage bucket CSV)
 # ---------------------------------------------------------------------------
@@ -272,6 +276,14 @@ def get_latest_ai_analysis() -> dict:
 
 def get_run_ai_analysis(run_id: str) -> dict:
     return _get_snapshot_for_run("ai_analysis_snapshots", run_id)
+
+
+def get_latest_action_plan_snapshot() -> dict:
+    return _get_latest_snapshot("action_plan_snapshots")
+
+
+def get_run_action_plan_snapshot(run_id: str) -> dict:
+    return _get_snapshot_for_run("action_plan_snapshots", run_id)
 
 
 # ---------------------------------------------------------------------------

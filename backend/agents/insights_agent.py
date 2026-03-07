@@ -96,14 +96,18 @@ class InsightsAgent(BaseAgent):
             ]
 
             narrative_prompt = (
-                "Write a 3-4 sentence executive summary that synthesizes these "
-                "business insights into actionable intelligence. Focus on the most "
-                "critical findings and what actions they suggest.\n\n"
+                "You are a retail doctor diagnosing a store's health. Write a 3-4 sentence "
+                "executive briefing that:\n"
+                "1. Diagnoses the most critical business issue (like a doctor diagnosing the main condition)\n"
+                "2. Prescribes 1-2 specific actions with expected impact\n"
+                "3. Uses imperative voice: 'Do X to achieve Y'\n"
+                "Include specific numbers (dollar amounts, percentages, customer counts) where available.\n\n"
                 f"Insights:\n{json.dumps(insights_summary, indent=2)}\n\n"
                 f"Priority areas from analysis: {plan.get('priority_areas', [])}"
             )
             narrative = await ask_llm(
-                "You are a chief analytics officer writing for the CEO.",
+                "You are a retail doctor — you diagnose business problems and prescribe specific actions. "
+                "Write for a store owner who needs to decide what to do today.",
                 narrative_prompt,
             )
 

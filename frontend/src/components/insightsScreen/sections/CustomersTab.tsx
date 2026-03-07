@@ -39,6 +39,7 @@ import type {
   KpiCardRow,
   CustomerRow,
   ChurnPrediction,
+  ChartNarrativeData,
 } from "../dashboard/types";
 import {
   fmtCurrency,
@@ -48,6 +49,7 @@ import {
   safeNum,
 } from "../dashboard/formatters";
 import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
+import { ChartNarrative } from "../charts/ChartNarrative";
 
 /* ------------------------------------------------------------------ */
 /* Chart configs                                                       */
@@ -126,6 +128,7 @@ interface CustomersTabProps {
   cards: KpiCardRow[];
   customers: CustomerRow[];
   churnPredictions: ChurnPrediction[];
+  chartNarrative?: ChartNarrativeData | null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -136,6 +139,7 @@ export function CustomersTab({
   cards,
   customers,
   churnPredictions,
+  chartNarrative,
 }: CustomersTabProps) {
   /* ---------- KPI values ---------- */
   const active30d = getCardValue(cards, "active_customers_30d");
@@ -214,6 +218,11 @@ export function CustomersTab({
 
   return (
     <div className="space-y-6">
+      {/* Chart Narrative */}
+      {chartNarrative && (
+        <ChartNarrative narrative={chartNarrative.narrative} actionHint={chartNarrative.action_hint} />
+      )}
+
       {/* ============================================================
           Row 1: 6 KPI cards
           ============================================================ */}
@@ -432,19 +441,19 @@ export function CustomersTab({
                         </TableCell>
                         <TableCell>
                           {cp.segment ? (
-                            <span
-                              className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${
+                            <Badge
+                              color={
                                 cp.segment === "Top Buyer"
-                                  ? "bg-green-100 text-green-800 ring-green-500/30"
-                                  : cp.segment === "Moderate"
-                                    ? "bg-amber-100 text-amber-800 ring-amber-500/30"
-                                    : cp.segment === "At-Risk"
-                                      ? "bg-red-100 text-red-800 ring-red-500/30"
-                                      : "bg-gray-100 text-gray-800 ring-gray-500/30"
-                              }`}
+                                  ? "green"
+                                  : cp.segment === "At-Risk"
+                                    ? "red"
+                                    : cp.segment === "Moderate"
+                                      ? "blue"
+                                      : "gray"
+                              }
                             >
                               {cp.segment}
-                            </span>
+                            </Badge>
                           ) : (
                             "-"
                           )}

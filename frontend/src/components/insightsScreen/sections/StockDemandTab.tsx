@@ -30,19 +30,20 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "../../ui/chart";
-import type { KpiCardRow, DemandForecastSku } from "../dashboard/types";
+import type { KpiCardRow, DemandForecastSku, ChartNarrativeData } from "../dashboard/types";
 import { getCardValue, fmtPercent, safeNum } from "../dashboard/formatters";
 import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
+import { ChartNarrative } from "../charts/ChartNarrative";
 
 /* ------------------------------------------------------------------ */
 /* Status badge helper                                                 */
 /* ------------------------------------------------------------------ */
 
-const STATUS_BADGE: Record<string, { className: string; label: string }> = {
-  critical: { className: "bg-red-100 text-red-700", label: "Critical" },
-  warning: { className: "bg-amber-100 text-amber-700", label: "Warning" },
-  healthy: { className: "bg-green-100 text-green-700", label: "Healthy" },
-  unknown: { className: "bg-gray-100 text-gray-700", label: "Unknown" },
+const STATUS_BADGE: Record<string, { color: string; label: string }> = {
+  critical: { color: "red", label: "Critical" },
+  warning: { color: "orange", label: "Warning" },
+  healthy: { color: "green", label: "Healthy" },
+  unknown: { color: "gray", label: "Unknown" },
 };
 
 /* ------------------------------------------------------------------ */
@@ -113,13 +114,14 @@ type SortDirection = "asc" | "desc";
 interface StockDemandTabProps {
   cards: KpiCardRow[];
   demandSkus: DemandForecastSku[];
+  chartNarrative?: ChartNarrativeData | null;
 }
 
 /* ------------------------------------------------------------------ */
 /* Component                                                           */
 /* ------------------------------------------------------------------ */
 
-export function StockDemandTab({ cards, demandSkus }: StockDemandTabProps) {
+export function StockDemandTab({ cards, demandSkus, chartNarrative }: StockDemandTabProps) {
   /* ---------- Sort state ---------- */
   const [sortColumn, setSortColumn] = useState<SortColumn>("days_until_stockout");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
@@ -244,6 +246,11 @@ export function StockDemandTab({ cards, demandSkus }: StockDemandTabProps) {
 
   return (
     <div className="space-y-6">
+      {/* Chart Narrative */}
+      {chartNarrative && (
+        <ChartNarrative narrative={chartNarrative.narrative} actionHint={chartNarrative.action_hint} />
+      )}
+
       {/* ============================================================
           Row 1: 4 KPI cards
           ============================================================ */}
@@ -345,7 +352,7 @@ export function StockDemandTab({ cards, demandSkus }: StockDemandTabProps) {
                             : "N/A"}
                         </TableCell>
                         <TableCell>
-                          <Badge className={statusInfo.className}>
+                          <Badge color={statusInfo.color}>
                             {statusInfo.label}
                           </Badge>
                         </TableCell>

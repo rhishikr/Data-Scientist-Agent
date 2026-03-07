@@ -12,6 +12,13 @@ def utc_now_iso() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
+ActionType = Literal[
+    "restock", "outreach", "pricing", "campaign", "investigate", "optimize", "monitor"
+]
+Effort = Literal["quick-win", "moderate", "strategic"]
+Urgency = Literal["critical", "high", "medium", "low"]
+
+
 @dataclass
 class Insight:
     insight_id: str
@@ -28,6 +35,12 @@ class Insight:
     # RAG/LLM-friendly
     doc: str
     tags: list[str]
+
+    # Action metadata (retail doctor)
+    action_type: ActionType = "investigate"
+    impact_estimate: str = ""
+    effort: Effort = "moderate"
+    priority: int = 50  # 1 = most urgent, 100 = least
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

@@ -46,6 +46,8 @@ from db.store import (
     get_latest_ai_analysis as db_get_latest_ai_analysis,
     get_run_ai_analysis as db_get_run_ai_analysis,
     store_ai_analysis as db_store_ai_analysis,
+    get_latest_action_plan_snapshot as db_get_latest_action_plan,
+    get_run_action_plan_snapshot as db_get_run_action_plan,
     get_pipeline_runs,
     get_latest_run_id,
     get_run_snapshots,
@@ -786,6 +788,177 @@ Guidelines:
             "error": str(e),
             "cached": False,
         }
+
+
+# -----------------------------------------------------------------------------
+# Action Plan endpoint (Retail Doctor)
+# -----------------------------------------------------------------------------
+@app.get("/api/action-plan")
+def get_action_plan(run_id: Optional[str] = None):
+    """Returns a prioritized action plan aggregated from all data sources.
+
+    Primary path: read from Supabase (stored by ActionAgent during pipeline run).
+    Fallback: compute rule-based action plan on-the-fly.
+    """
+    # 1. Try DB-stored action plan (from ActionAgent pipeline run)
+    try:
+        db_plan = db_get_run_action_plan(run_id) if run_id else db_get_latest_action_plan()
+        if db_plan and "error" not in db_plan and db_plan.get("prescriptions"):
+            return _safe_json(db_plan)
+    except Exception:
+        pass
+
+    # 2. Try local cached file
+    cache_path = _INSIGHT_DIR / "action_plan.json"
+    if cache_path.is_file():
+        try:
+            with open(cache_path, "r", encoding="utf-8") as f:
+                cached = json.load(f)
+            if cached and cached.get("prescriptions"):
+                return _safe_json(cached)
+        except Exception:
+            pass
+
+    # 3. Fallback: compute rule-based action plan on-the-fly
+    from datetime import datetime, timezone
+    from pipeline.insights.prescriptions import build_action_plan
+
+    insight_data = db_get_run_insight(run_id) if run_id else db_get_latest_insight()
+    forecast_data = db_get_run_forecast(run_id) if run_id else db_get_latest_forecast()
+
+    insights = []
+    if insight_data and "error" not in insight_data:
+        insights = insight_data.get("insights", []) if isinstance(insight_data, dict) else []
+
+    executive_insights = {}
+    if forecast_data and "error" not in forecast_data:
+        executive_insights = forecast_data.get("executive_insights", {})
+
+    demand_resp = get_demand_forecast(run_id)
+    demand_skus = demand_resp.get("skus", [])
+
+    churn_resp = get_churn_predictions(run_id)
+    churn_predictions = churn_resp.get("customers", [])
+
+    plan = build_action_plan(
+        insights=insights,
+        demand_skus=demand_skus,
+        churn_predictions=churn_predictions,
+        executive_insights=executive_insights,
+        generated_at=datetime.now(timezone.utc).isoformat(),
+    )
+
+    return _safe_json(plan.to_dict())
+
+
+# -----------------------------------------------------------------------------
+# Chart Narratives endpoint
+# -----------------------------------------------------------------------------
+@app.get("/api/chart-narratives")
+def get_chart_narratives(run_id: Optional[str] = None):
+    """Returns natural-language annotations for each dashboard chart."""
+    from datetime import datetime, timezone
+
+    # Check local cache
+    cache_path = _INSIGHT_DIR / "chart_narratives.json"
+    if cache_path.is_file():
+        try:
+            with open(cache_path, "r", encoding="utf-8") as f:
+                cached = json.load(f)
+            if cached and cached.get("narratives"):
+                cached["cached"] = True
+                return cached
+        except Exception:
+            pass
+
+    # Gather context
+    kpi_data = db_get_run_kpi(run_id) if run_id else db_get_latest_kpi()
+    forecast_data = db_get_run_forecast(run_id) if run_id else db_get_latest_forecast()
+    insight_data = db_get_run_insight(run_id) if run_id else db_get_latest_insight()
+    demand_resp = get_demand_forecast(run_id)
+    churn_resp = get_churn_predictions(run_id)
+
+    context_parts = []
+
+    if kpi_data and "error" not in kpi_data:
+        cards = kpi_data.get("cards", [])
+        card_summary = {c["id"]: {"value": c["value"], "title": c["title"]}
+                        for c in cards if isinstance(c, dict) and "id" in c}
+        context_parts.append(f"KPIs: {json.dumps(card_summary, default=str)}")
+
+    if forecast_data and "error" not in forecast_data:
+        forecasts = forecast_data.get("forecasts", {})
+        context_parts.append(f"Revenue forecast: {json.dumps(forecasts.get('forecasted_revenue', {}), default=str)}")
+        context_parts.append(f"Churn forecast: {json.dumps(forecasts.get('expected_churn_next_month', {}), default=str)}")
+
+    demand_skus = demand_resp.get("skus", [])
+    critical_count = sum(1 for s in demand_skus if s.get("status") == "critical")
+    warning_count = sum(1 for s in demand_skus if s.get("status") == "warning")
+    context_parts.append(f"Demand: {critical_count} critical SKUs, {warning_count} warning SKUs, {len(demand_skus)} total")
+
+    churn_customers = churn_resp.get("customers", [])
+    high_churn = [c for c in churn_customers if (c.get("churn_prob_30d") or 0) >= 0.7]
+    total_churn_value = sum(c.get("total_spend", 0) for c in high_churn)
+    context_parts.append(f"Churn: {len(high_churn)} high-risk customers, ${total_churn_value:,.0f} at risk")
+
+    if insight_data and "error" not in insight_data:
+        insights = insight_data.get("insights", []) if isinstance(insight_data, dict) else []
+        insight_titles = [i.get("title", "") for i in insights[:5]]
+        context_parts.append(f"Top insights: {json.dumps(insight_titles)}")
+
+    context = "\n".join(context_parts)
+
+    try:
+        from langchain_openai import ChatOpenAI
+        from langchain_core.messages import SystemMessage, HumanMessage
+
+        system_prompt = """You are a retail doctor generating chart annotations. For each chart below, write:
+1. A 1-2 sentence narrative explaining what the data shows in plain English
+2. An action hint starting with "Action:" that tells the store owner what to do
+
+Return valid JSON with this structure:
+{
+  "revenue_trend": {"narrative": "...", "action_hint": "..."},
+  "revenue_by_channel": {"narrative": "...", "action_hint": "..."},
+  "stock_health": {"narrative": "...", "action_hint": "..."},
+  "demand_forecast": {"narrative": "...", "action_hint": "..."},
+  "customer_segments": {"narrative": "...", "action_hint": "..."},
+  "churn_distribution": {"narrative": "...", "action_hint": "..."},
+  "top_products": {"narrative": "...", "action_hint": "..."},
+  "marketing_channels": {"narrative": "...", "action_hint": "..."}
+}
+
+Use specific numbers. Be concise. Every action_hint must start with an action verb."""
+
+        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.3)
+        response = llm.invoke([
+            SystemMessage(content=system_prompt),
+            HumanMessage(content=f"Business data:\n{context}"),
+        ])
+
+        content = response.content
+        if "```json" in content:
+            content = content.split("```json")[1].split("```")[0].strip()
+        elif "```" in content:
+            content = content.split("```")[1].split("```")[0].strip()
+
+        narratives = json.loads(content)
+
+        result = {
+            "narratives": narratives,
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "cached": False,
+        }
+
+        # Cache locally
+        os.makedirs(str(_INSIGHT_DIR), exist_ok=True)
+        with open(cache_path, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=2, default=str)
+
+        return result
+
+    except Exception as e:
+        return {"narratives": {}, "error": str(e), "cached": False}
 
 
 # -----------------------------------------------------------------------------

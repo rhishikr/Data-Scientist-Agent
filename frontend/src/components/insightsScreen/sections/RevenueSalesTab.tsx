@@ -24,6 +24,7 @@ import type {
   KpiCardRow,
   RevenueForecastPoint,
   ForecastSnapshot,
+  ChartNarrativeData,
 } from "../dashboard/types";
 import {
   fmtCurrency,
@@ -33,6 +34,7 @@ import {
 } from "../dashboard/formatters";
 import { RevenueLineChart } from "../charts/RevenueLineChart";
 import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
+import { ChartNarrative } from "../charts/ChartNarrative";
 
 /* ------------------------------------------------------------------ */
 /* Chart config                                                        */
@@ -84,6 +86,7 @@ interface RevenueSalesTabProps {
   revenueSeries: RevenueForecastPoint[];
   channelRevenueData: Array<{ channel: string; revenue: number }>;
   forecastSnapshot: ForecastSnapshot | null;
+  chartNarrative?: ChartNarrativeData | null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -95,6 +98,7 @@ export function RevenueSalesTab({
   revenueSeries,
   channelRevenueData,
   forecastSnapshot,
+  chartNarrative,
 }: RevenueSalesTabProps) {
   /* ---------- KPI values ---------- */
   const revMtd = getCardValue(cards, "rev_mtd");
@@ -110,6 +114,11 @@ export function RevenueSalesTab({
 
   return (
     <div className="space-y-6">
+      {/* Chart Narrative */}
+      {chartNarrative && (
+        <ChartNarrative narrative={chartNarrative.narrative} actionHint={chartNarrative.action_hint} />
+      )}
+
       {/* ============================================================
           Row 1: 4 small KPI cards
           ============================================================ */}
