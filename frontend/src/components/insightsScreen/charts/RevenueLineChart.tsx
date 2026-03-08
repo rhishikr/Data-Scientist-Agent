@@ -6,6 +6,7 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
+  ReferenceLine,
 } from "recharts";
 
 import {
@@ -59,6 +60,20 @@ export function RevenueLineChart({
   data,
   height = 350,
 }: RevenueLineChartProps) {
+  // Find the boundary date where actuals end and forecast begins
+  const forecastBoundary = React.useMemo(() => {
+    for (let i = data.length - 1; i >= 0; i--) {
+      if (data[i].revenue_actual != null && data[i].revenue_forecast != null) {
+        return data[i].date;
+      }
+    }
+    // Fallback: last date with actual data
+    for (let i = data.length - 1; i >= 0; i--) {
+      if (data[i].revenue_actual != null) return data[i].date;
+    }
+    return null;
+  }, [data]);
+
   if (!data || data.length === 0) {
     return (
       <div
@@ -115,6 +130,16 @@ export function RevenueLineChart({
             />
           }
         />
+
+        {/* Forecast boundary marker */}
+        {forecastBoundary && (
+          <ReferenceLine
+            x={forecastBoundary}
+            stroke="#94a3b8"
+            strokeDasharray="4 4"
+            label={{ value: "Forecast", position: "top", fontSize: 11, fill: "#94a3b8" }}
+          />
+        )}
 
         {/* Actual revenue as a filled area */}
         <Area

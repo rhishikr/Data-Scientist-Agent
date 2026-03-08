@@ -126,6 +126,20 @@ def store_ai_analysis(run_id: str, snapshot: dict) -> None:
     _store_snapshot("ai_analysis_snapshots", run_id, snapshot)
 
 
+def store_action_plan_snapshot(run_id: str, snapshot: dict) -> None:
+    _store_snapshot("action_plan_snapshots", run_id, snapshot)
+
+
+def store_comparison_ai(current_run_id: str, previous_run_id: str, snapshot: dict) -> None:
+    composite_key = f"{current_run_id}::{previous_run_id}"
+    _store_snapshot("ai_analysis_snapshots", composite_key, snapshot)
+
+
+def get_comparison_ai(current_run_id: str, previous_run_id: str) -> dict:
+    composite_key = f"{current_run_id}::{previous_run_id}"
+    return _get_snapshot_for_run("ai_analysis_snapshots", composite_key)
+
+
 # ---------------------------------------------------------------------------
 # Cleaned / Featured dataset storage (DB metadata + Storage bucket CSV)
 # ---------------------------------------------------------------------------
@@ -272,6 +286,48 @@ def get_latest_ai_analysis() -> dict:
 
 def get_run_ai_analysis(run_id: str) -> dict:
     return _get_snapshot_for_run("ai_analysis_snapshots", run_id)
+
+
+def get_latest_action_plan_snapshot() -> dict:
+    return _get_latest_snapshot("action_plan_snapshots")
+
+
+def get_run_action_plan_snapshot(run_id: str) -> dict:
+    return _get_snapshot_for_run("action_plan_snapshots", run_id)
+
+
+# ---------------------------------------------------------------------------
+# Prescription status tracking (action checklist)
+# ---------------------------------------------------------------------------
+
+def upsert_prescription_status(
+    run_id: str, prescription_id: str, status: str
+) -> None:
+    """Create or update the status of a prescription action."""
+    sb = get_supabase()
+    sb.table("prescription_statuses").upsert(
+        {
+            "run_id": run_id,
+            "prescription_id": prescription_id,
+            "status": status,
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        },
+        on_conflict="run_id,prescription_id",
+    ).execute()
+
+
+def get_prescription_statuses(run_id: str) -> List[dict]:
+    """Fetch all prescription statuses for a given run."""
+    def _query():
+        sb = get_supabase()
+        return (
+            sb.table("prescription_statuses")
+            .select("prescription_id, status, updated_at")
+            .eq("run_id", run_id)
+            .execute()
+        )
+    result = with_retry(_query)
+    return result.data or []
 
 
 # ---------------------------------------------------------------------------

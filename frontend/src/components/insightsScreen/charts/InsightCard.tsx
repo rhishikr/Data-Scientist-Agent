@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, ArrowRight, Zap, Clock, Target } from "lucide-react";
 
 import { Card, CardContent } from "../../ui/card";
 import { Badge } from "../../ui/badge";
@@ -16,20 +16,11 @@ import type { Insight } from "../dashboard/types";
 
 const SEVERITY_STYLES: Record<
   Insight["severity"],
-  { border: string; badgeClass: string }
+  { border: string; color: string }
 > = {
-  high: {
-    border: "border-l-4 border-l-red-500",
-    badgeClass: "bg-red-100 text-red-700",
-  },
-  medium: {
-    border: "border-l-4 border-l-amber-500",
-    badgeClass: "bg-amber-100 text-amber-700",
-  },
-  low: {
-    border: "border-l-4 border-l-green-500",
-    badgeClass: "bg-green-100 text-green-700",
-  },
+  high: { border: "border-l-4 border-l-red-500", color: "red" },
+  medium: { border: "border-l-4 border-l-orange-500", color: "orange" },
+  low: { border: "border-l-4 border-l-green-500", color: "green" },
 };
 
 /* ------------------------------------------------------------------ */
@@ -51,13 +42,28 @@ export function InsightCard({ insight }: InsightCardProps) {
   return (
     <Card className={`${styles.border} gap-0`}>
       <CardContent className="p-4 space-y-3">
-        {/* ---- Top row: severity badge + confidence ---- */}
-        <div className="flex items-center justify-between">
-          <Badge className={styles.badgeClass}>
+        {/* ---- Top row: severity badge + effort + confidence ---- */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <Badge color={styles.color}>
             {insight.severity.charAt(0).toUpperCase() +
               insight.severity.slice(1)}
           </Badge>
-          <span className="text-xs text-muted-foreground">
+          {insight.effort && (
+            <Badge color={
+              insight.effort === "quick-win" ? "teal" :
+              insight.effort === "strategic" ? "purple" :
+              "blue"
+            }>
+              <span className="flex items-center gap-1">
+                {insight.effort === "quick-win" ? <Zap className="size-3" /> :
+                 insight.effort === "strategic" ? <Target className="size-3" /> :
+                 <Clock className="size-3" />}
+                {insight.effort === "quick-win" ? "Quick Win" :
+                 insight.effort === "strategic" ? "Strategic" : "Moderate"}
+              </span>
+            </Badge>
+          )}
+          <span className="text-xs text-muted-foreground ml-auto">
             Confidence: <span className="font-medium">{confidencePct}</span>
           </span>
         </div>
@@ -70,11 +76,18 @@ export function InsightCard({ insight }: InsightCardProps) {
           {insight.description}
         </p>
 
-        {/* ---- Recommendation ---- */}
+        {/* ---- Impact estimate ---- */}
+        {insight.impact_estimate && (
+          <p className="text-xs text-muted-foreground flex items-center gap-1.5">
+            <ArrowRight className="size-3 shrink-0" />
+            <span className="font-medium">{insight.impact_estimate}</span>
+          </p>
+        )}
+
+        {/* ---- Recommendation (prominent) ---- */}
         {insight.recommendation && (
-          <div className="rounded-md bg-muted/50 px-3 py-2">
-            <p className="text-sm">
-              <span className="font-medium">Recommendation: </span>
+          <div className="rounded-md bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900 px-3 py-2.5">
+            <p className="text-sm font-medium text-blue-900 dark:text-blue-100 leading-relaxed">
               {insight.recommendation}
             </p>
           </div>

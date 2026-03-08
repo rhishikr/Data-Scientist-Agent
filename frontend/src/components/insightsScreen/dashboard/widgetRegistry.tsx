@@ -251,13 +251,12 @@ export function buildWidgetRegistry({
                       </td>
                       <td className="py-3">
                         <Badge
-                          variant="outline"
-                          className={
+                          color={
                             customer.segment === "Top Buyer"
-                              ? "text-green-600 border-green-200"
+                              ? "green"
                               : customer.segment === "At-Risk"
-                                ? "text-orange-600 border-orange-200"
-                                : "text-blue-600 border-blue-200"
+                                ? "orange"
+                                : "blue"
                           }
                         >
                           {customer.segment}

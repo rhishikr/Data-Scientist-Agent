@@ -127,6 +127,10 @@ def detect_engaged_no_purchase(
         created_at=utc_now_iso(),
         doc="",
         tags=["customer", "conversion", "engagement"],
+        action_type="campaign",
+        impact_estimate=f"{int(len(candidates))} engaged visitors not converting",
+        effort="moderate",
+        priority=30 if prevalence > 0.1 else 50,
     )
     ins.doc = build_doc(ins)
     return [ins]
@@ -161,7 +165,11 @@ def detect_at_risk_and_churn(
     if total_rev > 0:
         spend_shares = ( _num(buyers.get("total_spend", pd.Series(dtype=float))).fillna(0.0) / total_rev ).tolist()
 
-    def make_insight(segment_name: str, seg_df: pd.DataFrame, thr: float, insight_id: str, title: str, descr: str, rec_text: str) -> Insight:
+    def make_insight(
+        segment_name: str, seg_df: pd.DataFrame, thr: float,
+        insight_id: str, title: str, descr: str, rec_text: str,
+        action_type: str = "outreach", effort: str = "moderate", priority: int = 20,
+    ) -> Insight:
         seg_rev = float(_num(seg_df.get("total_spend", pd.Series(dtype=float))).fillna(0.0).sum())
         impact_share = (seg_rev / total_rev) if total_rev > 0 else None
 
@@ -178,6 +186,8 @@ def detect_at_risk_and_churn(
         else:
             prevalence = len(seg_df) / max(len(buyers), 1)
             sev = severity_from_metric(prevalence, reference_values=[prevalence])
+
+        impact_str = f"${seg_rev:,.0f} revenue at risk from {int(len(seg_df))} customers" if seg_rev > 0 else f"{int(len(seg_df))} customers at risk"
 
         evidence = {
             "segment": segment_name,
@@ -203,6 +213,10 @@ def detect_at_risk_and_churn(
             created_at=utc_now_iso(),
             doc="",
             tags=["customer", "retention", segment_name],
+            action_type=action_type,
+            impact_estimate=impact_str,
+            effort=effort,
+            priority=priority,
         )
         ins.doc = build_doc(ins)
         return ins
@@ -226,6 +240,9 @@ def detect_at_risk_and_churn(
                         "Trigger re-engagement for this segment: personalized messages based on past purchases, replenishment reminders, "
                         "and targeted offers. Prioritize high historical spenders first and measure win-back conversion rate."
                     ),
+                    action_type="outreach",
+                    effort="moderate",
+                    priority=15,
                 )
             )
 
@@ -248,6 +265,9 @@ def detect_at_risk_and_churn(
                         "Launch a win-back campaign: personalized offers, product reminders based on top_product_id, "
                         "and outreach that prioritizes customers with the highest historical spend. Track time-to-reactivation."
                     ),
+                    action_type="campaign",
+                    effort="moderate",
+                    priority=10,
                 )
             )
 
@@ -312,6 +332,8 @@ def detect_revenue_concentration(
         ].head(12).to_dict(orient="records"),
     }
 
+    impact_str = f"${top_rev:,.0f} revenue ({(share * 100):.0f}% of total) depends on {int(len(top))} customers" if share else ""
+
     ins = Insight(
         insight_id="cust_revenue_concentration",
         title="Revenue is concentrated among a small group of customers",
@@ -331,6 +353,10 @@ def detect_revenue_concentration(
         created_at=utc_now_iso(),
         doc="",
         tags=["customer", "revenue", "concentration", "risk"],
+        action_type="investigate",
+        impact_estimate=impact_str,
+        effort="strategic",
+        priority=25,
     )
     ins.doc = build_doc(ins)
     return [ins]

@@ -17,6 +17,11 @@ from .metrics import (
     compute_product_kpis,
     compute_inventory_kpis,
     compute_forecast_kpis,
+    compute_net_revenue_kpis,
+    compute_demographic_kpis,
+    compute_payment_kpis,
+    compute_supplier_kpis,
+    compute_brand_kpis,
 )
 
 
@@ -35,16 +40,12 @@ def _to_dt_max(df: pd.DataFrame, col: str) -> pd.Timestamp | None:
 def _infer_as_of_from_available(
     transactions_features: pd.DataFrame,
     transactions: pd.DataFrame,
+    sessions: pd.DataFrame,
     web: pd.DataFrame,
     marketing: pd.DataFrame,
 ) -> pd.Timestamp | None:
     """
     Choose 'as_of' from the freshest timestamp in your data (NOT wall-clock time).
-    Priority:
-      1) transactions_features.order_datetime
-      2) transactions.order_datetime
-      3) web_analytics.event_datetime
-      4) marketing.end_date / start_date
     """
     # 1) transactions_features
     as_of = _to_dt_max(transactions_features, "order_datetime")
@@ -56,12 +57,17 @@ def _infer_as_of_from_available(
     if as_of is not None:
         return as_of
 
-    # 3) web
+    # 3) sessions
+    as_of = _to_dt_max(sessions, "session_start")
+    if as_of is not None:
+        return as_of
+
+    # 4) web
     as_of = _to_dt_max(web, "event_datetime")
     if as_of is not None:
         return as_of
 
-    # 4) marketing (date-only)
+    # 5) marketing (date-only)
     if marketing is not None and not marketing.empty:
         for c in ("end_date", "start_date"):
             if c in marketing.columns:
@@ -73,7 +79,6 @@ def _infer_as_of_from_available(
 
 
 def _is_bad_number(x: Any) -> bool:
-    # catches: NaN, inf, -inf (python float + numpy float)
     try:
         if x is None:
             return False
@@ -95,7 +100,6 @@ def _sanitize_for_json(obj: Any) -> Any:
     if _is_bad_number(obj):
         return None
 
-    # numpy scalars -> python scalars
     if isinstance(obj, (np.integer,)):
         return int(obj)
     if isinstance(obj, (np.floating,)):
@@ -105,7 +109,6 @@ def _sanitize_for_json(obj: Any) -> Any:
         return bool(obj)
 
     if isinstance(obj, (pd.Timestamp, datetime)):
-        # keep as ISO string for API friendliness
         return str(obj)
 
     if isinstance(obj, dict):
@@ -118,7 +121,6 @@ def _sanitize_for_json(obj: Any) -> Any:
 
 
 def _safe_card_value(v: Any) -> Any:
-    # Keep ints/strings as-is, but remove NaN/Inf floats.
     return None if _is_bad_number(v) else v
 
 
@@ -146,33 +148,39 @@ def run_kpi_snapshot(paths: DataPaths | None = None) -> Dict[str, Any]:
     products = data.get("products", pd.DataFrame())
     transactions = data.get("transactions", pd.DataFrame())
     web = data.get("web_analytics", pd.DataFrame())
+    sessions = data.get("sessions", pd.DataFrame())
+    events = data.get("events", pd.DataFrame())
+    campaign_performance = data.get("campaign_performance", pd.DataFrame())
+    funnel_summary = data.get("funnel_summary", pd.DataFrame())
 
     customers_features = data.get("customers_features", pd.DataFrame())
     products_features = data.get("products_features", pd.DataFrame())
     transactions_features = data.get("transactions_features", pd.DataFrame())
 
     # IMPORTANT: as_of should come from your data, not from "today"
-    as_of = _infer_as_of_from_available(transactions_features, transactions, web, marketing)
+    as_of = _infer_as_of_from_available(transactions_features, transactions, sessions, web, marketing)
     if as_of is None:
-        # last-resort fallback: still avoid crashing
         as_of = pd.Timestamp.utcnow().floor("s")
 
     # --- KPI Groups ---
     revenue_kpis = compute_revenue_kpis(transactions, as_of)
     customer_kpis = compute_customer_kpis(customers, customers_features, transactions, as_of)
-    funnel_kpis = compute_funnel_kpis(web, transactions, as_of)
-    marketing_kpis = compute_marketing_kpis(marketing)
+    funnel_kpis = compute_funnel_kpis(sessions, events, funnel_summary, web, transactions, as_of)
+    marketing_kpis = compute_marketing_kpis(marketing, campaign_performance)
     product_kpis, top_products_df, low_products_df = compute_product_kpis(products, transactions)
     inventory_kpis, risky_products_df = compute_inventory_kpis(inventory, transactions, as_of)
+    net_revenue_kpis = compute_net_revenue_kpis(transactions, payments)
+    demographic_kpis = compute_demographic_kpis(customers)
+    payment_kpis = compute_payment_kpis(payments)
+    supplier_kpis = compute_supplier_kpis(inventory)
+    brand_kpis = compute_brand_kpis(products, transactions)
     # forecast_kpis = compute_forecast_kpis(transactions, as_of)
 
     # --- Tables ---
-    # Top customers table from customers_features (fallback could be added later)
     top_customers_df = pd.DataFrame()
     if customers_features is not None and not customers_features.empty and "total_spend" in customers_features.columns:
         cf = customers_features.copy()
 
-        # numeric cleanup
         for c in ("total_spend", "total_orders", "recency_days", "avg_order_value"):
             if c in cf.columns:
                 cf[c] = pd.to_numeric(cf[c], errors="coerce")
@@ -195,7 +203,7 @@ def run_kpi_snapshot(paths: DataPaths | None = None) -> Dict[str, Any]:
             .copy()
         )
 
-    # Discount watchlist: high discount + low rating
+    # Discount watchlist
     discount_watchlist_df = pd.DataFrame()
     if products is not None and not products.empty and "discount_percent" in products.columns:
         p = products.copy()
@@ -212,6 +220,7 @@ def run_kpi_snapshot(paths: DataPaths | None = None) -> Dict[str, Any]:
 
             cols = [
                 "sku",
+                "product_name",
                 "name",
                 "category",
                 "brand",
@@ -237,8 +246,8 @@ def run_kpi_snapshot(paths: DataPaths | None = None) -> Dict[str, Any]:
                 "title": title,
                 "value": _safe_card_value(value),
                 "unit": unit,
-                "format": fmt,   # number | percent | currency | minutes
-                "group": group,  # Revenue | Customers | Funnel | Marketing | Product | Inventory | Forecast
+                "format": fmt,
+                "group": group,
             }
         )
 
@@ -250,6 +259,15 @@ def run_kpi_snapshot(paths: DataPaths | None = None) -> Dict[str, Any]:
     add_card("aov", "Average Order Value (AOV)", revenue_kpis.get("average_order_value"), "USD", "currency", "Revenue")
     add_card("orders_day", "Orders per Day", revenue_kpis.get("orders_per_day"), "", "number", "Revenue")
     add_card("orders_week", "Orders per Week", revenue_kpis.get("orders_per_week"), "", "number", "Revenue")
+
+    # Net Revenue
+    add_card("gross_revenue", "Gross Revenue", net_revenue_kpis.get("gross_revenue"), "USD", "currency", "Revenue")
+    add_card("net_revenue", "Net Revenue", net_revenue_kpis.get("net_revenue"), "USD", "currency", "Revenue")
+    add_card("total_discounts", "Total Discounts", net_revenue_kpis.get("total_discounts"), "USD", "currency", "Revenue")
+    add_card("total_returns", "Total Returns Value", net_revenue_kpis.get("total_returns"), "USD", "currency", "Revenue")
+    add_card("total_refunds", "Total Refunds", net_revenue_kpis.get("total_refunds"), "USD", "currency", "Revenue")
+    add_card("total_fees", "Total Transaction Fees", net_revenue_kpis.get("total_fees"), "USD", "currency", "Revenue")
+    add_card("discount_rate", "Discount Rate", net_revenue_kpis.get("discount_rate"), "", "percent", "Revenue")
 
     # Customer Health
     add_card("active_customers_30d", "Active Customers (30d)", customer_kpis.get("active_customers_30d"), "", "number", "Customers")
@@ -265,14 +283,38 @@ def run_kpi_snapshot(paths: DataPaths | None = None) -> Dict[str, Any]:
     add_card("conversion_rate", "Conversion Rate", funnel_kpis.get("conversion_rate"), "", "percent", "Funnel")
     add_card("cart_abandonment_rate", "Cart Abandonment Rate", funnel_kpis.get("cart_abandonment_rate"), "", "percent", "Funnel")
     add_card("checkout_completion_rate", "Checkout Completion Rate", funnel_kpis.get("checkout_completion_rate"), "", "percent", "Funnel")
+    add_card("product_view_rate", "Product View Rate", funnel_kpis.get("product_view_rate"), "", "percent", "Funnel")
     add_card("bounce_rate", "Bounce Rate", funnel_kpis.get("bounce_rate"), "", "percent", "Funnel")
     add_card("time_to_purchase", "Avg Time to Purchase", funnel_kpis.get("avg_time_to_purchase_min"), "min", "minutes", "Funnel")
+    add_card("avg_session_duration", "Avg Session Duration", funnel_kpis.get("avg_session_duration"), "sec", "number", "Funnel")
+    add_card("revenue_per_session", "Revenue per Session", funnel_kpis.get("revenue_per_session"), "USD", "currency", "Funnel")
+    add_card("mobile_conversion_rate", "Mobile Conversion Rate", funnel_kpis.get("mobile_conversion_rate"), "", "percent", "Funnel")
+    add_card("desktop_conversion_rate", "Desktop Conversion Rate", funnel_kpis.get("desktop_conversion_rate"), "", "percent", "Funnel")
 
     # Marketing
     add_card("cac", "Customer Acquisition Cost (proxy)", marketing_kpis.get("cac"), "USD", "currency", "Marketing")
     add_card("roas", "ROAS", marketing_kpis.get("roas"), "x", "number", "Marketing")
     add_card("campaign_cr", "Campaign Conversion Rate", marketing_kpis.get("campaign_conversion_rate"), "", "percent", "Marketing")
-    add_card("promo_uplift", "Promotion Uplift (proxy)", marketing_kpis.get("promotion_uplift_proxy"), "", "percent", "Marketing")
+    add_card("best_campaign", "Best Performing Campaign", marketing_kpis.get("best_performing_campaign"), "", "text", "Marketing")
+    add_card("worst_campaign", "Worst Performing Campaign", marketing_kpis.get("worst_performing_campaign"), "", "text", "Marketing")
+
+    # Promo uplift: compare avg order value of discounted vs non-discounted orders
+    promo_uplift = None
+    if not transactions.empty and "discount_amount" in transactions.columns and "total_amount" in transactions.columns:
+        tx_promo = transactions.copy()
+        tx_promo["discount_amount"] = pd.to_numeric(tx_promo["discount_amount"], errors="coerce").fillna(0)
+        tx_promo["total_amount"] = pd.to_numeric(tx_promo["total_amount"], errors="coerce")
+        discounted = tx_promo[tx_promo["discount_amount"] > 0]["total_amount"]
+        non_discounted = tx_promo[tx_promo["discount_amount"] <= 0]["total_amount"]
+        if len(non_discounted) > 0 and non_discounted.mean() > 0 and len(discounted) > 0:
+            promo_uplift = (discounted.mean() - non_discounted.mean()) / non_discounted.mean()
+    add_card("promo_uplift", "Promo Uplift", promo_uplift, "", "percent", "Marketing")
+
+    # Payments
+    add_card("payment_failure_rate", "Payment Failure Rate", payment_kpis.get("payment_failure_rate"), "", "percent", "Payments")
+    add_card("payment_refund_rate", "Payment Refund Rate", payment_kpis.get("refund_rate"), "", "percent", "Payments")
+    add_card("top_payment_method", "Top Payment Method", payment_kpis.get("top_payment_method"), "", "text", "Payments")
+    add_card("avg_transaction_fee", "Avg Transaction Fee", payment_kpis.get("avg_transaction_fee"), "USD", "currency", "Payments")
 
     # Product & Merchandising
     add_card("avg_margin_pct", "Average Product Margin", product_kpis.get("avg_product_margin_pct"), "", "percent", "Product")
@@ -282,10 +324,23 @@ def run_kpi_snapshot(paths: DataPaths | None = None) -> Dict[str, Any]:
     add_card("stock_out_risk_pct", "Stock-Out Risk", inventory_kpis.get("stock_out_risk_pct"), "", "percent", "Inventory")
     add_card("inventory_turnover_proxy", "Inventory Turnover (proxy)", inventory_kpis.get("inventory_turnover_proxy"), "", "number", "Inventory")
 
-    # Forecast
-    # add_card("forecast_rev_7d", "Forecasted Revenue (7d)", forecast_kpis.get("forecasted_revenue_7d"), "USD", "currency", "Forecast")
-    # add_card("forecast_rev_30d", "Forecasted Revenue (30d)", forecast_kpis.get("forecasted_revenue_30d"), "USD", "currency", "Forecast")
-    # add_card("forecast_rev_90d", "Forecasted Revenue (90d)", forecast_kpis.get("forecasted_revenue_90d"), "USD", "currency", "Forecast")
+    # Demographics
+    add_card("customers_by_gender", "Customers by Gender", demographic_kpis.get("customers_by_gender"), "", "json", "Demographics")
+    add_card("customers_by_age_group", "Customers by Age Group", demographic_kpis.get("customers_by_age_group"), "", "json", "Demographics")
+    add_card("customers_by_loyalty", "Customers by Loyalty Tier", demographic_kpis.get("customers_by_loyalty_tier"), "", "json", "Demographics")
+    add_card("avg_spend_by_loyalty", "Avg Spend by Loyalty Tier", demographic_kpis.get("avg_spend_by_loyalty"), "", "json", "Demographics")
+
+    # Brand
+    top_brands = {}
+    rev_by_brand = brand_kpis.get("revenue_by_brand", {})
+    if isinstance(rev_by_brand, dict):
+        top_brands = dict(sorted(rev_by_brand.items(), key=lambda x: x[1], reverse=True)[:10])
+    add_card("top_brands_revenue", "Top 10 Brands by Revenue", top_brands, "", "json", "Brand")
+    add_card("brand_count", "Total Brands", len(rev_by_brand) if isinstance(rev_by_brand, dict) else 0, "", "number", "Brand")
+
+    # Supplier
+    add_card("supplier_stockouts", "Stockouts by Supplier", supplier_kpis.get("stockout_by_supplier"), "", "json", "Supplier")
+    add_card("supplier_reliability", "Supplier Reliability Scores", supplier_kpis.get("supplier_reliability_score"), "", "json", "Supplier")
 
     # --- AI Executive Insights (rule-based now; LLM can rewrite later) ---
     exec_insights: list[str] = []
@@ -306,7 +361,25 @@ def run_kpi_snapshot(paths: DataPaths | None = None) -> Dict[str, Any]:
     if isinstance(so, (int, float)) and not _is_bad_number(so) and so >= 0.15:
         exec_insights.append(f"Stock-out risk is elevated: ~{so*100:.0f}% of SKUs are at/under reorder threshold.")
 
-    # Optionally incorporate hypothesis_results.json if available (for “drivers”)
+    # Net revenue insights
+    nr = net_revenue_kpis.get("net_revenue")
+    gr = net_revenue_kpis.get("gross_revenue")
+    if isinstance(nr, (int, float)) and isinstance(gr, (int, float)) and not _is_bad_number(nr) and not _is_bad_number(gr) and gr > 0:
+        leakage = (gr - nr) / gr
+        if leakage > 0.15:
+            exec_insights.append(f"Revenue leakage (discounts + returns + refunds + fees) is {leakage*100:.1f}% of gross revenue.")
+
+    # Payment health
+    pf = payment_kpis.get("payment_failure_rate")
+    if isinstance(pf, (int, float)) and not _is_bad_number(pf) and pf > 0.05:
+        exec_insights.append(f"Payment failure rate is {pf*100:.1f}% — investigate payment gateway issues.")
+
+    # Cart abandonment
+    ca = funnel_kpis.get("cart_abandonment_rate")
+    if isinstance(ca, (int, float)) and not _is_bad_number(ca) and ca > 0.6:
+        exec_insights.append(f"Cart abandonment is high at {ca*100:.0f}%. Consider checkout UX improvements or retargeting campaigns.")
+
+    # Optionally incorporate hypothesis_results.json
     hyp = read_json(paths.hypothesis_json_path)
     drivers: list[str] = []
     if hyp and isinstance(hyp.get("top_findings"), list):
@@ -315,20 +388,22 @@ def run_kpi_snapshot(paths: DataPaths | None = None) -> Dict[str, Any]:
     snapshot = {
         "meta": {
             "generated_at": datetime.utcnow().isoformat() + "Z",
-            # as_of should be the newest date in your data
             "as_of": as_of.isoformat(sep=" ") if isinstance(as_of, pd.Timestamp) else str(as_of),
             "datasets_used": [k for k, v in data.items() if isinstance(v, pd.DataFrame) and not v.empty],
         },
         "kpis": {
             "revenue_sales_health": revenue_kpis,
+            "net_revenue": net_revenue_kpis,
             "customer_health_value": customer_kpis,
+            "demographics": demographic_kpis,
             "conversion_funnel": funnel_kpis,
             "marketing_effectiveness": marketing_kpis,
             "product_merchandising": product_kpis,
+            "brand_performance": brand_kpis,
             "inventory_operations": inventory_kpis,
-            # "forecasting_outlook": forecast_kpis,
+            "supplier_health": supplier_kpis,
+            "payment_health": payment_kpis,
         },
-        # This is your “25–30 KPI options” list for a dynamic dashboard
         "cards": cards,
         "tables": {
             "top_customers": top_customers_df.to_dict(orient="records") if not top_customers_df.empty else [],
@@ -343,7 +418,7 @@ def run_kpi_snapshot(paths: DataPaths | None = None) -> Dict[str, Any]:
         },
     }
 
-    # IMPORTANT: sanitize before returning to FastAPI (prevents NaN JSON crash)
+    # IMPORTANT: sanitize before returning to FastAPI
     snapshot = _sanitize_for_json(snapshot)
 
     # --- Write outputs ---

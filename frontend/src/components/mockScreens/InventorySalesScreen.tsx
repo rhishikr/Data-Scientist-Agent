@@ -308,13 +308,12 @@ export function InventorySalesScreen() {
                       </td>
                       <td className="py-3 text-right">
                         <Badge
-                          variant="outline"
-                          className={
+                          color={
                             item.risk === "High"
-                              ? "text-red-600 border-red-200 bg-red-50"
+                              ? "red"
                               : item.risk === "Medium"
-                                ? "text-orange-600 border-orange-200 bg-orange-50"
-                                : "text-green-600 border-green-200 bg-green-50"
+                                ? "orange"
+                                : "green"
                           }
                         >
                           {item.risk}

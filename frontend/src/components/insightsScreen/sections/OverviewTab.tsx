@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   PieChart,
   Pie,
@@ -6,10 +6,16 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import {
+  Activity,
   AlertTriangle,
-  ShieldAlert,
+  ChevronDown,
+  ChevronUp,
+  ClipboardCheck,
   Heart,
   Lightbulb,
+  MousePointerClick,
+  ShieldAlert,
+  ShoppingCart,
   TrendingDown,
   TrendingUp,
 } from "lucide-react";
@@ -22,8 +28,10 @@ import type {
   Insight,
   ForecastSnapshot,
   DemandForecastSku,
+  ActionPlan,
+  FunnelSnapshot,
 } from "../dashboard/types";
-import { fmtCurrency } from "../dashboard/formatters";
+import { fmtCurrency, fmtPercent, safeNum } from "../dashboard/formatters";
 import { RevenueLineChart } from "../charts/RevenueLineChart";
 import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
 
@@ -65,10 +73,10 @@ const CHANNEL_COLORS = [
 
 const SEVERITY_ORDER: Record<string, number> = { high: 0, medium: 1, low: 2 };
 
-const SEVERITY_BADGE: Record<string, string> = {
-  high: "bg-red-100 text-red-700",
-  medium: "bg-amber-100 text-amber-700",
-  low: "bg-green-100 text-green-700",
+const SEVERITY_COLOR: Record<string, string> = {
+  high: "red",
+  medium: "orange",
+  low: "green",
 };
 
 /* ------------------------------------------------------------------ */
@@ -82,6 +90,9 @@ interface OverviewTabProps {
   insights: Insight[];
   forecastSnapshot: ForecastSnapshot | null;
   demandSkus: DemandForecastSku[];
+  actionPlan?: ActionPlan | null;
+  funnelSnapshot?: FunnelSnapshot | null;
+  runId?: string | null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -95,7 +106,29 @@ export function OverviewTab({
   insights,
   forecastSnapshot,
   demandSkus,
+  actionPlan = null,
+  funnelSnapshot = null,
+  runId = null,
 }: OverviewTabProps) {
+  /* ---------- Fetch persisted prescription statuses ---------- */
+  const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+  const [statuses, setStatuses] = useState<Record<string, string>>({});
+  useEffect(() => {
+    const url = runId
+      ? `${API_BASE}/api/action-plan/prescriptions/statuses?run_id=${runId}`
+      : `${API_BASE}/api/action-plan/prescriptions/statuses`;
+    fetch(url)
+      .then((r) => r.json())
+      .then((data) => {
+        const map: Record<string, string> = {};
+        for (const s of data.statuses ?? []) {
+          map[s.prescription_id] = s.status;
+        }
+        setStatuses(map);
+      })
+      .catch(() => {});
+  }, [runId, API_BASE]);
+
   /* ---------- Stock alert counts ---------- */
   const criticalCount = useMemo(
     () => demandSkus.filter((s) => s.status === "critical").length,
@@ -105,6 +138,13 @@ export function OverviewTab({
     () => demandSkus.filter((s) => s.status === "warning").length,
     [demandSkus],
   );
+
+  /* ---------- At-risk SKUs (critical + warning) ---------- */
+  const atRiskSkus = useMemo(
+    () => demandSkus.filter((s) => s.status === "critical" || s.status === "warning"),
+    [demandSkus],
+  );
+  const [stockExpanded, setStockExpanded] = useState(false);
 
   /* ---------- Top 3 insights by severity ---------- */
   const topInsights = useMemo(() => {
@@ -133,8 +173,135 @@ export function OverviewTab({
     [channelRevenueData],
   );
 
+  /* ---------- Row 0 summary values ---------- */
+  const healthScore = safeNum(actionPlan?.health_score, 0);
+  const healthColor =
+    healthScore >= 70
+      ? "text-green-600"
+      : healthScore >= 40
+        ? "text-amber-500"
+        : "text-red-500";
+  const healthBg =
+    healthScore >= 70
+      ? "bg-green-100"
+      : healthScore >= 40
+        ? "bg-amber-100"
+        : "bg-red-100";
+
+  const prescriptions = actionPlan?.prescriptions ?? [];
+  const doneCount = prescriptions.filter(
+    (p) => (statuses[p.id] ?? p.status ?? "pending") === "done",
+  ).length;
+  const totalPrescriptions = prescriptions.length;
+
+  const conversionRate = safeNum(
+    funnelSnapshot?.funnel_kpis?.conversion_rate,
+    0,
+  );
+  const cartAbandonmentRate = safeNum(
+    funnelSnapshot?.funnel_kpis?.cart_abandonment_rate,
+    0,
+  );
+
   return (
     <div className="space-y-6">
+      {/* ============================================================
+          Row 0: Health Score / Prescription Progress / Funnel / Cart
+          ============================================================ */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Health Score */}
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
+              <div className={`rounded-full p-2 ${healthBg}`}>
+                <Activity className={`size-5 ${healthColor}`} />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Health Score</p>
+                <p className="text-2xl font-bold">
+                  <span className={healthColor}>{healthScore}</span>
+                  <span className="text-sm font-normal text-muted-foreground">
+                    /100
+                  </span>
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Overall business health
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Prescription Progress */}
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
+              <div className="rounded-full p-2 bg-blue-100">
+                <ClipboardCheck className="size-5 text-blue-600" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">
+                  Prescription Progress
+                </p>
+                <p className="text-2xl font-bold">
+                  {doneCount}/{totalPrescriptions}
+                  <span className="text-sm font-normal text-muted-foreground ml-1">
+                    completed
+                  </span>
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Action items completed
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Funnel Conversion */}
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
+              <div className="rounded-full p-2 bg-purple-100">
+                <MousePointerClick className="size-5 text-purple-600" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">
+                  Funnel Conversion
+                </p>
+                <p className="text-2xl font-bold">
+                  {fmtPercent(conversionRate)}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Visitor to purchase rate
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Cart Abandonment */}
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
+              <div className="rounded-full p-2 bg-orange-100">
+                <ShoppingCart className="size-5 text-orange-600" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">
+                  Cart Abandonment
+                </p>
+                <p className="text-2xl font-bold">
+                  {fmtPercent(cartAbandonmentRate)}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Carts not converted
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* ============================================================
           Row 1: Revenue Trend + Channel Donut
           ============================================================ */}
@@ -223,17 +390,60 @@ export function OverviewTab({
           <CardContent className="space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Critical</span>
-              <Badge className="bg-red-100 text-red-700">{criticalCount}</Badge>
+              <Badge color="red">{criticalCount}</Badge>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Warning</span>
-              <Badge className="bg-amber-100 text-amber-700">{warningCount}</Badge>
+              <Badge color="orange">{warningCount}</Badge>
             </div>
-            <p className="text-xs text-muted-foreground pt-1">
-              {criticalCount + warningCount === 0
-                ? "All stock levels healthy"
-                : `${criticalCount + warningCount} SKUs need attention`}
-            </p>
+            {atRiskSkus.length > 0 ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setStockExpanded((prev) => !prev)}
+                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer pt-1"
+                >
+                  {stockExpanded ? (
+                    <ChevronUp className="size-3.5" />
+                  ) : (
+                    <ChevronDown className="size-3.5" />
+                  )}
+                  {atRiskSkus.length} SKUs need attention
+                </button>
+                {stockExpanded && (
+                  <div className="space-y-1.5 pt-1 max-h-[200px] overflow-y-auto">
+                    {atRiskSkus.map((sku) => (
+                      <div
+                        key={sku.sku}
+                        className="flex items-center justify-between text-xs gap-2"
+                      >
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          <span
+                            className={`inline-block size-1.5 rounded-full shrink-0 ${
+                              sku.status === "critical" ? "bg-red-500" : "bg-orange-400"
+                            }`}
+                          />
+                          <span className={`truncate font-medium ${
+                            sku.status === "critical" ? "text-red-600" : "text-orange-600"
+                          }`}>
+                            {sku.name || sku.sku}
+                          </span>
+                        </div>
+                        <span className="text-muted-foreground shrink-0">
+                          {sku.days_until_stockout != null
+                            ? `${sku.days_until_stockout}d left`
+                            : "No forecast"}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <p className="text-xs text-muted-foreground pt-1">
+                All stock levels healthy
+              </p>
+            )}
           </CardContent>
         </Card>
 
@@ -298,7 +508,8 @@ export function OverviewTab({
                 {topInsights.map((ins) => (
                   <li key={ins.insight_id} className="flex items-start gap-2">
                     <Badge
-                      className={`mt-0.5 shrink-0 text-[10px] ${SEVERITY_BADGE[ins.severity] ?? SEVERITY_BADGE.low}`}
+                      color={SEVERITY_COLOR[ins.severity] ?? SEVERITY_COLOR.low}
+                      className="mt-0.5 shrink-0 text-[10px]"
                     >
                       {ins.severity}
                     </Badge>

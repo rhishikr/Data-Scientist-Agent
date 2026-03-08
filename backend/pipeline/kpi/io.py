@@ -49,7 +49,12 @@ def read_dataset(paths: DataPaths) -> Dict[str, pd.DataFrame]:
         "payments": os.path.join(paths.cleaned_dir, "payments_cleaned.csv"),
         "products": os.path.join(paths.cleaned_dir, "products_cleaned.csv"),
         "transactions": os.path.join(paths.cleaned_dir, "transactions_cleaned.csv"),
+        "transactions_with_session": os.path.join(paths.cleaned_dir, "transactions_with_session_cleaned.csv"),
         "web_analytics": os.path.join(paths.cleaned_dir, "web_analytics_cleaned.csv"),
+        "sessions": os.path.join(paths.cleaned_dir, "sessions_cleaned.csv"),
+        "events": os.path.join(paths.cleaned_dir, "events_cleaned.csv"),
+        "campaign_performance": os.path.join(paths.cleaned_dir, "campaign_performance_cleaned.csv"),
+        "funnel_summary": os.path.join(paths.cleaned_dir, "funnel_summary_cleaned.csv"),
         # featured
         "customers_features": os.path.join(paths.featured_dir, "customers_features.csv"),
         "products_features": os.path.join(paths.featured_dir, "products_features.csv"),

@@ -12,9 +12,12 @@ import {
   ShoppingBag,
   Megaphone,
   Sparkles,
-  AlertCircle,
   RefreshCw,
   ServerOff,
+  ClipboardList,
+  MousePointerClick,
+  GitCompareArrows,
+  BarChart3,
 } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 
@@ -25,6 +28,15 @@ import {
   useDemandForecast,
   useChurnPredictions,
   useAiAnalysis,
+  useActionPlan,
+  useChartNarratives,
+  useLocationStock,
+  useFunnelSnapshot,
+  useSessionsAnalytics,
+  useRunComparison,
+  useComparisonAiAnalysis,
+  useRuns,
+  useCampaignPerformance,
 } from "./dashboard/data";
 import {
   clamp01,
@@ -34,7 +46,8 @@ import {
 } from "./dashboard/formatters";
 import { RunSelector } from "./RunSelector";
 
-import { KpiStrip } from "./sections/KpiStrip";
+import { DiagnosisBanner } from "./sections/DiagnosisBanner";
+import { ActionQueueTab } from "./sections/ActionQueueTab";
 import { OverviewTab } from "./sections/OverviewTab";
 import { RevenueSalesTab } from "./sections/RevenueSalesTab";
 import { StockDemandTab } from "./sections/StockDemandTab";
@@ -42,9 +55,12 @@ import { CustomersTab } from "./sections/CustomersTab";
 import { ProductsTab } from "./sections/ProductsTab";
 import { MarketingTab } from "./sections/MarketingTab";
 import { AiInsightsTab } from "./sections/AiInsightsTab";
+import { FunnelSessionsTab } from "./sections/FunnelSessionsTab";
+import { RunComparisonTab } from "./sections/RunComparisonTab";
 
 export function CustomerInsightsScreen() {
   const [selectedRunId, setSelectedRunId] = useState<string | null>(null);
+  const [compareWithRunId, setCompareWithRunId] = useState<string | null>(null);
 
   // Existing data hooks
   const {
@@ -68,6 +84,19 @@ export function CustomerInsightsScreen() {
     useChurnPredictions(selectedRunId);
   const { data: aiAnalysis, loading: aiAnalysisLoading } =
     useAiAnalysis(selectedRunId);
+  const { data: actionPlan, loading: actionPlanLoading } =
+    useActionPlan(selectedRunId);
+  const { data: chartNarratives } = useChartNarratives(selectedRunId);
+  const { locations: locationSummary, transfers: storeTransfers } =
+    useLocationStock(selectedRunId);
+  const { data: funnelSnapshot } = useFunnelSnapshot(selectedRunId);
+  const { data: sessionsAnalytics } = useSessionsAnalytics(selectedRunId);
+  const { data: runComparison, loading: comparisonLoading } =
+    useRunComparison(selectedRunId, compareWithRunId);
+  const { data: comparisonAi, loading: comparisonAiLoading } =
+    useComparisonAiAnalysis(selectedRunId, compareWithRunId);
+  const { runs } = useRuns();
+  const { data: campaignPerformance } = useCampaignPerformance(selectedRunId);
 
   // Derive channel revenue data from KPI snapshot
   const channelRevenueData = useMemo(() => {
@@ -186,83 +215,35 @@ export function CustomerInsightsScreen() {
 
       {/* Content */}
       <div className="p-6 space-y-6">
-      {/* KPI Strip */}
-      <KpiStrip cards={cards} />
+      {/* Diagnosis Banner */}
+      <DiagnosisBanner cards={cards} actionPlan={actionPlan} />
 
       {/* Tabbed Content */}
-      <Tabs defaultValue="overview">
+      <Tabs defaultValue="actions">
         <TabsList className="w-full">
-          <TabsTrigger value="overview" className="flex-1">
-            <LayoutDashboard className="size-4 mr-1.5" />
-            Overview
-          </TabsTrigger>
-          <TabsTrigger value="revenue" className="flex-1">
-            <DollarSign className="size-4 mr-1.5" />
-            Revenue & Sales
-          </TabsTrigger>
-          <TabsTrigger value="stock" className="flex-1">
-            <Package className="size-4 mr-1.5" />
-            Stock & Demand
-          </TabsTrigger>
-          <TabsTrigger value="customers" className="flex-1">
-            <Users className="size-4 mr-1.5" />
-            Customers
-          </TabsTrigger>
-          <TabsTrigger value="products" className="flex-1">
-            <ShoppingBag className="size-4 mr-1.5" />
-            Products
-          </TabsTrigger>
-          <TabsTrigger value="marketing" className="flex-1">
-            <Megaphone className="size-4 mr-1.5" />
-            Marketing
+          <TabsTrigger value="actions" className="flex-1">
+            <ClipboardList className="size-4 mr-1.5" />
+            Action Plan
           </TabsTrigger>
           <TabsTrigger value="insights" className="flex-1">
             <Sparkles className="size-4 mr-1.5" />
             AI Insights
           </TabsTrigger>
+          <TabsTrigger value="analytics" className="flex-1">
+            <BarChart3 className="size-4 mr-1.5" />
+            Analytics
+          </TabsTrigger>
+          <TabsTrigger value="comparison" className="flex-1">
+            <GitCompareArrows className="size-4 mr-1.5" />
+            Follow-Up
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview">
-          <OverviewTab
-            cards={cards}
-            revenueSeries={revenueSeries}
-            channelRevenueData={channelRevenueData}
-            insights={insights}
-            forecastSnapshot={forecastSnapshot}
-            demandSkus={demandSkus}
-          />
-        </TabsContent>
-
-        <TabsContent value="revenue">
-          <RevenueSalesTab
-            cards={cards}
-            revenueSeries={revenueSeries}
-            channelRevenueData={channelRevenueData}
-            forecastSnapshot={forecastSnapshot}
-          />
-        </TabsContent>
-
-        <TabsContent value="stock">
-          <StockDemandTab cards={cards} demandSkus={demandSkus} />
-        </TabsContent>
-
-        <TabsContent value="customers">
-          <CustomersTab
-            cards={cards}
-            customers={customers}
-            churnPredictions={churnPredictions}
-          />
-        </TabsContent>
-
-        <TabsContent value="products">
-          <ProductsTab cards={cards} snapshot={snapshot} />
-        </TabsContent>
-
-        <TabsContent value="marketing">
-          <MarketingTab
-            cards={cards}
-            channelRevenueData={channelRevenueData}
-            forecastSnapshot={forecastSnapshot}
+        <TabsContent value="actions">
+          <ActionQueueTab
+            actionPlan={actionPlan}
+            loading={actionPlanLoading}
+            runId={selectedRunId}
           />
         </TabsContent>
 
@@ -274,6 +255,125 @@ export function CustomerInsightsScreen() {
             aiAnalysisLoading={aiAnalysisLoading}
           />
         </TabsContent>
+
+        <TabsContent value="analytics">
+          <Tabs defaultValue="overview">
+            <TabsList className="w-full">
+              <TabsTrigger value="overview" className="flex-1">
+                <LayoutDashboard className="size-4 mr-1.5" />
+                Overview
+              </TabsTrigger>
+              <TabsTrigger value="revenue" className="flex-1">
+                <DollarSign className="size-4 mr-1.5" />
+                Revenue
+              </TabsTrigger>
+              <TabsTrigger value="stock" className="flex-1">
+                <Package className="size-4 mr-1.5" />
+                Stock
+              </TabsTrigger>
+              <TabsTrigger value="customers" className="flex-1">
+                <Users className="size-4 mr-1.5" />
+                Customers
+              </TabsTrigger>
+              <TabsTrigger value="products" className="flex-1">
+                <ShoppingBag className="size-4 mr-1.5" />
+                Products
+              </TabsTrigger>
+              <TabsTrigger value="marketing" className="flex-1">
+                <Megaphone className="size-4 mr-1.5" />
+                Marketing
+              </TabsTrigger>
+              <TabsTrigger value="funnel" className="flex-1">
+                <MousePointerClick className="size-4 mr-1.5" />
+                Funnel
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="overview">
+              <OverviewTab
+                cards={cards}
+                revenueSeries={revenueSeries}
+                channelRevenueData={channelRevenueData}
+                insights={insights}
+                forecastSnapshot={forecastSnapshot}
+                demandSkus={demandSkus}
+                actionPlan={actionPlan}
+                funnelSnapshot={funnelSnapshot}
+                runId={selectedRunId}
+              />
+            </TabsContent>
+
+            <TabsContent value="revenue">
+              <RevenueSalesTab
+                cards={cards}
+                revenueSeries={revenueSeries}
+                channelRevenueData={channelRevenueData}
+                forecastSnapshot={forecastSnapshot}
+                chartNarrative={chartNarratives?.narratives?.revenue_trend}
+                snapshot={snapshot}
+              />
+            </TabsContent>
+
+            <TabsContent value="stock">
+              <StockDemandTab
+                cards={cards}
+                demandSkus={demandSkus}
+                chartNarrative={chartNarratives?.narratives?.stock_health}
+                locationSummary={locationSummary}
+                storeTransfers={storeTransfers}
+              />
+            </TabsContent>
+
+            <TabsContent value="customers">
+              <CustomersTab
+                cards={cards}
+                customers={customers}
+                churnPredictions={churnPredictions}
+                chartNarrative={chartNarratives?.narratives?.churn_distribution}
+                segmentRecommendations={actionPlan?.segment_recommendations}
+                snapshot={snapshot}
+              />
+            </TabsContent>
+
+            <TabsContent value="products">
+              <ProductsTab cards={cards} snapshot={snapshot} demandSkus={demandSkus} />
+            </TabsContent>
+
+            <TabsContent value="marketing">
+              <MarketingTab
+                cards={cards}
+                channelRevenueData={channelRevenueData}
+                forecastSnapshot={forecastSnapshot}
+                snapshot={snapshot}
+                campaignData={campaignPerformance}
+              />
+            </TabsContent>
+
+            <TabsContent value="funnel">
+              <FunnelSessionsTab
+                cards={cards}
+                funnelSnapshot={funnelSnapshot}
+                sessionsAnalytics={sessionsAnalytics}
+              />
+            </TabsContent>
+          </Tabs>
+        </TabsContent>
+
+        <TabsContent value="comparison">
+          <RunComparisonTab
+            comparison={runComparison}
+            comparisonLoading={comparisonLoading}
+            comparisonAi={comparisonAi}
+            comparisonAiLoading={comparisonAiLoading}
+            actionPlan={actionPlan}
+            runs={runs}
+            selectedRunId={selectedRunId}
+            onSelectRun={setSelectedRunId}
+            compareWithRunId={compareWithRunId}
+            onCompareWithChange={setCompareWithRunId}
+          />
+        </TabsContent>
+
       </Tabs>
       </div>
     </div>

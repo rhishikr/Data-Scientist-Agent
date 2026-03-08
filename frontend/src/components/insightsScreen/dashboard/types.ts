@@ -162,6 +162,11 @@ export type Insight = {
   hypothesis_support?: Array<Record<string, any>>;
   tags?: string[];
   created_at?: string;
+  // Action metadata (retail doctor)
+  action_type?: string;
+  impact_estimate?: string;
+  effort?: "quick-win" | "moderate" | "strategic";
+  priority?: number;
 };
 
 export type InsightsSnapshot = {
@@ -219,4 +224,236 @@ export type AiAnalysis = {
   generated_at?: string;
   cached?: boolean;
   error?: string;
+};
+
+// ------------------------
+// Prescription / Action Plan (Retail Doctor)
+// ------------------------
+export type PrescriptionStatus = "pending" | "done" | "dismissed";
+
+export type Prescription = {
+  id: string;
+  priority: number;
+  category: "inventory" | "customer" | "revenue" | "marketing" | "product" | "funnel" | "pricing";
+  urgency: "critical" | "high" | "medium" | "low";
+  title: string;
+  description: string;
+  impact_estimate: string;
+  effort: string;
+  evidence: Record<string, any>;
+  source: string;
+  action_type: string;
+  related_entities: string[];
+  status?: PrescriptionStatus;
+};
+
+export type ActionPlan = {
+  health_score: number;
+  health_summary: string;
+  prescriptions: Prescription[];
+  generated_at: string;
+  segment_recommendations?: Record<string, string[]>;
+};
+
+// ------------------------
+// Location stock analysis
+// ------------------------
+export type LocationSummary = {
+  location: string;
+  total_skus: number;
+  total_stock: number;
+  avg_stock: number;
+};
+
+export type StoreTransfer = {
+  sku: string;
+  product_name: string;
+  category: string;
+  from_location: string;
+  from_stock: number;
+  to_location: string;
+  to_stock: number;
+  transfer_qty: number;
+  to_days_left: number;
+  urgency: "critical" | "warning";
+};
+
+// ------------------------
+// Chart Narratives
+// ------------------------
+export type ChartNarrativeData = {
+  narrative: string;
+  action_hint: string;
+};
+
+export type ChartNarratives = {
+  narratives: Record<string, ChartNarrativeData>;
+  generated_at?: string;
+  cached?: boolean;
+  error?: string;
+};
+
+// ------------------------
+// Run Comparison (from /api/runs/compare)
+// ------------------------
+export type KpiDelta = {
+  id: string;
+  title: string;
+  group: string;
+  format: string;
+  current_value: number;
+  previous_value: number | null;
+  absolute_change: number | null;
+  percent_change: number | null;
+  direction: "up" | "down" | "stable" | "new";
+};
+
+export type ResolvedIssue = {
+  title: string;
+  severity: string;
+  description?: string;
+};
+
+export type CompletedPrescription = {
+  id: string;
+  title: string;
+  category: string;
+  urgency: string;
+  related_kpi_changes: Array<{
+    id: string;
+    title: string;
+    direction: string;
+    percent_change: number | null;
+  }>;
+};
+
+export type RunComparison = {
+  current_snapshot: { generated_at?: string } | null;
+  previous_snapshot: { generated_at?: string } | null;
+  deltas: KpiDelta[];
+  resolved_issues?: ResolvedIssue[];
+  new_risks?: ResolvedIssue[];
+  completed_prescriptions?: CompletedPrescription[];
+  message?: string;
+  error?: string;
+};
+
+// ------------------------
+// AI Comparison Analysis (from /api/runs/compare/ai-analysis)
+// ------------------------
+export type DepartmentGrade = {
+  department: string;
+  grade: string;
+  trend: "improving" | "stable" | "declining";
+  one_liner: string;
+};
+
+export type RootCause = {
+  metric: string;
+  direction: string;
+  explanation: string;
+  contributing_factors: string[];
+};
+
+export type CausalChain = {
+  chain: string[];
+  narrative: string;
+};
+
+export type RevenueBridgeComponent = {
+  label: string;
+  impact: number;
+};
+
+export type PrescriptionVerdict = {
+  prescription_title: string;
+  verdict: "effective" | "partially_effective" | "no_impact" | "too_early";
+  evidence: string;
+  related_kpi_impact: string;
+};
+
+export type MissedOpportunity = {
+  prescription_title: string;
+  status: string;
+  estimated_cost_of_inaction: string;
+  urgency_now: string;
+};
+
+export type Target30Day = {
+  target: string;
+  current_value: string;
+  target_value: string;
+  how: string;
+  expected_impact: string;
+};
+
+export type QuickWin = {
+  action: string;
+  effort: string;
+  expected_impact: string;
+  data_point: string;
+};
+
+export type Anomaly = {
+  metric: string;
+  change: string;
+  why_unexpected: string;
+  suggested_investigation: string;
+};
+
+export type ComparisonAiAnalysis = {
+  executive_summary: string | null;
+  department_grades: DepartmentGrade[];
+  root_causes: RootCause[];
+  causal_chains: CausalChain[];
+  revenue_bridge: {
+    total_change: number;
+    components: RevenueBridgeComponent[];
+  } | null;
+  profit_loss_drivers: { positive: string[]; negative: string[] };
+  prescription_report_card: PrescriptionVerdict[];
+  missed_opportunities: MissedOpportunity[];
+  next_30_day_targets: Target30Day[];
+  quick_wins: QuickWin[];
+  start_doing: string[];
+  stop_doing: string[];
+  keep_doing: string[];
+  anomalies: Anomaly[];
+  trend_verdict: {
+    direction: "improving" | "stable" | "declining";
+    confidence: "high" | "medium" | "low";
+    summary: string;
+  } | null;
+  generated_at?: string;
+  cached?: boolean;
+  error?: string;
+};
+
+// ------------------------
+// Funnel & Sessions (from /api/funnel/snapshot, /api/sessions/analytics)
+// ------------------------
+export type FunnelSnapshot = {
+  funnel_kpis: Record<string, any>;
+  daily_trends: Array<{
+    date: string;
+    sessions?: number;
+    product_views?: number;
+    add_to_cart?: number;
+    begin_checkout?: number;
+    purchases?: number;
+    conversion_rate?: number;
+    cart_abandonment_rate?: number;
+  }>;
+};
+
+export type SessionsAnalytics = {
+  by_device: Record<string, number>;
+  conversion_by_device: Record<string, number>;
+  avg_revenue_by_device: Record<string, number>;
+  by_traffic_source: Record<string, number>;
+  conversion_by_source: Record<string, number>;
+  by_landing_page: Record<string, number>;
+  conversion_by_landing: Record<string, number>;
+  session_duration_distribution: Record<string, number>;
+  session_duration_conversion: Record<string, number>;
 };

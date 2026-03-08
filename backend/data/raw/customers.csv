@@ -1,607 +1,501 @@
-customer_id,name,location,device_type,account_creation_date,avg_session_time_min,wishlist_items_count
-,Customer 0,"Sydney, Australia",tablet,2024-03-10 03:27:37.000000,7.4,8.0
-CUST1001,Customer 1,"Toronto, Canada",mobile,2024-06-15 18:20:52.000000,23.0,6.0
-CUST1002,Customer 2,"Berlin, Germany",mobile,2025-06-10 10:02:37.000000,11.2,
-CUST1003,Customer 3,"Los Angeles, USA",desktop,2025-07-20 12:58:14.000000,28.1,9.0
-CUST1004,Customer 4,"Dubai, UAE",tablet,2024-03-30 10:45:32.000000,1.4,4.0
-CUST1005,Customer 5,"London, UK",desktop,2025-09-16 15:36:04.000000,8.3,9.0
-CUST1006,Customer 6,"New York, USA",mobile,2024-04-05 08:14:32.000000,18.1,4.0
-,Customer 7,"Berlin, Germany",desktop,,21.8,8.0
-CUST1008,Customer 8,"Berlin, Germany",mobile,2025-04-02 22:30:32.000000,18.2,1.0
-CUST1009,Customer 9,"Dubai, UAE",tablet,2025-09-28 18:39:07.000000,4.2,8.0
-CUST1010,Customer 10,"Toronto, Canada",desktop,2024-12-02 01:03:45.000000,15.8,3.0
-CUST1011,,"Sydney, Australia",mobile,2024-08-18 20:43:40.000000,14.8,9.0
-CUST1012,Customer 12,"Tokyo, Japan",desktop,2025-07-07 13:17:35.000000,3.4,5.0
-CUST1013,Customer 13,"Chicago, USA",mobile,2025-04-18 10:48:26.000000,19.7,0.0
-CUST1014,Customer 14,"Houston, USA",mobile,2024-09-08 23:44:35.000000,23.7,8.0
-CUST1015,Customer 15,"Sydney, Australia",mobile,2026-01-30 02:37:05.000000,5.1,1.0
-CUST1016,Customer 16,"Dubai, UAE",mobile,2025-05-14 08:26:24.000000,9.8,10.0
-CUST1017,Customer 17,"Delhi, India",mobile,2024-05-03 15:47:08.000000,6.8,5.0
-CUST1018,Customer 18,"Sydney, Australia",tablet,2025-04-21 18:32:09.000000,20.1,2.0
-CUST1019,Customer 19,"Houston, USA",tablet,2024-08-29 01:14:21.000000,25.5,6.0
-CUST1020,Customer 20,"Chicago, USA",desktop,2026-01-01 22:17:46.000000,,5.0
-CUST1021,Customer 21,,desktop,2024-05-05 20:12:43.000000,17.0,9.0
-CUST1022,Customer 22,,tablet,2024-12-31 18:53:22.000000,26.0,4.0
-CUST1023,Customer 23,"Houston, USA",desktop,,6.2,1.0
-CUST1024,Customer 24,,desktop,,18.1,5.0
-CUST1025,Customer 25,,tablet,2025-09-10 11:22:42.000000,11.2,10.0
-CUST1026,Customer 26,"Berlin, Germany",desktop,2024-07-14 00:09:30.000000,28.2,2.0
-CUST1027,CUSTOMER 27,"Paris, France",desktop,2025-02-17 12:49:47.000000,28.8,10.0
-CUST1028,Customer 28,"Toronto, Canada",,2025-02-19 01:11:00.000000,23.2,10.0
-CUST1029,Customer 29,"sydney, australia",mobile,2025-11-01 13:41:38.000000,15.8,3.0
-CUST1030,Customer 30,"Berlin, Germany",desktop,2025-03-14 01:44:49.000000,27.3,2.0
-CUST1031,Customer 31,"Toronto, Canada",mobile,2024-09-24 22:21:31.000000,10.4,1.0
-CUST1032,Customer 32,"Bangalore, India",mobile,2026-01-18 19:24:42.000000,,9.0
-CUST1033,Customer 33,"Bangalore, India",tablet,2024-09-14 23:52:58.000000,1.4,10.0
-CUST1034,Customer 34,"BERLIN, GERMANY",mobile,2025-12-20 07:16:49.000000,2.0,3.0
-CUST1035,Customer 35,"Bangalore, India",mobile,2024-11-13 19:44:01.000000,2.5,0.0
-CUST1036, customer 36 ,"Tokyo, Japan",desktop,2024-06-25 07:48:58.000000,28.9,2.0
-,Customer 37,"Bangalore, India",mobile,2024-08-22 15:02:26.000000,23.3,9.0
-CUST1038,Customer 38,"Tokyo, Japan",DESKTOP,2025-01-17 17:27:42.000000,19.2,2.0
-CUST1039,Customer 39,"Berlin, Germany",tablet,2024-08-24 16:21:41.000000,3.1,3.0
-CUST1040,Customer 40,"Delhi, India",desktop,2025-08-13 15:00:44.000000,16.9,3.0
-CUST1041,Customer 41,"Tokyo, Japan",mobile,2025-08-06 07:50:50.000000,20.1,8.0
-CUST1042,Customer 42,"Mumbai, India",tablet,2025-04-07 05:13:41.000000,20.9,7.0
-CUST1043,Customer 43,"São Paulo, Brazil",mobile,2024-05-24 07:40:38.000000,29.2,2.0
-CUST1044,CUSTOMER 44,"Delhi, India",desktop,2025-03-03 22:49:13.000000,19.1,2.0
-CUST1045,Customer 45,"Bangalore, India",mobile,2026-01-21 15:44:56.000000,25.9,4.0
-CUST1046,Customer 46,"Tokyo, Japan",mobile,,13.8,
-CUST1047,Customer 47,"Houston, USA",tablet,2024-07-18 15:37:02.000000,16.6,4.0
-CUST1048,Customer 48,"Paris, France",desktop,2024-09-14 11:02:12.000000,15.1,0.0
-CUST1049, customer 49 ,"São Paulo, Brazil",tablet,2025-09-30 17:22:58.000000,14.4,4.0
-CUST1050,Customer 50,"Delhi, India",mobile,2025-08-07 19:00:52.000000,20.0,
-CUST1051,Customer 51,"São Paulo, Brazil",tablet,2024-03-29 02:26:14.000000,11.2,10.0
-CUST1052,Customer 52,"Dubai, UAE",tablet,2024-06-18 00:22:58.000000,0.9,3.0
-CUST1053,Customer 53,"London, UK",tablet,2025-02-16 18:48:53.000000,16.8,9.0
-CUST1054,Customer 54,"Bangalore, India",desktop,2024-10-04 21:29:03.000000,17.6,2.0
-CUST1055,Customer 55,"Dubai, UAE",tablet,2025-12-11 21:14:18.000000,1.8,6.0
-CUST1056,Customer 56,"New York, USA",desktop,2025-01-22 23:54:09.000000,,2.0
-CUST1057,Customer 57,"Delhi, India",mobile,2025-12-14 11:17:57.000000,28.6,7.0
-CUST1058,Customer 58,"Houston, USA",mobile,2024-05-04 01:35:26.000000,21.0,0.0
-CUST1059,Customer 59,"Bangalore, India",mobile,2024-12-09 03:08:33.000000,7.6,2.0
-CUST1060,Customer 60,"London, UK",mobile,2025-05-17 09:07:49.000000,28.9,7.0
-CUST1061,Customer 61,"Paris, France",tablet,2025-07-11 06:17:35.000000,0.7,0.0
-CUST1062,Customer 62,"Houston, USA",tablet,2025-09-24 20:58:55.000000,19.9,10.0
-,,"Delhi, India",desktop,2024-07-20 23:05:10.000000,16.4,8.0
-CUST1064,Customer 64,"Toronto, Canada",mobile,2025-09-23 18:24:09.000000,25.9,6.0
-CUST1065,,"Berlin, Germany",tablet,2025-11-15 18:58:10.000000,11.5,
-CUST1066,Customer 66,"Los Angeles, USA",tablet,,1.6,1.0
-CUST1067,Customer 67,"Sydney, Australia",tablet,2025-01-03 06:00:29.000000,25.1,
-CUST1068,Customer 68,"Los Angeles, USA",tablet,2024-07-12 10:17:16.000000,28.5,1.0
-CUST1069,customer 69,"Chicago, USA",tablet,2025-12-22 12:17:52.000000,23.3,
-CUST1070,Customer 70,"Chicago, USA",mobile,,8.3,6.0
-CUST1071,Customer 71,"Los Angeles, USA",tablet,2025-03-27 00:33:18.000000,,7.0
-CUST1072,Customer 72,"Dubai, UAE",mobile,2025-05-15 15:59:19.000000,10.1,8.0
-CUST1073,Customer 73,"Tokyo, Japan",tablet,2026-01-05 19:12:59.000000,10.5,6.0
-CUST1074,Customer 74,"Tokyo, Japan",mobile,2025-09-11 20:09:20.000000,4.3,8.0
-CUST1075,Customer 75,"Bangalore, India",desktop,2025-05-09 21:10:55.000000,5.1,1.0
-CUST1076,Customer 76,"Bangalore, India",tablet,2024-03-07 09:24:24.000000,19.9,0.0
-CUST1077,,"São Paulo, Brazil",mobile,2024-03-10 19:29:23.000000,16.1,7.0
-CUST1078,Customer 78,"Los Angeles, USA", tablet ,2025-01-10 08:12:29.000000,13.5,8.0
-CUST1079,Customer 79,"Tokyo, Japan",tablet,2024-07-29 01:41:12.000000,23.0,
-CUST1080,Customer 80,"Berlin, Germany",desktop,2024-03-19 20:34:16.000000,14.1,5.0
-CUST1081,Customer 81,"New York, USA",tablet,2024-11-23 01:25:23.000000,25.4,9.0
-CUST1082,Customer 82,"Toronto, Canada",mobile,2025-10-10 21:56:34.000000,22.0,2.0
-CUST1083,Customer 83,"Tokyo, Japan",tablet,2025-09-28 05:08:12.000000,20.6,10.0
-CUST1084,Customer 84,"Los Angeles, USA",desktop,2024-04-13 15:00:50.000000,13.8,4.0
-CUST1085,Customer 85,"London, UK",tablet,2025-11-06 00:03:46.000000,6.1,8.0
-CUST1086,Customer 86,"Sydney, Australia",mobile,2025-01-22 07:24:57.000000,18.5,4.0
-CUST1087,Customer 87,"Delhi, India",tablet,2025-12-08 10:20:44.000000,27.2,5.0
-CUST1088,Customer 88,"Tokyo, Japan",mobile,2025-10-22 21:38:54.000000,4.3,10.0
-CUST1089,,"Mumbai, India",desktop,2024-06-15 08:23:14.000000,25.4,8.0
-,Customer 90,"Chicago, USA",mobile,2025-11-05 09:40:04.000000,,5.0
-CUST1091,Customer 91,"London, UK",desktop,2025-07-26 20:33:20.000000,29.5,4.0
-CUST1092,Customer 92,"Paris, France",tablet,2026-02-10 16:29:39.000000,25.5,4.0
-CUST1093,Customer 93,"Los Angeles, USA",desktop,2025-01-03 06:14:20.000000,15.3,1.0
-CUST1094,Customer 94,,desktop,2025-08-17 00:08:51.000000,18.7,0.0
-CUST1095,Customer 95,"Los Angeles, USA",MOBILE,2025-02-05 01:12:55.000000,25.2,
-CUST1096,Customer 96,"Paris, France",mobile,2024-11-22 02:08:28.000000,16.0,8.0
-CUST1097,Customer 97,"Mumbai, India",mobile,2025-06-17 23:33:31.000000,17.7,
-CUST1098,Customer 98,"London, UK",mobile,2025-10-10 21:14:15.000000,1.6,3.0
-CUST1099,Customer 99,"London, UK",mobile,2024-03-24 03:07:54.000000,10.3,5.0
-CUST1100,Customer 100,"Chicago, USA",tablet,2025-01-10 17:14:50.000000,18.3,8.0
-CUST1101,Customer 101,"Sydney, Australia",desktop,2026-01-24 01:35:25.000000,29.9,0.0
-CUST1102,Customer 102,"New York, USA", desktop ,2024-11-26 12:51:27.000000,,2.0
-CUST1103,Customer 103,"Berlin, Germany",desktop,2025-09-09 09:58:24.000000,15.8,1.0
-CUST1104,Customer 104,"Dubai, UAE",mobile,2026-01-14 00:35:28.000000,29.9,5.0
-CUST1105,Customer 105,"Chicago, USA",tablet,2024-08-08 04:10:00.000000,6.4,
-CUST1106,Customer 106,"Paris, France",desktop,2025-03-30 07:40:38.000000,12.6,2.0
-CUST1107,Customer 107,"Dubai, UAE",tablet,2025-01-17 00:35:21.000000,26.1,8.0
-CUST1108,Customer 108,"Berlin, Germany",desktop,2024-09-16 04:08:17.000000,9.4,8.0
-CUST1109,Customer 109,"Dubai, UAE",tablet,2025-06-28 05:33:51.000000,8.3,9.0
-CUST1110,Customer 110,"Mumbai, India",tablet,2025-08-03 20:41:14.000000,13.5,3.0
-CUST1111,Customer 111,"Delhi, India",desktop,2024-08-21 18:19:13.000000,8.4,1.0
-CUST1112,Customer 112,"Dubai, UAE",tablet,2024-06-18 18:21:28.000000,15.7,4.0
-CUST1113,Customer 113,"Paris, France",desktop,2025-07-22 08:41:33.000000,16.3,6.0
-CUST1114,,"New York, USA",tablet,2025-01-30 19:12:50.000000,8.8,10.0
-CUST1115,Customer 115,"Berlin, Germany",mobile,,4.5,7.0
-CUST1116,Customer 116,"Delhi, India",tablet,2025-03-16 01:02:12.000000,16.2,4.0
-CUST1117,Customer 117,"Dubai, UAE",mobile,2025-07-09 05:06:05.000000,23.4,0.0
-CUST1118,Customer 118,"Chicago, USA",tablet,2024-03-01 17:01:05.000000,12.9,3.0
-CUST1119,Customer 119,"New York, USA",tablet,2025-03-30 03:36:14.000000,28.7,8.0
-CUST1120,Customer 120,"Sydney, Australia",mobile,2024-10-04 03:56:15.000000,21.3,7.0
-CUST1121,Customer 121,"Los Angeles, USA",desktop,2025-11-01 23:07:34.000000,1.7,1.0
-CUST1122,Customer 122,"Berlin, Germany",desktop,2025-05-16 19:18:48.000000,2.0,3.0
-CUST1123,Customer 123,"Toronto, Canada",mobile,2025-12-29 06:33:20.000000,19.7,4.0
-CUST1124,Customer 124,"Berlin, Germany",mobile,2026-01-01 06:14:17.000000,,6.0
-CUST1125,Customer 125," New York, USA ",desktop,2025-04-12 23:51:18.000000,26.7,8.0
-CUST1126,Customer 126,,desktop,2025-09-26 04:46:25.000000,18.5,6.0
-CUST1127,Customer 127,"Chicago, USA",mobile,2025-09-23 11:02:32.000000,10.2,
-CUST1128,Customer 128,"Mumbai, India",tablet,2025-06-26 02:26:31.000000,9.2,3.0
-CUST1129,Customer 129,"Sydney, Australia",tablet,2025-09-29 18:05:33.000000,22.8,1.0
-CUST1130,Customer 130,"São Paulo, Brazil",tablet,2025-12-10 16:46:25.000000,3.9,9.0
-CUST1131,Customer 131,"Bangalore, India",desktop,2024-03-03 21:49:50.000000,24.6,9.0
-CUST1132,Customer 132,"Dubai, UAE",mobile,2024-05-31 04:34:37.000000,29.4,6.0
-CUST1133,Customer 133,"Los Angeles, USA",tablet,2024-05-18 03:28:57.000000,16.3,3.0
-CUST1134,Customer 134,"Bangalore, India",mobile,2024-07-11 09:31:48.000000,21.9,10.0
-CUST1135, customer 135 ,"New York, USA",,2025-01-21 22:51:35.000000,6.9,0.0
-CUST1136,Customer 136,"Paris, France",desktop,2025-07-12 19:15:05.000000,12.7,8.0
-CUST1137,Customer 137,"LONDON, UK",desktop,2025-01-04 08:51:13.000000,9.3,8.0
-CUST1138,Customer 138,"Dubai, UAE",desktop,2024-08-22 15:12:39.000000,10.2,7.0
-CUST1139,Customer 139,,mobile,2025-08-31 14:01:41.000000,6.9,5.0
-CUST1140,Customer 140,"Sydney, Australia",mobile,2024-12-20 01:45:26.000000,16.8,6.0
-CUST1141,Customer 141,"London, UK",desktop,2024-07-22 18:34:15.000000,12.7,3.0
- CUST1142 ,Customer 142,"Houston, USA",mobile,2025-07-31 22:27:58.000000,23.0,10.0
-CUST1143,Customer 143,"Berlin, Germany",tablet,,25.5,
- cust1144 ,Customer 144,"Houston, USA",tablet,2026-01-24 22:55:13.000000,,8.0
- CUST1145 ,Customer 145,"Sydney, Australia",mobile,2024-06-10 15:39:01.000000,18.8,5.0
-CUST1146,Customer 146,"Sydney, Australia",mobile,,12.5,7.0
- cust1147 ,Customer 147,"Paris, France",tablet,2026-01-16 00:56:44.000000,26.7,0.0
-CUST1148,Customer 148,"Chicago, USA",mobile,2025-08-22 13:54:12.000000,27.9,9.0
-CUST1149,Customer 149,"Toronto, Canada",tablet,2024-11-10 15:17:18.000000,13.4,5.0
-CUST1150,Customer 150,"Tokyo, Japan",desktop,2024-12-03 14:27:59.000000,20.6,1.0
-CUST1151,Customer 151,"Bangalore, India",tablet,,9.6,4.0
-CUST1152,Customer 152,"LOS ANGELES, USA",tablet,2024-02-25 14:02:44.000000,11.9,8.0
-CUST1153,Customer 153,"Chicago, USA",mobile,2025-01-08 01:54:59.000000,23.6,3.0
-CUST1154,Customer 154,"New York, USA",tablet,2025-01-22 22:21:00.000000,24.6,9.0
-CUST1155,Customer 155,"Bangalore, India",tablet,2025-10-15 09:03:31.000000,11.6,6.0
-CUST1156,Customer 156,"Toronto, Canada",desktop,2025-10-27 13:56:09.000000,20.9,6.0
-CUST1157,Customer 157,"Bangalore, India",tablet,2025-03-15 11:56:38.000000,26.2,0.0
-CUST1158,Customer 158,"Los Angeles, USA",tablet,2024-03-21 09:45:00.000000,19.5,5.0
-,Customer 159,"Berlin, Germany",mobile,2025-10-07 21:30:09.000000,20.9,0.0
-CUST1160,Customer 160,"Sydney, Australia",desktop,2024-11-12 12:47:17.000000,13.4,5.0
-CUST1161,CUSTOMER 161,"Toronto, Canada",mobile,2024-10-30 02:05:39.000000,28.8,6.0
-CUST1162,Customer 162,"Dubai, UAE", desktop ,2025-08-15 15:01:56.000000,2.3,8.0
-CUST1163,Customer 163,"Berlin, Germany",desktop,2024-11-12 05:47:07.000000,14.0,10.0
-CUST1164,Customer 164,"Los Angeles, USA",desktop,2025-01-05 20:32:31.000000,17.5,7.0
-CUST1165,Customer 165,"London, UK",desktop,2024-02-23 10:38:53.000000,6.3,8.0
-CUST1166,Customer 166,"London, UK",mobile,2025-04-08 13:45:03.000000,23.5,7.0
-CUST1167,Customer 167,"Delhi, India",tablet,2025-01-11 05:27:28.000000,25.0,4.0
-CUST1168,Customer 168,"São Paulo, Brazil",mobile,2025-08-04 06:22:52.000000,21.5,2.0
-CUST1169,Customer 169,"Berlin, Germany",desktop,2025-05-05 20:33:54.000000,25.8,10.0
-CUST1170,Customer 170,"Mumbai, India",mobile,2025-11-20 12:01:12.000000,25.4,2.0
-CUST1171,Customer 171,"Dubai, UAE",tablet,2024-11-28 15:59:07.000000,14.9,1.0
-CUST1172,Customer 172,"Berlin, Germany",mobile,2024-09-23 06:33:29.000000,17.5,7.0
-CUST1173,Customer 173,"São Paulo, Brazil",,2025-01-13 06:45:25.000000,20.8,10.0
-CUST1174,Customer 174,"Los Angeles, USA",mobile,2025-09-01 21:24:14.000000,7.4,
-CUST1175,Customer 175,"NEW YORK, USA",desktop,2024-08-11 19:52:44.000000,22.1,5.0
-CUST1176,Customer 176,"Tokyo, Japan",tablet,2024-06-22 11:21:15.000000,21.8,2.0
-CUST1177,Customer 177,"Chicago, USA",desktop,2025-10-22 10:44:16.000000,8.7,8.0
-CUST1178,,"São Paulo, Brazil",tablet,2024-12-16 06:46:05.000000,2.1,3.0
-CUST1179,Customer 179,"New York, USA",mobile,2025-01-07 21:27:53.000000,20.6,
-CUST1180,Customer 180,"Toronto, Canada",tablet,2025-08-14 02:41:54.000000,19.4,2.0
-CUST1181,Customer 181,"Berlin, Germany",tablet,2025-08-11 16:15:44.000000,28.6,3.0
-CUST1182,Customer 182,"Sydney, Australia",mobile,2024-06-22 06:03:41.000000,10.7,4.0
-CUST1183,Customer 183,"Toronto, Canada",desktop,2025-08-22 06:40:03.000000,19.0,8.0
-CUST1184,Customer 184,"Los Angeles, USA",mobile,2024-03-21 04:55:33.000000,,5.0
-CUST1185,Customer 185,"Dubai, UAE",mobile,2025-08-28 11:08:24.000000,24.9,1.0
-CUST1186,Customer 186,"Bangalore, India",desktop,2024-04-23 02:20:34.000000,0.7,9.0
-CUST1187,Customer 187,"Toronto, Canada",tablet,2024-02-20 22:53:32.000000,1.2,10.0
-CUST1188, Customer 188 ,"Sydney, Australia",mobile,2024-06-05 14:02:02.000000,3.2,8.0
-CUST1189,Customer 189,"Berlin, Germany",mobile,2025-07-14 12:50:59.000000,7.5,5.0
-CUST1190,Customer 190,"Houston, USA",tablet,2025-01-30 04:31:53.000000,12.5,3.0
-CUST1191,Customer 191,"Mumbai, India",mobile,2024-06-10 04:57:21.000000,7.8,
-CUST1192,Customer 192,"São Paulo, Brazil",mobile,2025-10-24 13:41:10.000000,0.9,3.0
-CUST1193,Customer 193,"Paris, France", mobile ,2025-01-25 10:09:32.000000,3.2,5.0
-CUST1194,Customer 194,,tablet,2026-01-21 12:01:04.000000,8.8,0.0
-CUST1195,Customer 195,"London, UK",mobile,2025-10-27 04:50:48.000000,19.1,0.0
-CUST1196,Customer 196,"Dubai, UAE",desktop,,24.4,7.0
-CUST1197,Customer 197,"Tokyo, Japan",tablet,2024-08-04 10:07:42.000000,29.5,2.0
-CUST1198,Customer 198,"New York, USA",tablet,2024-07-11 04:55:47.000000,24.4,8.0
-CUST1199,Customer 199,"Berlin, Germany",tablet,2025-08-25 20:41:10.000000,24.2,
-CUST1200,Customer 200,"São Paulo, Brazil",tablet,2024-05-04 11:22:34.000000,10.0,6.0
-CUST1201,Customer 201,"Sydney, Australia",desktop,2024-07-01 04:47:28.000000,22.2,2.0
-CUST1202,Customer 202," Paris, France ",tablet,2026-02-12 13:07:33.000000,10.3,5.0
-CUST1203,Customer 203,"Tokyo, Japan",mobile,2024-04-08 15:47:10.000000,23.7,0.0
-CUST1204,Customer 204,"Bangalore, India",desktop,2025-09-26 22:41:02.000000,5.3,0.0
-CUST1205,Customer 205,"Bangalore, India",mobile,2026-01-09 18:56:33.000000,1.4,2.0
-CUST1206,Customer 206,"Bangalore, India",tablet,2024-10-03 23:56:59.000000,2.0,7.0
-CUST1207,Customer 207,"Paris, France",mobile,2024-04-19 15:23:58.000000,3.9,7.0
-CUST1208,Customer 208,"Dubai, UAE",mobile,2024-08-09 17:27:42.000000,17.1,10.0
-CUST1209,Customer 209,"Houston, USA",tablet,2025-12-20 08:04:32.000000,17.4,4.0
-CUST1210,Customer 210,"Toronto, Canada",mobile,2024-06-29 06:41:51.000000,5.4,3.0
-CUST1211,Customer 211,"Tokyo, Japan",desktop,2024-04-08 01:11:36.000000,16.9,4.0
-,Customer 212,"Toronto, Canada",mobile,2026-02-14 20:20:43.000000,3.6,4.0
-CUST1213,Customer 213,,desktop,2025-07-28 19:16:17.000000,1.6,5.0
-CUST1214,Customer 214,"Delhi, India",desktop,2025-07-31 22:34:01.000000,26.1,7.0
-CUST1215,Customer 215,"London, UK",tablet,2024-12-02 10:11:29.000000,15.7,4.0
-CUST1216,Customer 216,"Chicago, USA",mobile,2026-01-29 01:20:22.000000,6.4,7.0
-CUST1217,Customer 217,"Paris, France",desktop,2024-06-22 00:06:52.000000,8.1,1.0
-CUST1218,Customer 218,"São Paulo, Brazil",mobile,2024-03-02 13:48:10.000000,29.0,7.0
-CUST1219,CUSTOMER 219,"Mumbai, India",desktop,2024-11-12 20:24:38.000000,6.9,8.0
-CUST1220,Customer 220,"São Paulo, Brazil",tablet,2024-05-09 23:12:52.000000,10.4,5.0
-CUST1221,Customer 221,"Chicago, USA",mobile,2025-05-27 01:25:53.000000,9.9,0.0
-CUST1222,Customer 222,"New York, USA",mobile,2025-08-02 01:53:48.000000,23.7,10.0
-CUST1223,Customer 223,"Mumbai, India",desktop,2026-01-24 20:33:31.000000,20.6,1.0
-CUST1224,Customer 224,"Delhi, India",mobile,2025-05-14 06:37:09.000000,18.8,3.0
-CUST1225,Customer 225,"São Paulo, Brazil",desktop,2026-01-20 04:38:20.000000,4.7,2.0
-CUST1226,Customer 226,"New York, USA",mobile,2025-10-17 21:23:31.000000,3.1,10.0
-CUST1227, Customer 227 ,"New York, USA",tablet,2025-06-16 18:17:27.000000,7.2,4.0
-CUST1228,Customer 228,"Mumbai, India",tablet,2026-01-05 17:02:09.000000,4.4,7.0
-CUST1229,Customer 229,"Houston, USA",mobile,2024-06-26 06:06:14.000000,21.5,6.0
-CUST1230,Customer 230,"Tokyo, Japan",mobile,2024-12-07 08:26:38.000000,8.0,3.0
-CUST1231,Customer 231,"Mumbai, India",desktop,2025-08-27 06:46:24.000000,8.8,7.0
-CUST1232,Customer 232,"Sydney, Australia",tablet,2026-02-09 18:41:54.000000,,1.0
-CUST1233,Customer 233,"Berlin, Germany",desktop,2024-10-02 22:15:12.000000,2.0,0.0
-CUST1234,Customer 234,,mobile,2024-11-19 16:47:37.000000,28.7,1.0
-CUST1235,Customer 235,"São Paulo, Brazil",desktop,2024-05-13 19:31:37.000000,21.9,2.0
-CUST1236,Customer 236,"Paris, France",mobile,2025-09-02 21:27:22.000000,4.4,1.0
-CUST1237,,"São Paulo, Brazil",tablet,2025-07-20 06:48:13.000000,15.8,9.0
-CUST1238,Customer 238,"Bangalore, India",tablet,2024-06-16 21:20:17.000000,14.3,2.0
-CUST1239,Customer 239,"Houston, USA",mobile,2025-05-06 02:08:43.000000,25.8,1.0
-,," berlin, germany ",tablet,2025-04-27 18:38:20.000000,20.3,5.0
-CUST1241,Customer 241,"Paris, France",tablet,2025-07-11 18:58:38.000000,10.6,4.0
-CUST1242,Customer 242,"São Paulo, Brazil",mobile,2024-05-19 18:51:53.000000,12.1,3.0
-CUST1243,Customer 243,"Paris, France",desktop,2024-05-30 13:47:49.000000,0.6,8.0
-CUST1244,Customer 244,"Chicago, USA",mobile,2025-05-31 19:39:20.000000,15.4,9.0
-CUST1245,Customer 245,"London, UK",tablet,2024-10-05 04:08:40.000000,16.7,8.0
-CUST1246,Customer 246,"Tokyo, Japan",mobile,2024-10-23 09:37:29.000000,22.9,9.0
-CUST1247,Customer 247,"Mumbai, India",,2024-06-07 21:05:10.000000,2.2,2.0
-CUST1248,Customer 248,,desktop,2025-09-12 09:08:20.000000,7.1,6.0
-CUST1249,Customer 249,"Dubai, UAE",tablet,2024-02-26 01:41:22.000000,6.5,7.0
-CUST1250,Customer 250,"Berlin, Germany",tablet,2024-07-02 19:27:30.000000,2.7,8.0
-CUST1251,Customer 251,"São Paulo, Brazil",,2026-02-06 06:53:06.000000,2.0,9.0
-CUST1252,Customer 252,"Sydney, Australia",mobile,2024-06-18 18:52:52.000000,16.3,3.0
-CUST1253,Customer 253,"Paris, France", tablet ,2026-01-18 13:02:09.000000,27.6,0.0
-CUST1254,Customer 254,,tablet,2025-10-31 13:35:19.000000,14.9,10.0
-CUST1255,Customer 255,"Berlin, Germany",mobile,2025-12-18 19:51:09.000000,25.2,6.0
-CUST1256,Customer 256," delhi, india ",desktop,2024-08-10 19:37:19.000000,12.5,6.0
- CUST1257 ,Customer 257,,mobile,2024-09-28 02:56:44.000000,9.4,7.0
-,Customer 258,"Sydney, Australia",tablet,2024-10-04 12:10:33.000000,27.5,10.0
-CUST1259,Customer 259,"New York, USA",tablet,2025-09-19 05:15:33.000000,21.9,10.0
-CUST1260,Customer 260,"Los Angeles, USA",mobile,2025-04-17 07:19:34.000000,16.7,1.0
-CUST1261,Customer 261,"Tokyo, Japan",tablet,2025-02-27 09:06:35.000000,18.7,9.0
-CUST1262,Customer 262,"Delhi, India",tablet,2024-11-21 05:18:17.000000,22.1,7.0
-CUST1263,Customer 263,"Los Angeles, USA",mobile,2025-09-07 18:15:45.000000,2.8,0.0
-CUST1264,Customer 264,"Houston, USA",tablet,2025-07-07 21:43:52.000000,11.3,9.0
-CUST1265,Customer 265," berlin, germany ",tablet,2024-06-04 00:41:57.000000,5.8,10.0
-CUST1266,,"Toronto, Canada",desktop,2025-03-24 06:04:49.000000,11.2,7.0
-CUST1267,Customer 267,"Tokyo, Japan",desktop,2024-12-04 13:26:35.000000,11.3,1.0
-CUST1268,Customer 268,"São Paulo, Brazil",tablet,2024-08-12 15:20:19.000000,19.5,2.0
-CUST1269,Customer 269,"Delhi, India",desktop,2025-07-02 17:47:11.000000,,9.0
-CUST1270,Customer 270,"Chicago, USA",desktop,2024-03-01 11:06:09.000000,22.0,1.0
-CUST1271,Customer 271,"Bangalore, India",mobile,2024-06-25 06:33:32.000000,10.6,9.0
-CUST1272, Customer 272 ,"Tokyo, Japan",mobile,,23.6,1.0
-CUST1273,,"Toronto, Canada",,2025-04-02 12:29:44.000000,28.2,6.0
-CUST1274,Customer 274,"Bangalore, India",mobile,2025-05-25 16:58:39.000000,12.6,0.0
-,Customer 275,"Delhi, India",desktop,2025-12-11 01:55:30.000000,17.2,10.0
-CUST1276,Customer 276,"Berlin, Germany",desktop,2024-12-21 05:40:35.000000,25.7,3.0
-CUST1277,Customer 277,"Delhi, India",tablet,,3.2,9.0
-CUST1278,,"Bangalore, India",tablet,2025-05-25 01:41:45.000000,23.3,7.0
-CUST1279,Customer 279,"New York, USA",tablet,2024-03-15 00:13:41.000000,19.8,1.0
-CUST1280,Customer 280," Berlin, Germany ",tablet,2026-01-26 17:00:12.000000,10.8,3.0
-CUST1281,Customer 281,"Bangalore, India",tablet,2025-10-31 15:55:41.000000,8.1,9.0
-CUST1282,Customer 282,"Delhi, India",desktop,2025-02-24 08:34:30.000000,2.5,3.0
-CUST1283,Customer 283,"New York, USA",desktop,2025-11-14 17:56:29.000000,16.9,5.0
-CUST1284,Customer 284,"Dubai, UAE",mobile,2024-07-25 14:37:59.000000,25.1,5.0
-CUST1285,Customer 285,"paris, france",desktop,2026-01-13 14:11:33.000000,27.0,7.0
-CUST1286,Customer 286,"Chicago, USA",,2024-11-11 17:56:07.000000,20.7,1.0
-CUST1287, customer 287 ,"Delhi, India",mobile,2025-02-16 02:30:51.000000,10.6,6.0
-CUST1288,Customer 288,"Chicago, USA",tablet,2024-09-12 16:12:57.000000,16.9,3.0
-CUST1289,Customer 289,"London, UK",tablet,2025-10-17 23:40:01.000000,7.9,0.0
-CUST1290,Customer 290,"Tokyo, Japan",desktop,2026-02-08 18:50:30.000000,10.7,5.0
-CUST1291,Customer 291,"Chicago, USA",desktop,2025-09-10 01:50:34.000000,2.8,7.0
-CUST1292,Customer 292,"Tokyo, Japan",mobile,2024-10-16 11:43:45.000000,9.1,10.0
-CUST1293,Customer 293,"Berlin, Germany",mobile,2024-08-16 05:46:04.000000,28.2,1.0
-CUST1294,Customer 294,"NEW YORK, USA",mobile,2024-04-21 11:40:33.000000,26.6,3.0
-CUST1295,Customer 295,"New York, USA",desktop,2025-12-23 10:43:13.000000,8.5,8.0
-CUST1296,Customer 296,"Berlin, Germany",desktop,2024-04-25 13:24:28.000000,11.3,
-CUST1297,Customer 297,"berlin, germany",desktop,2025-10-27 19:08:29.000000,,5.0
-CUST1298,Customer 298,"Tokyo, Japan",desktop,2025-03-23 06:18:34.000000,27.3,10.0
-CUST1299,Customer 299,"Los Angeles, USA",tablet,2025-08-13 01:45:20.000000,,0.0
-CUST1300,Customer 300,"London, UK", mobile ,2025-10-18 06:58:54.000000,29.9,0.0
-CUST1301,Customer 301,"Los Angeles, USA",desktop,2024-05-20 17:31:41.000000,21.6,7.0
-CUST1302,Customer 302,"Tokyo, Japan",tablet,2024-06-18 04:43:53.000000,1.7,8.0
-CUST1303,Customer 303,"Tokyo, Japan",,2025-10-25 00:30:37.000000,4.0,0.0
-CUST1304,Customer 304,"Toronto, Canada",mobile,2025-09-27 23:13:39.000000,2.3,8.0
-CUST1305,Customer 305,"Toronto, Canada",tablet,2024-11-20 04:43:33.000000,,7.0
-CUST1306,Customer 306,"Delhi, India",tablet,2024-04-09 11:57:09.000000,13.8,8.0
- CUST1307 ,,"São Paulo, Brazil",desktop,2025-04-09 14:52:39.000000,6.1,8.0
-CUST1308,Customer 308,"Tokyo, Japan",,2024-05-09 03:39:10.000000,3.4,6.0
-CUST1309,Customer 309,,mobile,2025-11-23 07:03:09.000000,24.1,8.0
-CUST1310,Customer 310,,mobile,2024-08-01 16:40:07.000000,3.4,8.0
-CUST1311,Customer 311,"Berlin, Germany",mobile,2025-07-23 21:27:09.000000,20.1,2.0
-CUST1312,Customer 312,"Paris, France",desktop,2025-12-03 05:13:13.000000,23.0,5.0
-CUST1313,Customer 313,"Mumbai, India", desktop ,2024-02-28 15:53:58.000000,29.8,4.0
-CUST1314,Customer 314,"São Paulo, Brazil",tablet,,11.0,5.0
-CUST1315,Customer 315,"Paris, France",tablet,2025-03-01 06:07:54.000000,20.8,1.0
-CUST1316,Customer 316,"New York, USA",desktop,2025-12-22 13:59:44.000000,22.6,0.0
-CUST1317,Customer 317,"Paris, France",mobile,2024-12-17 03:51:51.000000,22.7,1.0
-CUST1318,Customer 318,"Paris, France",desktop,2025-10-09 01:08:45.000000,23.0,3.0
-CUST1319,Customer 319,"Houston, USA",desktop,2024-04-25 14:09:55.000000,12.7,3.0
-,Customer 320,"Paris, France",,2025-11-12 11:49:48.000000,20.7,1.0
-CUST1321,Customer 321,"São Paulo, Brazil",mobile,2024-10-30 18:37:49.000000,16.4,8.0
-CUST1322,Customer 322," Tokyo, Japan ",mobile,2024-07-20 21:14:44.000000,18.7,10.0
-CUST1323,Customer 323,,tablet,2025-03-16 23:52:43.000000,3.4,9.0
-CUST1324,Customer 324,"new york, usa",desktop,2024-11-11 08:26:45.000000,11.0,8.0
-CUST1325,Customer 325,"New York, USA",mobile,2025-07-10 06:05:44.000000,22.0,10.0
-CUST1326,Customer 326,"Mumbai, India",tablet,2025-05-12 07:11:50.000000,24.1,4.0
-CUST1327,Customer 327,"Toronto, Canada",mobile,2025-08-27 19:20:35.000000,9.9,0.0
-CUST1328,Customer 328,"Dubai, UAE",tablet,2024-05-08 22:21:49.000000,1.3,9.0
-CUST1329,Customer 329,"Delhi, India",mobile,2025-08-22 00:59:54.000000,5.9,7.0
-,,"Mumbai, India",tablet,2024-04-07 08:52:13.000000,28.7,9.0
-CUST1331,Customer 331,"New York, USA",tablet,2025-09-14 16:36:14.000000,16.3,0.0
-CUST1332,Customer 332,"Berlin, Germany",mobile,2025-06-19 20:08:27.000000,6.1,4.0
-CUST1333,Customer 333,"Sydney, Australia",tablet,2024-05-13 21:40:16.000000,17.8,8.0
-CUST1334,Customer 334,"Sydney, Australia",mobile,2026-01-20 14:44:02.000000,5.3,1.0
-CUST1335,Customer 335,"Toronto, Canada",mobile,2025-10-04 17:24:37.000000,10.4,2.0
-CUST1336,Customer 336,"Sydney, Australia",tablet,,,7.0
-,Customer 337,"Paris, France",desktop,2024-08-24 01:47:02.000000,8.7,
-CUST1338,Customer 338,"Tokyo, Japan",,2025-01-04 20:38:25.000000,5.3,10.0
-CUST1339,Customer 339,,desktop,2025-11-14 02:50:35.000000,13.1,4.0
-CUST1340,Customer 340,"Houston, USA",mobile,2025-04-01 20:16:46.000000,14.8,4.0
-CUST1341,Customer 341,"Dubai, UAE",tablet,2025-11-04 13:50:44.000000,18.5,
-CUST1342,Customer 342,"Toronto, Canada",mobile,2025-06-25 03:55:38.000000,19.4,4.0
-CUST1343,,"Tokyo, Japan",,2024-07-01 09:57:48.000000,25.1,7.0
-CUST1344,Customer 344,"Dubai, UAE",desktop,2025-09-14 18:46:52.000000,15.9,10.0
-CUST1345,Customer 345,"Dubai, UAE",,2024-12-03 10:59:42.000000,25.4,6.0
-CUST1346,Customer 346,"SYDNEY, AUSTRALIA",mobile,2024-10-08 01:24:28.000000,9.4,0.0
-CUST1347,CUSTOMER 347,"Houston, USA",tablet,2025-10-05 16:10:22.000000,24.8,10.0
-,Customer 348,"los angeles, usa",tablet,,15.9,
-CUST1349,Customer 349,"Mumbai, India",desktop,2024-06-17 07:56:18.000000,1.0,8.0
-CUST1350,Customer 350,"Toronto, Canada",mobile,2025-04-10 21:05:15.000000,4.3,10.0
-CUST1351,Customer 351,"Dubai, UAE",tablet,2024-10-31 03:07:09.000000,21.5,8.0
-CUST1352,Customer 352,"Toronto, Canada",desktop,2025-10-03 08:28:27.000000,7.3,9.0
-CUST1353,Customer 353,"São Paulo, Brazil",mobile,2025-02-21 18:43:17.000000,5.5,9.0
-CUST1354,Customer 354,"Berlin, Germany",tablet,2024-08-19 07:21:56.000000,16.7,6.0
-CUST1355,Customer 355,"Paris, France",mobile,2025-09-12 06:48:02.000000,17.4,9.0
-CUST1356,Customer 356,"Bangalore, India",tablet,2025-03-05 22:19:45.000000,2.3,2.0
-CUST1357, customer 357 ,"Berlin, Germany",desktop,2024-10-18 21:48:33.000000,23.9,6.0
-CUST1358,Customer 358,"Berlin, Germany",desktop,,17.0,1.0
-CUST1359,Customer 359,"Delhi, India",desktop,2025-02-18 20:14:41.000000,16.9,5.0
-CUST1360,Customer 360,"Los Angeles, USA",desktop,2024-05-31 11:02:36.000000,19.4,7.0
-CUST1361,Customer 361,"Bangalore, India",desktop,2024-02-21 18:30:18.000000,25.5,8.0
-CUST1362,,"London, UK",desktop,2025-09-05 03:38:37.000000,29.5,4.0
-CUST1363,Customer 363,"Sydney, Australia",tablet,2024-10-15 17:25:01.000000,27.2,0.0
-CUST1364,Customer 364,"Toronto, Canada",tablet,2025-09-02 15:44:05.000000,8.2,9.0
-CUST1365,Customer 365,"Mumbai, India",mobile,2024-05-28 22:42:05.000000,8.6,1.0
-CUST1366,Customer 366,"Chicago, USA",desktop,2024-03-12 16:51:07.000000,3.0,2.0
-CUST1367,Customer 367,"Sydney, Australia",tablet,2024-09-08 08:41:21.000000,3.9,6.0
-CUST1368,Customer 368,"Tokyo, Japan",mobile,2024-09-27 07:28:37.000000,13.7,8.0
-CUST1369,Customer 369,"Bangalore, India",desktop,2024-05-02 08:00:43.000000,17.7,10.0
-CUST1370,Customer 370,"Sydney, Australia",mobile,2024-02-25 06:58:36.000000,16.0,5.0
-CUST1371, customer 371 ,"Tokyo, Japan",tablet,2024-05-19 04:32:07.000000,18.3,10.0
-CUST1372,Customer 372,"London, UK",desktop,2025-01-12 15:32:50.000000,20.2,4.0
-CUST1373,Customer 373,"New York, USA",mobile,2026-02-06 06:06:11.000000,12.1,1.0
-CUST1374,Customer 374,,mobile,,15.2,0.0
-CUST1375,Customer 375," Paris, France ",desktop,2025-10-14 13:43:17.000000,2.6,6.0
-CUST1376,Customer 376,"Delhi, India",mobile,2024-04-26 10:09:17.000000,25.7,7.0
-CUST1377,Customer 377,"Tokyo, Japan",mobile,2024-04-21 21:57:04.000000,13.4,0.0
-CUST1378,Customer 378,"Berlin, Germany",,2024-11-05 12:43:58.000000,,1.0
-CUST1379,Customer 379,"Berlin, Germany", mobile ,2025-02-16 00:10:14.000000,18.7,10.0
-,Customer 380,"London, UK",mobile,2025-03-08 03:25:35.000000,18.7,3.0
-CUST1381,Customer 381,"Tokyo, Japan",mobile,2024-11-02 14:14:34.000000,8.6,2.0
-CUST1382,,"Los Angeles, USA",,2025-02-28 05:43:54.000000,0.7,10.0
-CUST1383,Customer 383,"Chicago, USA",tablet,2024-06-30 13:49:40.000000,1.6,7.0
-CUST1384,Customer 384,"Berlin, Germany",tablet,2025-12-17 02:28:21.000000,16.4,10.0
-CUST1385,Customer 385,"Dubai, UAE",tablet,2024-11-24 21:03:03.000000,13.3,
-CUST1386,Customer 386,"London, UK",mobile,2024-10-26 04:33:51.000000,22.5,3.0
-CUST1387,Customer 387,"Bangalore, India",tablet,2024-06-07 13:54:04.000000,18.5,5.0
-CUST1388,Customer 388," Chicago, USA ",mobile,2024-06-27 23:25:25.000000,7.0,2.0
-CUST1389,Customer 389,"São Paulo, Brazil",tablet,2025-05-20 11:52:00.000000,,6.0
-CUST1390,Customer 390,"Paris, France",,2025-02-15 13:36:03.000000,15.4,6.0
-CUST1391,Customer 391,"Berlin, Germany",desktop,2024-10-02 17:55:59.000000,,10.0
-CUST1392,,"London, UK",tablet,2024-11-29 17:08:16.000000,,10.0
-CUST1393,Customer 393,"Mumbai, India",tablet,2024-04-18 21:11:09.000000,10.4,8.0
-CUST1394,Customer 394,"PARIS, FRANCE",tablet,2024-07-24 00:07:09.000000,10.4,10.0
-CUST1395,Customer 395,"Sydney, Australia",desktop,2024-03-29 07:12:28.000000,10.7,8.0
-CUST1396,Customer 396,"London, UK",tablet,2024-04-06 23:23:13.000000,26.6,6.0
-CUST1397,Customer 397,"Sydney, Australia",mobile,2024-09-30 17:04:28.000000,20.6,7.0
-CUST1398,Customer 398,"São Paulo, Brazil",tablet,2024-11-08 06:06:53.000000,23.7,10.0
-CUST1399,Customer 399,"Toronto, Canada",mobile,2025-10-05 21:10:30.000000,4.9,2.0
-CUST1400,Customer 400,"Sydney, Australia",mobile,2024-10-18 22:20:00.000000,13.5,3.0
-CUST1401,Customer 401,"Berlin, Germany",mobile,2025-03-09 21:48:21.000000,28.5,
-CUST1402,Customer 402,"London, UK",tablet,2025-09-03 21:02:25.000000,13.5,7.0
-CUST1403,Customer 403,"São Paulo, Brazil",desktop,2025-05-14 03:57:01.000000,23.5,
-CUST1404,Customer 404,"Berlin, Germany",tablet,2026-01-21 14:40:42.000000,12.2,6.0
-CUST1405,Customer 405,"São Paulo, Brazil",desktop,2025-01-24 16:52:45.000000,24.3,6.0
-CUST1406,Customer 406,"Mumbai, India",desktop,2025-09-25 06:59:15.000000,0.7,4.0
-CUST1407,Customer 407,"Chicago, USA",desktop,2024-10-09 01:22:28.000000,22.3,0.0
-CUST1408,Customer 408,"Tokyo, Japan",desktop,2024-03-09 02:12:29.000000,8.7,1.0
-CUST1409,Customer 409,"Tokyo, Japan",mobile,2024-02-29 15:03:50.000000,5.3,5.0
-CUST1410,Customer 410,"Tokyo, Japan",desktop,2024-04-15 16:09:11.000000,23.1,1.0
-CUST1411,Customer 411,"Toronto, Canada",tablet,2024-11-15 02:50:47.000000,0.9,5.0
-CUST1412,Customer 412,"Berlin, Germany",tablet,2025-03-30 06:52:43.000000,21.5,1.0
-CUST1413,,"Delhi, India",desktop,2025-10-01 02:20:26.000000,5.6,1.0
-CUST1414,Customer 414,"Chicago, USA",mobile,2025-09-26 05:43:46.000000,,10.0
-CUST1415,Customer 415," tokyo, japan ",tablet,2024-07-08 12:34:58.000000,1.4,4.0
-CUST1416,Customer 416,"Houston, USA",tablet,2025-08-24 23:41:45.000000,8.8,
-CUST1417,Customer 417,"London, UK",desktop,2025-11-25 08:43:17.000000,11.7,3.0
-CUST1418,Customer 418,"London, UK",tablet,2025-03-05 11:28:25.000000,8.9,4.0
-CUST1419,Customer 419,"Bangalore, India",desktop,2024-02-25 22:20:43.000000,15.0,7.0
-CUST1420,Customer 420,"Los Angeles, USA",mobile,2024-11-05 00:33:05.000000,25.4,3.0
-CUST1421,Customer 421,"Mumbai, India",desktop,2024-12-26 03:22:30.000000,15.6,7.0
-CUST1422,Customer 422,"Los Angeles, USA",desktop,2024-12-09 04:47:44.000000,10.1,9.0
-CUST1423,Customer 423,"Houston, USA",tablet,2025-12-14 17:27:12.000000,1.0,6.0
-CUST1424,Customer 424," New York, USA ",desktop,2025-01-15 12:28:40.000000,21.6,1.0
-CUST1425,Customer 425,"Berlin, Germany",desktop,2024-12-05 10:39:34.000000,10.9,5.0
-CUST1426,Customer 426,"paris, france",mobile,2024-12-31 22:55:27.000000,20.0,10.0
-CUST1427,Customer 427,"CHICAGO, USA",desktop,,,5.0
-CUST1428,Customer 428,"Tokyo, Japan",tablet,2024-11-24 05:02:32.000000,6.5,1.0
-CUST1429,Customer 429,"Bangalore, India",mobile,2025-05-20 17:09:24.000000,2.5,7.0
-CUST1430,Customer 430,"Mumbai, India",mobile,2025-03-22 07:10:43.000000,23.0,0.0
-CUST1431,Customer 431,"São Paulo, Brazil",tablet,2025-10-05 09:25:13.000000,28.1,0.0
-CUST1432,Customer 432,"Mumbai, India",mobile,2024-09-10 08:01:28.000000,19.6,9.0
-CUST1433,customer 433,"London, UK",tablet,2024-09-14 19:43:10.000000,8.1,10.0
-,Customer 434,"New York, USA",tablet,2024-12-28 03:09:27.000000,20.3,6.0
-CUST1435,Customer 435,"Dubai, UAE",tablet,2024-08-29 14:02:32.000000,3.2,5.0
-CUST1436,Customer 436,"Bangalore, India",mobile,2024-08-31 12:36:21.000000,2.1,1.0
-CUST1437,Customer 437,"Dubai, UAE",,2026-01-19 02:41:58.000000,25.3,0.0
-CUST1438,Customer 438,"Sydney, Australia",mobile,2025-01-24 14:59:09.000000,27.3,4.0
-CUST1439,Customer 439,"Chicago, USA",,2025-12-19 23:41:52.000000,23.5,6.0
-CUST1440,Customer 440,"Chicago, USA",desktop,2025-04-16 10:23:05.000000,,0.0
-CUST1441,,"Houston, USA",mobile,2025-08-23 05:47:45.000000,25.0,9.0
-CUST1442,Customer 442,"Mumbai, India",desktop,2025-01-02 22:46:24.000000,12.1,9.0
-CUST1443,Customer 443,"Dubai, UAE",desktop,2024-12-23 11:49:57.000000,18.2,5.0
-,Customer 444,"Dubai, UAE",mobile,2025-12-16 11:39:54.000000,8.4,6.0
-CUST1445,Customer 445,"Tokyo, Japan",mobile,2025-01-31 06:48:53.000000,11.4,7.0
-CUST1446,Customer 446,"Houston, USA",tablet,2025-04-23 15:13:55.000000,10.3,5.0
-CUST1447,Customer 447," New York, USA ",desktop,2026-01-09 00:17:49.000000,17.6,8.0
-CUST1448,Customer 448,"Bangalore, India",mobile,2025-11-25 09:52:30.000000,11.1,4.0
-CUST1449,Customer 449,"Delhi, India",mobile,2025-06-24 12:03:25.000000,2.1,3.0
-CUST1450,Customer 450,,desktop,2025-02-05 13:15:33.000000,25.5,1.0
-CUST1451,Customer 451,"São Paulo, Brazil",tablet,2024-02-19 04:54:32.000000,17.3,1.0
-CUST1452,Customer 452,"Tokyo, Japan",mobile,2024-04-18 23:07:41.000000,21.4,10.0
-,Customer 453,"London, UK",tablet,2024-05-26 10:42:11.000000,1.9,5.0
-CUST1454,Customer 454,"Mumbai, India",desktop,2024-06-21 13:26:04.000000,12.4,10.0
-CUST1455,Customer 455,"Dubai, UAE",tablet,2024-07-20 05:52:13.000000,26.6,9.0
-CUST1456,Customer 456,,desktop,2025-07-03 00:20:12.000000,5.1,10.0
-CUST1457,Customer 457,"Mumbai, India",desktop,2024-10-02 12:10:36.000000,16.8,8.0
-CUST1458,Customer 458,"Mumbai, India", tablet ,2025-10-18 15:24:11.000000,12.1,4.0
-CUST1459,Customer 459,"Delhi, India",mobile,2025-05-30 04:21:42.000000,20.4,
-CUST1460,Customer 460,"São Paulo, Brazil",tablet,2025-06-09 00:57:24.000000,20.4,6.0
-CUST1461,Customer 461,"Sydney, Australia",mobile,2024-08-21 19:06:35.000000,19.0,3.0
-CUST1462,Customer 462,"Dubai, UAE",desktop,2025-05-15 13:24:30.000000,9.2,6.0
- CUST1463 ,Customer 463,"Sydney, Australia",DESKTOP,2025-08-31 19:47:14.000000,20.5,7.0
-,Customer 464,"Mumbai, India",desktop,2025-07-01 21:39:53.000000,,4.0
-CUST1465,Customer 465,"Tokyo, Japan",tablet,2024-09-30 21:15:40.000000,12.0,10.0
-CUST1466,Customer 466,"Houston, USA",tablet,2024-06-16 09:54:21.000000,3.5,7.0
-,customer 467,"Chicago, USA", tablet ,2025-06-09 16:12:26.000000,17.1,5.0
-CUST1468,Customer 468,"São Paulo, Brazil",tablet,2025-01-21 01:40:52.000000,28.9,1.0
-CUST1469,Customer 469,"Berlin, Germany",mobile,2024-09-29 21:34:01.000000,23.0,1.0
-CUST1470,Customer 470,,desktop,2024-04-22 04:52:27.000000,21.6,10.0
-CUST1471,Customer 471,"Toronto, Canada",desktop,2025-07-29 21:06:15.000000,1.4,0.0
-CUST1472,Customer 472,"Toronto, Canada",mobile,2026-01-17 00:01:36.000000,29.3,10.0
-CUST1473,Customer 473,"São Paulo, Brazil",DESKTOP,2026-01-30 22:26:33.000000,12.4,8.0
-CUST1474,Customer 474,"Tokyo, Japan",desktop,2024-12-14 22:00:23.000000,22.3,8.0
-CUST1475,Customer 475,"chicago, usa",desktop,2025-09-02 07:06:50.000000,15.4,5.0
-CUST1476,Customer 476,"London, UK",desktop,2025-09-17 05:56:16.000000,17.2,10.0
-CUST1477,Customer 477,"São Paulo, Brazil",tablet,2024-05-07 17:34:19.000000,17.7,5.0
-CUST1478,Customer 478,"Bangalore, India",desktop,2024-12-24 19:52:23.000000,15.8,4.0
-CUST1479,Customer 479,"Sydney, Australia",mobile,2025-02-05 12:23:06.000000,21.3,1.0
-,Customer 480,"Dubai, UAE",desktop,,5.0,5.0
-CUST1481,Customer 481,"New York, USA",desktop,,16.7,0.0
-CUST1482,Customer 482,"London, UK",mobile,2025-02-08 00:28:22.000000,20.2,5.0
-CUST1483,Customer 483,"Delhi, India",desktop,2025-12-19 14:32:40.000000,1.2,4.0
-CUST1484,Customer 484,"Paris, France",tablet,,19.9,0.0
-CUST1485,Customer 485,"Los Angeles, USA",desktop,,13.4,8.0
-CUST1486,Customer 486,"Chicago, USA",mobile,2024-06-26 09:56:59.000000,28.9,0.0
-CUST1487,Customer 487,"São Paulo, Brazil",mobile,2025-03-04 21:48:10.000000,15.4,4.0
-CUST1488,Customer 488,,tablet,2024-08-25 07:39:53.000000,19.7,9.0
-CUST1489,Customer 489,"Delhi, India",mobile,2026-01-23 23:27:21.000000,1.7,9.0
-,Customer 490,"Paris, France",desktop,2025-11-29 23:29:21.000000,1.8,9.0
-CUST1491,Customer 491,"Mumbai, India",tablet,2025-07-29 19:17:02.000000,19.2,7.0
-CUST1492,Customer 492," Delhi, India ",,2024-02-23 10:33:29.000000,12.7,7.0
-CUST1493,Customer 493,"New York, USA",desktop,2025-11-08 07:20:26.000000,18.2,0.0
-CUST1494, Customer 494 ,"Tokyo, Japan",mobile,2025-11-04 21:56:18.000000,7.4,
-CUST1495,,"São Paulo, Brazil",desktop,2025-04-19 14:01:17.000000,22.3,9.0
-CUST1496,Customer 496,"Paris, France",tablet,,29.1,9.0
-CUST1497,Customer 497,"Tokyo, Japan",desktop,2024-05-20 12:58:56.000000,14.3,0.0
-CUST1498,Customer 498,"New York, USA",tablet,2024-08-09 06:00:38.000000,13.0,3.0
-CUST1499,,"Bangalore, India",tablet,2024-08-25 23:16:35.000000,7.5,0.0
-CUST1500,Customer 1500,"Los Angeles, USA",,2026-02-15 23:38:09.000000,,3.0
-CUST1501,Customer 1501,"são paulo, brazil",desktop,2026-02-18 22:23:07.000000,11.7,5.0
-CUST1502,Customer 1502,"Bangalore, India",tablet,2026-02-17 04:21:12.000000,1.9,4.0
-CUST1503,Customer 1503,"São Paulo, Brazil",mobile,2026-02-15 17:08:33.000000,5.5,2.0
-CUST1504,Customer 1504,"Delhi, India",mobile,2026-02-19 17:11:34.000000,6.7,5.0
-CUST1505,Customer 1505,"Chicago, USA",desktop,2026-02-19 16:40:44.000000,29.9,7.0
-CUST1506,Customer 1506,"Bangalore, India",tablet,2026-02-21 13:29:02.000000,0.8,10.0
-CUST1507,Customer 1507,"Chicago, USA",tablet,2026-02-17 00:22:53.000000,3.6,10.0
-CUST1508,Customer 1508,,desktop,2026-02-19 06:04:15.000000,25.0,0.0
-CUST1509,Customer 1509,"Toronto, Canada",tablet,2026-02-18 01:32:55.000000,18.4,8.0
-CUST1510,Customer 1510,"Delhi, India",mobile,2026-02-15 02:28:19.000000,7.3,1.0
-CUST1511,Customer 1511,"Berlin, Germany",mobile,2026-02-21 18:40:25.000000,7.7,6.0
-CUST1512,Customer 1512,"Sydney, Australia",tablet,2026-02-18 23:10:27.000000,3.7,8.0
-CUST1513,Customer 1513,"Los Angeles, USA",,2026-02-22 21:57:51.000000,,3.0
-CUST1514,Customer 1514,"são paulo, brazil",desktop,2026-02-25 20:42:49.000000,11.7,5.0
-CUST1515,Customer 1515,"Bangalore, India",tablet,2026-02-24 02:40:54.000000,1.9,4.0
-CUST1516,Customer 1516,"São Paulo, Brazil",mobile,2026-02-22 15:28:15.000000,5.5,2.0
-CUST1517,Customer 1517,"Delhi, India",mobile,2026-02-26 15:31:16.000000,6.7,5.0
-CUST1518,Customer 1518,"Chicago, USA",desktop,2026-02-26 15:00:26.000000,29.9,7.0
-CUST1519,Customer 1519,"Bangalore, India",tablet,2026-02-28 11:48:44.000000,0.8,10.0
-CUST1520,Customer 1520,"Chicago, USA",tablet,2026-02-23 22:42:35.000000,3.6,10.0
-CUST1521,Customer 1521,,desktop,2026-02-26 04:23:57.000000,25.0,0.0
-CUST1522,Customer 1522,"Toronto, Canada",tablet,2026-02-24 23:52:37.000000,18.4,8.0
-CUST1523,Customer 1523,"Delhi, India",mobile,2026-02-22 00:48:01.000000,7.3,1.0
-CUST1524,Customer 1524,"Berlin, Germany",mobile,2026-02-28 17:00:07.000000,7.7,6.0
-CUST1525,Customer 1525,"Sydney, Australia",tablet,2026-02-25 21:30:09.000000,3.7,8.0
-CUST1526,Customer 1526,"Los Angeles, USA",,2026-03-01 20:17:33.000000,,3.0
-CUST1527,Customer 1527,"são paulo, brazil",desktop,2026-03-04 19:02:31.000000,11.7,5.0
-CUST1528,Customer 1528,"Bangalore, India",tablet,2026-03-03 01:00:36.000000,1.9,4.0
-CUST1529,Customer 1529,"São Paulo, Brazil",mobile,2026-03-01 13:47:57.000000,5.5,2.0
-CUST1530,Customer 1530,"Delhi, India",mobile,2026-03-05 13:50:58.000000,6.7,5.0
-CUST1531,Customer 1531,"Chicago, USA",desktop,2026-03-05 13:20:08.000000,29.9,7.0
-CUST1532,Customer 1532,"Bangalore, India",tablet,2026-03-07 10:08:26.000000,0.8,10.0
-CUST1533,Customer 1533,"Chicago, USA",tablet,2026-03-02 21:02:17.000000,3.6,10.0
-CUST1534,Customer 1534,,desktop,2026-03-05 02:43:39.000000,25.0,0.0
-CUST1535,Customer 1535,"Toronto, Canada",tablet,2026-03-03 22:12:19.000000,18.4,8.0
-CUST1536,Customer 1536,"Delhi, India",mobile,2026-02-28 23:07:43.000000,7.3,1.0
-CUST1537,Customer 1537,"Berlin, Germany",mobile,2026-03-07 15:19:49.000000,7.7,6.0
-CUST1538,Customer 1538,"Sydney, Australia",tablet,2026-03-04 19:49:51.000000,3.7,8.0
-CUST1539,Customer 1539,"Los Angeles, USA",,2026-03-09 21:54:42.000000,,3.0
-CUST1540,Customer 1540,"são paulo, brazil",desktop,2026-03-15 19:24:38.000000,11.7,5.0
-CUST1541,Customer 1541,"Bangalore, India",tablet,2026-03-12 07:20:47.000000,1.9,4.0
-CUST1542,Customer 1542,"São Paulo, Brazil",mobile,2026-03-09 08:55:30.000000,5.5,2.0
-CUST1543,Customer 1543,"Delhi, India",mobile,2026-03-17 09:01:32.000000,6.7,5.0
-CUST1544,Customer 1544,"Chicago, USA",desktop,2026-03-17 07:59:52.000000,29.9,7.0
-CUST1545,Customer 1545,"Bangalore, India",tablet,2026-03-21 01:36:27.000000,0.8,10.0
-CUST1546,Customer 1546,"Chicago, USA",tablet,2026-03-11 23:24:09.000000,3.6,10.0
-CUST1547,Customer 1547,,desktop,2026-03-16 10:46:54.000000,25.0,0.0
-CUST1548,Customer 1548,"Toronto, Canada",tablet,2026-03-14 01:44:13.000000,18.4,8.0
-CUST1549,Customer 1549,"Delhi, India",mobile,2026-03-08 03:35:01.000000,7.3,1.0
-CUST1550,Customer 1550,"Berlin, Germany",mobile,2026-03-21 11:59:13.000000,7.7,6.0
-CUST1551,Customer 1551,"Sydney, Australia",tablet,2026-03-15 20:59:18.000000,3.7,8.0
-CUST1552,Customer 1552,"London, UK",mobile,2026-03-07 23:55:38.000000,27.8,2.0
-CUST1553,Customer 1553,"New York, USA",desktop,2026-03-21 03:05:19.000000,14.9,3.0
-CUST1554,Customer 1554,"Paris, France",tablet,2026-03-09 13:59:54.000000,2.5,3.0
-CUST1555,,"Los Angeles, USA",tablet,2026-03-15 06:21:20.000000,12.2,4.0
-CUST1556, Customer 1556 ,"Los Angeles, USA",desktop,2026-03-09 07:24:14.000000,11.4,8.0
-CUST1557,,"São Paulo, Brazil",mobile,2026-03-10 10:34:20.000000,22.4,4.0
-CUST1558,Customer 1558,"London, UK",mobile,,10.3,4.0
-CUST1559,Customer 1559,"Dubai, UAE",mobile,2026-03-11 05:36:04.000000,1.7,0.0
-CUST1560,Customer 1560,"Dubai, UAE",tablet,2026-03-11 13:59:39.000000,24.4,0.0
-CUST1561,Customer 1561,"Sydney, Australia",tablet,2026-03-19 01:31:37.000000,24.6,4.0
-CUST1562,Customer 1562,"Mumbai, India",desktop,2026-03-20 15:41:54.000000,1.3,4.0
-CUST1563,Customer 1563,"Sydney, Australia",tablet,2026-03-12 06:03:33.000000,,8.0
-CUST1564,Customer 1564,"Tokyo, Japan",tablet,2026-03-14 22:16:50.000000,20.2,4.0
-CUST1565,Customer 1565,"Chicago, USA",tablet,2026-03-12 17:46:14.000000,17.6,7.0
-CUST1566,Customer 1566,"Los Angeles, USA",,2026-03-22 15:16:39.000000,,3.0
-CUST1567,Customer 1567,"são paulo, brazil",desktop,2026-03-25 14:01:37.000000,11.7,5.0
-CUST1568,Customer 1568,"Bangalore, India",tablet,2026-03-23 19:59:42.000000,1.9,4.0
-CUST1569,Customer 1569,"São Paulo, Brazil",mobile,2026-03-22 08:47:03.000000,5.5,2.0
-CUST1570,Customer 1570,"Delhi, India",mobile,2026-03-26 08:50:04.000000,6.7,5.0
-CUST1571,Customer 1571,"Chicago, USA",desktop,2026-03-26 08:19:14.000000,29.9,7.0
-CUST1572,Customer 1572,"Bangalore, India",tablet,2026-03-28 05:07:32.000000,0.8,10.0
-CUST1573,Customer 1573,"Chicago, USA",tablet,2026-03-23 16:01:23.000000,3.6,10.0
-CUST1574,Customer 1574,,desktop,2026-03-25 21:42:45.000000,25.0,0.0
-CUST1575,Customer 1575,"Toronto, Canada",tablet,2026-03-24 17:11:25.000000,18.4,8.0
-CUST1576,Customer 1576,"Delhi, India",mobile,2026-03-21 18:06:49.000000,7.3,1.0
-CUST1577,Customer 1577,"Berlin, Germany",mobile,2026-03-28 10:18:55.000000,7.7,6.0
-CUST1578,Customer 1578,"Sydney, Australia",tablet,2026-03-25 14:48:57.000000,3.7,8.0
-CUST1579,Customer 1579,"Los Angeles, USA",,2026-03-30 16:53:48.000000,,3.0
-CUST1580,Customer 1580,"são paulo, brazil",desktop,2026-04-05 14:23:44.000000,11.7,5.0
-CUST1581,Customer 1581,"Bangalore, India",tablet,2026-04-02 02:19:53.000000,1.9,4.0
-CUST1582,Customer 1582,"São Paulo, Brazil",mobile,2026-03-30 03:54:36.000000,5.5,2.0
-CUST1583,Customer 1583,"Delhi, India",mobile,2026-04-07 04:00:38.000000,6.7,5.0
-CUST1584,Customer 1584,"Chicago, USA",desktop,2026-04-07 02:58:58.000000,29.9,7.0
-CUST1585,Customer 1585,"Bangalore, India",tablet,2026-04-10 20:35:33.000000,0.8,10.0
-CUST1586,Customer 1586,"Chicago, USA",tablet,2026-04-01 18:23:15.000000,3.6,10.0
-CUST1587,Customer 1587,,desktop,2026-04-06 05:46:00.000000,25.0,0.0
-CUST1588,Customer 1588,"Toronto, Canada",tablet,2026-04-03 20:43:19.000000,18.4,8.0
-CUST1589,Customer 1589,"Delhi, India",mobile,2026-03-28 22:34:07.000000,7.3,1.0
-CUST1590,Customer 1590,"Berlin, Germany",mobile,2026-04-11 06:58:19.000000,7.7,6.0
-CUST1591,Customer 1591,"Sydney, Australia",tablet,2026-04-05 15:58:24.000000,3.7,8.0
-CUST1592,Customer 1592,"London, UK",mobile,2026-03-28 18:54:44.000000,27.8,2.0
-CUST1593,Customer 1593,"New York, USA",desktop,2026-04-10 22:04:25.000000,14.9,3.0
-CUST1594,Customer 1594,"Paris, France",tablet,2026-03-30 08:59:00.000000,2.5,3.0
-CUST1595,,"Los Angeles, USA",tablet,2026-04-05 01:20:26.000000,12.2,4.0
-CUST1596, Customer 1596 ,"Los Angeles, USA",desktop,2026-03-30 02:23:20.000000,11.4,8.0
-CUST1597,,"São Paulo, Brazil",mobile,2026-03-31 05:33:26.000000,22.4,4.0
-CUST1598,Customer 1598,"London, UK",mobile,,10.3,4.0
-CUST1599,Customer 1599,"Dubai, UAE",mobile,2026-04-01 00:35:10.000000,1.7,0.0
-CUST1600,Customer 1600,"Dubai, UAE",tablet,2026-04-01 08:58:45.000000,24.4,0.0
-CUST1601,Customer 1601,"Sydney, Australia",tablet,2026-04-08 20:30:43.000000,24.6,4.0
-CUST1602,Customer 1602,"Mumbai, India",desktop,2026-04-10 10:41:00.000000,1.3,4.0
-CUST1603,Customer 1603,"Sydney, Australia",tablet,2026-04-02 01:02:39.000000,,8.0
-CUST1604,Customer 1604,"Tokyo, Japan",tablet,2026-04-04 17:15:56.000000,20.2,4.0
-CUST1605,Customer 1605,"Chicago, USA",tablet,2026-04-02 12:45:20.000000,17.6,7.0
+customer_id,name,email,age,gender,location,device_type,loyalty_status,total_spend,acquisition_date
+CUST1000,Mei Bernard,mei.bernard62@gmail.com,43.0,Female,"Toronto, Canada",mobile,silver,7636.97,2025-03-27 21:27:29.000000
+CUST1001,Grace Martin,grace.martin73@icloud.com,65.0,Female,"Los Angeles, USA",mobile,,1485.18,2024-09-26 18:39:51.000000
+CUST1002,Alina Stewart,alina.stewart81@icloud.com,30.0,Female,"São Paulo, Brazil",desktop,platinum,,2024-10-09 04:40:14.000000
+CUST1003,Erik Fontaine,erik.fontaine6@hotmail.com,56.0,Male,,tablet,gold,3291.36,2025-01-24 11:45:12.000000
+CUST1004,Riya Cooper,riya.cooper12@hotmail.com,39.0,Male,"London, UK", tablet ,bronze,5828.03,2025-11-17 17:45:27.000000
+CUST1005,Ines Brown,ines.brown47@icloud.com,58.0,Male,"Mumbai, India", mobile ,,3591.79,2024-12-28 21:29:51.000000
+CUST1006,Thomas Weber,thomas.weber20@hotmail.com,36.0,Male,"Houston, USA",mobile,gold,1839.58,2025-10-21 14:46:57.000000
+CUST1007,,andre.durand93@outlook.com,55.0,Female,"Delhi, India",desktop,bronze,12141.46,2024-08-15 09:55:10.000000
+CUST1008,Gabriel Williams,gabriel.williams49@hotmail.com,68.0,,"Berlin, Germany",mobile,silver,10318.18,2024-12-30 10:33:19.000000
+CUST1009,Ines Morris,ines.morris80@protonmail.com,23.0,Non-binary,"Delhi, India",,bronze,4520.84,2024-08-10 16:39:05.000000
+CUST1010,Ethan Weber,ethan.weber57@yahoo.com,,Female,"Chicago, USA",tablet,bronze,2611.44,2024-08-21 01:23:33.000000
+CUST1011,Jason Olsen,jason.olsen86@gmail.com,47.0,Female,"Delhi, India",desktop,bronze,7939.89,2024-05-08 20:09:39.000000
+CUST1012,Priya Williams,priya.williams85@hotmail.com,54.0,Female,"Sydney, Australia",desktop,gold,4644.22,2024-08-28 16:01:19.000000
+CUST1013,Stefan Muller,,68.0,Female,"Mumbai, India",mobile,platinum,5091.58,2025-11-22 01:07:54.000000
+CUST1014,Ana Singh,ana.singh44@gmail.com,22.0,Prefer not to say,"Bangalore, India",desktop,bronze,1209.17,2025-09-19 18:35:17.000000
+CUST1015,Henry Martinez,,53.0,Female,"London, UK",,bronze,3859.22,2024-08-16 08:59:23.000000
+CUST1016,Oliver Patel,oliver.patel70@hotmail.com,64.0,Female,"Bangalore, India",tablet,platinum,9963.21,2025-08-01 14:00:23.000000
+CUST1017,Sasha Hoffman,sasha.hoffman16@hotmail.com,31.0,female,"Chicago, USA",tablet,gold,4874.41,2026-01-15 11:06:54.000000
+CUST1018,Jade Jensen,jade.jensen23@gmail.com,19.0,Male,"New York, USA",tablet,bronze,2466.08,2025-05-22 02:44:12.000000
+CUST1019,Freya Silva,freya.silva85@icloud.com,59.0,Male,"Tokyo, Japan",desktop,silver,1553.38,2025-06-21 17:24:19.000000
+CUST1020,Nina Nguyen,nina.nguyen65@icloud.com,68.0,Non-binary,"Sydney, Australia",mobile,bronze,3015.46,2024-10-15 17:51:41.000000
+CUST1021,Riya Walker,riya.walker11@gmail.com,65.0,Non-binary,"Berlin, Germany",desktop,gold,17223.85,2024-09-26 09:48:02.000000
+CUST1022,Mei Ward,mei.ward29@gmail.com,53.0,Female,"São Paulo, Brazil",tablet,bronze,8320.69,
+CUST1023,Leo Simon,leo.simon24@yahoo.com,43.0,Female,"Berlin, Germany",desktop,bronze,7690.79,2026-01-02 02:41:30.000000
+CUST1024,Chloe Torres,chloe.torres85@hotmail.com,46.0,Male,"Los Angeles, USA",desktop,bronze,4777.39,2024-07-23 18:43:23.000000
+CUST1025,Zara Reed,zara.reed1@hotmail.com,29.0,Female,"Tokyo, Japan", tablet ,gold,1457.91,2025-08-20 02:01:09.000000
+CUST1026,Freya Johnson,freya.johnson80@hotmail.com,41.0,Non-binary,"Berlin, Germany",tablet,bronze,0.0,2025-03-18 02:11:43.000000
+CUST1027,Nathan Johansson,nathan.johansson19@yahoo.com,34.0,Female,"Chicago, USA",desktop,silver,,2025-06-23 10:49:08.000000
+CUST1028,Nathan Khan,nathan.khan61@hotmail.com,68.0,Male,"LONDON, UK",tablet,silver,6768.8,2025-04-21 13:12:21.000000
+,Brian Campbell,brian.campbell25@outlook.com,50.0,Male,"Delhi, India",tablet,silver,0.0,2024-06-18 07:14:37.000000
+CUST1030,Tara Cox,tara.cox7@protonmail.com,22.0,Female,"São Paulo, Brazil",mobile,bronze,5484.34,2025-08-11 12:36:36.000000
+CUST1031,Oscar Blanc,oscar.blanc83@outlook.com,60.0,Prefer not to say,"Los Angeles, USA",DESKTOP,bronze,11049.6,2024-06-01 20:24:14.000000
+CUST1032,Fiona Muller,,39.0,Female,"Chicago, USA",,bronze,,2025-06-04 06:19:25.000000
+CUST1033,Leila Moreira,leila.moreira61@yahoo.com,54.0,Female,"Berlin, Germany",mobile,bronze,13662.23,2025-04-21 17:23:19.000000
+CUST1034,Jade Meyer,jade.meyer21@outlook.com,50.0,Female,"London, UK",desktop,bronze,3521.45,2024-03-08 21:27:14.000000
+CUST1035,Aisha Olsen,aisha.olsen5@outlook.com,48.0,Male,,mobile,gold,,2024-09-26 18:36:09.000000
+CUST1036,Kevin Baker,kevin.baker9@gmail.com,49.0,Male,,desktop,silver,1645.11,2024-04-08 13:38:02.000000
+CUST1037,,clara.campbell61@gmail.com,41.0,Male,"Sydney, Australia",tablet,bronze,8247.41,2024-06-30 23:53:52.000000
+CUST1038,Raj Cook,raj.cook18@gmail.com,,Male,"Delhi, India",,silver,2141.62,2024-03-24 03:07:54.000000
+CUST1039,David Petit,david.petit96@hotmail.com,42.0,Male,"Toronto, Canada",tablet,platinum,2117.5,2024-05-05 16:33:49.000000
+CUST1040,Darren Andersen,darren.andersen89@hotmail.com,20.0,Prefer not to say,"Tokyo, Japan",mobile,silver,2843.98,2024-03-11 04:30:11.000000
+CUST1041,Simon Anderson,simon.anderson83@outlook.com,,Male,"London, UK",tablet,,2380.03,2024-07-09 12:11:13.000000
+CUST1042,Elena Colombo,elena.colombo58@yahoo.com,36.0,Prefer not to say,"Los Angeles, USA",desktop,platinum,13628.51,2025-08-20 02:47:36.000000
+CUST1043,Mei Fontaine,mei.fontaine90@protonmail.com,41.0,Male,"Toronto, Canada",tablet,silver,5322.14,2024-10-13 05:35:48.000000
+CUST1044,Stefan Levy,stefan.levy74@gmail.com,38.0,Female,"Dubai, UAE",tablet,silver,3312.03,2024-05-22 10:31:51.000000
+CUST1045,Sean Sharma,sean.sharma67@outlook.com,34.0,Prefer not to say,"Paris, France",mobile,bronze,9639.02,2024-11-04 05:41:06.000000
+CUST1046, oscar sharma ,oscar.sharma74@outlook.com,67.0,female,"Tokyo, Japan",tablet,silver,7734.01,2025-02-10 17:49:45.000000
+CUST1047,Raj Peterson,raj.peterson45@hotmail.com,41.0,Male,"London, UK",desktop,silver,459.02,2025-11-08 20:19:34.000000
+CUST1048,Max Martin,max.martin66@hotmail.com,37.0,Male,"Houston, USA",mobile,gold,4202.37,2024-02-22 08:26:16.000000
+CUST1049,Fatima Olsen,fatima.olsen47@gmail.com,54.0,Male,"London, UK",tablet,platinum,10744.47,2024-11-05 09:00:29.000000
+CUST1050,Sean Colombo,,63.0,Female,"Berlin, Germany",desktop,gold,,2025-11-20 08:25:59.000000
+CUST1051,,nina.williams43@protonmail.com,44.0,Female,"New York, USA",tablet,silver,2336.94,2024-06-27 10:34:30.000000
+CUST1052,Grace Mitchell,grace.mitchell32@gmail.com,62.0,Male,"Sydney, Australia",tablet,gold,0.0,2024-07-26 01:07:46.000000
+CUST1053,Yara Campbell,yara.campbell59@icloud.com,40.0,Non-binary,"Mumbai, India",mobile,platinum,0.0,2025-08-16 12:18:21.000000
+CUST1054,Adam Olsen,adam.olsen93@outlook.com,54.0,Male,"Toronto, Canada",desktop,platinum,15096.23,2024-07-31 05:00:11.000000
+CUST1055,Leila Bailey,leila.bailey79@protonmail.com,33.0,Prefer not to say,"Los Angeles, USA",mobile,platinum,2731.66,2025-07-07 02:48:13.000000
+CUST1056,Lucia Jensen,lucia.jensen42@outlook.com,67.0,Female,"dubai, uae",,gold,6274.78,2025-09-19 18:25:53.000000
+CUST1057, Zara Thomas ,zara.thomas43@outlook.com,59.0,Female,"London, UK",desktop,bronze,13343.19,2025-10-22 04:58:39.000000
+CUST1058,Amara Yamamoto,amara.yamamoto52@hotmail.com,23.0,Male,"Dubai, UAE",mobile,bronze,7053.0,2024-09-06 03:42:14.000000
+CUST1059,Samuel Morgan,samuel.morgan52@protonmail.com,63.0,Female,"Delhi, India",mobile,platinum,7997.8,2026-01-24 23:46:02.000000
+CUST1060,Carlos Scott,carlos.scott97@icloud.com,23.0,Female,"Los Angeles, USA",tablet,bronze,5455.65,2025-07-28 09:37:20.000000
+CUST1061,Hannah Lemoine,hannah.lemoine59@yahoo.com,47.0,Female,"New York, USA",tablet,silver,2761.66,2024-04-02 19:14:46.000000
+CUST1062,Chloe Adams,chloe.adams99@yahoo.com,64.0,Female,"São Paulo, Brazil",mobile,silver,2695.36,2024-07-03 14:59:22.000000
+CUST1063,Amelia Sullivan,amelia.sullivan97@gmail.com,47.0,Female,"Houston, USA",mobile,bronze,2681.01,2025-10-03 00:16:17.000000
+CUST1064,Noor Ward,noor.ward58@icloud.com,21.0,Male,"Toronto, Canada",tablet,platinum,3714.34,2025-10-08 01:09:21.000000
+CUST1065,Darren Cooper,darren.cooper29@hotmail.com,21.0,Female,"Tokyo, Japan",desktop,gold,4416.69,2024-06-10 21:37:04.000000
+CUST1066,Andre Rogers,andre.rogers91@yahoo.com,21.0,Prefer not to say,"Houston, USA",mobile,bronze,,2024-09-11 12:29:12.000000
+,Iris Durand,iris.durand76@protonmail.com,31.0,Non-binary,"New York, USA",tablet,silver,0.0,2024-07-23 20:24:04.000000
+CUST1068,Clara Reed,clara.reed84@outlook.com,41.0,Female,"London, UK",mobile,silver,7201.01,2024-09-05 13:10:54.000000
+CUST1069,Sarah Lee,sarah.lee30@hotmail.com,33.0,Female,"São Paulo, Brazil",tablet,gold,6052.2,2025-03-01 06:52:33.000000
+CUST1070,Vincent David,,18.0,Non-binary,"New York, USA",mobile,silver,7274.05,2024-02-21 03:15:47.000000
+,Maya Laurent,maya.laurent37@gmail.com,62.0,Non-binary,"Los Angeles, USA",tablet,bronze,0.0,2024-12-27 08:53:58.000000
+CUST1072,Erik Reed,erik.reed11@protonmail.com,59.0,Male,"New York, USA",mobile,gold,3749.77,2024-04-30 01:40:24.000000
+CUST1073,Marcus David,marcus.david73@hotmail.com,22.0,Male,"Chicago, USA",mobile,gold,5290.5,2024-06-21 04:17:31.000000
+CUST1074,Lucas Rogers,lucas.rogers50@protonmail.com,62.0,Female,"Bangalore, India",tablet,,2641.26,2024-09-15 07:11:06.000000
+CUST1075,Patrick Watanabe,patrick.watanabe24@protonmail.com,42.0,Female,"Los Angeles, USA",tablet,bronze,6170.9,2025-01-26 10:28:38.000000
+CUST1076,Fatima Mitchell,fatima.mitchell72@icloud.com,19.0,Female,"São Paulo, Brazil",desktop,silver,729.78,2025-03-26 18:05:33.000000
+CUST1077,Emily Nguyen,emily.nguyen9@yahoo.com,44.0,Female,"Sydney, Australia",mobile,bronze,2865.16,2024-12-07 01:39:43.000000
+CUST1078,Iris Larsson,iris.larsson77@yahoo.com,56.0,Male,"Delhi, India",desktop,bronze,4109.21,2024-11-25 12:22:58.000000
+CUST1079,Sasha Ito,sasha.ito71@gmail.com,47.0,Male,"Los Angeles, USA",desktop,bronze,8946.06,2025-01-09 15:40:36.000000
+CUST1080,Henry Bell,henry.bell65@protonmail.com,20.0,Male,"Tokyo, Japan",mobile,silver,11608.42,2024-12-22 09:24:52.000000
+CUST1081,Marcus Cooper,marcus.cooper29@icloud.com,53.0,Female,"Toronto, Canada",,bronze,318.36,2024-05-16 03:41:21.000000
+CUST1082,Rosa Bernard,rosa.bernard67@hotmail.com,24.0,Female,,desktop,bronze,2160.66,2024-06-30 12:02:38.000000
+CUST1083,Serena Mitchell,serena.mitchell81@yahoo.com,60.0,Male,,mobile,gold,2894.33,2025-12-24 06:52:22.000000
+CUST1084,Ethan Tanaka,ethan.tanaka63@icloud.com,38.0,Female,"São Paulo, Brazil",tablet,silver,2679.44,2024-05-17 13:06:01.000000
+CUST1085,Raj Adams,raj.adams77@yahoo.com,45.0,Female,"Chicago, USA",mobile,silver,4734.78,2025-02-26 09:45:54.000000
+CUST1086,Oliver Romano,oliver.romano88@hotmail.com,46.0,male,"Mumbai, India",desktop,silver,5017.53,2024-09-11 01:48:40.000000
+CUST1087,,gabriel.scott93@hotmail.com,45.0,Non-binary,"New York, USA",mobile,gold,10144.2,2025-05-17 15:41:44.000000
+CUST1088,Aiden Williams,aiden.williams27@yahoo.com,54.0,Male,"Sydney, Australia",tablet,bronze,2120.38,2026-01-29 15:05:24.000000
+CUST1089,Aiden Morris,aiden.morris19@protonmail.com,33.0,Female,"Mumbai, India",mobile,bronze,5152.56,2026-02-12 06:34:12.000000
+CUST1090,Freya Roux,freya.roux94@gmail.com,47.0,Female,"Bangalore, India",mobile,bronze,6121.68,2025-12-09 02:18:30.000000
+CUST1091,Erik Bertrand,erik.bertrand59@gmail.com,28.0,Male,"Sydney, Australia",desktop,bronze,2374.92,2024-11-30 19:40:12.000000
+CUST1092,Kenji Mitchell,kenji.mitchell97@yahoo.com,23.0,Male,"Houston, USA",mobile,platinum,1657.92,2024-04-11 00:20:07.000000
+CUST1093,Amelia Mitchell,amelia.mitchell39@yahoo.com,70.0,Male,"Berlin, Germany",mobile,silver,2108.61,2025-08-02 06:31:15.000000
+CUST1094,Fiona Morgan,fiona.morgan94@hotmail.com,45.0,Male,"Berlin, Germany",desktop,gold,174.21,2025-03-24 03:32:35.000000
+CUST1095,Nathan Dubois,nathan.dubois31@hotmail.com,33.0,Female,"Delhi, India",tablet,bronze,397.7,
+CUST1096,Thomas Ward,thomas.ward51@icloud.com,63.0,Female,"Berlin, Germany",mobile,bronze,2402.35,2024-12-15 11:45:47.000000
+CUST1097,Kevin Moreira,kevin.moreira56@protonmail.com,33.0,Male,"Paris, France",tablet,gold,7224.12,2024-11-11 07:03:07.000000
+CUST1098,Isabella Durand,isabella.durand35@protonmail.com,67.0,Male,"Mumbai, India",mobile,bronze,5684.52,2024-06-17 04:28:14.000000
+CUST1099,Mei Moreau,,18.0,Female,,tablet,bronze,4125.49,2024-09-13 16:36:53.000000
+CUST1100,Leila Levy,leila.levy29@icloud.com,43.0,Female,"Delhi, India",desktop,bronze,3704.53,2025-05-20 13:55:06.000000
+CUST1101,Lucas Sato,,,Female,,tablet,bronze,2717.25,2025-01-07 01:56:04.000000
+CUST1102,Thomas Fernandez,thomas.fernandez30@icloud.com,41.0,Female,"Tokyo, Japan",tablet,bronze,1004.94,2026-02-04 06:40:23.000000
+CUST1103,Elena Cooper,elena.cooper10@yahoo.com,67.0,Male,"Bangalore, India",mobile,gold,3733.7,2024-10-09 06:58:41.000000
+,Noah Girard,noah.girard12@protonmail.com,40.0,Male,"CHICAGO, USA",tablet,bronze,0.0,2024-04-03 21:35:48.000000
+CUST1105,Hannah Laurent,hannah.laurent81@protonmail.com,55.0, non-binary ,"London, UK",desktop,bronze,49.14,2025-08-31 16:22:11.000000
+CUST1106,Ethan Hoffman,ethan.hoffman24@outlook.com,,Female,"Bangalore, India",mobile,bronze,2845.76,2025-06-19 22:06:50.000000
+,Raj Romano,raj.romano62@icloud.com,40.0,Female,,desktop,silver,0.0,2024-06-18 23:37:19.000000
+CUST1108,Jack Hoffman,jack.hoffman8@yahoo.com,69.0,Prefer not to say,"Houston, USA",tablet,gold,1885.27,2024-06-05 08:58:43.000000
+CUST1109,James Petit,james.petit40@yahoo.com,23.0,FEMALE,"Paris, France",tablet,gold,1161.25,2025-08-16 08:29:30.000000
+CUST1110,Alina Hill,alina.hill48@protonmail.com,43.0,Male,"Sydney, Australia",desktop,platinum,5255.2,2025-10-19 06:35:25.000000
+CUST1111,Henry Hassan,henry.hassan38@yahoo.com,18.0,Prefer not to say," Paris, France ",tablet,platinum,6428.1,2024-08-18 20:33:56.000000
+CUST1112,Caleb Sato,caleb.sato86@protonmail.com,39.0,Male,"Mumbai, India",mobile,platinum,7352.49,2024-12-06 03:42:50.000000
+CUST1113,Eva Rogers,eva.rogers98@protonmail.com,46.0,Non-binary,"Los Angeles, USA",desktop,platinum,5914.33,2025-06-06 15:10:00.000000
+CUST1114,Sean Andersen,sean.andersen56@yahoo.com,39.0,Male,"Sydney, Australia",,silver,5767.52,
+CUST1115,Tobias Santos,tobias.santos13@gmail.com,58.0,Male,"Bangalore, India",desktop,bronze,8175.39,
+CUST1116,Hana Petit,hana.petit20@protonmail.com,23.0,Non-binary,"Houston, USA",tablet,gold,,2025-02-19 22:10:20.000000
+CUST1117,Sasha Bertrand,sasha.bertrand67@icloud.com,57.0,Prefer not to say,"Chicago, USA", mobile ,bronze,1395.76,2025-05-23 04:29:32.000000
+CUST1118,Hannah David,hannah.david51@icloud.com,35.0, Prefer not to say ,"Toronto, Canada",mobile,platinum,1935.57,2025-10-13 11:45:59.000000
+CUST1119,Miles Morgan,miles.morgan50@protonmail.com,56.0,Male,,,silver,16106.01,2024-11-04 10:16:48.000000
+CUST1120,Aisha Moreira,aisha.moreira13@yahoo.com,65.0,Non-binary,"Tokyo, Japan",desktop,gold,5254.2,2024-06-18 11:27:40.000000
+CUST1121,Fatima Taylor,fatima.taylor73@gmail.com,30.0,Male,"Sydney, Australia",desktop,BRONZE,12858.74,2024-07-02 22:23:59.000000
+CUST1122,Felix Lopez,felix.lopez34@protonmail.com,23.0,Male,"Houston, USA",tablet,silver,12524.2,
+CUST1123,,elsa.rogers33@icloud.com,37.0,Female,"São Paulo, Brazil",desktop,,2459.3,2025-07-14 11:12:01.000000
+CUST1124,Sean Richardson,sean.richardson88@gmail.com,39.0,Female,"Sydney, Australia",mobile,gold,3344.01,2025-05-27 01:25:53.000000
+CUST1125,HANA NGUYEN,hana.nguyen54@hotmail.com,20.0,Prefer not to say,"Sydney, Australia",desktop,silver,9609.05,2025-12-27 19:02:49.000000
+CUST1126,Alina Campbell,alina.campbell72@yahoo.com,39.0,Male,"Bangalore, India",desktop,bronze,,2025-05-11 17:49:13.000000
+CUST1127,Luna Cook,luna.cook49@icloud.com,21.0,Male,"Paris, France",mobile,gold,10430.55,2024-07-02 08:14:35.000000
+CUST1128,Tobias Romano,tobias.romano74@yahoo.com,66.0,Male,"Bangalore, India",mobile,platinum,2863.96,2025-04-03 11:11:14.000000
+CUST1129,James Bernard,james.bernard45@outlook.com,42.0,,"Mumbai, India",tablet,platinum,7778.85,2024-11-21 00:55:18.000000
+CUST1130,,victor.campbell29@protonmail.com,31.0,Female,"Tokyo, Japan",tablet,bronze,4140.4,2025-07-07 15:23:00.000000
+CUST1131,Ian Silva,ian.silva33@hotmail.com,31.0,Female,"Tokyo, Japan",tablet,bronze,7799.26,2024-05-14 13:20:52.000000
+CUST1132,Elif Moreau,elif.moreau26@outlook.com,36.0,Female,,tablet,silver,14292.02,2025-10-13 11:25:19.000000
+CUST1133,Olivia Oliveira,olivia.oliveira38@outlook.com,24.0,Non-binary,"Tokyo, Japan",mobile,bronze,1824.15,2024-10-28 06:40:54.000000
+CUST1134,Andre Bailey,andre.bailey44@yahoo.com,43.0,Male,"Toronto, Canada",mobile,bronze,1612.63,2025-01-04 03:19:07.000000
+CUST1135,Rosa Becker,,61.0,Female,"London, UK",mobile,bronze,514.5,2025-09-15 14:09:09.000000
+CUST1136,Rosa Martin,rosa.martin67@protonmail.com,24.0,Female,"Tokyo, Japan",tablet,bronze,2441.92,2025-02-14 12:10:47.000000
+CUST1137,Aiden Mitchell,aiden.mitchell36@gmail.com,53.0,Female,"Toronto, Canada",desktop,silver,7853.91,
+CUST1138,Ines Cruz,ines.cruz82@outlook.com,53.0,Female,"New York, USA",desktop,silver,7569.2,2024-05-14 13:32:58.000000
+,Hugo Baker,hugo.baker38@icloud.com,62.0,Non-binary,"Sydney, Australia",tablet,gold,0.0,2024-07-13 00:38:44.000000
+CUST1140,Mia Lemoine,mia.lemoine76@gmail.com,46.0,Female,,desktop,silver,6724.8,2025-05-10 09:02:07.000000
+CUST1141,Patrick Oliveira,patrick.oliveira42@icloud.com,44.0,Prefer not to say,"Delhi, India",mobile,gold,8885.02,2025-04-16 11:50:36.000000
+CUST1142,Diana Moreau,diana.moreau80@protonmail.com,40.0,Male,"Chicago, USA",desktop,silver,5967.57,2025-08-20 13:39:50.000000
+CUST1143,Vincent Thomas,vincent.thomas2@icloud.com,42.0,Female,"Chicago, USA",mobile,,9531.13,2025-11-09 06:32:54.000000
+CUST1144,Hannah Cruz,hannah.cruz83@icloud.com,50.0,Female,"Dubai, UAE",tablet,bronze,1212.39,2025-10-14 13:29:42.000000
+CUST1145,Gabriel Fontaine,gabriel.fontaine48@icloud.com,56.0,Female,"Tokyo, Japan",tablet,silver,9350.39,2025-05-14 14:17:20.000000
+CUST1146,Sean Petit,sean.petit77@gmail.com,58.0,Female,"Delhi, India",tablet,bronze,2864.27,2025-04-08 03:04:32.000000
+CUST1147,Carlos Rivera,carlos.rivera38@yahoo.com,57.0,Prefer not to say,"New York, USA",mobile,silver,4918.22,2024-10-22 06:41:58.000000
+CUST1148,Fatima Ali,fatima.ali4@icloud.com,41.0,Female,"Tokyo, Japan",mobile, silver ,2612.88,2025-10-08 20:37:07.000000
+CUST1149,Carlos Bertrand,carlos.bertrand95@hotmail.com,22.0,Male,"Los Angeles, USA",desktop,bronze,946.95,2025-06-19 12:06:04.000000
+CUST1150,,elena.lemoine93@icloud.com,65.0,Female,"Los Angeles, USA",tablet,silver,2640.66,2025-02-18 03:46:14.000000
+CUST1151,Sophia Williams,sophia.williams38@protonmail.com,61.0,Prefer not to say,"New York, USA", mobile ,silver,7209.23,2025-09-13 21:15:57.000000
+CUST1152,Leo Schulz,leo.schulz21@yahoo.com,34.0,Male,"São Paulo, Brazil",tablet,bronze,8286.98,2025-09-01 13:57:50.000000
+CUST1153,Mira Dubois,mira.dubois37@icloud.com,30.0,Female,"Paris, France",desktop,bronze,2338.07,2025-06-27 18:05:46.000000
+CUST1154,Hannah Cooper,hannah.cooper60@hotmail.com,37.0,Male,"Mumbai, India",tablet,silver,3194.28,2025-12-06 21:27:16.000000
+CUST1155,Sana Anderson,sana.anderson5@icloud.com,52.0,Female,"Toronto, Canada",mobile,bronze,5506.37,2025-12-05 15:31:37.000000
+CUST1156,Freya Sharma,freya.sharma21@yahoo.com,54.0,Prefer not to say,"delhi, india",,bronze,3774.54,2025-02-14 19:21:43.000000
+,James Tanaka,james.tanaka67@protonmail.com,65.0,Female,"Delhi, India",mobile,platinum,0.0,2025-12-20 23:27:44.000000
+CUST1158,fiona rossi,fiona.rossi30@gmail.com,35.0,Male,"Los Angeles, USA",desktop,silver,737.99,2025-11-24 07:02:58.000000
+CUST1159,Hannah Jensen,hannah.jensen66@gmail.com,27.0,Male,"Paris, France",tablet,platinum,,2025-02-16 03:47:01.000000
+CUST1160,Noor Brown,noor.brown99@yahoo.com,50.0,Female,"Paris, France",mobile,gold,13241.9,2024-06-11 04:01:21.000000
+CUST1161,Lucia Rogers,lucia.rogers69@icloud.com,23.0,Male,"Dubai, UAE",desktop,bronze,6980.21,2025-10-31 03:57:34.000000
+CUST1162,Olivia Girard,olivia.girard90@icloud.com,26.0,Female,"Paris, France",,silver,5868.8,2024-07-24 13:16:55.000000
+CUST1163,Ryan Anderson,ryan.anderson33@outlook.com,45.0,Female,"Houston, USA",desktop,silver,7420.12,2025-10-09 08:01:52.000000
+CUST1164,Caleb Suzuki,caleb.suzuki58@protonmail.com,24.0,Female,"Sydney, Australia",,bronze,9022.23,2025-01-19 04:01:25.000000
+CUST1165,Aiden Cook,aiden.cook52@icloud.com,36.0,Female,,tablet,bronze,3519.82,2025-08-11 12:02:48.000000
+,,jade.young21@gmail.com,67.0,Female,"New York, USA",mobile,silver,0.0,2025-11-10 10:17:57.000000
+CUST1167,Isabella Bernard,isabella.bernard34@yahoo.com,24.0,Female,"Berlin, Germany",tablet,bronze,6819.44,2024-11-05 19:44:07.000000
+CUST1168,,zara.blanc15@outlook.com,58.0,Male,"Bangalore, India",mobile,bronze,5279.75,2024-11-07 15:12:33.000000
+CUST1169,Grace Jensen,grace.jensen35@yahoo.com,61.0,Male,"Houston, USA",mobile,bronze,6209.67,2024-04-16 23:06:51.000000
+CUST1170,Mira Hill,mira.hill6@hotmail.com,38.0,Prefer not to say,"London, UK",tablet,silver,2318.78,2025-02-21 12:31:56.000000
+CUST1171,Sarah Pereira,sarah.pereira59@gmail.com,47.0,Male,"Los Angeles, USA",desktop,bronze,10850.15,2024-07-07 20:23:57.000000
+CUST1172,Kevin Cook,kevin.cook36@hotmail.com,26.0,Female,"Toronto, Canada",desktop,,10657.65,2025-01-08 09:42:53.000000
+CUST1173,Derek Hoffman,derek.hoffman63@outlook.com,,Male,"Mumbai, India",desktop,bronze,9035.96,
+CUST1174,Liam Costa,liam.costa74@protonmail.com,29.0,Male,"Toronto, Canada",desktop,platinum,989.49,2026-02-06 05:44:14.000000
+CUST1175,Marco Lopez,marco.lopez21@outlook.com,38.0,Female,"Dubai, UAE",desktop,silver,,2024-05-23 02:54:46.000000
+CUST1176,Nathan Hoffman,nathan.hoffman22@hotmail.com,22.0,Female,"Berlin, Germany",desktop,platinum,3128.94,2025-09-10 21:44:03.000000
+CUST1177,,mira.suzuki85@outlook.com,38.0,Female,"Berlin, Germany",tablet,silver,2874.24,2025-01-18 20:33:57.000000
+CUST1178,Olivia Bell,olivia.bell12@hotmail.com,44.0,male,"Delhi, India",tablet,SILVER,5079.57,2024-08-13 14:10:02.000000
+CUST1179,Thomas Larsson,thomas.larsson32@yahoo.com,59.0,Male,"Houston, USA",tablet,bronze,4979.09,2025-01-01 17:05:10.000000
+CUST1180,Mateo Oliveira,mateo.oliveira58@outlook.com,49.0, Male ,"Los Angeles, USA",desktop,bronze,6127.41,2024-10-15 00:12:37.000000
+CUST1181,,kevin.cooper11@yahoo.com,67.0,Female,"Mumbai, India",mobile,bronze,5227.88,2024-03-13 00:40:37.000000
+CUST1182,Leila David,leila.david50@protonmail.com,38.0,Female,"Los Angeles, USA",mobile,silver,2385.84,2025-01-18 05:21:35.000000
+CUST1183,Luna Rogers,luna.rogers2@gmail.com,62.0,Female,"Chicago, USA",desktop,silver,119.43,2025-08-13 17:42:14.000000
+CUST1184,Max Adams,max.adams83@outlook.com,46.0,Male,"Mumbai, India",desktop,silver,,2024-10-24 09:50:55.000000
+CUST1185,Nina Stewart,nina.stewart9@icloud.com,36.0,Female,"Berlin, Germany",mobile,silver,4871.34,2025-04-09 14:52:39.000000
+CUST1186,Erik Adams,erik.adams37@outlook.com,38.0,Female,,mobile,silver,13136.61,2025-03-30 10:01:14.000000
+,Ines Campbell,ines.campbell2@yahoo.com,23.0,Female,"Dubai, UAE",tablet,silver,0.0,2024-04-16 12:49:14.000000
+CUST1188,Hannah Young,hannah.young25@yahoo.com,33.0,Prefer not to say,"Sydney, Australia",desktop,silver,4899.13,2025-04-18 04:05:57.000000
+CUST1189,Brian Cruz,brian.cruz46@outlook.com,38.0,Female,"Delhi, India",mobile,gold,3477.95,
+CUST1190, mei campbell ,mei.campbell1@outlook.com,31.0,Male,"Mumbai, India",tablet,bronze,326.13,2024-11-27 02:55:15.000000
+CUST1191,Ethan Leroy,ethan.leroy73@yahoo.com,64.0,Female,"Sydney, Australia",,gold,2418.41,2026-02-01 00:55:48.000000
+CUST1192,Kevin Hill,kevin.hill99@yahoo.com,56.0,Female," Berlin, Germany ",tablet,silver,9635.78,2025-09-22 17:57:30.000000
+CUST1193,Mia Singh,mia.singh17@outlook.com,54.0,Female,"Bangalore, India",mobile,bronze,4299.14,2025-09-09 09:50:27.000000
+CUST1194,Ryan Chevalier,ryan.chevalier74@gmail.com,44.0,Male,"New York, USA",desktop,,5175.38,2025-11-12 11:49:48.000000
+CUST1195,Diana Morgan,diana.morgan95@gmail.com,57.0,,"Sydney, Australia", desktop ,bronze,1871.98,2025-02-25 04:15:48.000000
+CUST1196,Ryan Ito,,28.0,Male,,desktop,platinum,8817.51,2024-09-30 04:30:45.000000
+CUST1197,David Campbell,david.campbell13@outlook.com,56.0,Male,,tablet, gold ,479.13,2024-10-07 19:46:08.000000
+CUST1198,Simon Larsson,simon.larsson50@gmail.com,35.0,Male,"Sydney, Australia",tablet,silver,5318.11,2024-10-15 15:14:12.000000
+CUST1199,Kai Martinez,kai.martinez70@protonmail.com,26.0,Female,"Dubai, UAE",tablet,silver,7028.56,2024-10-19 16:26:53.000000
+,Raj Mitchell,raj.mitchell53@outlook.com,70.0,Prefer not to say,,tablet,silver,0.0,2024-03-07 06:15:00.000000
+CUST1201,Iris Moreau,iris.moreau92@protonmail.com,42.0,,"Toronto, Canada",desktop,bronze,4847.63,2025-01-22 04:52:10.000000
+CUST1202,Rosa Suzuki,rosa.suzuki52@gmail.com,70.0,Male,"Paris, France",tablet,,,2024-08-24 20:35:00.000000
+CUST1203,Felix Dubois,felix.dubois81@gmail.com,46.0,Male,"Bangalore, India",tablet,gold,11605.36,2024-05-13 21:40:16.000000
+CUST1204,Vera Cox,,47.0,Female,"Mumbai, India",tablet,bronze,10573.42,2024-11-23 21:45:18.000000
+CUST1205,Nadia Rivera,nadia.rivera21@hotmail.com,20.0,Prefer not to say,"Chicago, USA",tablet,gold,2886.32,2024-07-05 08:25:05.000000
+CUST1206,Sarah Becker,sarah.becker59@hotmail.com,52.0,Female,"Tokyo, Japan",,gold,1116.63,2025-11-14 00:10:14.000000
+CUST1207,,simon.rivera5@protonmail.com,56.0,PREFER NOT TO SAY,"Tokyo, Japan",tablet,bronze,,
+CUST1208,Liam Cruz,liam.cruz98@hotmail.com,22.0,Male,"Berlin, Germany",mobile,gold,4391.26,2025-02-25 16:07:53.000000
+CUST1209,Caleb Cox,caleb.cox41@outlook.com,57.0,Male,"Tokyo, Japan",tablet,bronze,6286.63,2025-10-26 20:10:16.000000
+CUST1210,Nathan Martinez,nathan.martinez43@outlook.com,58.0,Female,"Los Angeles, USA",desktop,bronze,6462.02,2024-03-09 14:47:14.000000
+CUST1211,Simon Hassan,simon.hassan61@gmail.com,48.0,Female,"London, UK",tablet,silver,6812.54,2024-03-01 12:56:12.000000
+CUST1212,Ana Sullivan,ana.sullivan20@outlook.com,39.0,Female,"Bangalore, India",desktop,bronze,9523.3,2024-08-18 13:58:21.000000
+CUST1213,Mia Simon,mia.simon48@gmail.com,23.0,Male,"Houston, USA",tablet,gold,7617.66,2025-03-22 21:40:13.000000
+CUST1214,Chloe Murphy,,20.0,Female,"New York, USA",tablet,bronze,5064.89,2024-07-14 13:18:39.000000
+CUST1215,Alina Patel,alina.patel21@outlook.com,57.0,Male,"Mumbai, India",desktop,bronze,3085.35,2024-03-26 09:36:16.000000
+CUST1216,Aisha Dubois,aisha.dubois55@hotmail.com,56.0,Female,"Delhi, India",tablet,bronze,2630.45,2025-05-02 00:21:35.000000
+CUST1217,Sean Morris,sean.morris88@protonmail.com,47.0,Prefer not to say,"Mumbai, India",tablet,gold,9617.85,2024-04-06 18:29:44.000000
+CUST1218,David Roux,david.roux78@icloud.com,24.0,Female,"Los Angeles, USA",desktop,bronze,,2024-04-07 07:26:47.000000
+CUST1219,Vera Sullivan,vera.sullivan44@icloud.com,29.0,Male,"London, UK",desktop,bronze,6038.29,2024-05-10 11:08:48.000000
+CUST1220,Tobias Meyer,tobias.meyer8@gmail.com,26.0,,"Chicago, USA",desktop,bronze,7652.39,2025-05-03 22:43:21.000000
+CUST1221,Leo Morris,leo.morris45@gmail.com,57.0,Female,"Delhi, India",mobile,bronze,2991.51,2024-08-16 17:12:47.000000
+CUST1222,Emily Muller,emily.muller56@icloud.com,29.0,Male,"São Paulo, Brazil",,silver,9705.11,2025-07-11 00:38:33.000000
+CUST1223,Caleb Lopez,caleb.lopez59@protonmail.com,45.0,Female,"Bangalore, India",TABLET,gold,2574.37,2025-05-08 15:59:11.000000
+CUST1224,Yara Andersen,yara.andersen62@protonmail.com,64.0,Prefer not to say,"London, UK",tablet,gold,12425.05,2025-06-22 04:47:39.000000
+CUST1225,Jack Silva,jack.silva2@hotmail.com,48.0,Male,,tablet,silver,5622.49,2024-06-26 07:51:55.000000
+CUST1226,,elif.bell63@gmail.com,22.0,Male,"São Paulo, Brazil",tablet,bronze,10349.69,2024-09-05 22:06:04.000000
+CUST1227,,elsa.singh11@yahoo.com,70.0,Female,"Houston, USA",mobile,bronze,2266.68,2024-05-16 02:17:30.000000
+CUST1228,Noor Suzuki,noor.suzuki69@yahoo.com,63.0,Male,"Mumbai, India",tablet,platinum,,2024-11-16 19:50:01.000000
+CUST1229,Lucia Chen,lucia.chen35@gmail.com,55.0,Female,"Paris, France",tablet,silver,10540.39,2024-02-25 06:58:36.000000
+CUST1230,Riya Colombo,,57.0,Prefer not to say,"Paris, France",mobile,bronze,480.66,2025-10-31 20:44:03.000000
+CUST1231,Brian Martinez,brian.martinez10@protonmail.com,35.0,Female,"Mumbai, India",mobile,bronze,1698.48,2025-01-23 04:54:36.000000
+CUST1232,Brian Pereira,brian.pereira14@yahoo.com,45.0,Female," los angeles, usa ",DESKTOP,BRONZE,1742.65,2024-10-29 04:29:34.000000
+CUST1233,Mateo Berg,mateo.berg56@hotmail.com,67.0,Male,"Sydney, Australia",tablet,bronze,2916.07,2025-07-02 14:20:28.000000
+CUST1234,Daniel Sato,daniel.sato99@outlook.com,29.0,Prefer not to say,"Bangalore, India",desktop,,7081.6,2024-03-06 16:49:49.000000
+CUST1235,Vincent Jensen,vincent.jensen40@hotmail.com,69.0, prefer not to say ,"New York, USA",tablet,silver,2043.27,2025-05-10 23:47:12.000000
+CUST1236,,aiden.campbell80@gmail.com,59.0,MALE,"London, UK",mobile,silver,,2025-11-01 20:06:02.000000
+CUST1237,Clara Costa,clara.costa16@protonmail.com,26.0,,"Chicago, USA",mobile,bronze,127.65,
+CUST1238,Ana Hassan,ana.hassan3@hotmail.com,18.0,Male,"Bangalore, India",desktop,silver,12825.13,2026-02-13 15:15:28.000000
+CUST1239,Erik Robinson,erik.robinson12@protonmail.com,37.0,Male,"Berlin, Germany",tablet,silver,4535.24,2024-05-13 12:29:27.000000
+CUST1240,Eva Baker,eva.baker86@gmail.com,41.0,Female,"Toronto, Canada",mobile,gold,3195.0,2026-01-11 05:29:06.000000
+CUST1241,Liam Silva,liam.silva42@yahoo.com,38.0,Male,"Dubai, UAE",desktop,bronze,4341.95,2024-12-02 02:15:59.000000
+CUST1242,Nina Rossi,nina.rossi17@gmail.com,21.0,Male,"Toronto, Canada",tablet,platinum,8560.62,2025-04-20 08:06:42.000000
+CUST1243,Patrick Chen,patrick.chen76@hotmail.com,,Female,"Bangalore, India",tablet,,8450.93,2025-02-15 13:36:03.000000
+CUST1244,Riya Peterson,riya.peterson90@gmail.com,33.0,Female,"Houston, USA",,silver,1564.99,2025-05-04 00:40:07.000000
+CUST1245,Kai Romano,kai.romano52@yahoo.com,41.0, Female ,,desktop,silver,2934.24,2025-07-31 19:05:02.000000
+CUST1246,Layla Walker,layla.walker87@outlook.com,25.0,FEMALE,"Sydney, Australia",mobile,silver,11175.27,2025-09-22 07:27:44.000000
+CUST1247,Kevin Walker,kevin.walker46@outlook.com,45.0,Male,"Berlin, Germany",tablet,bronze,7869.87,2025-08-07 10:36:53.000000
+CUST1248,Fiona Reed,fiona.reed11@hotmail.com,36.0,Male,"Chicago, USA",,silver,2960.92,2025-02-18 02:13:40.000000
+CUST1249,Miles Moreira,miles.moreira30@icloud.com,44.0,Female,"Tokyo, Japan",desktop,gold,13527.28,2024-08-10 03:31:18.000000
+CUST1250,Erik Roux,erik.roux59@yahoo.com,28.0,Male,"Sydney, Australia",,bronze,9451.16,2024-07-08 07:15:56.000000
+CUST1251,Mateo Moreau,mateo.moreau58@icloud.com,52.0,Prefer not to say,"Chicago, USA", mobile ,bronze,7245.14,2024-09-28 02:46:12.000000
+CUST1252,Mia Bernard,mia.bernard94@hotmail.com,25.0,Prefer not to say," Mumbai, India ",desktop,silver,2187.41,2026-02-11 18:03:40.000000
+CUST1253,Serena Walker,serena.walker12@icloud.com,49.0,Female,"Delhi, India",desktop,bronze,13004.62,2025-12-26 02:09:56.000000
+CUST1254,Eva Reed,eva.reed57@outlook.com,64.0,Female,"Paris, France",desktop,platinum,12306.38,2025-09-25 06:59:15.000000
+ CUST1255 ,Jade Olsen,jade.olsen73@yahoo.com,42.0,Female,"Paris, France",desktop,bronze,3050.41,2025-06-24 10:21:14.000000
+CUST1256,Henry Moreira,henry.moreira89@protonmail.com,25.0,Female,"Delhi, India",desktop,silver,3542.27,
+CUST1257,Tobias Hill,tobias.hill89@yahoo.com,21.0,Female,"Mumbai, India",mobile,bronze,5926.68,2025-04-13 07:31:57.000000
+CUST1258,Miles Lee,miles.lee90@protonmail.com,52.0, Non-binary ,"London, UK",mobile,bronze,10251.95,2025-06-06 11:08:00.000000
+CUST1259,Yuki Lee,yuki.lee15@hotmail.com,22.0,MALE,"Chicago, USA",tablet,bronze,8679.16,2024-05-18 02:48:22.000000
+CUST1260,Patrick David,patrick.david17@gmail.com,66.0,Male,,tablet,bronze,3883.08,
+CUST1261,Liam Durand,liam.durand26@yahoo.com,19.0,Non-binary,"Delhi, India",tablet,bronze,6534.13,2025-04-01 18:16:07.000000
+CUST1262,Erik Blanc,erik.blanc93@gmail.com,50.0,Female,"Tokyo, Japan",desktop,silver,1301.92,2024-10-17 02:36:32.000000
+CUST1263,Gabriel Morgan,,38.0,Male,"Tokyo, Japan",tablet,silver,10788.17,2025-10-31 06:29:55.000000
+CUST1264,Miles Robinson,miles.robinson14@hotmail.com,60.0,Male,"Los Angeles, USA",mobile,bronze,3980.59,2024-05-21 08:27:09.000000
+CUST1265,Priya Yamamoto,priya.yamamoto76@outlook.com,69.0,Female,"Bangalore, India",mobile,bronze,4168.31,
+CUST1266,,elena.martinez23@hotmail.com,38.0,Female,"Toronto, Canada",desktop,silver,4886.15,2025-12-14 17:27:12.000000
+cust1267,Aisha Muller,aisha.muller58@outlook.com,46.0,Male,"Mumbai, India",desktop,silver,524.72,2025-07-12 16:45:24.000000
+CUST1268,Thomas Tanaka,thomas.tanaka8@hotmail.com,55.0,Female,"Delhi, India",mobile,gold,1517.89,2024-05-01 14:44:11.000000
+CUST1269,Chloe Lopez,chloe.lopez31@protonmail.com,23.0,Male,,tablet,platinum,7075.09,
+CUST1270,Lily Andersen,lily.andersen63@gmail.com,31.0,Female,"Paris, France",mobile,gold,2964.98,2024-09-26 04:41:45.000000
+CUST1271,Arjun Costa,arjun.costa12@protonmail.com,24.0,Male,"Bangalore, India",tablet,bronze,929.61,2025-01-02 19:22:38.000000
+CUST1272,Simon Clark,simon.clark3@protonmail.com,29.0,Male,"London, UK",tablet,platinum,10223.32,2024-07-20 20:21:01.000000
+CUST1273,Maya Dubois,maya.dubois56@hotmail.com,22.0,Non-binary,"Chicago, USA",desktop,bronze,2387.98,2025-02-27 00:10:58.000000
+CUST1274,Emily Rossi,emily.rossi18@gmail.com,69.0,,,mobile,bronze,6776.42,2025-07-21 16:52:29.000000
+CUST1275,Adam Pereira,adam.pereira15@icloud.com,25.0,Non-binary,"Mumbai, India",tablet,bronze,5854.78,2025-09-19 06:42:24.000000
+CUST1276,Julia Levy,julia.levy36@hotmail.com,55.0,Female,"Berlin, Germany",desktop,bronze,0.0,2024-03-03 08:51:06.000000
+,Luna Fontaine,luna.fontaine7@protonmail.com,60.0,Female,"Delhi, India",tablet,bronze,0.0,2026-01-28 23:23:37.000000
+CUST1278,Oliver Nguyen,oliver.nguyen21@hotmail.com,69.0,female,"London, UK",desktop,gold,947.29,2025-03-15 06:45:34.000000
+CUST1279,Brian Kim,brian.kim89@gmail.com,59.0,Female,"Bangalore, India",tablet,silver,9806.97,2025-09-30 18:23:02.000000
+CUST1280,Henry Fontaine,henry.fontaine95@yahoo.com,61.0,Male,"Delhi, India",tablet,platinum,539.44,2026-01-20 08:48:43.000000
+CUST1281,,serena.schulz80@hotmail.com,27.0,Male,"Sydney, Australia",desktop,bronze,1163.45,2025-11-08 19:06:23.000000
+CUST1282,Tara Kim,tara.kim77@yahoo.com,36.0,Male,"New York, USA",tablet,silver,7106.94,2025-02-14 04:35:12.000000
+CUST1283,Raj Rivera,raj.rivera91@hotmail.com,34.0,Female,"London, UK",tablet,GOLD,12076.22,2024-10-07 23:08:44.000000
+CUST1284,,sana.rogers23@outlook.com,49.0,Non-binary,"Berlin, Germany", desktop ,gold,7984.13,2024-09-22 18:06:49.000000
+CUST1285,Nathan Jensen,nathan.jensen56@yahoo.com,49.0,Male,"Toronto, Canada",,bronze,3983.67,2026-01-11 07:16:31.000000
+CUST1286,Amara Bernard,amara.bernard64@gmail.com,27.0,Male,"Chicago, USA",tablet,silver,,2025-05-04 08:15:21.000000
+CUST1287,Grace Girard,grace.girard43@gmail.com,61.0,Male,"Delhi, India",tablet,,5517.98,2024-03-21 01:22:02.000000
+CUST1288,Sean Cox,sean.cox73@yahoo.com,21.0,Male,"Berlin, Germany",desktop,,0.0,2024-07-26 17:33:11.000000
+CUST1289,Fatima Bell,fatima.bell16@outlook.com,45.0,Prefer not to say,"Delhi, India",tablet,bronze,5757.23,2024-04-26 01:51:59.000000
+CUST1290,Grace Sullivan,grace.sullivan6@icloud.com,47.0,Female,"Berlin, Germany",desktop,gold,5046.66,2025-07-31 12:32:10.000000
+CUST1291,,ethan.bertrand10@gmail.com,50.0,Male,"Mumbai, India", tablet ,,8647.42,2025-01-04 07:29:29.000000
+CUST1292,Elif Yamamoto,elif.yamamoto80@outlook.com,69.0,Male,"São Paulo, Brazil", mobile ,silver,10930.09,2025-09-16 01:45:59.000000
+CUST1293,Brian Bernard,brian.bernard87@protonmail.com,69.0,,"Houston, USA",tablet,gold,6734.1,2024-04-22 20:54:00.000000
+CUST1294, hannah tanaka ,hannah.tanaka90@hotmail.com,,Female,"São Paulo, Brazil",mobile,silver,0.0,2025-05-10 11:01:40.000000
+CUST1295,Miles Thomas,miles.thomas76@protonmail.com,61.0,Non-binary,"New York, USA",mobile,gold,0.0,2025-07-01 21:39:53.000000
+,Diana Fernandez,diana.fernandez45@hotmail.com,32.0,Female,"Sydney, Australia",desktop,silver,0.0,2024-11-21 19:39:01.000000
+CUST1297,Kevin Yamamoto,kevin.yamamoto96@gmail.com,26.0,Male,"London, UK",mobile,bronze,8358.43,2025-12-14 13:31:36.000000
+CUST1298,David Martin,david.martin16@icloud.com,34.0,Female,"Berlin, Germany",tablet,bronze,6731.17,2025-10-28 14:11:42.000000
+CUST1299,Leila Roux,,24.0,Male,"Sydney, Australia",tablet,bronze,4671.84,2024-05-21 12:34:40.000000
+CUST1300,Simon Bailey,simon.bailey61@outlook.com,28.0,Male,"Tokyo, Japan",tablet,gold,0.0,2025-02-06 07:46:36.000000
+CUST1301,Stefan Schulz,stefan.schulz99@gmail.com,51.0,Male,"Chicago, USA",mobile,platinum,9207.18,2025-08-23 02:10:17.000000
+CUST1302,Sarah Khan,sarah.khan90@icloud.com,64.0,PREFER NOT TO SAY,"Dubai, UAE",tablet,gold,1515.6,2026-01-05 11:27:33.000000
+CUST1303,Mei Pereira,mei.pereira69@outlook.com,64.0,Male,"Los Angeles, USA",desktop,bronze,0.0,2024-08-21 10:53:58.000000
+CUST1304,Eva Silva,eva.silva48@outlook.com,40.0,Female,"Paris, France",mobile,silver,4942.42,2025-04-05 05:13:15.000000
+CUST1305,Elena Howard,elena.howard74@protonmail.com,42.0,Male,"São Paulo, Brazil",mobile,bronze,3886.92,2025-02-19 22:00:02.000000
+CUST1306,Tara Simon,tara.simon51@outlook.com,58.0,Female,"Bangalore, India",mobile,platinum,6344.71,2025-08-08 09:52:20.000000
+CUST1307,Darren David,darren.david16@icloud.com,25.0, female ,"Delhi, India",mobile,bronze,907.12,2024-08-01 10:43:46.000000
+,Brian Leroy,brian.leroy6@hotmail.com,37.0,Prefer not to say,"Sydney, Australia",mobile,silver,0.0,2024-10-25 14:28:15.000000
+CUST1309,Diana Pereira,,60.0,Female," Sydney, Australia ",desktop,silver,3973.88,2025-05-09 01:22:02.000000
+CUST1310,Sana Mitchell,sana.mitchell3@gmail.com,52.0,Male,"Sydney, Australia",mobile,,7657.73,2025-01-20 10:35:42.000000
+CUST1311,Tara Fischer,tara.fischer13@icloud.com,27.0,Female,"Tokyo, Japan",desktop,bronze,6935.19,2026-01-09 14:55:55.000000
+CUST1312,Fiona Hassan,fiona.hassan97@icloud.com,49.0,Female,"Delhi, India", desktop ,bronze,8658.64,2024-05-04 20:16:21.000000
+CUST1313,Max Kim,max.kim11@protonmail.com,68.0,Male,"Berlin, Germany",,silver,5261.34,
+CUST1314,Elsa Larsson,elsa.larsson49@outlook.com,31.0, Female ,"Mumbai, India",mobile,gold,427.84,2025-10-30 23:25:04.000000
+CUST1315,Amelia Martin,amelia.martin58@outlook.com,38.0,,"Sydney, Australia",tablet,silver,12276.89,2025-08-15 06:27:22.000000
+CUST1316,Stefan Stewart,stefan.stewart69@gmail.com,70.0,Female,"São Paulo, Brazil",tablet,,8377.87,
+CUST1317,Noah Morgan,noah.morgan79@protonmail.com,63.0,,"London, UK",mobile,bronze,7820.4,2024-06-27 09:55:24.000000
+CUST1318,Olivia Colombo,olivia.colombo9@icloud.com,22.0,Prefer not to say,"Sydney, Australia",tablet,silver,,2024-02-17 12:26:35.000000
+CUST1319,Tara Larsson,tara.larsson56@hotmail.com,61.0,,"Sydney, Australia",desktop,bronze,0.0,
+CUST1320,Nadia Chevalier,nadia.chevalier32@yahoo.com,37.0,,"Toronto, Canada",desktop,platinum,,2025-03-25 15:26:41.000000
+CUST1321,Amara Sharma,amara.sharma81@hotmail.com,23.0,Prefer not to say,"Sydney, Australia",desktop,silver,7994.26,2024-03-27 13:08:13.000000
+CUST1322,Lily Rogers,lily.rogers77@protonmail.com,47.0,Female,"Delhi, India",mobile,bronze,9872.38,2024-04-08 11:07:12.000000
+CUST1323,Iris Thomas,iris.thomas46@hotmail.com,57.0,Male,"Mumbai, India",tablet,gold,4683.36,2024-10-12 18:06:29.000000
+CUST1324,Fiona Rogers,fiona.rogers19@gmail.com,70.0,Non-binary,"Houston, USA",mobile,silver,2881.12,2024-10-30 04:59:53.000000
+CUST1325,Elif Lopez,elif.lopez14@hotmail.com,20.0,Prefer not to say,"London, UK",tablet,gold,4410.03,2025-11-18 15:19:40.000000
+CUST1326,Jason Baker,jason.baker38@hotmail.com,55.0,Male,"Mumbai, India",tablet,bronze,3581.31,2024-09-06 08:05:35.000000
+CUST1327,Oscar Rogers,oscar.rogers15@outlook.com,37.0,Male,"Berlin, Germany",desktop,bronze,4041.33,2024-07-13 21:11:53.000000
+CUST1328,Sasha Taylor,sasha.taylor6@icloud.com,52.0,Male,"Mumbai, India",tablet,bronze,314.92,2024-04-06 09:19:16.000000
+CUST1329,Hugo Adams,hugo.adams67@hotmail.com,63.0,Female,"Mumbai, India",tablet,gold,4440.45,2024-08-03 18:52:56.000000
+CUST1330,Jason Romano,jason.romano71@gmail.com,23.0,,"Berlin, Germany",desktop,,3477.9,2025-01-24 01:40:13.000000
+CUST1331,Mei Blanc,mei.blanc66@icloud.com,68.0,Male,"Berlin, Germany",desktop,gold,5755.38,2025-05-30 04:00:38.000000
+CUST1332,Ian Fontaine,ian.fontaine2@outlook.com,40.0,Female," Tokyo, Japan ",mobile,gold,2280.03,2025-05-16 22:32:27.000000
+CUST1333,Simon Johnson,simon.johnson41@yahoo.com,62.0,,"Chicago, USA",tablet,bronze,5281.79,2024-12-25 07:20:16.000000
+CUST1334,Vincent Watanabe,vincent.watanabe5@yahoo.com,39.0,Female,"Bangalore, India",desktop,silver,0.0,2025-06-26 07:53:05.000000
+CUST1335,,kevin.clark89@icloud.com,29.0,Prefer not to say,"Mumbai, India",,bronze,5330.53,2024-05-12 00:25:00.000000
+CUST1336,Felix Richardson,felix.richardson27@yahoo.com,37.0,Female,"Mumbai, India",tablet,platinum,,2025-05-30 19:11:42.000000
+CUST1337,Aisha Sharma,aisha.sharma74@gmail.com,36.0,Prefer not to say,"Toronto, Canada",mobile,silver,66.52,2025-07-11 22:08:32.000000
+CUST1338,Adam Martin,adam.martin21@outlook.com,52.0,Prefer not to say,"Houston, USA",tablet,gold,6554.27,2024-12-30 12:44:41.000000
+CUST1339,Olivia Levy,olivia.levy89@protonmail.com,42.0,,"Mumbai, India",desktop,silver,6363.02,2025-08-23 06:07:26.000000
+CUST1340,Marco Peterson,marco.peterson3@icloud.com,36.0,Female,"New York, USA",desktop,gold,4096.49,2024-03-24 02:14:12.000000
+CUST1341,Serena Ward,serena.ward50@protonmail.com,21.0,Male,"Houston, USA",,gold,4959.65,2026-01-01 07:00:15.000000
+CUST1342,,erik.reyes66@gmail.com,38.0,Male,"Bangalore, India",, silver ,1871.1,2025-07-11 01:17:42.000000
+CUST1343,Raj Lopez,raj.lopez39@icloud.com,24.0,Female,"Mumbai, India",tablet,platinum,3368.53,2025-06-23 11:50:48.000000
+CUST1344,Mia Leroy,mia.leroy3@icloud.com,46.0,Female,"New York, USA",mobile,gold,6379.85,2024-12-02 21:37:35.000000
+CUST1345,Layla Pereira,layla.pereira93@icloud.com,46.0,Male,"toronto, canada",desktop,gold,15130.93,2024-03-29 00:00:43.000000
+CUST1346,Mira Cooper,mira.cooper78@hotmail.com,29.0,Male,"Houston, USA",mobile,silver,1612.98,2025-03-16 03:04:45.000000
+CUST1347,Henry Yamamoto,henry.yamamoto23@icloud.com,36.0,Prefer not to say,"London, UK",desktop,silver,7241.39,2024-06-16 01:47:06.000000
+,Jason Adams,jason.adams98@outlook.com,27.0,Male,"Mumbai, India",mobile,,0.0,2025-12-16 06:24:56.000000
+CUST1349,Rosa Baker,rosa.baker96@outlook.com,37.0,,"Dubai, UAE",mobile,bronze,0.0,2025-03-17 19:47:18.000000
+CUST1350,Erik Williams,erik.williams55@protonmail.com,,Non-binary,"Sydney, Australia",tablet,bronze,8608.43,2025-11-30 14:59:36.000000
+CUST1351,Ahmed Santos,ahmed.santos91@icloud.com,23.0,Male,"Mumbai, India",tablet,bronze,8071.56,2025-09-03 04:25:04.000000
+CUST1352,Diana Anderson,diana.anderson35@protonmail.com,65.0,Male,"New York, USA",desktop,gold,6337.58,2025-08-15 20:23:27.000000
+CUST1353,Olivia Laurent,olivia.laurent28@yahoo.com,65.0,Female,"Bangalore, India",mobile,bronze,7660.3,
+CUST1354,,andre.tanaka35@gmail.com,68.0,,"Paris, France",desktop,bronze,526.34,2026-01-07 09:38:22.000000
+CUST1355,Lucia Becker,lucia.becker79@gmail.com,39.0,Male,"São Paulo, Brazil",tablet,platinum,5329.6,2025-02-01 00:21:48.000000
+CUST1356,Yara Bianchi,,41.0,Prefer not to say,"Houston, USA",tablet,platinum,5448.08,2025-07-11 08:19:42.000000
+CUST1357,Ines Weber,ines.weber19@icloud.com,68.0,Female,"Mumbai, India",desktop,bronze,5155.58,2024-07-29 09:16:15.000000
+CUST1358,Yuki Anderson,yuki.anderson4@yahoo.com,38.0,Female,"London, UK",tablet,gold,0.0,2025-12-24 06:09:03.000000
+CUST1359,Lucas Campbell,lucas.campbell92@protonmail.com,42.0,Female,"Houston, USA",mobile,silver,2418.9,2025-05-05 22:29:35.000000
+CUST1360,,nina.lee8@icloud.com,42.0,Male,"Toronto, Canada",tablet,silver,,2024-10-03 13:11:31.000000
+CUST1361,Hugo Reyes,,38.0,Prefer not to say,"Sydney, Australia",mobile,bronze,12722.81,2025-11-20 00:53:21.000000
+CUST1362,Victor Adams,victor.adams23@hotmail.com,37.0,Female,"Berlin, Germany",desktop,bronze,4487.5,2025-08-09 21:23:43.000000
+CUST1363,Alex Rivera,alex.rivera75@gmail.com,63.0,Female,"London, UK",mobile,silver,0.0,2024-05-05 04:26:43.000000
+CUST1364,Alex Bernard,alex.bernard22@gmail.com,48.0,Male,"Paris, France",,bronze,154.01,2024-06-28 23:23:26.000000
+CUST1365,Marcus Taylor,marcus.taylor60@protonmail.com,58.0,Male,"London, UK", mobile ,bronze,0.0,2024-07-05 15:53:06.000000
+CUST1366,Emily Costa,emily.costa42@gmail.com,68.0,Female,"São Paulo, Brazil",desktop,silver,8727.41,2025-09-23 06:24:40.000000
+CUST1367,Hana Patel,hana.patel24@gmail.com,69.0,Male,"Los Angeles, USA",mobile,bronze,10487.34,
+CUST1368,Jason Lemoine,jason.lemoine85@icloud.com,54.0,Male,"Paris, France",,bronze,0.0,2024-08-01 03:51:35.000000
+CUST1369,Oliver Campbell,oliver.campbell80@hotmail.com,34.0,Female,"Mumbai, India",mobile,gold,771.92,2024-07-14 14:50:07.000000
+CUST1370,Ana Hoffman,ana.hoffman20@outlook.com,45.0,Prefer not to say,"Berlin, Germany",mobile,platinum,3386.83,2025-10-27 21:36:47.000000
+CUST1371,Hugo Williams,hugo.williams16@yahoo.com,37.0,Non-binary,"Paris, France",,bronze,3564.52,2025-11-03 02:30:48.000000
+CUST1372,Thomas Garcia,thomas.garcia62@icloud.com,18.0,Female,"Paris, France",tablet,gold,2585.34,2025-02-05 13:45:38.000000
+CUST1373,Raj Petit,raj.petit55@icloud.com,70.0,Female,"Toronto, Canada",mobile,bronze,282.72,2024-09-25 00:38:46.000000
+CUST1374,Samuel Suzuki,samuel.suzuki66@protonmail.com,49.0,Prefer not to say," bangalore, india ",mobile,gold,997.98,2026-01-30 22:35:54.000000
+CUST1375,Julia Adams,julia.adams22@protonmail.com,66.0,Male,"Berlin, Germany",desktop,bronze,5763.32,2025-04-09 17:55:05.000000
+CUST1376,Lucia Chevalier,lucia.chevalier1@protonmail.com,43.0,Male,"São Paulo, Brazil",tablet,bronze,4296.86,
+CUST1377,James Laurent,james.laurent63@yahoo.com,50.0,,"Toronto, Canada",desktop,gold,2782.97,2025-01-21 15:34:33.000000
+CUST1378,,eva.williams91@yahoo.com,,Male,"Chicago, USA",tablet,silver,9506.89,2024-05-24 23:32:30.000000
+CUST1379,Leo Ward,leo.ward50@yahoo.com,24.0,,"Tokyo, Japan",desktop,bronze,1697.26,2024-04-20 04:03:11.000000
+CUST1380,Grace Singh,grace.singh99@gmail.com,62.0,Non-binary,"Toronto, Canada",tablet,silver,2521.39,2024-05-28 18:10:21.000000
+CUST1381,,marco.thomas26@gmail.com,42.0,Male,"Delhi, India",desktop,bronze,9523.96,2025-01-05 17:28:04.000000
+CUST1382, Hugo Meyer ,hugo.meyer37@hotmail.com,56.0,Male,"Mumbai, India",tablet,bronze,10427.83,2025-10-12 22:02:20.000000
+CUST1383,Ian Reed,ian.reed12@gmail.com,65.0,Male,"São Paulo, Brazil",mobile,bronze,6451.86,2024-07-21 21:32:11.000000
+CUST1384,Adam Moreira,adam.moreira98@icloud.com,41.0,Female,"Bangalore, India",mobile,platinum,2865.75,2024-04-03 05:16:15.000000
+CUST1385,Amara Colombo,amara.colombo66@gmail.com,66.0,Female,"Houston, USA",,platinum,0.0,2025-08-28 16:34:09.000000
+CUST1386,Gabriel Muller,,33.0,Female,"Chicago, USA",tablet,bronze,0.0,2025-06-21 10:03:49.000000
+CUST1387,Julia Sato,julia.sato93@yahoo.com,57.0,,"Delhi, India",,silver,8043.13,2025-05-14 00:46:37.000000
+CUST1388,Hana Garcia,hana.garcia82@icloud.com,70.0,Male,"São Paulo, Brazil",mobile,bronze,5746.82,2025-02-06 19:39:08.000000
+CUST1389,Elena Peterson,,28.0,Non-binary,"Chicago, USA",tablet,silver,5845.87,2025-05-29 14:12:22.000000
+CUST1390,felix suzuki,felix.suzuki17@yahoo.com,35.0,female,"Los Angeles, USA",tablet,gold,4659.49,2024-10-11 18:04:17.000000
+CUST1391,Miles Bianchi,miles.bianchi16@gmail.com,24.0,Male,,desktop,bronze,3869.24,2025-08-02 10:15:05.000000
+CUST1392,Miles Blanc,miles.blanc14@outlook.com,57.0,Male,"New York, USA",tablet,silver,4048.45,2025-06-15 06:20:17.000000
+CUST1393,Max Oliveira,max.oliveira34@protonmail.com,,Prefer not to say,"Delhi, India",desktop,silver,1931.4,2024-10-23 22:09:07.000000
+CUST1394,Yara Leroy,yara.leroy89@hotmail.com,58.0,Non-binary,"Bangalore, India",desktop,bronze,3616.33,2025-05-09 20:23:51.000000
+CUST1395,Sarah Howard,sarah.howard27@gmail.com,48.0,Prefer not to say,"São Paulo, Brazil",mobile,gold,6644.62,2024-08-22 08:28:45.000000
+CUST1396,Nina Jensen,nina.jensen19@hotmail.com,62.0,Male,"Los Angeles, USA",MOBILE,bronze,219.42,2024-06-11 06:55:52.000000
+CUST1397,Daniel Martin,daniel.martin61@hotmail.com,46.0,Female,"Dubai, UAE",,gold,6170.58,2025-04-21 10:12:54.000000
+CUST1398,Rosa Stewart,rosa.stewart21@outlook.com,51.0,Prefer not to say,"New York, USA",tablet,bronze,1176.81,2025-07-06 23:12:32.000000
+CUST1399,Oliver Moreira,oliver.moreira25@outlook.com,22.0,Female,"Chicago, USA",tablet,bronze,,2024-04-22 01:14:54.000000
+CUST1400,,kevin.thomas41@gmail.com,18.0,Female,"Delhi, India",mobile,silver,7188.46,2025-11-04 04:47:07.000000
+CUST1401,Chloe Richardson,chloe.richardson5@outlook.com,61.0,Non-binary,"Dubai, UAE",mobile,platinum,15364.4,2025-07-05 22:52:52.000000
+CUST1402,Maya Young,,63.0,Male,"Los Angeles, USA",,gold,7148.28,2025-10-27 08:17:49.000000
+CUST1403,Sarah Leroy,sarah.leroy21@gmail.com,41.0,Male,"London, UK",desktop,,0.0,2025-12-14 04:58:52.000000
+CUST1404,Jason Taylor,jason.taylor66@icloud.com,41.0,Female,"tokyo, japan",mobile,bronze,,2025-05-03 20:03:46.000000
+CUST1405,Sana Silva,sana.silva60@hotmail.com,70.0,Male,"Dubai, UAE",desktop,platinum,10445.29,2025-02-19 21:22:27.000000
+CUST1406,Sophia Reed,sophia.reed28@outlook.com,56.0,Male,"London, UK",mobile,bronze,6988.5,2024-04-09 19:04:56.000000
+CUST1407,Lucas Reed,lucas.reed28@protonmail.com,29.0,Male,"Toronto, Canada",desktop,gold,553.23,2026-01-24 20:03:22.000000
+,Fatima Wright,fatima.wright10@protonmail.com,57.0,Female,"São Paulo, Brazil",mobile,silver,0.0,2025-07-23 11:15:04.000000
+,Vera Fernandez,vera.fernandez17@protonmail.com,55.0,Male,"Berlin, Germany",mobile,,0.0,2025-11-09 01:56:47.000000
+CUST1410,Maya Hill,maya.hill64@protonmail.com,44.0,Male,"Toronto, Canada",desktop,silver,7062.09,2025-12-03 09:38:57.000000
+CUST1411,Amara Lopez,amara.lopez13@gmail.com,24.0,Male,"Sydney, Australia",mobile,gold,3679.2,2024-07-29 13:33:50.000000
+CUST1412,Jade Durand,jade.durand16@outlook.com,47.0,Non-binary,"New York, USA",tablet,bronze,7219.27,2025-01-03 02:52:34.000000
+,alina martin,alina.martin67@protonmail.com,39.0,Female,"Bangalore, India",mobile,bronze,0.0,2024-06-29 22:19:28.000000
+CUST1414,Carlos Sullivan,carlos.sullivan17@icloud.com,54.0,Non-binary,"Berlin, Germany",mobile,,4379.31,2025-08-18 14:10:15.000000
+CUST1415, Iris David ,iris.david82@protonmail.com,29.0,Non-binary,"Houston, USA",desktop,bronze,6263.96,2025-06-25 20:23:17.000000
+CUST1416,Amelia Muller,amelia.muller19@outlook.com,29.0,Female,"Bangalore, India",desktop,bronze,7004.44,2024-10-16 13:38:48.000000
+CUST1417,Hana Robinson,hana.robinson85@icloud.com,20.0,Male,"Paris, France",tablet,silver,2046.17,2025-09-29 01:20:26.000000
+CUST1418,Diana Watanabe,diana.watanabe29@gmail.com,26.0,Female,"Berlin, Germany",desktop,platinum,0.0,2025-12-04 03:14:59.000000
+CUST1419,Aiden Roux,aiden.roux40@yahoo.com,64.0,Non-binary,"São Paulo, Brazil",desktop,bronze,11414.79,2024-06-24 21:44:53.000000
+CUST1420,Lucia Morgan,lucia.morgan83@icloud.com,19.0,Non-binary,"Houston, USA",desktop,bronze,2930.28,2024-07-31 01:00:24.000000
+CUST1421,Luna Baker,luna.baker78@yahoo.com,24.0,Female,"Tokyo, Japan",desktop,,2457.68,2025-03-05 15:36:07.000000
+CUST1422,Victor Suzuki,victor.suzuki42@icloud.com,,Male,"New York, USA", desktop ,BRONZE,4888.61,2025-01-03 09:37:51.000000
+CUST1423,Maya Williams,maya.williams41@hotmail.com,43.0,Prefer not to say,"Dubai, UAE",tablet,gold,11891.12,2025-12-16 01:27:01.000000
+CUST1424,Ines Lemoine,ines.lemoine48@icloud.com,62.0,Male,"Mumbai, India",tablet,silver,9780.37,2024-05-19 03:07:28.000000
+CUST1425,Mia Ito,mia.ito53@protonmail.com,25.0,Male,"Mumbai, India",mobile,gold,8011.71,2024-08-22 06:13:15.000000
+CUST1426,Iris Hill,,31.0,Male,"São Paulo, Brazil",desktop,silver,2693.64,2026-01-26 00:31:48.000000
+CUST1427,Erik Chevalier,erik.chevalier26@hotmail.com,35.0,Female,"Los Angeles, USA",,silver,3280.35,2025-04-03 08:25:16.000000
+CUST1428,Riya Kim,riya.kim20@hotmail.com,50.0,,"Bangalore, India",desktop,bronze,5732.54,2024-05-10 19:20:51.000000
+CUST1429,Amelia Cohen,amelia.cohen5@icloud.com,22.0,Male,"Bangalore, India",tablet,silver,963.77,2025-06-24 16:39:42.000000
+CUST1430,Amara Robinson,amara.robinson90@icloud.com,37.0,Female,"Chicago, USA",mobile,silver,,2024-06-27 14:32:48.000000
+CUST1431,David Cooper,david.cooper63@yahoo.com,20.0,Female,"Berlin, Germany",mobile,bronze,6123.72,2025-04-14 20:51:58.000000
+CUST1432,RYAN GARCIA,ryan.garcia67@protonmail.com,56.0,Male,"Chicago, USA",tablet,bronze,1674.38,2025-01-15 13:12:44.000000
+CUST1433,Iris Muller,iris.muller36@protonmail.com,46.0,Non-binary,"Delhi, India",desktop,bronze,,2025-11-24 22:05:06.000000
+CUST1434,Oscar Scott,oscar.scott37@gmail.com,49.0,Male,"Mumbai, India",desktop,bronze,4873.44,2025-11-18 03:53:14.000000
+CUST1435,Mira Richardson,mira.richardson1@gmail.com,40.0,Female,"Berlin, Germany",desktop,silver,1393.92,2024-03-11 23:04:16.000000
+CUST1436,Chloe Durand,chloe.durand13@outlook.com,56.0,Female,"Paris, France",desktop,bronze,0.0,2025-06-18 00:42:42.000000
+CUST1437,Nadia Olsen,nadia.olsen68@hotmail.com,50.0,Female,"Bangalore, India",tablet,bronze,5267.09,2025-05-11 17:59:38.000000
+CUST1438,Kai Rogers,kai.rogers97@hotmail.com,,Non-binary,"New York, USA",tablet,gold,3166.57,2025-12-18 07:58:59.000000
+CUST1439,Oliver Weber,oliver.weber27@icloud.com,65.0,Male,"Chicago, USA",mobile,bronze,340.31,2025-12-30 10:30:26.000000
+CUST1440,Thomas Levy,thomas.levy57@hotmail.com,25.0,Female,"São Paulo, Brazil",tablet,,3270.81,2024-06-05 01:13:18.000000
+CUST1441,Daniel Weber,daniel.weber61@hotmail.com,60.0,Female,"Bangalore, India",desktop,bronze,4611.57,2025-05-11 22:00:50.000000
+CUST1442,,carlos.moreira46@yahoo.com,64.0,Male,"São Paulo, Brazil",tablet,bronze,13961.74,2025-04-28 09:50:06.000000
+CUST1443,Zara Lee,zara.lee39@hotmail.com,59.0,Prefer not to say,"Sydney, Australia",tablet,silver,6431.0,2025-11-21 14:12:04.000000
+CUST1444,Nina Khan,nina.khan14@hotmail.com,48.0,Male,"Toronto, Canada",mobile,platinum,3324.21,2024-08-28 13:21:26.000000
+CUST1445,Mia Howard,mia.howard4@yahoo.com,62.0,Male,"Houston, USA",desktop,silver,3154.91,2024-04-22 19:29:50.000000
+CUST1446,Freya Robinson,freya.robinson1@outlook.com,54.0,Male,"Dubai, UAE",mobile,silver,151.64,2025-04-24 22:52:21.000000
+CUST1447,Aiden Lee,aiden.lee73@gmail.com,51.0,Male,"delhi, india",desktop,gold,4988.76,2025-04-06 02:22:54.000000
+CUST1448,Oliver Peterson,oliver.peterson8@icloud.com,25.0,Prefer not to say,"New York, USA",desktop,bronze,11800.37,2025-09-26 05:55:46.000000
+CUST1449,Lucia Berg,lucia.berg79@protonmail.com,,Prefer not to say,"Paris, France",desktop, bronze ,2059.32,2025-01-16 04:01:59.000000
+CUST1450,Kenji Schulz,kenji.schulz4@yahoo.com,42.0,Female,"Toronto, Canada",tablet,silver,4597.15,2024-11-27 14:35:11.000000
+CUST1451,Marco Moreira,marco.moreira2@yahoo.com,66.0,Female,"New York, USA",mobile,BRONZE,4151.69,2024-08-23 17:02:40.000000
+CUST1452,Lucia Roux,lucia.roux10@outlook.com,31.0,Female,"Houston, USA",desktop,silver,17988.5,2025-08-10 23:24:25.000000
+CUST1453,Brian Johnson,brian.johnson63@outlook.com,26.0,Female,"Los Angeles, USA", mobile ,,8344.57,
+CUST1454,Stefan Reed,stefan.reed36@icloud.com,19.0, male ,"Bangalore, India",mobile,bronze,0.0,2026-02-01 16:21:00.000000
+CUST1455,,yara.colombo93@icloud.com,45.0,Prefer not to say,"Berlin, Germany",tablet,silver,,2025-10-05 07:25:45.000000
+CUST1456,Mei Becker,mei.becker17@gmail.com,61.0,Male,,desktop,gold,5736.37,2024-05-22 13:14:22.000000
+CUST1457,Rohan Nakamura,,20.0,Female,"New York, USA",tablet,silver,2638.15,2024-09-04 14:11:28.000000
+CUST1458,Noor Richardson,noor.richardson7@yahoo.com,20.0,Female,"Berlin, Germany",tablet,bronze,5712.22,2025-04-10 18:33:25.000000
+CUST1459,Andre Anderson,andre.anderson66@gmail.com,38.0,Non-binary,"Bangalore, India",desktop,platinum,5505.66,2024-10-01 09:43:56.000000
+,Jade Moreira,jade.moreira4@gmail.com,69.0,Female,"Sydney, Australia", tablet ,platinum,0.0,2026-02-11 15:19:01.000000
+CUST1461,Mei Garcia,mei.garcia69@protonmail.com,51.0,Female,"Delhi, India",desktop,gold,5745.53,2024-10-17 12:36:09.000000
+CUST1462,Henry Khan,henry.khan47@gmail.com,50.0,Male,"Toronto, Canada",mobile,platinum,5681.92,2025-05-31 08:11:21.000000
+CUST1463,Sarah Girard,sarah.girard19@icloud.com,67.0,Male,"Bangalore, India",desktop,bronze,15897.66,2024-04-12 17:05:34.000000
+CUST1464,Ines Larsson,ines.larsson52@protonmail.com,63.0,Male,"Paris, France",mobile,platinum,2463.27,2025-09-13 07:36:06.000000
+CUST1465,Samuel Brown,samuel.brown99@icloud.com,50.0,Non-binary,"Tokyo, Japan",mobile,platinum,913.22,
+CUST1466,Alina Pereira,alina.pereira37@outlook.com,66.0,Male,"Sydney, Australia",tablet,bronze,2974.86,2025-02-27 23:32:50.000000
+CUST1467,Maya Ali,maya.ali97@gmail.com,60.0,Male,"chicago, usa",tablet,silver,9844.42,2024-09-21 21:49:55.000000
+CUST1468,Felix Andersen,felix.andersen38@gmail.com,25.0,Female,"Mumbai, India",desktop,bronze,11601.83,2024-11-02 11:08:16.000000
+CUST1469,Hugo Torres,hugo.torres41@gmail.com,63.0,Male,"Dubai, UAE", tablet ,platinum,1901.59,2024-06-12 14:55:03.000000
+CUST1470,Carlos Johansson,carlos.johansson12@icloud.com,65.0,Female,"Sydney, Australia",desktop,bronze,4630.85,2024-07-04 20:38:32.000000
+CUST1471,Aiden Sato,aiden.sato81@hotmail.com,52.0,Male,"Toronto, Canada",desktop,bronze,3575.78,2024-05-14 04:28:11.000000
+CUST1472,Marco Yamamoto,marco.yamamoto63@icloud.com,,Male,"Bangalore, India",desktop,gold,7698.1,2024-03-29 10:26:23.000000
+CUST1473,Thomas Scott,thomas.scott53@yahoo.com,28.0,Female,"Paris, France",,bronze,2283.58,2024-11-15 22:48:58.000000
+CUST1474,Rohan Kim,rohan.kim26@yahoo.com,43.0,Male,"Delhi, India",,bronze,5310.97,2024-12-21 02:05:27.000000
+CUST1475, Elena Oliveira ,elena.oliveira5@outlook.com,70.0,Female,"Mumbai, India",tablet,silver,0.0,2024-06-12 22:38:37.000000
+CUST1476,Olivia Sullivan,olivia.sullivan42@hotmail.com,19.0,Female,"Paris, France",mobile,bronze,6957.88,2025-03-15 11:35:14.000000
+CUST1477,Amara Rossi,amara.rossi14@hotmail.com,19.0,Male,"Tokyo, Japan",tablet,bronze,3034.85,2024-08-28 03:45:39.000000
+CUST1478,Aiden Suzuki,aiden.suzuki98@yahoo.com,49.0,Male,"Delhi, India",mobile,silver,4122.6,2025-07-06 10:19:18.000000
+CUST1479,Tobias Wright,tobias.wright94@gmail.com,45.0,Male,"Sydney, Australia",MOBILE,gold,0.0,2025-04-15 22:24:16.000000
+ cust1480 ,Noah Adams,noah.adams35@icloud.com,41.0,Male,"Toronto, Canada",tablet,bronze,1079.37,2025-12-09 01:48:58.000000
+CUST1481,Jade Yamamoto,jade.yamamoto23@yahoo.com,18.0,Male,"Delhi, India",tablet,silver,1990.54,2026-02-05 16:55:39.000000
+CUST1482,Oliver Pereira,oliver.pereira48@icloud.com,34.0,Female,"Los Angeles, USA",desktop,silver,13945.21,2025-05-08 03:00:00.000000
+CUST1483,Ryan Levy,ryan.levy86@hotmail.com,18.0,Prefer not to say,"Chicago, USA",mobile,bronze,341.47,2025-07-16 09:33:26.000000
+CUST1484,Jason Peterson,jason.peterson50@protonmail.com,37.0,Male,"Houston, USA",desktop,silver,3030.9,2025-08-01 08:10:40.000000
+CUST1485,Darren Dubois,darren.dubois60@protonmail.com,45.0,Female,"Bangalore, India",mobile,bronze,2556.36,2026-01-23 15:01:50.000000
+CUST1486,,clara.nakamura36@protonmail.com,20.0,Female,"Paris, France",desktop,silver,6803.69,2025-09-20 23:56:37.000000
+CUST1487,Mateo Olsen,mateo.olsen91@protonmail.com,26.0,Non-binary,"Sydney, Australia",tablet,silver,475.51,2025-07-21 22:49:07.000000
+CUST1488,Ian Bianchi,,60.0,Non-binary,"São Paulo, Brazil",desktop,bronze,15567.01,2024-06-29 08:21:40.000000
+CUST1489,Gabriel Patel,gabriel.patel16@outlook.com,62.0,Prefer not to say,"Chicago, USA",, bronze ,4412.13,2025-12-28 08:09:47.000000
+CUST1490,Isabella Peterson,isabella.peterson25@protonmail.com,26.0,Male,"Paris, France",mobile,platinum,3860.99,2024-04-27 18:41:08.000000
+CUST1491,Caleb Williams,caleb.williams81@protonmail.com,20.0,Female,"Sydney, Australia",tablet,silver,8222.22,2025-10-24 22:43:57.000000
+CUST1492,Iris Weber,iris.weber15@icloud.com,29.0,Female,,tablet,platinum,2656.0,2024-11-03 12:01:04.000000
+CUST1493,Lucia Tanaka,lucia.tanaka24@gmail.com,57.0,Female,"São Paulo, Brazil",tablet,bronze,8615.08,2025-09-30 18:34:32.000000
+CUST1494,Lily Bianchi,lily.bianchi74@hotmail.com,28.0,Prefer not to say,"Berlin, Germany",mobile,platinum,6950.38,2025-10-02 19:58:39.000000
+CUST1495,Clara Walker,clara.walker26@yahoo.com,23.0,Non-binary,"Chicago, USA", desktop ,silver,7806.57,2025-02-16 20:25:15.000000
+CUST1496,Nadia Taylor,nadia.taylor17@outlook.com,26.0,Male,"São Paulo, Brazil",mobile,platinum,2706.52,2024-08-16 15:39:18.000000
+CUST1497,Tobias Yamamoto,tobias.yamamoto10@protonmail.com,49.0,Male,"Tokyo, Japan",desktop,bronze,5594.02,2024-06-22 00:39:36.000000
+CUST1498,Victor Chevalier,victor.chevalier94@gmail.com,43.0,Male,,tablet,gold,1125.14,2025-06-22 12:48:03.000000
+CUST1499,Aisha Nguyen,aisha.nguyen92@outlook.com,41.0,Male,"São Paulo, Brazil",desktop,bronze,1343.31,2025-12-24 11:04:59.000000

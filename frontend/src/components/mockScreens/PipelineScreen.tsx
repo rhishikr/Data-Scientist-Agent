@@ -26,6 +26,7 @@ import {
   MessageSquare,
   Zap,
   BarChart3,
+  ClipboardList,
 } from "lucide-react";
 
 // ---------------------------------------------------------------------------
@@ -134,6 +135,17 @@ const defaultStages: AgentStage[] = [
     name: "Forecasting Agent",
     status: "pending",
     icon: Package,
+    progress: 0,
+    llmReasoning: null,
+    llmDecisions: [],
+    duration: null,
+    phase: "idle",
+  },
+  {
+    id: "actions",
+    name: "Action Plan Agent",
+    status: "pending",
+    icon: ClipboardList,
     progress: 0,
     llmReasoning: null,
     llmDecisions: [],
@@ -276,13 +288,13 @@ export function PipelineScreen() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "text-green-600 bg-green-50 border-green-200";
+        return "green";
       case "running":
-        return "text-blue-600 bg-blue-50 border-blue-200";
+        return "blue";
       case "error":
-        return "text-red-600 bg-red-50 border-red-200";
+        return "red";
       default:
-        return "text-slate-600 bg-slate-50 border-slate-200";
+        return "gray";
     }
   };
 
@@ -334,7 +346,7 @@ export function PipelineScreen() {
               Multi-Agent Pipeline
             </h1>
             <p className="text-xs text-muted-foreground">
-              6 autonomous agents with LLM-driven perceive &rarr; reason &rarr;
+              7 autonomous agents with LLM-driven perceive &rarr; reason &rarr;
               act cycles
             </p>
           </div>
@@ -367,13 +379,12 @@ export function PipelineScreen() {
               </CardDescription>
             </div>
             <Badge
-              variant="outline"
-              className={
+              color={
                 pipelineRunning
-                  ? "text-blue-600 border-blue-200"
+                  ? "blue"
                   : pipelineDone
-                    ? "text-green-600 border-green-200"
-                    : "text-slate-600 border-slate-200"
+                    ? "green"
+                    : "gray"
               }
             >
               {pipelineRunning ? (
@@ -454,8 +465,7 @@ export function PipelineScreen() {
                       <div className="flex items-center gap-3 mb-2">
                         <h3 className="text-base font-medium">{stage.name}</h3>
                         <Badge
-                          variant="outline"
-                          className={getStatusColor(stage.status)}
+                          color={getStatusColor(stage.status)}
                         >
                           {getStatusIcon(stage.status)}
                           <span className="ml-1 capitalize">

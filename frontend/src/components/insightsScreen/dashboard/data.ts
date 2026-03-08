@@ -3,7 +3,10 @@ import { useCallback, useEffect, useState } from "react";
 import type {
   Snapshot, KpiCardRow, CustomerRow, ForecastSnapshot,
   InsightsSnapshot, RevenueForecastPoint, DemandForecastSku,
-  ChurnPrediction, AiAnalysis,
+  ChurnPrediction, AiAnalysis, ActionPlan, ChartNarratives,
+  LocationSummary, StoreTransfer,
+  FunnelSnapshot, SessionsAnalytics, RunComparison,
+  ComparisonAiAnalysis,
 } from "./types";
 
 const API_BASE = "http://127.0.0.1:8000";
@@ -331,6 +334,63 @@ export function useAiAnalysis(runId?: string | null) {
 }
 
 // ---------------------------------------------------------------------------
+// Action Plan (Retail Doctor)
+// ---------------------------------------------------------------------------
+
+export function useActionPlan(runId?: string | null) {
+  const [data, setData] = useState<ActionPlan | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<ActionPlan>(
+        `${API_BASE}/api/action-plan${qs}`
+      );
+      setData(result);
+    } catch (e: any) {
+      setError(e?.message ?? "Failed to load action plan");
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { data, loading, error, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Chart Narratives
+// ---------------------------------------------------------------------------
+
+export function useChartNarratives(runId?: string | null) {
+  const [data, setData] = useState<ChartNarratives | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<ChartNarratives>(
+        `${API_BASE}/api/chart-narratives${qs}`
+      );
+      setData(result);
+    } catch {
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { data, loading, refresh };
+}
+
+// ---------------------------------------------------------------------------
 // Featured data
 // ---------------------------------------------------------------------------
 
@@ -358,4 +418,183 @@ export function useFeaturedData(runId?: string | null) {
   }, [refresh]);
 
   return { data, loading, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Campaign performance
+// ---------------------------------------------------------------------------
+
+export function useCampaignPerformance(runId?: string | null) {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<any>(`${API_BASE}/api/campaigns/performance${qs}`);
+      setData(result);
+    } catch { setData(null); }
+    finally { setLoading(false); }
+  }, [runId]);
+  useEffect(() => { refresh(); }, [refresh]);
+  return { data, loading, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Location stock analysis
+// ---------------------------------------------------------------------------
+
+export type LocationStockData = {
+  locations: LocationSummary[];
+  transfers: StoreTransfer[];
+};
+
+// ---------------------------------------------------------------------------
+// Funnel snapshot
+// ---------------------------------------------------------------------------
+
+export function useFunnelSnapshot(runId?: string | null) {
+  const [data, setData] = useState<FunnelSnapshot | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<FunnelSnapshot>(
+        `${API_BASE}/api/funnel/snapshot${qs}`
+      );
+      setData(result);
+    } catch {
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { data, loading, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Sessions analytics
+// ---------------------------------------------------------------------------
+
+export function useSessionsAnalytics(runId?: string | null) {
+  const [data, setData] = useState<SessionsAnalytics | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<SessionsAnalytics>(
+        `${API_BASE}/api/sessions/analytics${qs}`
+      );
+      setData(result);
+    } catch {
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { data, loading, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Run comparison
+// ---------------------------------------------------------------------------
+
+export function useRunComparison(
+  currentRunId?: string | null,
+  previousRunId?: string | null,
+) {
+  const [data, setData] = useState<RunComparison | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (currentRunId) params.set("current", currentRunId);
+      if (previousRunId) params.set("previous", previousRunId);
+      const qs = params.toString() ? `?${params.toString()}` : "";
+      const result = await fetchJson<RunComparison>(
+        `${API_BASE}/api/runs/compare${qs}`
+      );
+      setData(result);
+    } catch {
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentRunId, previousRunId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { data, loading, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// AI-powered comparison analysis
+// ---------------------------------------------------------------------------
+
+export function useComparisonAiAnalysis(
+  currentRunId?: string | null,
+  previousRunId?: string | null,
+) {
+  const [data, setData] = useState<ComparisonAiAnalysis | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (currentRunId) params.set("current", currentRunId);
+      if (previousRunId) params.set("previous", previousRunId);
+      const qs = params.toString() ? `?${params.toString()}` : "";
+      const result = await fetchJson<ComparisonAiAnalysis>(
+        `${API_BASE}/api/runs/compare/ai-analysis${qs}`
+      );
+      setData(result);
+    } catch {
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentRunId, previousRunId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { data, loading, refresh };
+}
+
+// ---------------------------------------------------------------------------
+// Location stock analysis
+// ---------------------------------------------------------------------------
+
+export function useLocationStock(runId?: string | null) {
+  const [data, setData] = useState<LocationStockData>({ locations: [], transfers: [] });
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const qs = runId ? `?run_id=${runId}` : "";
+      const result = await fetchJson<LocationStockData & { error?: string }>(
+        `${API_BASE}/api/forecast/series/demand-by-location${qs}`
+      );
+      setData({
+        locations: result.locations || [],
+        transfers: result.transfers || [],
+      });
+    } catch {
+      setData({ locations: [], transfers: [] });
+    } finally {
+      setLoading(false);
+    }
+  }, [runId]);
+
+  useEffect(() => { refresh(); }, [refresh]);
+  return { ...data, loading, refresh };
 }

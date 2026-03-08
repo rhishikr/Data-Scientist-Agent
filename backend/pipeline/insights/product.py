@@ -103,6 +103,8 @@ def detect_low_rating_risk(
         ].head(12).to_dict(orient="records"),
     }
 
+    impact_str = f"${low_rev:,.0f} revenue from {int(len(low))} low-rated products" if low_rev > 0 else f"{int(len(low))} low-rated products"
+
     ins = Insight(
         insight_id="prod_low_rating_risk",
         title="Low-rated products may be creating quality and satisfaction risk",
@@ -123,6 +125,10 @@ def detect_low_rating_risk(
         created_at=utc_now_iso(),
         doc="",
         tags=["product", "quality", "rating", "risk"],
+        action_type="investigate",
+        impact_estimate=impact_str,
+        effort="moderate",
+        priority=35,
     )
     ins.doc = build_doc(ins)
     return [ins]
@@ -204,6 +210,8 @@ def detect_high_discount_underperformance(
         ].head(12).to_dict(orient="records"),
     }
 
+    impact_str = f"${flagged_rev:,.0f} revenue from {int(len(flagged))} underperforming discounted products" if flagged_rev > 0 else f"{int(len(flagged))} underperforming discounted products"
+
     ins = Insight(
         insight_id="prod_high_discount_underperformance",
         title="Some high-discount products may be underperforming relative to their discount level",
@@ -223,6 +231,10 @@ def detect_high_discount_underperformance(
         created_at=utc_now_iso(),
         doc="",
         tags=["product", "pricing", "discount", "margin"],
+        action_type="pricing",
+        impact_estimate=impact_str,
+        effort="moderate",
+        priority=30,
     )
     ins.doc = build_doc(ins)
     return [ins]
@@ -286,6 +298,8 @@ def detect_high_demand_low_stock(
         ].head(12).to_dict(orient="records"),
     }
 
+    impact_str = f"${cand_rev:,.0f} revenue at risk from {int(len(cand))} SKUs near stockout" if cand_rev > 0 else f"{int(len(cand))} SKUs near stockout"
+
     ins = Insight(
         insight_id="prod_high_demand_low_stock",
         title="Stockout risk detected for high-demand products",
@@ -305,6 +319,10 @@ def detect_high_demand_low_stock(
         created_at=utc_now_iso(),
         doc="",
         tags=["product", "inventory", "stockout", "risk"],
+        action_type="restock",
+        impact_estimate=impact_str,
+        effort="quick-win",
+        priority=5,
     )
     ins.doc = build_doc(ins)
     return [ins]

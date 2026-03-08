@@ -102,12 +102,7 @@ export function HomeScreen() {
                     Completed • 2 hours ago
                   </p>
                 </div>
-                <Badge
-                  variant="outline"
-                  className="text-green-600 border-green-200"
-                >
-                  Success
-                </Badge>
+                <Badge color="green">Success</Badge>
               </div>
 
               <div className="flex items-center gap-4">
@@ -120,12 +115,7 @@ export function HomeScreen() {
                     Running • 45% complete
                   </p>
                 </div>
-                <Badge
-                  variant="outline"
-                  className="text-blue-600 border-blue-200"
-                >
-                  In Progress
-                </Badge>
+                <Badge color="blue">In Progress</Badge>
               </div>
 
               <div className="flex items-center gap-4">
@@ -138,12 +128,7 @@ export function HomeScreen() {
                     Completed • 5 hours ago
                   </p>
                 </div>
-                <Badge
-                  variant="outline"
-                  className="text-green-600 border-green-200"
-                >
-                  Success
-                </Badge>
+                <Badge color="green">Success</Badge>
               </div>
 
               <div className="flex items-center gap-4">
@@ -156,12 +141,7 @@ export function HomeScreen() {
                     Warning • 1 day ago
                   </p>
                 </div>
-                <Badge
-                  variant="outline"
-                  className="text-orange-600 border-orange-200"
-                >
-                  Needs Review
-                </Badge>
+                <Badge color="orange">Needs Review</Badge>
               </div>
             </div>
           </CardContent>

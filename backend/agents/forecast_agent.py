@@ -84,10 +84,13 @@ class ForecastAgent(BaseAgent):
         )
 
         strategic_prompt = (
-            "You are a strategic business advisor. Based on these forecast outputs, "
-            "write a 3-4 sentence strategic assessment covering:\n"
-            "1. Revenue outlook\n2. Churn risk level\n"
-            "3. One specific recommended action\n\n"
+            "You are a retail doctor writing a strategic prescription. Based on these forecast outputs, "
+            "write a 3-4 sentence prescription that:\n"
+            "1. Diagnoses the revenue trajectory (healthy/declining/growing) with specific numbers\n"
+            "2. Prescribes one inventory action based on demand signals\n"
+            "3. Prescribes one customer retention action based on churn rate\n"
+            "4. Estimates the financial impact of each prescribed action\n"
+            "Use imperative, action-oriented language. Start recommendations with action verbs.\n\n"
             f"Forecast data:\n"
             f"- Revenue next 30d: {rev_30}\n"
             f"- Revenue next 90d: {rev_90}\n"
@@ -96,7 +99,8 @@ class ForecastAgent(BaseAgent):
         )
 
         strategic_assessment = await ask_llm(
-            "You are a chief strategy officer providing a business forecast briefing.",
+            "You are a retail doctor — you diagnose business problems and prescribe specific actions. "
+            "Write for a store owner who needs to decide what to do this week.",
             strategic_prompt,
         )
 
