@@ -46,6 +46,8 @@ from db.store import (
     get_latest_ai_analysis as db_get_latest_ai_analysis,
     get_run_ai_analysis as db_get_run_ai_analysis,
     store_ai_analysis as db_store_ai_analysis,
+    store_comparison_ai as db_store_comparison_ai,
+    get_comparison_ai as db_get_comparison_ai,
     get_latest_action_plan_snapshot as db_get_latest_action_plan,
     get_run_action_plan_snapshot as db_get_run_action_plan,
     upsert_prescription_status as db_upsert_prescription_status,
@@ -460,6 +462,729 @@ def list_runs():
     return get_pipeline_runs()
 
 
+@app.get("/api/runs/compare")
+def compare_runs(current: Optional[str] = None, previous: Optional[str] = None):
+    """Compare KPI snapshots between two runs. Returns deltas for all KPI cards."""
+    # Load current snapshot
+    current_snap = _load_kpi_snapshot(current)
+    if not current_snap:
+        return _safe_json({"error": "No current KPI snapshot found", "deltas": []})
+
+    # Load previous snapshot
+    prev_snap = None
+    if previous:
+        prev_snap = _load_kpi_snapshot(previous)
+    else:
+        # Try to get the second-most-recent run from Supabase
+        try:
+            runs = get_pipeline_runs()
+            if isinstance(runs, list) and len(runs) >= 2:
+                completed = [r for r in runs if r.get("status") == "completed"]
+                if len(completed) >= 2:
+                    prev_run_id = completed[1].get("id")
+                    if prev_run_id:
+                        prev_snap = _load_kpi_snapshot(prev_run_id)
+        except Exception:
+            pass
+
+    if not prev_snap:
+        return _safe_json({
+            "current_snapshot": {
+                "generated_at": current_snap.get("meta", {}).get("generated_at"),
+                "cards": current_snap.get("cards", []),
+            },
+            "previous_snapshot": None,
+            "deltas": [],
+            "message": "No previous run available for comparison",
+        })
+
+    # Compute deltas for every card
+    current_cards = {c["id"]: c for c in current_snap.get("cards", []) if isinstance(c, dict)}
+    prev_cards = {c["id"]: c for c in prev_snap.get("cards", []) if isinstance(c, dict)}
+
+    deltas = []
+    for card_id, card in current_cards.items():
+        cur_val = card.get("value")
+        prev_card = prev_cards.get(card_id)
+        prev_val = prev_card.get("value") if prev_card else None
+
+        # Skip non-numeric values
+        if not isinstance(cur_val, (int, float)) or (prev_val is not None and not isinstance(prev_val, (int, float))):
+            continue
+
+        if prev_val is None:
+            direction = "new"
+            abs_change = None
+            pct_change = None
+        else:
+            abs_change = cur_val - prev_val
+            pct_change = abs_change / prev_val if prev_val != 0 else None
+            if abs_change > 0:
+                direction = "up"
+            elif abs_change < 0:
+                direction = "down"
+            else:
+                direction = "stable"
+
+        deltas.append({
+            "id": card_id,
+            "title": card.get("title", ""),
+            "group": card.get("group", ""),
+            "format": card.get("format", "number"),
+            "current_value": cur_val,
+            "previous_value": prev_val,
+            "absolute_change": abs_change,
+            "percent_change": pct_change,
+            "direction": direction,
+        })
+
+    # ---- Insight comparison ----
+    resolved_issues = []
+    new_risks = []
+    try:
+        current_insight_snap = None
+        prev_insight_snap = None
+
+        # Load current insights
+        if current:
+            current_insight_snap = db_get_run_insight(current)
+        else:
+            current_insight_snap = db_get_latest_insight()
+
+        # Load previous insights
+        if previous:
+            prev_insight_snap = db_get_run_insight(previous)
+        elif prev_snap:
+            # We already found the previous run ID above, reuse it
+            try:
+                runs = get_pipeline_runs()
+                completed = [r for r in runs if r.get("status") == "completed"]
+                if len(completed) >= 2:
+                    prev_run_id = completed[1].get("id")
+                    if prev_run_id:
+                        prev_insight_snap = db_get_run_insight(prev_run_id)
+            except Exception:
+                pass
+
+        current_insights = []
+        prev_insights = []
+        if current_insight_snap:
+            current_insights = current_insight_snap.get("insights", [])
+            if not isinstance(current_insights, list):
+                current_insights = []
+        if prev_insight_snap:
+            prev_insights = prev_insight_snap.get("insights", [])
+            if not isinstance(prev_insights, list):
+                prev_insights = []
+
+        # Build title sets for comparison
+        current_titles = {i.get("title", "").lower().strip() for i in current_insights if i.get("title")}
+        prev_titles = {i.get("title", "").lower().strip() for i in prev_insights if i.get("title")}
+
+        # Resolved: were in previous (high/medium severity) but not in current
+        for ins in prev_insights:
+            title = (ins.get("title") or "").lower().strip()
+            severity = ins.get("severity", "low")
+            if severity in ("high", "medium") and title and title not in current_titles:
+                resolved_issues.append({
+                    "title": ins.get("title", ""),
+                    "severity": severity,
+                    "description": ins.get("description", ""),
+                })
+
+        # New risks: in current (high/medium severity) but not in previous
+        for ins in current_insights:
+            title = (ins.get("title") or "").lower().strip()
+            severity = ins.get("severity", "low")
+            if severity in ("high", "medium") and title and title not in prev_titles:
+                new_risks.append({
+                    "title": ins.get("title", ""),
+                    "severity": severity,
+                    "description": ins.get("description", ""),
+                })
+    except Exception:
+        pass
+
+    # ---- Prescription impact ----
+    completed_prescriptions = []
+    try:
+        # Get previous run's action plan to find prescriptions
+        prev_action_plan = None
+        prev_run_id_for_rx = previous
+        if not prev_run_id_for_rx:
+            try:
+                runs = get_pipeline_runs()
+                completed_runs = [r for r in runs if r.get("status") == "completed"]
+                if len(completed_runs) >= 2:
+                    prev_run_id_for_rx = completed_runs[1].get("id")
+            except Exception:
+                pass
+
+        if prev_run_id_for_rx:
+            prev_action_plan = db_get_run_action_plan(prev_run_id_for_rx)
+            if prev_action_plan:
+                # Get prescription statuses
+                statuses = db_get_prescription_statuses(prev_run_id_for_rx)
+                status_map = {s["prescription_id"]: s["status"] for s in statuses}
+
+                prescriptions = prev_action_plan.get("prescriptions", [])
+                for rx in prescriptions:
+                    rx_id = rx.get("id", "")
+                    rx_status = status_map.get(rx_id, rx.get("status", "pending"))
+                    if rx_status == "done":
+                        # Find related KPI deltas for this prescription
+                        related_deltas = []
+                        rx_category = rx.get("category", "")
+                        # Map prescription category to KPI group
+                        cat_to_group = {
+                            "inventory": "Inventory",
+                            "customer": "Customers",
+                            "revenue": "Revenue",
+                            "marketing": "Marketing",
+                            "product": "Product",
+                            "funnel": "Funnel",
+                            "pricing": "Revenue",
+                        }
+                        target_group = cat_to_group.get(rx_category, "")
+                        for d in deltas:
+                            if d.get("group") == target_group:
+                                related_deltas.append({
+                                    "id": d["id"],
+                                    "title": d["title"],
+                                    "direction": d["direction"],
+                                    "percent_change": d.get("percent_change"),
+                                })
+
+                        completed_prescriptions.append({
+                            "id": rx_id,
+                            "title": rx.get("title", ""),
+                            "category": rx_category,
+                            "urgency": rx.get("urgency", "medium"),
+                            "related_kpi_changes": related_deltas,
+                        })
+    except Exception:
+        pass
+
+    return _safe_json({
+        "current_snapshot": {
+            "generated_at": current_snap.get("meta", {}).get("generated_at"),
+        },
+        "previous_snapshot": {
+            "generated_at": prev_snap.get("meta", {}).get("generated_at"),
+        },
+        "deltas": deltas,
+        "resolved_issues": resolved_issues,
+        "new_risks": new_risks,
+        "completed_prescriptions": completed_prescriptions,
+    })
+
+
+@app.get("/api/runs/compare/ai-analysis")
+async def get_comparison_ai_analysis(current: Optional[str] = None, previous: Optional[str] = None):
+    """AI-powered analysis of changes between two pipeline runs."""
+    from datetime import datetime, timezone
+    from agents.llm import ask_llm, parse_llm_json
+
+    # ---- 1. Resolve run IDs ------------------------------------------------
+    current_run_id = current or get_latest_run_id()
+    previous_run_id = previous
+
+    if not previous_run_id:
+        try:
+            runs = get_pipeline_runs()
+            completed = [r for r in runs if r.get("status") == "completed"]
+            if len(completed) >= 2:
+                previous_run_id = completed[1].get("id")
+        except Exception:
+            pass
+
+    if not current_run_id or not previous_run_id:
+        return _safe_json({
+            "error": "Need at least two completed runs for AI comparison analysis",
+            "executive_summary": None, "department_grades": [], "root_causes": [],
+            "causal_chains": [], "revenue_bridge": None, "profit_loss_drivers": {"positive": [], "negative": []},
+            "prescription_report_card": [], "missed_opportunities": [], "next_30_day_targets": [],
+            "quick_wins": [], "start_doing": [], "stop_doing": [], "keep_doing": [],
+            "anomalies": [], "trend_verdict": None,
+        })
+
+    # ---- 2. Check cache ----------------------------------------------------
+    try:
+        cached = db_get_comparison_ai(current_run_id, previous_run_id)
+        if cached and isinstance(cached, dict) and "error" not in cached and cached.get("executive_summary"):
+            cached["cached"] = True
+            return _safe_json(cached)
+    except Exception:
+        pass
+
+    # ---- 3. Load snapshots for both runs -----------------------------------
+    try:
+        cur_snap = _load_kpi_snapshot(current_run_id if current else None)
+        prev_snap = _load_kpi_snapshot(previous_run_id)
+        cur_insight = db_get_run_insight(current_run_id) if current_run_id else db_get_latest_insight()
+        prev_insight = db_get_run_insight(previous_run_id) if previous_run_id else None
+        cur_action = db_get_run_action_plan(current_run_id) if current_run_id else db_get_latest_action_plan()
+        prev_action = db_get_run_action_plan(previous_run_id) if previous_run_id else None
+        cur_forecast = db_get_run_forecast(current_run_id) if current_run_id else db_get_latest_forecast()
+    except Exception:
+        cur_snap = prev_snap = None
+        cur_insight = prev_insight = cur_action = prev_action = cur_forecast = None
+
+    if not cur_snap or not prev_snap:
+        return _safe_json({
+            "error": "Could not load KPI snapshots for comparison",
+            "executive_summary": None, "department_grades": [], "root_causes": [],
+            "causal_chains": [], "revenue_bridge": None, "profit_loss_drivers": {"positive": [], "negative": []},
+            "prescription_report_card": [], "missed_opportunities": [], "next_30_day_targets": [],
+            "quick_wins": [], "start_doing": [], "stop_doing": [], "keep_doing": [],
+            "anomalies": [], "trend_verdict": None,
+        })
+
+    # ---- 4. Build data digest for LLM -------------------------------------
+    digest_parts = []
+
+    # 4a. KPI Deltas (top 20 by |percent_change|)
+    current_cards = {c["id"]: c for c in cur_snap.get("cards", []) if isinstance(c, dict)}
+    prev_cards = {c["id"]: c for c in prev_snap.get("cards", []) if isinstance(c, dict)}
+    deltas = []
+    for card_id, card in current_cards.items():
+        cur_val = card.get("value")
+        prev_card = prev_cards.get(card_id)
+        prev_val = prev_card.get("value") if prev_card else None
+        if not isinstance(cur_val, (int, float)):
+            continue
+        if prev_val is not None and isinstance(prev_val, (int, float)):
+            abs_chg = cur_val - prev_val
+            pct_chg = abs_chg / prev_val if prev_val != 0 else None
+            direction = "up" if abs_chg > 0 else ("down" if abs_chg < 0 else "stable")
+        else:
+            pct_chg = None
+            direction = "new"
+        deltas.append({
+            "id": card_id, "title": card.get("title", ""), "group": card.get("group", ""),
+            "format": card.get("format", "number"),
+            "current": cur_val, "previous": prev_val, "pct_change": pct_chg, "direction": direction,
+        })
+
+    deltas_sorted = sorted(deltas, key=lambda d: abs(d["pct_change"]) if d["pct_change"] is not None else 0, reverse=True)
+    top_deltas = deltas_sorted[:20]
+    delta_lines = []
+    for d in top_deltas:
+        pct_str = f"{d['pct_change']*100:+.1f}%" if d["pct_change"] is not None else "NEW"
+        delta_lines.append(f"  [{d['group']}] {d['title']}: {d['previous']} → {d['current']} ({pct_str}, {d['direction']})")
+    digest_parts.append("## TOP KPI CHANGES (by magnitude)\n" + "\n".join(delta_lines))
+
+    # 4b. Revenue Waterfall (both runs)
+    cur_net = cur_snap.get("kpis", {}).get("net_revenue", {})
+    prev_net = prev_snap.get("kpis", {}).get("net_revenue", {})
+    if cur_net or prev_net:
+        waterfall_fields = ["gross_revenue", "total_discounts", "total_returns", "total_refunds", "total_fees", "net_revenue", "discount_rate"]
+        wf_lines = []
+        for f in waterfall_fields:
+            cv = cur_net.get(f, "N/A")
+            pv = prev_net.get(f, "N/A")
+            wf_lines.append(f"  {f}: {pv} → {cv}")
+        digest_parts.append("## REVENUE WATERFALL\n" + "\n".join(wf_lines))
+
+    # 4c. Customer metrics (both runs)
+    cur_cust = cur_snap.get("kpis", {}).get("customer_health_value", {})
+    prev_cust = prev_snap.get("kpis", {}).get("customer_health_value", {})
+    if cur_cust or prev_cust:
+        cust_fields = ["active_customers_30d", "new_customers_30d", "returning_customers_30d",
+                       "repeat_purchase_rate", "churn_rate_proxy", "avg_clv"]
+        cl = [f"  {f}: {prev_cust.get(f, 'N/A')} → {cur_cust.get(f, 'N/A')}" for f in cust_fields]
+        digest_parts.append("## CUSTOMER METRICS\n" + "\n".join(cl))
+
+    # 4d. Funnel metrics (both runs)
+    cur_funnel = cur_snap.get("kpis", {}).get("conversion_funnel", {})
+    prev_funnel = prev_snap.get("kpis", {}).get("conversion_funnel", {})
+    if cur_funnel or prev_funnel:
+        funnel_fields = ["conversion_rate", "cart_abandonment_rate", "bounce_rate",
+                         "avg_session_duration", "revenue_per_session",
+                         "mobile_conversion_rate", "desktop_conversion_rate"]
+        fl = [f"  {f}: {prev_funnel.get(f, 'N/A')} → {cur_funnel.get(f, 'N/A')}" for f in funnel_fields]
+        digest_parts.append("## FUNNEL METRICS\n" + "\n".join(fl))
+
+    # 4e. Brand performance (both runs) — revenue, margins, ratings
+    cur_brand = cur_snap.get("kpis", {}).get("brand_performance", {})
+    prev_brand = prev_snap.get("kpis", {}).get("brand_performance", {})
+    if cur_brand or prev_brand:
+        brand_lines = []
+        if cur_brand.get("revenue_by_brand") or prev_brand.get("revenue_by_brand"):
+            brand_lines.append(f"  Revenue: Previous: {json.dumps(prev_brand.get('revenue_by_brand', {}), default=str)} → Current: {json.dumps(cur_brand.get('revenue_by_brand', {}), default=str)}")
+        if cur_brand.get("margin_by_brand") or prev_brand.get("margin_by_brand"):
+            brand_lines.append(f"  Margins: Previous: {json.dumps(prev_brand.get('margin_by_brand', {}), default=str)} → Current: {json.dumps(cur_brand.get('margin_by_brand', {}), default=str)}")
+        if cur_brand.get("rating_by_brand") or prev_brand.get("rating_by_brand"):
+            brand_lines.append(f"  Ratings: Previous: {json.dumps(prev_brand.get('rating_by_brand', {}), default=str)} → Current: {json.dumps(cur_brand.get('rating_by_brand', {}), default=str)}")
+        if brand_lines:
+            digest_parts.append("## BRAND PERFORMANCE\n" + "\n".join(brand_lines))
+
+    # 4f. Supplier health (both runs) — stockouts + reliability scores
+    cur_supp = cur_snap.get("kpis", {}).get("supplier_health", {})
+    prev_supp = prev_snap.get("kpis", {}).get("supplier_health", {})
+    if cur_supp or prev_supp:
+        supp_lines = []
+        if cur_supp.get("stockout_by_supplier") or prev_supp.get("stockout_by_supplier"):
+            supp_lines.append(f"  Stockouts: Previous: {json.dumps(prev_supp.get('stockout_by_supplier', {}), default=str)} → Current: {json.dumps(cur_supp.get('stockout_by_supplier', {}), default=str)}")
+        if cur_supp.get("supplier_reliability_score") or prev_supp.get("supplier_reliability_score"):
+            supp_lines.append(f"  Reliability: Previous: {json.dumps(prev_supp.get('supplier_reliability_score', {}), default=str)} → Current: {json.dumps(cur_supp.get('supplier_reliability_score', {}), default=str)}")
+        if supp_lines:
+            digest_parts.append("## SUPPLIER HEALTH\n" + "\n".join(supp_lines))
+
+    # 4g. Resolved issues & new risks
+    cur_insights_list = (cur_insight or {}).get("insights", []) if isinstance(cur_insight, dict) else []
+    prev_insights_list = (prev_insight or {}).get("insights", []) if isinstance(prev_insight, dict) else []
+    cur_titles = {i.get("title", "").lower().strip() for i in cur_insights_list if i.get("title")}
+    prev_titles = {i.get("title", "").lower().strip() for i in prev_insights_list if i.get("title")}
+
+    resolved = [i for i in prev_insights_list
+                if i.get("severity") in ("high", "medium") and (i.get("title", "").lower().strip()) not in cur_titles]
+    new_risks = [i for i in cur_insights_list
+                 if i.get("severity") in ("high", "medium") and (i.get("title", "").lower().strip()) not in prev_titles]
+
+    if resolved:
+        rl = []
+        for i in resolved[:8]:
+            entry = f"  [{i.get('severity')}] {i.get('title')}"
+            if i.get("description"):
+                entry += f"\n    Description: {i['description'][:200]}"
+            if i.get("recommendation"):
+                entry += f"\n    Recommendation: {i['recommendation'][:200]}"
+            if i.get("impact_estimate"):
+                entry += f"\n    Impact: {i['impact_estimate']}"
+            ev = i.get("evidence")
+            if ev and isinstance(ev, dict):
+                entry += f"\n    Evidence: {json.dumps(ev, default=str)[:300]}"
+            rl.append(entry)
+        digest_parts.append("## RESOLVED ISSUES\n" + "\n".join(rl))
+    if new_risks:
+        nl = []
+        for i in new_risks[:8]:
+            entry = f"  [{i.get('severity')}] {i.get('title')}"
+            if i.get("description"):
+                entry += f"\n    Description: {i['description'][:200]}"
+            if i.get("recommendation"):
+                entry += f"\n    Recommendation: {i['recommendation'][:200]}"
+            if i.get("impact_estimate"):
+                entry += f"\n    Impact: {i['impact_estimate']}"
+            ev = i.get("evidence")
+            if ev and isinstance(ev, dict):
+                entry += f"\n    Evidence: {json.dumps(ev, default=str)[:300]}"
+            nl.append(entry)
+        digest_parts.append("## NEW RISKS\n" + "\n".join(nl))
+
+    # 4h. ALL prescriptions from previous run with statuses
+    if prev_action and isinstance(prev_action, dict):
+        prev_rxs = prev_action.get("prescriptions", [])
+        statuses = {}
+        try:
+            status_rows = db_get_prescription_statuses(previous_run_id)
+            statuses = {s["prescription_id"]: s["status"] for s in status_rows}
+        except Exception:
+            pass
+        if prev_rxs:
+            rx_lines = []
+            for rx in prev_rxs[:15]:
+                rx_id = rx.get("id", "")
+                st = statuses.get(rx_id, rx.get("status", "pending"))
+                entry = f"  [{st.upper()}] [{rx.get('urgency')}] {rx.get('title')} (category: {rx.get('category')}, impact: {rx.get('impact_estimate', 'N/A')})"
+                if rx.get("description"):
+                    entry += f"\n    Description: {rx['description'][:250]}"
+                ev = rx.get("evidence")
+                if ev and isinstance(ev, dict):
+                    entry += f"\n    Evidence: {json.dumps(ev, default=str)[:300]}"
+                rels = rx.get("related_entities")
+                if rels and isinstance(rels, list):
+                    entry += f"\n    Related: {', '.join(rels[:5])}"
+                rx_lines.append(entry)
+            digest_parts.append("## PREVIOUS RUN PRESCRIPTIONS (with status)\n" + "\n".join(rx_lines))
+
+    # 4i. Demand forecast context
+    demand_csv = _read_local_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
+    if demand_csv is not None and not demand_csv.empty and "status" in demand_csv.columns:
+        critical = demand_csv[demand_csv["status"] == "critical"].head(5)
+        warning = demand_csv[demand_csv["status"] == "warning"].head(5)
+        if not critical.empty:
+            cols = [c for c in ["sku", "product_name", "current_stock", "forecast_qty_30d", "days_until_stockout"] if c in critical.columns]
+            digest_parts.append(f"## CRITICAL DEMAND SKUS\n{critical[cols].to_string(index=False)}")
+        if not warning.empty:
+            cols = [c for c in ["sku", "product_name", "current_stock", "forecast_qty_30d", "days_until_stockout"] if c in warning.columns]
+            digest_parts.append(f"## WARNING DEMAND SKUS\n{warning[cols].to_string(index=False)}")
+
+    # 4j. Churn risk context
+    churn_csv = _read_local_csv(_FORECAST_DIR / "churn_predictions.csv")
+    if churn_csv is not None and not churn_csv.empty and "churn_prob_30d" in churn_csv.columns:
+        high_churn = churn_csv[churn_csv["churn_prob_30d"] >= 0.7].sort_values("churn_prob_30d", ascending=False).head(5)
+        if not high_churn.empty:
+            cols = [c for c in ["customer_id", "name", "churn_prob_30d", "total_spend", "recency_days"] if c in high_churn.columns]
+            total_at_risk = churn_csv[churn_csv["churn_prob_30d"] >= 0.7]["total_spend"].sum() if "total_spend" in churn_csv.columns else 0
+            digest_parts.append(f"## HIGH CHURN RISK CUSTOMERS (top 5 of {len(churn_csv[churn_csv['churn_prob_30d'] >= 0.7])} at risk, ${total_at_risk:,.0f} spend at risk)\n{high_churn[cols].to_string(index=False)}")
+
+    # 4k. Forecast context
+    if cur_forecast and isinstance(cur_forecast, dict) and "error" not in cur_forecast:
+        forecasts = cur_forecast.get("forecasts", {})
+        fc_lines = []
+        rev_fc = forecasts.get("forecasted_revenue", {})
+        if rev_fc:
+            fc_lines.append(f"  Revenue forecast: 7d={rev_fc.get('next_7d', 'N/A')}, 30d={rev_fc.get('next_30d', 'N/A')}, 90d={rev_fc.get('next_90d', 'N/A')}")
+        churn_fc = forecasts.get("expected_churn_next_month", {})
+        if churn_fc:
+            fc_lines.append(f"  Churn forecast: {churn_fc.get('expected_churn_rate_next_30d', 'N/A')}")
+        if fc_lines:
+            digest_parts.append("## FORECASTS\n" + "\n".join(fc_lines))
+
+    # 4l. Health scores
+    cur_health = (cur_action or {}).get("health_score") if isinstance(cur_action, dict) else None
+    prev_health = (prev_action or {}).get("health_score") if isinstance(prev_action, dict) else None
+    if cur_health is not None or prev_health is not None:
+        digest_parts.append(f"## HEALTH SCORE\n  Previous: {prev_health or 'N/A'} → Current: {cur_health or 'N/A'}")
+
+    # 4m. Top products (current run)
+    cur_tables = cur_snap.get("tables", {})
+    top_prods = cur_tables.get("top_products", [])
+    if top_prods:
+        prod_lines = []
+        for p in top_prods[:10]:
+            if isinstance(p, dict):
+                prod_lines.append(
+                    f"  {p.get('sku', 'N/A')} | {p.get('product_name', 'N/A')} | Revenue: {p.get('revenue', 'N/A')} | "
+                    f"Margin: {p.get('margin_pct', 'N/A')} | Units: {p.get('quantity', 'N/A')} | "
+                    f"Brand: {p.get('brand', 'N/A')} | Category: {p.get('category', 'N/A')}"
+                )
+        if prod_lines:
+            digest_parts.append("## TOP PRODUCTS BY REVENUE\n" + "\n".join(prod_lines))
+
+    # 4n. Low-performing products
+    low_prods = cur_tables.get("low_products", [])
+    if low_prods:
+        low_lines = []
+        for p in low_prods[:5]:
+            if isinstance(p, dict):
+                low_lines.append(
+                    f"  {p.get('sku', 'N/A')} | {p.get('product_name', 'N/A')} | Revenue: {p.get('revenue', 'N/A')} | "
+                    f"Margin: {p.get('margin_pct', 'N/A')} | Brand: {p.get('brand', 'N/A')}"
+                )
+        if low_lines:
+            digest_parts.append("## LOW PERFORMING PRODUCTS\n" + "\n".join(low_lines))
+
+    # 4o. Risky products (inventory risk)
+    risky_prods = cur_tables.get("risky_products", [])
+    if risky_prods:
+        risky_lines = []
+        for p in risky_prods[:8]:
+            if isinstance(p, dict):
+                risky_lines.append(
+                    f"  {p.get('sku', 'N/A')} | stock: {p.get('stock_level', 'N/A')} | "
+                    f"reorder_threshold: {p.get('reorder_threshold', 'N/A')} | "
+                    f"avg_daily_sold: {p.get('avg_daily_qty_sold_30d', 'N/A')} | "
+                    f"days_remaining: {p.get('days_of_inventory_remaining', 'N/A')} | "
+                    f"risk: {p.get('risk_flag', 'N/A')}"
+                )
+        if risky_lines:
+            digest_parts.append("## RISKY PRODUCTS (low stock + high demand)\n" + "\n".join(risky_lines))
+
+    # 4p. Discount watchlist
+    disc_watch = cur_tables.get("discount_watchlist", [])
+    if disc_watch:
+        disc_lines = []
+        for p in disc_watch[:5]:
+            if isinstance(p, dict):
+                disc_lines.append(
+                    f"  {p.get('sku', 'N/A')} | {p.get('product_name', 'N/A')} | "
+                    f"discount: {p.get('discount_percent', 'N/A')}% | rating: {p.get('average_rating', 'N/A')} | "
+                    f"price: {p.get('retail_price', 'N/A')} | cost: {p.get('cost_price', 'N/A')} | "
+                    f"brand: {p.get('brand', 'N/A')}{' | LOW_RATING' if p.get('flag_low_rating') else ''}"
+                )
+        if disc_lines:
+            digest_parts.append("## HIGH-DISCOUNT PRODUCTS (discount >= 15%)\n" + "\n".join(disc_lines))
+
+    # 4q. Top customers
+    top_custs = cur_tables.get("top_customers", [])
+    if top_custs:
+        cust_lines = []
+        for c in top_custs[:10]:
+            if isinstance(c, dict):
+                cust_lines.append(
+                    f"  {c.get('customer_id', 'N/A')} | {c.get('name', 'N/A')} | "
+                    f"orders: {c.get('total_orders', 'N/A')} | spend: ${c.get('total_spend', 0):,.0f} | "
+                    f"AOV: ${c.get('avg_order_value', 0):,.0f} | recency: {c.get('recency_days', 'N/A')} days | "
+                    f"device: {c.get('device_type', 'N/A')} | location: {c.get('location', 'N/A')}"
+                )
+        if cust_lines:
+            digest_parts.append("## TOP CUSTOMERS\n" + "\n".join(cust_lines))
+
+    # 4r. Demographics (both runs)
+    cur_demo = cur_snap.get("kpis", {}).get("demographics", {})
+    prev_demo = prev_snap.get("kpis", {}).get("demographics", {})
+    if cur_demo or prev_demo:
+        demo_lines = []
+        for field in ["customers_by_gender", "customers_by_age_group", "customers_by_loyalty_tier", "avg_spend_by_loyalty"]:
+            cv = cur_demo.get(field)
+            pv = prev_demo.get(field)
+            if cv or pv:
+                demo_lines.append(f"  {field}: {json.dumps(pv or {}, default=str)} → {json.dumps(cv or {}, default=str)}")
+        if demo_lines:
+            digest_parts.append("## CUSTOMER DEMOGRAPHICS\n" + "\n".join(demo_lines))
+
+    # 4s. Payment health (both runs)
+    cur_pay = cur_snap.get("kpis", {}).get("payment_health", {})
+    prev_pay = prev_snap.get("kpis", {}).get("payment_health", {})
+    if cur_pay or prev_pay:
+        pay_fields = ["payment_failure_rate", "refund_rate", "top_payment_method", "avg_transaction_fee"]
+        pay_lines = [f"  {f}: {prev_pay.get(f, 'N/A')} → {cur_pay.get(f, 'N/A')}" for f in pay_fields]
+        digest_parts.append("## PAYMENT HEALTH\n" + "\n".join(pay_lines))
+
+    # 4t. Forecast executive insights (risks + opportunities)
+    if cur_forecast and isinstance(cur_forecast, dict) and "error" not in cur_forecast:
+        exec_ins = cur_forecast.get("executive_insights", {})
+        if isinstance(exec_ins, dict):
+            risks = exec_ins.get("top_3_risks", [])
+            opps = exec_ins.get("top_3_opportunities", [])
+            if risks:
+                risk_lines = []
+                for r in risks[:3]:
+                    if isinstance(r, dict):
+                        risk_lines.append(f"  - {r.get('title', 'N/A')} — Evidence: {json.dumps(r.get('evidence', {}), default=str)[:200]}")
+                    elif isinstance(r, str):
+                        risk_lines.append(f"  - {r}")
+                if risk_lines:
+                    digest_parts.append("## FORECAST RISKS\n" + "\n".join(risk_lines))
+            if opps:
+                opp_lines = []
+                for o in opps[:3]:
+                    if isinstance(o, dict):
+                        opp_lines.append(f"  - {o.get('title', 'N/A')} — Evidence: {json.dumps(o.get('evidence', {}), default=str)[:200]}")
+                    elif isinstance(o, str):
+                        opp_lines.append(f"  - {o}")
+                if opp_lines:
+                    digest_parts.append("## FORECAST OPPORTUNITIES\n" + "\n".join(opp_lines))
+
+    # Build final digest (cap at ~15000 chars)
+    digest = "\n\n".join(digest_parts)
+    if len(digest) > 15000:
+        digest = digest[:15000] + "\n... (truncated)"
+
+    # ---- 5. System prompt --------------------------------------------------
+    system_prompt = """You are an expert retail analytics advisor. You are comparing two pipeline analysis runs of a retail store and must explain WHAT changed, WHY it changed (root causes), and WHAT TO DO about it.
+
+Return ONLY valid JSON with this exact structure:
+{
+  "executive_summary": "2-3 sentences connecting the biggest changes with their root causes, referencing specific numbers from the data.",
+
+  "department_grades": [
+    {"department": "Revenue|Customers|Inventory|Marketing|Funnel|Product|Payments", "grade": "A|B|C|D|F", "trend": "improving|stable|declining", "one_liner": "Short assessment"}
+  ],
+
+  "root_causes": [
+    {"metric": "metric_id", "direction": "up|down", "explanation": "1-2 sentences explaining likely cause", "contributing_factors": ["factor1", "factor2"]}
+  ],
+
+  "causal_chains": [
+    {"chain": ["Metric A changed X%", "Which caused Metric B to change Y%", "Leading to Z impact"], "narrative": "One sentence connecting the chain"}
+  ],
+
+  "revenue_bridge": {
+    "total_change": <number>,
+    "components": [{"label": "Component name", "impact": <positive or negative number>}]
+  },
+
+  "profit_loss_drivers": {
+    "positive": ["Specific driver that helped, with numbers"],
+    "negative": ["Specific driver that hurt, with numbers"]
+  },
+
+  "prescription_report_card": [
+    {"prescription_title": "Title of completed prescription", "verdict": "effective|partially_effective|no_impact|too_early", "evidence": "What changed as a result", "related_kpi_impact": "e.g. +20% metric"}
+  ],
+
+  "missed_opportunities": [
+    {"prescription_title": "Title of undone prescription", "status": "pending|dismissed", "estimated_cost_of_inaction": "$X in lost Y", "urgency_now": "critical|high|medium"}
+  ],
+
+  "next_30_day_targets": [
+    {"target": "Specific measurable goal", "current_value": "68%", "target_value": "55%", "how": "Specific steps to achieve this", "expected_impact": "Estimated business impact"}
+  ],
+
+  "quick_wins": [
+    {"action": "Specific immediate action", "effort": "Time estimate", "expected_impact": "Quantified impact", "data_point": "Supporting data"}
+  ],
+
+  "start_doing": ["Actionable recommendation to START, with data backing"],
+  "stop_doing": ["Thing to STOP or reduce, with data backing"],
+  "keep_doing": ["Thing that IS working well, with data backing"],
+
+  "anomalies": [
+    {"metric": "metric_id", "change": "+X%", "why_unexpected": "Why this is unusual", "suggested_investigation": "What to check"}
+  ],
+
+  "trend_verdict": {
+    "direction": "improving|stable|declining",
+    "confidence": "high|medium|low",
+    "summary": "2-3 sentence overall trajectory assessment"
+  }
+}
+
+RULES:
+1. Focus on the TOP 5 most significant metric changes by percent_change magnitude.
+2. Cross-reference metrics: if revenue dropped and churn rose, connect them in causal_chains.
+3. For prescription_report_card, ONLY include prescriptions marked DONE. Evaluate their effectiveness by checking if related KPIs improved.
+4. For missed_opportunities, include prescriptions still PENDING or DISMISSED that are now more urgent.
+5. Revenue bridge components should sum approximately to total_change. Use revenue waterfall data.
+6. Generate 5-7 department_grades (one per department that has data).
+7. Generate 3-5 root_causes, 1-3 causal_chains, 2-4 items per start/stop/keep.
+8. Generate 2-3 next_30_day_targets with realistic target values based on current data.
+9. Generate 2-4 quick_wins — things that can be done in < 1 week.
+10. Only include anomalies for truly unexpected changes (max 3).
+11. Ground ALL claims in actual numbers from the data. Never invent numbers.
+12. Return ONLY valid JSON. No markdown fences, no extra text.
+
+CRITICAL — BE SPECIFIC, NOT VAGUE:
+13. ALWAYS reference specific product names, SKU IDs, customer names, brand names, supplier names, and dollar amounts from the data provided. Never use generic language like "some products", "certain customers", or "strong growth". Instead say "Nike Air Max (SKU-101) revenue dropped 12% from $25K to $22K" or "Customer John D ($12,500 lifetime spend) is at 85% churn risk".
+14. In department_grades one_liner: include the most important metric value and its change. E.g. "Revenue MTD dropped 8% ($45K → $41K) driven by Nike brand decline, but YTD up 15% at $600K".
+15. In quick_wins: name the specific SKUs to restock, customers to contact, or campaigns to adjust — with quantities and dollar amounts.
+16. In root_causes: cite the specific data evidence (revenue waterfall components, brand breakdowns, product tables, customer data) that supports each cause.
+17. Use the TOP PRODUCTS, RISKY PRODUCTS, TOP CUSTOMERS, BRAND PERFORMANCE, and DISCOUNT WATCHLIST data extensively to make recommendations concrete."""
+
+    user_prompt = f"Analyze this comparison between two pipeline runs:\n\n{digest}"
+
+    # ---- 6. Call LLM -------------------------------------------------------
+    try:
+        raw = await ask_llm(system_prompt, user_prompt)
+        result = parse_llm_json(raw, fallback={
+            "executive_summary": None, "department_grades": [], "root_causes": [],
+            "causal_chains": [], "revenue_bridge": None,
+            "profit_loss_drivers": {"positive": [], "negative": []},
+            "prescription_report_card": [], "missed_opportunities": [],
+            "next_30_day_targets": [], "quick_wins": [],
+            "start_doing": [], "stop_doing": [], "keep_doing": [],
+            "anomalies": [], "trend_verdict": None,
+        })
+
+        result["generated_at"] = datetime.now(timezone.utc).isoformat()
+        result["cached"] = False
+
+        # ---- 7. Cache in Supabase ------------------------------------------
+        try:
+            db_store_comparison_ai(current_run_id, previous_run_id, result)
+        except Exception as e:
+            print(f"[comparison-ai] Failed to cache in Supabase: {e}")
+
+        return _safe_json(result)
+
+    except Exception as e:
+        return _safe_json({
+            "error": str(e),
+            "executive_summary": None, "department_grades": [], "root_causes": [],
+            "causal_chains": [], "revenue_bridge": None,
+            "profit_loss_drivers": {"positive": [], "negative": []},
+            "prescription_report_card": [], "missed_opportunities": [],
+            "next_30_day_targets": [], "quick_wins": [],
+            "start_doing": [], "stop_doing": [], "keep_doing": [],
+            "anomalies": [], "trend_verdict": None,
+            "cached": False,
+        })
+
+
 @app.get("/api/runs/{run_id}")
 def get_run_detail(run_id: str):
     """Returns all snapshots for a specific pipeline run."""
@@ -517,6 +1242,38 @@ def _read_local_csv(path: Path) -> pd.DataFrame | None:
     return None
 
 
+def _sanitize(obj):
+    """Alias for _safe_json — replace NaN/Inf with None for JSON serialization."""
+    return _safe_json(obj)
+
+
+def _load_kpi_snapshot(run_id: Optional[str] = None) -> dict | None:
+    """Load KPI snapshot from local file first, then Supabase fallback.
+
+    Local file is preferred because it reflects the latest pipeline run
+    (including newly added KPI groups) without needing a Supabase re-upload.
+    """
+    # Prefer local file (always up-to-date with latest pipeline output)
+    kpi_path = _BACKEND_ROOT / "data" / "kpi_outputs" / "kpi_snapshot.json"
+    if kpi_path.is_file() and not run_id:
+        try:
+            with open(kpi_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    # Fallback: Supabase (needed for historical run_id lookups)
+    try:
+        if run_id:
+            result = db_get_run_kpi(run_id)
+        else:
+            result = db_get_latest_kpi()
+        if result and isinstance(result, dict) and result.get("kpis"):
+            return result
+    except Exception:
+        pass
+    return None
+
+
 @app.get("/api/forecast/series/revenue")
 def get_revenue_forecast_series(run_id: Optional[str] = None):
     """Returns daily revenue forecast time-series data."""
@@ -551,10 +1308,13 @@ def get_demand_forecast(run_id: Optional[str] = None):
     inv_csv = _read_local_csv(_CLEANED_DIR / "inventory_cleaned.csv")
     prod_csv = _read_local_csv(_CLEANED_DIR / "products_cleaned.csv")
 
-    demand_csv["sku"] = demand_csv["sku"].astype(str)
+    demand_csv["sku"] = demand_csv["sku"].astype(str).str.upper()
 
     if inv_csv is not None and not inv_csv.empty:
-        inv_csv["sku"] = inv_csv["sku"].astype(str)
+        inv_csv["sku"] = inv_csv["sku"].astype(str).str.upper()
+        # Normalize column names
+        inv_renames = {"stock_quantity": "stock_level", "reorder_level": "reorder_threshold"}
+        inv_csv = inv_csv.rename(columns={k: v for k, v in inv_renames.items() if k in inv_csv.columns})
         inv_cols = ["sku", "stock_level", "reorder_threshold"]
         inv_cols = [c for c in inv_cols if c in inv_csv.columns]
         demand_csv = demand_csv.merge(inv_csv[inv_cols], on="sku", how="left")
@@ -562,7 +1322,10 @@ def get_demand_forecast(run_id: Optional[str] = None):
     if prod_csv is not None and not prod_csv.empty:
         sku_col_prod = "sku" if "sku" in prod_csv.columns else ("product_id" if "product_id" in prod_csv.columns else None)
         if sku_col_prod:
-            prod_csv["sku"] = prod_csv[sku_col_prod].astype(str)
+            prod_csv["sku"] = prod_csv[sku_col_prod].astype(str).str.upper()
+            # Normalize column names
+            if "product_name" in prod_csv.columns and "name" not in prod_csv.columns:
+                prod_csv = prod_csv.rename(columns={"product_name": "name"})
             prod_cols = ["sku"]
             for c in ["name", "category", "brand"]:
                 if c in prod_csv.columns:
@@ -868,7 +1631,11 @@ def get_demand_by_location(run_id: Optional[str] = None):
     demand_csv = _read_local_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
     prod_csv = _read_local_csv(_CLEANED_DIR / "products_cleaned.csv")
 
-    inv_csv["sku"] = inv_csv["sku"].astype(str)
+    inv_csv["sku"] = inv_csv["sku"].astype(str).str.upper()
+
+    # Normalize column names
+    inv_renames = {"stock_quantity": "stock_level", "reorder_level": "reorder_threshold"}
+    inv_csv = inv_csv.rename(columns={k: v for k, v in inv_renames.items() if k in inv_csv.columns})
 
     # Normalize warehouse_location casing
     loc_col = "warehouse_location" if "warehouse_location" in inv_csv.columns else None
@@ -888,7 +1655,9 @@ def get_demand_by_location(run_id: Optional[str] = None):
     if prod_csv is not None and not prod_csv.empty:
         sku_col_prod = "sku" if "sku" in prod_csv.columns else ("product_id" if "product_id" in prod_csv.columns else None)
         if sku_col_prod:
-            prod_csv["sku"] = prod_csv[sku_col_prod].astype(str)
+            prod_csv["sku"] = prod_csv[sku_col_prod].astype(str).str.upper()
+            if "product_name" in prod_csv.columns and "name" not in prod_csv.columns:
+                prod_csv = prod_csv.rename(columns={"product_name": "name"})
             name_cols = ["sku"]
             for c in ["name", "category"]:
                 if c in prod_csv.columns:
@@ -899,7 +1668,7 @@ def get_demand_by_location(run_id: Optional[str] = None):
 
     # Join with demand forecast for avg_daily_forecast
     if demand_csv is not None and not demand_csv.empty:
-        demand_csv["sku"] = demand_csv["sku"].astype(str)
+        demand_csv["sku"] = demand_csv["sku"].astype(str).str.upper()
         demand_cols = ["sku", "avg_daily_forecast", "forecast_qty_30d"]
         demand_cols = [c for c in demand_cols if c in demand_csv.columns]
         inv_csv = inv_csv.merge(demand_csv[demand_cols], on="sku", how="left")
@@ -1014,6 +1783,250 @@ def get_prescription_statuses_endpoint(run_id: Optional[str] = None):
         return {"statuses": [], "run_id": None}
     statuses = db_get_prescription_statuses(rid)
     return {"statuses": statuses, "run_id": rid}
+
+
+# -----------------------------------------------------------------------------
+# Funnel & Sessions Analytics endpoint
+# -----------------------------------------------------------------------------
+@app.get("/api/funnel/snapshot")
+def get_funnel_snapshot(run_id: Optional[str] = None):
+    """Returns funnel analytics aggregated from sessions, events, and funnel_summary."""
+    kpi = _load_kpi_snapshot(run_id)
+    if not kpi:
+        return {"error": "No KPI snapshot found"}
+
+    kpis = kpi.get("kpis", {})
+    funnel = kpis.get("conversion_funnel", {})
+
+    # Load funnel_summary for daily trends
+    daily_trends = []
+    funnel_csv = _CLEANED_DIR / "funnel_summary_cleaned.csv"
+    if funnel_csv.is_file():
+        try:
+            df = pd.read_csv(funnel_csv)
+            for col in ["sessions", "product_views", "add_to_cart", "checkout_started", "purchases", "conversion_rate", "cart_abandonment_rate"]:
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col], errors="coerce")
+            if "date" in df.columns:
+                df["date"] = pd.to_datetime(df["date"], errors="coerce")
+                df = df.sort_values("date")
+                daily_trends = _sanitize(df.to_dict(orient="records"))
+        except Exception:
+            pass
+
+    return _sanitize({
+        "funnel_kpis": funnel,
+        "daily_trends": daily_trends,
+    })
+
+
+@app.get("/api/sessions/analytics")
+def get_sessions_analytics(run_id: Optional[str] = None):
+    """Returns session analytics: device, source, landing page breakdowns."""
+    sessions_csv = _CLEANED_DIR / "sessions_cleaned.csv"
+    if not sessions_csv.is_file():
+        return {"error": "No sessions data found"}
+
+    try:
+        df = pd.read_csv(sessions_csv)
+    except Exception as e:
+        return {"error": str(e)}
+
+    result = {}
+
+    # Device breakdown
+    if "device_type" in df.columns:
+        device_counts = df["device_type"].value_counts().to_dict()
+        result["by_device"] = {str(k): int(v) for k, v in device_counts.items()}
+
+        if "converted_flag" in df.columns:
+            conv = df["converted_flag"].astype(str).str.lower().isin(["true", "1", "yes"])
+            device_conv = df.assign(_conv=conv).groupby("device_type")["_conv"].mean()
+            result["conversion_by_device"] = {str(k): round(float(v), 4) for k, v in device_conv.items()}
+
+        if "revenue" in df.columns:
+            rev = pd.to_numeric(df["revenue"], errors="coerce")
+            device_rev = df.assign(_rev=rev).groupby("device_type")["_rev"].mean()
+            result["avg_revenue_by_device"] = {str(k): round(float(v), 2) for k, v in device_rev.items()}
+
+    # Traffic source breakdown
+    if "traffic_source" in df.columns:
+        source_counts = df["traffic_source"].value_counts().to_dict()
+        result["by_traffic_source"] = {str(k): int(v) for k, v in source_counts.items()}
+
+        if "converted_flag" in df.columns:
+            conv = df["converted_flag"].astype(str).str.lower().isin(["true", "1", "yes"])
+            source_conv = df.assign(_conv=conv).groupby("traffic_source")["_conv"].mean()
+            result["conversion_by_source"] = {str(k): round(float(v), 4) for k, v in source_conv.items()}
+
+    # Landing page breakdown
+    if "landing_page" in df.columns:
+        lp_counts = df["landing_page"].value_counts().to_dict()
+        result["by_landing_page"] = {str(k): int(v) for k, v in lp_counts.items()}
+
+        if "converted_flag" in df.columns:
+            conv = df["converted_flag"].astype(str).str.lower().isin(["true", "1", "yes"])
+            lp_conv = df.assign(_conv=conv).groupby("landing_page")["_conv"].mean()
+            result["conversion_by_landing"] = {str(k): round(float(v), 4) for k, v in lp_conv.items()}
+
+    # Session duration distribution
+    if "session_duration_sec" in df.columns:
+        dur = pd.to_numeric(df["session_duration_sec"], errors="coerce").dropna()
+        bins = [0, 60, 180, 300, 600, 900, 1800, float("inf")]
+        labels = ["<1min", "1-3min", "3-5min", "5-10min", "10-15min", "15-30min", "30min+"]
+        groups = pd.cut(dur, bins=bins, labels=labels, right=False)
+        dist = groups.value_counts().sort_index()
+        result["session_duration_distribution"] = {str(k): int(v) for k, v in dist.items()}
+
+        if "converted_flag" in df.columns:
+            conv = df["converted_flag"].astype(str).str.lower().isin(["true", "1", "yes"])
+            dur_conv = df.assign(_dur_group=groups, _conv=conv).groupby("_dur_group")["_conv"].mean()
+            result["session_duration_conversion"] = {str(k): round(float(v), 4) for k, v in dur_conv.items()}
+
+    return _sanitize(result)
+
+
+# -----------------------------------------------------------------------------
+# Demographics endpoint
+# -----------------------------------------------------------------------------
+@app.get("/api/demographics/snapshot")
+def get_demographics_snapshot(run_id: Optional[str] = None):
+    """Returns customer demographic distributions."""
+    kpi = _load_kpi_snapshot(run_id)
+    if not kpi:
+        return {"error": "No KPI snapshot found"}
+
+    demographics = kpi.get("kpis", {}).get("demographics", {})
+    return _sanitize(demographics)
+
+
+# -----------------------------------------------------------------------------
+# Campaign Performance endpoint
+# -----------------------------------------------------------------------------
+@app.get("/api/campaigns/performance")
+def get_campaigns_performance(run_id: Optional[str] = None):
+    """Returns campaign-level performance table and channel aggregates."""
+    result = {"campaigns": [], "by_channel": {}, "by_type": {}}
+
+    # Campaign performance from cleaned data
+    cp_csv = _CLEANED_DIR / "campaign_performance_cleaned.csv"
+    if cp_csv.is_file():
+        try:
+            df = pd.read_csv(cp_csv)
+            for col in ["impressions", "clicks", "spend", "sessions", "orders", "attributed_revenue"]:
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col], errors="coerce")
+
+            # Aggregate per campaign
+            if "campaign_id" in df.columns:
+                agg = df.groupby(["campaign_id"]).agg(
+                    channel=("channel", "first"),
+                    campaign_name=("campaign_name", "first"),
+                    total_impressions=("impressions", "sum"),
+                    total_clicks=("clicks", "sum"),
+                    total_spend=("spend", "sum"),
+                    total_sessions=("sessions", "sum"),
+                    total_orders=("orders", "sum"),
+                    total_revenue=("attributed_revenue", "sum"),
+                ).reset_index()
+                agg["roas"] = agg["total_revenue"] / agg["total_spend"].replace(0, float("nan"))
+                agg["cpa"] = agg["total_spend"] / agg["total_orders"].replace(0, float("nan"))
+                agg["ctr"] = agg["total_clicks"] / agg["total_impressions"].replace(0, float("nan"))
+                result["campaigns"] = _sanitize(agg.sort_values("total_revenue", ascending=False).to_dict(orient="records"))
+
+            # By channel
+            if "channel" in df.columns:
+                ch = df.groupby("channel").agg(
+                    total_spend=("spend", "sum"),
+                    total_revenue=("attributed_revenue", "sum"),
+                    total_orders=("orders", "sum"),
+                ).reset_index()
+                ch["roas"] = ch["total_revenue"] / ch["total_spend"].replace(0, float("nan"))
+                result["by_channel"] = _sanitize(ch.to_dict(orient="records"))
+        except Exception:
+            pass
+
+    # Campaign type breakdown from marketing table
+    mkt_csv = _CLEANED_DIR / "marketing_cleaned.csv"
+    if mkt_csv.is_file():
+        try:
+            mdf = pd.read_csv(mkt_csv)
+            if "campaign_type" in mdf.columns:
+                for col in ["ad_spend", "impressions", "clicks", "conversions"]:
+                    if col in mdf.columns:
+                        mdf[col] = pd.to_numeric(mdf[col], errors="coerce")
+                type_agg = mdf.groupby("campaign_type").agg(
+                    count=("campaign_id", "count"),
+                    total_spend=("ad_spend", "sum"),
+                    total_conversions=("conversions", "sum"),
+                ).reset_index()
+                result["by_type"] = _sanitize(type_agg.to_dict(orient="records"))
+        except Exception:
+            pass
+
+    # KPI-level marketing metrics
+    kpi = _load_kpi_snapshot(run_id)
+    if kpi:
+        mkt_kpis = kpi.get("kpis", {}).get("marketing_effectiveness", {})
+        result["marketing_kpis"] = _sanitize(mkt_kpis)
+
+    return result
+
+
+# -----------------------------------------------------------------------------
+# Brand Performance endpoint
+# -----------------------------------------------------------------------------
+@app.get("/api/brands/performance")
+def get_brands_performance(run_id: Optional[str] = None):
+    """Returns brand-level performance metrics."""
+    kpi = _load_kpi_snapshot(run_id)
+    if not kpi:
+        return {"error": "No KPI snapshot found"}
+
+    brand_kpis = kpi.get("kpis", {}).get("brand_performance", {})
+    return _sanitize(brand_kpis)
+
+
+# -----------------------------------------------------------------------------
+# Supplier Health endpoint
+# -----------------------------------------------------------------------------
+@app.get("/api/suppliers/health")
+def get_suppliers_health(run_id: Optional[str] = None):
+    """Returns supplier-level health metrics."""
+    kpi = _load_kpi_snapshot(run_id)
+    if not kpi:
+        return {"error": "No KPI snapshot found"}
+
+    supplier_kpis = kpi.get("kpis", {}).get("supplier_health", {})
+    return _sanitize(supplier_kpis)
+
+
+# -----------------------------------------------------------------------------
+# Payment Health endpoint
+# -----------------------------------------------------------------------------
+@app.get("/api/payments/health")
+def get_payments_health(run_id: Optional[str] = None):
+    """Returns payment health metrics."""
+    kpi = _load_kpi_snapshot(run_id)
+    if not kpi:
+        return {"error": "No KPI snapshot found"}
+
+    payment_kpis = kpi.get("kpis", {}).get("payment_health", {})
+    return _sanitize(payment_kpis)
+
+
+# -----------------------------------------------------------------------------
+# Net Revenue endpoint
+# -----------------------------------------------------------------------------
+@app.get("/api/revenue/net")
+def get_net_revenue(run_id: Optional[str] = None):
+    """Returns net revenue waterfall data."""
+    kpi = _load_kpi_snapshot(run_id)
+    if not kpi:
+        return {"error": "No KPI snapshot found"}
+
+    net_rev = kpi.get("kpis", {}).get("net_revenue", {})
+    return _sanitize(net_rev)
 
 
 # -----------------------------------------------------------------------------

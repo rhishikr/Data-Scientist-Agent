@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -16,6 +16,15 @@ import {
   CardTitle,
 } from "../../ui/card";
 import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../../ui/table";
+import { Badge } from "../../ui/badge";
+import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -30,7 +39,7 @@ import {
   safeNum,
   getCardValue,
 } from "../dashboard/formatters";
-import type { KpiCardRow, ForecastSnapshot } from "../dashboard/types";
+import type { KpiCardRow, ForecastSnapshot, Snapshot } from "../dashboard/types";
 
 import {
   DollarSign,
@@ -40,6 +49,9 @@ import {
   Megaphone,
   Lightbulb,
   ArrowRight,
+  ArrowUpDown,
+  Trophy,
+  AlertTriangle,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -65,7 +77,16 @@ interface MarketingTabProps {
   cards: KpiCardRow[];
   channelRevenueData: Array<{ channel: string; revenue: number }>;
   forecastSnapshot: ForecastSnapshot | null;
+  snapshot?: Snapshot | null;
+  campaignData?: any;
 }
+
+/* ------------------------------------------------------------------ */
+/* Sortable column helper                                              */
+/* ------------------------------------------------------------------ */
+
+type SortKey = "campaign_name" | "channel" | "total_spend" | "total_revenue" | "roas" | "cpa" | "ctr";
+type SortDir = "asc" | "desc";
 
 /* ------------------------------------------------------------------ */
 /* Chart config                                                        */
@@ -116,12 +137,49 @@ export function MarketingTab({
   cards,
   channelRevenueData,
   forecastSnapshot,
+  snapshot,
+  campaignData,
 }: MarketingTabProps) {
   // KPI values
   const cac = getCardValue(cards, "cac", 0);
   const roas = getCardValue(cards, "roas", 0);
   const campaignCr = getCardValue(cards, "campaign_cr", 0);
   const promoUplift = getCardValue(cards, "promo_uplift", 0);
+  const bestCampaign = getCardValue(cards, "best_campaign", "N/A");
+  const worstCampaign = getCardValue(cards, "worst_campaign", "N/A");
+
+  // Campaign table sorting
+  const [sortKey, setSortKey] = useState<SortKey>("total_revenue");
+  const [sortDir, setSortDir] = useState<SortDir>("desc");
+
+  const campaigns: any[] = useMemo(() => {
+    return Array.isArray(campaignData?.campaigns) ? campaignData.campaigns : [];
+  }, [campaignData]);
+
+  const sortedCampaigns = useMemo(() => {
+    if (campaigns.length === 0) return [];
+    return [...campaigns].sort((a, b) => {
+      const aVal = a[sortKey] ?? 0;
+      const bVal = b[sortKey] ?? 0;
+      if (typeof aVal === "string" && typeof bVal === "string") {
+        return sortDir === "asc"
+          ? aVal.localeCompare(bVal)
+          : bVal.localeCompare(aVal);
+      }
+      return sortDir === "asc"
+        ? safeNum(aVal) - safeNum(bVal)
+        : safeNum(bVal) - safeNum(aVal);
+    });
+  }, [campaigns, sortKey, sortDir]);
+
+  const handleSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDir("desc");
+    }
+  };
 
   // Sort channel revenue data descending
   const sortedChannelData = useMemo(() => {
@@ -313,6 +371,121 @@ export function MarketingTab({
           </CardContent>
         </Card>
       </div>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Row 4: Best / Worst Campaign cards                                  */}
+      {/* ------------------------------------------------------------------ */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <div className="rounded-md p-1.5 bg-green-50">
+                <Trophy className="size-4 text-green-600" />
+              </div>
+              <CardTitle>Best Campaign</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-lg font-semibold">
+              {typeof bestCampaign === "string" ? bestCampaign : String(bestCampaign)}
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Top-performing campaign by overall effectiveness
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <div className="rounded-md p-1.5 bg-red-50">
+                <AlertTriangle className="size-4 text-red-600" />
+              </div>
+              <CardTitle>Worst Campaign</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-lg font-semibold">
+              {typeof worstCampaign === "string" ? worstCampaign : String(worstCampaign)}
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Lowest-performing campaign — review for optimization
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Row 5: Campaign Performance Table                                   */}
+      {/* ------------------------------------------------------------------ */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Campaign Performance</CardTitle>
+          <CardDescription>
+            {sortedCampaigns.length} campaign{sortedCampaigns.length !== 1 ? "s" : ""} tracked — click column headers to sort
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {sortedCampaigns.length === 0 ? (
+            <p className="text-sm text-muted-foreground py-12 text-center">
+              No campaign performance data available
+            </p>
+          ) : (
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    {([
+                      ["campaign_name", "Campaign Name"],
+                      ["channel", "Channel"],
+                      ["total_spend", "Spend"],
+                      ["total_revenue", "Revenue"],
+                      ["roas", "ROAS"],
+                      ["cpa", "CPA"],
+                      ["ctr", "CTR"],
+                    ] as [SortKey, string][]).map(([key, label]) => (
+                      <TableHead
+                        key={key}
+                        className="cursor-pointer select-none hover:bg-muted/50"
+                        onClick={() => handleSort(key)}
+                      >
+                        <div className="flex items-center gap-1">
+                          {label}
+                          <ArrowUpDown className="size-3 text-muted-foreground" />
+                          {sortKey === key && (
+                            <span className="text-xs">{sortDir === "asc" ? "↑" : "↓"}</span>
+                          )}
+                        </div>
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {sortedCampaigns.map((c: any, idx: number) => (
+                    <TableRow key={c.campaign_id ?? idx}>
+                      <TableCell className="font-medium">{c.campaign_name ?? "—"}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className="capitalize">
+                          {c.channel ?? "—"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{fmtCurrency(safeNum(c.total_spend))}</TableCell>
+                      <TableCell>{fmtCurrency(safeNum(c.total_revenue))}</TableCell>
+                      <TableCell>
+                        <span className={safeNum(c.roas) >= 2 ? "text-green-600 font-semibold" : safeNum(c.roas) < 1 ? "text-red-600 font-semibold" : ""}>
+                          {safeNum(c.roas).toFixed(2)}x
+                        </span>
+                      </TableCell>
+                      <TableCell>{fmtCurrency2(safeNum(c.cpa))}</TableCell>
+                      <TableCell>{fmtPercent(safeNum(c.ctr))}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

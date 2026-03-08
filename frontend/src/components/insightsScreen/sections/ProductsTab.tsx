@@ -173,6 +173,26 @@ export function ProductsTab({ cards, snapshot, demandSkus = [] }: ProductsTabPro
     ? sortedDiscount
     : sortedDiscount.slice(0, COLLAPSED_ROW_COUNT);
 
+  // Brand performance data
+  const brandPerformance = useMemo(() => {
+    const bp = (snapshot?.kpis as any)?.brand_performance;
+    if (!bp) return [];
+    const revByBrand: Record<string, number> = bp.revenue_by_brand ?? {};
+    const marginByBrand: Record<string, number> = bp.margin_by_brand ?? {};
+    const ratingByBrand: Record<string, number> = bp.rating_by_brand ?? {};
+
+    const brands = Object.keys(revByBrand);
+    return brands
+      .map((brand) => ({
+        brand,
+        revenue: safeNum(revByBrand[brand]),
+        margin: safeNum(marginByBrand[brand]),
+        rating: safeNum(ratingByBrand[brand]),
+      }))
+      .sort((a, b) => b.revenue - a.revenue)
+      .slice(0, 15);
+  }, [snapshot]);
+
   // Dynamic chart height
   const topChartHeight = Math.max(250, topChartData.length * 36);
   const bottomChartHeight = Math.max(250, bottomChartData.length * 36);
@@ -227,6 +247,63 @@ export function ProductsTab({ cards, snapshot, demandSkus = [] }: ProductsTabPro
           </CardContent>
         </Card>
       </div>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Row 1b: Brand Performance Table                                     */}
+      {/* ------------------------------------------------------------------ */}
+      {brandPerformance.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Brand Performance</CardTitle>
+            <CardDescription>
+              Top {brandPerformance.length} brands by revenue
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-8">#</TableHead>
+                    <TableHead>Brand</TableHead>
+                    <TableHead className="text-right">Revenue</TableHead>
+                    <TableHead className="text-right">Avg Margin %</TableHead>
+                    <TableHead className="text-right">Avg Rating</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {brandPerformance.map((b, i) => (
+                    <TableRow key={b.brand}>
+                      <TableCell className="text-muted-foreground">{i + 1}</TableCell>
+                      <TableCell className="font-medium">{b.brand}</TableCell>
+                      <TableCell className="text-right font-medium">
+                        {fmtCurrency(b.revenue)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {fmtPercent(b.margin)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Badge
+                          variant={b.rating >= 4 ? "default" : "outline"}
+                          className={
+                            b.rating >= 4
+                              ? "bg-green-100 text-green-800 border-green-200"
+                              : b.rating >= 3
+                                ? "bg-yellow-100 text-yellow-800 border-yellow-200"
+                                : "bg-red-100 text-red-800 border-red-200"
+                          }
+                        >
+                          {b.rating.toFixed(1)}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* ------------------------------------------------------------------ */}
       {/* Row 2: Top & Bottom Products (Table default, with chart toggle)     */}

@@ -15,6 +15,7 @@ import {
   ChevronUp,
   ArrowRightLeft,
   MapPin,
+  Truck,
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
@@ -648,6 +649,80 @@ export function StockDemandTab({ cards, demandSkus, chartNarrative, locationSumm
           </CardContent>
         </Card>
       )}
+
+      {/* ============================================================
+          Row 6: Supplier Performance
+          ============================================================ */}
+      {(() => {
+        const supplierStockouts = getCardValue(cards, "supplier_stockouts", {}) as Record<string, number>;
+        const supplierReliability = getCardValue(cards, "supplier_reliability", {}) as Record<string, number>;
+        const supplierNames = Array.from(
+          new Set([...Object.keys(supplierStockouts), ...Object.keys(supplierReliability)]),
+        );
+        if (supplierNames.length === 0) return null;
+
+        return (
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Truck className="size-4 text-indigo-600" />
+                <CardTitle className="text-base">Supplier Performance</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {supplierNames.map((name) => {
+                  const stockouts = supplierStockouts[name] ?? 0;
+                  const reliability = supplierReliability[name] ?? 0;
+                  const reliabilityPct = Math.round(reliability * 100);
+                  const color =
+                    reliabilityPct < 70
+                      ? "red"
+                      : reliabilityPct < 85
+                        ? "orange"
+                        : "green";
+                  const colorClasses =
+                    color === "red"
+                      ? "border-red-200 bg-red-50/40"
+                      : color === "orange"
+                        ? "border-orange-200 bg-orange-50/40"
+                        : "border-green-200 bg-green-50/40";
+                  const textColor =
+                    color === "red"
+                      ? "text-red-600"
+                      : color === "orange"
+                        ? "text-orange-600"
+                        : "text-green-600";
+
+                  return (
+                    <div
+                      key={name}
+                      className={`rounded-lg border p-4 space-y-2 ${colorClasses}`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-semibold">{name}</span>
+                        <Badge color={color}>
+                          {reliabilityPct}%
+                        </Badge>
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        Stockout incidents: <span className="font-medium text-foreground">{stockouts}</span>
+                      </div>
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-muted-foreground">Reliability</span>
+                          <span className={`font-medium ${textColor}`}>{reliabilityPct}%</span>
+                        </div>
+                        <Progress value={reliabilityPct} className="h-1.5" />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        );
+      })()}
     </div>
   );
 }

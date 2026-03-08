@@ -10,7 +10,7 @@ import { PrescriptionCard } from "../charts/PrescriptionCard";
 
 const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 
-const CATEGORY_FILTERS = ["all", "inventory", "customer", "revenue", "marketing", "product"] as const;
+const CATEGORY_FILTERS = ["all", "inventory", "customer", "revenue", "marketing", "product", "funnel", "pricing"] as const;
 const STATUS_FILTERS = ["all", "pending", "done", "dismissed"] as const;
 
 interface ActionQueueTabProps {

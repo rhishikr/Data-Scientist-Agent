@@ -2,6 +2,9 @@ import React, { useMemo } from "react";
 import {
   BarChart,
   Bar,
+  PieChart,
+  Pie,
+  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -11,9 +14,11 @@ import {
   TrendingUp,
   Calendar,
   Target,
+  ShoppingCart,
+  Hash,
 } from "lucide-react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../ui/card";
 import {
   ChartContainer,
   ChartTooltip,
@@ -25,12 +30,14 @@ import type {
   RevenueForecastPoint,
   ForecastSnapshot,
   ChartNarrativeData,
+  Snapshot,
 } from "../dashboard/types";
 import {
   fmtCurrency,
   fmtCurrency2,
   fmtPercent,
   getCardValue,
+  safeNum,
 } from "../dashboard/formatters";
 import { RevenueLineChart } from "../charts/RevenueLineChart";
 import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
@@ -87,11 +94,27 @@ interface RevenueSalesTabProps {
   channelRevenueData: Array<{ channel: string; revenue: number }>;
   forecastSnapshot: ForecastSnapshot | null;
   chartNarrative?: ChartNarrativeData | null;
+  snapshot?: Snapshot | null;
 }
 
 /* ------------------------------------------------------------------ */
 /* Component                                                           */
 /* ------------------------------------------------------------------ */
+
+const ORDER_STATUS_COLORS = [
+  "var(--chart-1)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-4)",
+  "var(--chart-5)",
+  "#8b5cf6",
+  "#f59e0b",
+  "#06b6d4",
+];
+
+const orderStatusChartConfig = {
+  count: { label: "Orders" },
+} satisfies ChartConfig;
 
 export function RevenueSalesTab({
   cards,
@@ -99,12 +122,50 @@ export function RevenueSalesTab({
   channelRevenueData,
   forecastSnapshot,
   chartNarrative,
+  snapshot,
 }: RevenueSalesTabProps) {
   /* ---------- KPI values ---------- */
   const revMtd = getCardValue(cards, "rev_mtd");
   const revQtd = getCardValue(cards, "rev_qtd");
   const revYtd = getCardValue(cards, "rev_ytd");
   const revGrowth30d = getCardValue(cards, "rev_growth_30d");
+
+  /* ---------- Waterfall data ---------- */
+  const grossRevenue = getCardValue(cards, "gross_revenue");
+  const netRevenue = getCardValue(cards, "net_revenue");
+  const totalDiscounts = getCardValue(cards, "total_discounts");
+  const totalReturns = getCardValue(cards, "total_returns");
+  const totalRefunds = getCardValue(cards, "total_refunds");
+  const totalFees = getCardValue(cards, "total_fees");
+  const discountRate = getCardValue(cards, "discount_rate");
+
+  const hasWaterfallData = grossRevenue > 0 || netRevenue > 0;
+
+  const waterfallRows = useMemo(() => {
+    if (!hasWaterfallData) return [];
+    return [
+      { label: "Gross Revenue", value: grossRevenue, type: "positive" as const },
+      { label: "Discounts", value: -Math.abs(totalDiscounts), type: "negative" as const },
+      { label: "Returns", value: -Math.abs(totalReturns), type: "negative" as const },
+      { label: "Refunds", value: -Math.abs(totalRefunds), type: "negative" as const },
+      { label: "Fees", value: -Math.abs(totalFees), type: "negative" as const },
+      { label: "Net Revenue", value: netRevenue, type: "total" as const },
+    ];
+  }, [grossRevenue, netRevenue, totalDiscounts, totalReturns, totalRefunds, totalFees, hasWaterfallData]);
+
+  /* ---------- AOV + Orders/Day ---------- */
+  const aov = getCardValue(cards, "aov");
+  const ordersPerDay = getCardValue(cards, "orders_day");
+
+  /* ---------- Order Status Breakdown ---------- */
+  const orderStatusBreakdown = useMemo(() => {
+    const raw = snapshot?.kpis?.revenue_sales_health?.order_status_breakdown;
+    if (!raw || typeof raw !== "object") return [];
+    return Object.entries(raw).map(([status, count]) => ({
+      status,
+      count: safeNum(count, 0),
+    }));
+  }, [snapshot]);
 
   /* ---------- Forecast summary ---------- */
   const forecasted = forecastSnapshot?.forecasts?.forecasted_revenue;
@@ -289,6 +350,136 @@ export function RevenueSalesTab({
                   </div>
                 )}
               </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* ============================================================
+          Row 4: AOV + Orders/Day KPI cards
+          ============================================================ */}
+      <div className="grid grid-cols-2 gap-4">
+        <MiniKpi
+          icon={ShoppingCart}
+          label="Avg Order Value"
+          value={fmtCurrency2(aov)}
+          iconColor="text-amber-600"
+          iconBg="bg-amber-50"
+        />
+        <MiniKpi
+          icon={Hash}
+          label="Orders / Day"
+          value={ordersPerDay.toLocaleString(undefined, { maximumFractionDigits: 1 })}
+          iconColor="text-indigo-600"
+          iconBg="bg-indigo-50"
+        />
+      </div>
+
+      {/* ============================================================
+          Row 5: Net Revenue Waterfall + Order Status Breakdown
+          ============================================================ */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Net Revenue Waterfall */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Net Revenue Waterfall</CardTitle>
+            <CardDescription className="text-xs">
+              Gross Revenue to Net Revenue breakdown
+              {discountRate > 0 && (
+                <span className="ml-2 text-muted-foreground">
+                  (Discount rate: {fmtPercent(discountRate)})
+                </span>
+              )}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {!hasWaterfallData ? (
+              <div className="flex items-center justify-center h-[280px] text-sm text-muted-foreground">
+                No waterfall data available
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {waterfallRows.map((row) => {
+                  const maxVal = Math.max(grossRevenue, netRevenue, 1);
+                  const barWidth = Math.abs(row.value) / maxVal;
+                  return (
+                    <div key={row.label} className="flex items-center gap-3">
+                      <span className="text-xs text-muted-foreground w-28 text-right shrink-0">
+                        {row.label}
+                      </span>
+                      <div className="flex-1 h-7 relative">
+                        <div
+                          className={`h-full rounded ${
+                            row.type === "positive"
+                              ? "bg-green-500/80"
+                              : row.type === "negative"
+                              ? "bg-red-400/70"
+                              : "bg-teal-500/80"
+                          }`}
+                          style={{ width: `${Math.max(barWidth * 100, 2)}%` }}
+                        />
+                      </div>
+                      <span
+                        className={`text-sm font-medium w-24 text-right shrink-0 ${
+                          row.type === "negative" ? "text-red-600" : ""
+                        }`}
+                      >
+                        {row.type === "negative" ? "-" : ""}
+                        {fmtCurrency(Math.abs(row.value))}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Order Status Breakdown */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Order Status Breakdown</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {orderStatusBreakdown.length === 0 ? (
+              <div className="flex items-center justify-center h-[280px] text-sm text-muted-foreground">
+                No order status data
+              </div>
+            ) : (
+              <ChartEnlargeWrapper title="Order Status Breakdown">
+                <ChartContainer config={orderStatusChartConfig} className="w-full" style={{ height: 280 }}>
+                  <PieChart>
+                    <ChartTooltip
+                      content={
+                        <ChartTooltipContent
+                          formatter={(value, name) => `${name}: ${Number(value).toLocaleString()}`}
+                        />
+                      }
+                    />
+                    <Pie
+                      data={orderStatusBreakdown}
+                      dataKey="count"
+                      nameKey="status"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={55}
+                      outerRadius={95}
+                      paddingAngle={2}
+                      label={({ status, percent }) =>
+                        `${status} (${(percent * 100).toFixed(0)}%)`
+                      }
+                      labelLine={false}
+                    >
+                      {orderStatusBreakdown.map((_, idx) => (
+                        <Cell
+                          key={idx}
+                          fill={ORDER_STATUS_COLORS[idx % ORDER_STATUS_COLORS.length]}
+                        />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ChartContainer>
+              </ChartEnlargeWrapper>
             )}
           </CardContent>
         </Card>

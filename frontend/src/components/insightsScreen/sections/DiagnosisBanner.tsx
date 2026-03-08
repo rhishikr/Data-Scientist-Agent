@@ -49,13 +49,13 @@ export function DiagnosisBanner({ cards, actionPlan }: DiagnosisBannerProps) {
   return (
     <div className="space-y-2">
       {/* KPI strip */}
-      <div className="flex rounded-xl border bg-card text-card-foreground">
+      <div className="flex overflow-x-auto rounded-xl border bg-card text-card-foreground">
         {KPI_DEFS.map((def) => {
           const value = getCardValue(cards, def.id);
           const Icon = def.icon;
 
           return (
-            <div key={def.id} className="flex-1 px-4 py-3 text-center">
+            <div key={def.id} className="flex-1 min-w-[130px] px-4 py-3 text-center">
               <div className="flex items-center justify-center gap-1.5 mb-0.5">
                 <Icon className={`size-3.5 ${def.color}`} />
                 <span className="text-base font-semibold tracking-tight">

@@ -23,7 +23,7 @@ from .blackboard import SharedBlackboard
 from .llm import ask_llm, parse_llm_json
 
 
-VALID_CATEGORIES = {"inventory", "customer", "revenue", "marketing", "product"}
+VALID_CATEGORIES = {"inventory", "customer", "revenue", "marketing", "product", "funnel", "pricing"}
 VALID_URGENCIES = {"critical", "high", "medium", "low"}
 VALID_EFFORTS = {"quick-win", "moderate", "strategic"}
 
@@ -190,7 +190,89 @@ class ActionAgent(BaseAgent):
                 kpi_lines.append(f"  {group}: {' | '.join(items)}")
             sections.append("=== KPI DASHBOARD ===\n" + "\n".join(kpi_lines))
 
-        # B. Demand SKU Summary
+        # B. Funnel & Conversion Summary
+        kpi_groups = kpi_snapshot.get("kpis", {})
+        funnel_data = kpi_groups.get("conversion_funnel", {})
+        if funnel_data:
+            funnel_lines = []
+            for key in ["conversion_rate", "cart_abandonment_rate", "checkout_completion_rate",
+                         "product_view_rate", "avg_session_duration", "revenue_per_session",
+                         "mobile_conversion_rate", "desktop_conversion_rate", "bounce_rate"]:
+                val = funnel_data.get(key)
+                if val is not None:
+                    if "rate" in key or key == "bounce_rate":
+                        funnel_lines.append(f"  {key}: {val:.1%}")
+                    elif key == "avg_session_duration":
+                        funnel_lines.append(f"  {key}: {val:.0f}s")
+                    elif key == "revenue_per_session":
+                        funnel_lines.append(f"  {key}: ${val:.2f}")
+                    else:
+                        funnel_lines.append(f"  {key}: {val}")
+            if funnel_lines:
+                sections.append("=== FUNNEL & CONVERSION ===\n" + "\n".join(funnel_lines))
+
+        # C. Demographics Summary
+        demo_data = kpi_groups.get("demographics", {})
+        if demo_data:
+            demo_lines = []
+            by_gender = demo_data.get("customers_by_gender", {})
+            if by_gender:
+                demo_lines.append(f"  Gender: {', '.join(f'{k}={v}' for k, v in by_gender.items())}")
+            by_age = demo_data.get("customers_by_age_group", {})
+            if by_age:
+                demo_lines.append(f"  Age groups: {', '.join(f'{k}={v}' for k, v in by_age.items())}")
+            by_loyalty = demo_data.get("customers_by_loyalty_tier", {})
+            if by_loyalty:
+                demo_lines.append(f"  Loyalty tiers: {', '.join(f'{k}={v}' for k, v in by_loyalty.items())}")
+            avg_spend = demo_data.get("avg_spend_by_loyalty", {})
+            if avg_spend:
+                demo_lines.append(f"  Avg spend by tier: {', '.join(f'{k}=${v:,.0f}' for k, v in avg_spend.items())}")
+            if demo_lines:
+                sections.append("=== CUSTOMER DEMOGRAPHICS ===\n" + "\n".join(demo_lines))
+
+        # D. Net Revenue Breakdown
+        net_rev = kpi_groups.get("net_revenue", {})
+        if net_rev and net_rev.get("gross_revenue"):
+            nr_lines = [
+                f"  Gross Revenue: ${net_rev.get('gross_revenue', 0):,.0f}",
+                f"  Discounts: ${net_rev.get('total_discounts', 0):,.0f}",
+                f"  Returns: ${net_rev.get('total_returns', 0):,.0f}",
+                f"  Refunds: ${net_rev.get('total_refunds', 0):,.0f}",
+                f"  Fees: ${net_rev.get('total_fees', 0):,.0f}",
+                f"  Net Revenue: ${net_rev.get('net_revenue', 0):,.0f}",
+                f"  Discount Rate: {net_rev.get('discount_rate', 0):.1%}",
+            ]
+            sections.append("=== NET REVENUE WATERFALL ===\n" + "\n".join(nr_lines))
+
+        # E. Payment Health
+        pay_data = kpi_groups.get("payment_health", {})
+        if pay_data and pay_data.get("payment_failure_rate") is not None:
+            pay_lines = [
+                f"  Failure Rate: {pay_data.get('payment_failure_rate', 0):.1%}",
+                f"  Refund Rate: {pay_data.get('refund_rate', 0):.1%}",
+                f"  Top Method: {pay_data.get('top_payment_method', 'N/A')}",
+                f"  Avg Fee: ${pay_data.get('avg_transaction_fee', 0):.2f}",
+            ]
+            sections.append("=== PAYMENT HEALTH ===\n" + "\n".join(pay_lines))
+
+        # F. Brand Performance (top 5)
+        brand_data = kpi_groups.get("brand_performance", {})
+        rev_by_brand = brand_data.get("revenue_by_brand", {})
+        if rev_by_brand:
+            top_brands = sorted(rev_by_brand.items(), key=lambda x: -x[1])[:5]
+            brand_lines = [f"  {b}: ${v:,.0f}" for b, v in top_brands]
+            sections.append("=== TOP BRANDS BY REVENUE ===\n" + "\n".join(brand_lines))
+
+        # G. Supplier Health
+        supplier_data = kpi_groups.get("supplier_health", {})
+        stockout_by_supplier = supplier_data.get("stockout_by_supplier", {})
+        if stockout_by_supplier:
+            problem_suppliers = {k: v for k, v in stockout_by_supplier.items() if v > 0}
+            if problem_suppliers:
+                supplier_lines = [f"  {s}: {n} SKUs at risk" for s, n in sorted(problem_suppliers.items(), key=lambda x: -x[1])]
+                sections.append("=== SUPPLIER STOCKOUT RISKS ===\n" + "\n".join(supplier_lines))
+
+        # H. Demand SKU Summary
         demand_skus = p.get("demand_skus", [])
         critical = [s for s in demand_skus if s.get("status") == "critical"]
         warning = [s for s in demand_skus if s.get("status") == "warning"]
@@ -284,6 +366,59 @@ class ActionAgent(BaseAgent):
         if exec_lines:
             sections.append("=== EXECUTIVE CONTEXT ===\n" + "\n".join(exec_lines))
 
+        # G. Follow-Up Context (comparison with previous run)
+        comparison = p.get("comparison_data")
+        if comparison and isinstance(comparison, dict):
+            comp_lines = []
+
+            # KPI changes summary
+            deltas = comparison.get("deltas", [])
+            if deltas:
+                improving = [d for d in deltas if d.get("direction") == "up"]
+                declining = [d for d in deltas if d.get("direction") == "down"]
+                comp_lines.append(f"KPI Changes: {len(improving)} improving, {len(declining)} declining out of {len(deltas)} total")
+
+                # Show top improving
+                for d in sorted(improving, key=lambda x: abs(x.get("percent_change") or 0), reverse=True)[:5]:
+                    pct = d.get("percent_change")
+                    pct_str = f" ({pct:+.1%})" if pct is not None else ""
+                    comp_lines.append(f"  ↑ {d.get('title', d.get('id', ''))}{pct_str}")
+
+                # Show top declining
+                for d in sorted(declining, key=lambda x: abs(x.get("percent_change") or 0), reverse=True)[:5]:
+                    pct = d.get("percent_change")
+                    pct_str = f" ({pct:+.1%})" if pct is not None else ""
+                    comp_lines.append(f"  ↓ {d.get('title', d.get('id', ''))}{pct_str}")
+
+            # Resolved issues
+            resolved = comparison.get("resolved_issues", [])
+            if resolved:
+                comp_lines.append(f"Resolved Issues ({len(resolved)}):")
+                for r in resolved[:5]:
+                    comp_lines.append(f"  ✓ [{r.get('severity', '')}] {r.get('title', '')}")
+
+            # New risks
+            new_risks = comparison.get("new_risks", [])
+            if new_risks:
+                comp_lines.append(f"New Risks ({len(new_risks)}):")
+                for r in new_risks[:5]:
+                    comp_lines.append(f"  ⚠ [{r.get('severity', '')}] {r.get('title', '')}")
+
+            # Completed prescriptions impact
+            completed_rx = comparison.get("completed_prescriptions", [])
+            if completed_rx:
+                comp_lines.append(f"Completed Prescriptions ({len(completed_rx)}):")
+                for rx in completed_rx:
+                    impact_summary = ""
+                    related = rx.get("related_kpi_changes", [])
+                    if related:
+                        impacts = [f"{d['title']} {d['direction']}" for d in related[:3]]
+                        impact_summary = f" → {', '.join(impacts)}"
+                    comp_lines.append(f"  Done: {rx.get('title', '')}{impact_summary}")
+
+            if comp_lines:
+                sections.append("=== FOLLOW-UP COMPARISON (vs previous run) ===\n" + "\n".join(comp_lines))
+
         return "\n\n".join(sections)
 
     @staticmethod
@@ -364,6 +499,88 @@ class ActionAgent(BaseAgent):
     ) -> AgentResult:
         p = self._perception
 
+        # Inject comparison data if a previous run exists
+        try:
+            from db.store import get_pipeline_runs, get_latest_run_id
+            runs = get_pipeline_runs()
+            completed_runs = [r for r in runs if r.get("status") == "completed"]
+            if len(completed_runs) >= 2:
+                import httpx
+                # Use the internal compare endpoint data
+                current_run = blackboard.config.get("run_id")
+                prev_run = completed_runs[1].get("id") if not current_run else None
+                # Build comparison inline instead of HTTP call
+                from db.store import (
+                    get_run_insight_snapshot, get_latest_insight_snapshot,
+                    get_run_action_plan_snapshot, get_prescription_statuses,
+                    get_run_kpi_snapshot, get_latest_kpi_snapshot,
+                )
+
+                cur_kpi = get_run_kpi_snapshot(current_run) if current_run else get_latest_kpi_snapshot()
+                prev_kpi = get_run_kpi_snapshot(completed_runs[1]["id"]) if len(completed_runs) >= 2 else None
+
+                if cur_kpi and prev_kpi:
+                    cur_cards = {c["id"]: c for c in cur_kpi.get("cards", []) if isinstance(c, dict)}
+                    prev_cards = {c["id"]: c for c in prev_kpi.get("cards", []) if isinstance(c, dict)}
+
+                    deltas = []
+                    for card_id, card in cur_cards.items():
+                        cur_val = card.get("value")
+                        prev_card = prev_cards.get(card_id)
+                        prev_val = prev_card.get("value") if prev_card else None
+                        if not isinstance(cur_val, (int, float)):
+                            continue
+                        if prev_val is not None and not isinstance(prev_val, (int, float)):
+                            continue
+                        if prev_val is None:
+                            continue
+                        abs_change = cur_val - prev_val
+                        pct_change = abs_change / prev_val if prev_val != 0 else None
+                        direction = "up" if abs_change > 0 else ("down" if abs_change < 0 else "stable")
+                        deltas.append({
+                            "id": card_id,
+                            "title": card.get("title", ""),
+                            "group": card.get("group", ""),
+                            "direction": direction,
+                            "percent_change": pct_change,
+                        })
+
+                    # Insight comparison
+                    cur_insights = []
+                    prev_insights = []
+                    try:
+                        ci = get_run_insight_snapshot(current_run) if current_run else get_latest_insight_snapshot()
+                        if ci:
+                            cur_insights = ci.get("insights", [])
+                    except Exception:
+                        pass
+                    try:
+                        pi = get_run_insight_snapshot(completed_runs[1]["id"])
+                        if pi:
+                            prev_insights = pi.get("insights", [])
+                    except Exception:
+                        pass
+
+                    cur_titles = {i.get("title", "").lower().strip() for i in cur_insights if i.get("title")}
+                    prev_titles = {i.get("title", "").lower().strip() for i in prev_insights if i.get("title")}
+
+                    resolved = [{"title": i.get("title",""), "severity": i.get("severity","low")}
+                                for i in prev_insights
+                                if i.get("severity") in ("high","medium")
+                                and (i.get("title","").lower().strip()) not in cur_titles]
+                    new_risks = [{"title": i.get("title",""), "severity": i.get("severity","low")}
+                                 for i in cur_insights
+                                 if i.get("severity") in ("high","medium")
+                                 and (i.get("title","").lower().strip()) not in prev_titles]
+
+                    p["comparison_data"] = {
+                        "deltas": deltas,
+                        "resolved_issues": resolved,
+                        "new_risks": new_risks,
+                    }
+        except Exception as e:
+            print(f"[ActionAgent] Could not load comparison data: {e}")
+
         # Build structured data for LLM and evidence registry for post-processing
         data_digest = self._build_data_digest(p)
         evidence_registry = self._build_evidence_registry(p)
@@ -387,7 +604,7 @@ class ActionAgent(BaseAgent):
                 "    {\n"
                 '      "id": "<unique 8-char alphanumeric>",\n'
                 '      "priority": <integer, 1=most urgent>,\n'
-                '      "category": "<inventory|customer|revenue|marketing|product>",\n'
+                '      "category": "<inventory|customer|revenue|marketing|product|funnel|pricing>",\n'
                 '      "urgency": "<critical|high|medium|low>",\n'
                 '      "title": "<imperative voice, max 80 chars, start with action verb>",\n'
                 '      "description": "<2-3 sentences cross-referencing data sources with specific numbers>",\n'
@@ -400,9 +617,9 @@ class ActionAgent(BaseAgent):
                 "  ]\n"
                 "}\n\n"
                 "RULES:\n"
-                "1. Generate 8-12 prescriptions total.\n"
+                "1. Generate 10-15 prescriptions total.\n"
                 "2. MANDATORY: Include at least 1 prescription per category "
-                "(inventory, customer, revenue, marketing, product).\n"
+                "(inventory, customer, revenue, marketing, product, funnel, pricing).\n"
                 "3. Use IMPERATIVE VOICE for titles — start with action verbs: "
                 "Restock, Launch, Investigate, Optimize, Monitor, Redesign, Test, "
                 "Expand, Reduce, Consolidate, etc.\n"
@@ -414,7 +631,10 @@ class ActionAgent(BaseAgent):
                 "issues with customer churn, revenue trends with marketing spend, etc.\n"
                 "7. Health score: 80-100=healthy, 60-79=needs attention, "
                 "40-59=concerning, 0-39=critical.\n"
-                "8. Return ONLY valid JSON. No markdown fences."
+                "8. Return ONLY valid JSON. No markdown fences.\n"
+                "9. If FOLLOW-UP COMPARISON data is provided, reference it in your prescriptions. "
+                "Acknowledge resolved issues, flag new risks, and adjust recommendations based on "
+                "what improved and what declined since the last analysis.\n"
             )
 
             user_prompt = (

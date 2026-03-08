@@ -424,21 +424,21 @@ def _apply_business_rules(df: pd.DataFrame, table: str, cfg: dict, rep: AuditRep
             )
             count(m, "clicks<=impressions")
 
-        # inventory: reorder <= quantity (warn)
-        if r == "reorder_level<=quantity_available?warn" and {
-            "reorder_level", "quantity_available"
+        # inventory: reorder <= stock_quantity (warn)
+        if r == "reorder_level<=stock_quantity?warn" and {
+            "reorder_level", "stock_quantity"
         }.issubset(df.columns):
             rl = pd.to_numeric(df["reorder_level"], errors="coerce")
-            qa = pd.to_numeric(df["quantity_available"], errors="coerce")
+            qa = pd.to_numeric(df["stock_quantity"], errors="coerce")
             m = rl.isna() | qa.isna() | (rl <= qa)
             count(m, "reorder<=qty", warn=True)
 
         # transactions: total ≈ qty * price (warn + fix total)
         if r == "total≈qty*price?warn" and {
-            "quantity", "price_per_unit", "total_amount"
+            "quantity", "unit_price", "total_amount"
         }.issubset(df.columns):
             qty = pd.to_numeric(df["quantity"], errors="coerce").fillna(0)
-            price = pd.to_numeric(df["price_per_unit"], errors="coerce").fillna(0)
+            price = pd.to_numeric(df["unit_price"], errors="coerce").fillna(0)
             est = qty * price
             total = pd.to_numeric(df["total_amount"], errors="coerce").fillna(0)
             diff = (total - est).abs()
@@ -496,17 +496,21 @@ def clean_table(df: pd.DataFrame, table: str, cfg: dict):
 
     # 2) table-specific pre-cleaners BEFORE casting
     if table == "products":
-        if "price" in df.columns:
-            df["price"] = _strip_currency(df["price"])
+        for price_col in ("retail_price", "cost_price", "price"):
+            if price_col in df.columns:
+                df[price_col] = _strip_currency(df[price_col])
     if table == "marketing":
+        for spend_col in ("ad_spend", "spend"):
+            if spend_col in df.columns:
+                df[spend_col] = _strip_currency(df[spend_col])
+    if table == "payments":
+        if "transaction_fee" in df.columns:
+            df["transaction_fee"] = _strip_currency(df["transaction_fee"])
+    if table in ("campaign_performance",):
         if "spend" in df.columns:
             df["spend"] = _strip_currency(df["spend"])
-    if table == "payments":
-        if "amount" in df.columns:
-            df["amount"] = _strip_currency(df["amount"])
-    if table == "feedback":
-        if "feedback_text" in df.columns:
-            df["feedback_text"] = _clean_feedback_text(df["feedback_text"])
+        if "attributed_revenue" in df.columns:
+            df["attributed_revenue"] = _strip_currency(df["attributed_revenue"])
 
     # 3) dates / timestamps (looser detection: date, time, timestamp in col name)
     date_cols = [
@@ -582,15 +586,18 @@ def clean_table(df: pd.DataFrame, table: str, cfg: dict):
 # -------------- Table detection --------------
 
 _HINTS = [
-    ("transactions", ["transaction_id", "total_amount", "price_per_unit"]),
-    ("inventory", ["quantity_available", "reorder_level", "warehouse_location"]),
-    ("products", ["product_id", "name", "price"]),
-    ("returns", ["return_id", "refund_amount"]),  # not used now, but kept
-    ("customers", ["customer_id", "signup_date"]),
-    ("web_analytics", ["session_id", "pageviews", "session_duration_sec"]),
-    ("marketing", ["campaign_id", "impressions", "clicks"]),
-    ("payments", ["payment_id", "amount", "method"]),
-    ("feedback", ["feedback_id", "rating", "feedback_text"]),
+    ("transactions_with_session", ["order_id", "total_amount", "session_id", "sku"]),
+    ("transactions", ["order_id", "total_amount", "unit_price", "sku"]),
+    ("inventory", ["stock_quantity", "reorder_level", "warehouse_location"]),
+    ("products", ["sku", "product_name", "retail_price"]),
+    ("customers", ["customer_id", "acquisition_date"]),
+    ("sessions", ["session_id", "session_start", "session_duration_sec", "converted_flag"]),
+    ("events", ["event_id", "session_id", "event_type", "event_datetime"]),
+    ("web_analytics", ["event_id", "session_id", "page_type", "action", "referral_source"]),
+    ("marketing", ["campaign_id", "ad_spend", "impressions", "clicks"]),
+    ("payments", ["order_id", "payment_method", "payment_status", "transaction_fee"]),
+    ("campaign_performance", ["campaign_id", "spend", "attributed_revenue"]),
+    ("funnel_summary", ["sessions", "product_views", "add_to_cart", "purchases"]),
 ]
 
 def infer_table_type(df: pd.DataFrame, filename: str | None, cfg: dict) -> str | None:

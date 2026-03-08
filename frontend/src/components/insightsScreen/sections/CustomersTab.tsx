@@ -44,6 +44,7 @@ import type {
   CustomerRow,
   ChurnPrediction,
   ChartNarrativeData,
+  Snapshot,
 } from "../dashboard/types";
 import {
   fmtCurrency,
@@ -79,6 +80,31 @@ const churnDistConfig = {
 /* ------------------------------------------------------------------ */
 /* Segment colors                                                      */
 /* ------------------------------------------------------------------ */
+
+const genderChartConfig = {
+  count: { label: "Customers" },
+} satisfies ChartConfig;
+
+const ageGroupChartConfig = {
+  count: {
+    label: "Customers",
+    color: "var(--chart-2)",
+  },
+} satisfies ChartConfig;
+
+const GENDER_COLORS: Record<string, string> = {
+  Female: "var(--chart-1)",
+  Male: "var(--chart-2)",
+  "Non-binary": "var(--chart-4)",
+  "Prefer not to say": "var(--chart-3)",
+};
+
+const LOYALTY_COLORS: Record<string, string> = {
+  bronze: "#CD7F32",
+  silver: "#9CA3AF",
+  gold: "#F59E0B",
+  platinum: "#6366F1",
+};
 
 const SEGMENT_COLORS = [
   "var(--chart-1)",
@@ -148,6 +174,7 @@ interface CustomersTabProps {
   churnPredictions: ChurnPrediction[];
   chartNarrative?: ChartNarrativeData | null;
   segmentRecommendations?: Record<string, string[]> | null;
+  snapshot?: Snapshot | null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -160,6 +187,7 @@ export function CustomersTab({
   churnPredictions,
   chartNarrative,
   segmentRecommendations,
+  snapshot,
 }: CustomersTabProps) {
   const [showAllAtRisk, setShowAllAtRisk] = useState(false);
   const [showAllTopBuyers, setShowAllTopBuyers] = useState(false);
@@ -171,6 +199,43 @@ export function CustomersTab({
   const avgClv = getCardValue(cards, "avg_clv");
   const churnRate = getCardValue(cards, "churn_rate_proxy");
   const retentionRate = getCardValue(cards, "retention_rate_proxy");
+
+  /* ---------- Demographics data ---------- */
+  const demographics = snapshot?.kpis?.demographics;
+
+  const genderData = useMemo(() => {
+    const raw = demographics?.customers_by_gender;
+    if (!raw) return [];
+    return Object.entries(raw).map(([name, value]) => ({
+      name,
+      value: safeNum(value),
+      fill: GENDER_COLORS[name] ?? "var(--chart-5)",
+    }));
+  }, [demographics]);
+
+  const ageGroupData = useMemo(() => {
+    const raw = demographics?.customers_by_age_group;
+    if (!raw) return [];
+    return Object.entries(raw).map(([group, count]) => ({
+      group,
+      count: safeNum(count),
+    }));
+  }, [demographics]);
+
+  const loyaltyData = useMemo(() => {
+    const tiers = demographics?.customers_by_loyalty_tier;
+    const spends = demographics?.avg_spend_by_loyalty;
+    if (!tiers) return [];
+    const total = Object.values(tiers).reduce((s: number, v: any) => s + safeNum(v), 0);
+    return Object.entries(tiers).map(([tier, count]) => ({
+      tier: tier.charAt(0).toUpperCase() + tier.slice(1),
+      tierKey: tier,
+      count: safeNum(count),
+      pct: total > 0 ? Math.round((safeNum(count) / total) * 100) : 0,
+      avgSpend: spends?.[tier] != null ? safeNum(spends[tier]) : null,
+      fill: LOYALTY_COLORS[tier] ?? "var(--chart-5)",
+    }));
+  }, [demographics]);
 
   /* ---------- Customer Segments Donut data ---------- */
   const segmentData = useMemo(() => {
@@ -295,6 +360,167 @@ export function CustomersTab({
           );
         })}
       </div>
+
+      {/* ============================================================
+          Row 1b: Demographics (Gender + Age Group + Loyalty)
+          ============================================================ */}
+      {(genderData.length > 0 || ageGroupData.length > 0 || loyaltyData.length > 0) && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Gender Distribution Donut */}
+          {genderData.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Gender Distribution</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ChartEnlargeWrapper title="Gender Distribution">
+                  <ChartContainer config={genderChartConfig} className="w-full" style={{ height: 220 }}>
+                    <PieChart>
+                      <ChartTooltip
+                        content={
+                          <ChartTooltipContent
+                            formatter={(value, name) => (
+                              <span>
+                                {name}: {Number(value).toLocaleString()}
+                              </span>
+                            )}
+                          />
+                        }
+                      />
+                      <Pie
+                        data={genderData}
+                        dataKey="value"
+                        nameKey="name"
+                        innerRadius={45}
+                        outerRadius={80}
+                        paddingAngle={3}
+                        strokeWidth={2}
+                        label={({ value }) => `${value}`}
+                      >
+                        {genderData.map((entry) => (
+                          <Cell key={entry.name} fill={entry.fill} />
+                        ))}
+                      </Pie>
+                    </PieChart>
+                  </ChartContainer>
+                  <div className="flex flex-wrap gap-3 mt-3 justify-center">
+                    {genderData.map((g) => (
+                      <div key={g.name} className="flex items-center gap-1.5 text-xs">
+                        <span
+                          className="rounded-sm shrink-0 inline-block"
+                          style={{ backgroundColor: g.fill, width: 12, height: 12 }}
+                        />
+                        <span className="text-muted-foreground">
+                          {g.name} ({g.value})
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </ChartEnlargeWrapper>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Age Group Horizontal Bar */}
+          {ageGroupData.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Age Group Distribution</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ChartEnlargeWrapper title="Age Group Distribution">
+                  <ChartContainer config={ageGroupChartConfig} className="w-full" style={{ height: 220 }}>
+                    <BarChart
+                      data={ageGroupData}
+                      layout="vertical"
+                      margin={{ top: 4, right: 24, bottom: 4, left: 8 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                      <XAxis
+                        type="number"
+                        tick={{ fontSize: 11 }}
+                        tickLine={false}
+                        axisLine={false}
+                      />
+                      <YAxis
+                        type="category"
+                        dataKey="group"
+                        tick={{ fontSize: 11 }}
+                        tickLine={false}
+                        axisLine={false}
+                        width={40}
+                      />
+                      <ChartTooltip
+                        content={
+                          <ChartTooltipContent
+                            formatter={(value) =>
+                              `${Number(value).toLocaleString()} customers`
+                            }
+                          />
+                        }
+                      />
+                      <Bar
+                        dataKey="count"
+                        fill="var(--chart-2)"
+                        radius={[0, 4, 4, 0]}
+                      />
+                    </BarChart>
+                  </ChartContainer>
+                </ChartEnlargeWrapper>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Loyalty Tier Breakdown */}
+          {loyaltyData.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Loyalty Tiers</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Stacked bar visualization */}
+                <div className="flex h-6 rounded-md overflow-hidden">
+                  {loyaltyData.map((tier) => (
+                    <div
+                      key={tier.tierKey}
+                      className="relative group"
+                      style={{
+                        width: `${tier.pct}%`,
+                        backgroundColor: tier.fill,
+                        minWidth: tier.pct > 0 ? 4 : 0,
+                      }}
+                      title={`${tier.tier}: ${tier.count} (${tier.pct}%)`}
+                    />
+                  ))}
+                </div>
+
+                {/* Tier details */}
+                <div className="space-y-2.5">
+                  {loyaltyData.map((tier) => (
+                    <div key={tier.tierKey} className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="rounded-sm shrink-0 inline-block"
+                          style={{ backgroundColor: tier.fill, width: 12, height: 12 }}
+                        />
+                        <span className="font-medium">{tier.tier}</span>
+                        <span className="text-muted-foreground text-xs">
+                          {tier.count.toLocaleString()} ({tier.pct}%)
+                        </span>
+                      </div>
+                      {tier.avgSpend != null && (
+                        <span className="text-xs text-muted-foreground tabular-nums">
+                          Avg {fmtCurrency(tier.avgSpend)}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
 
       {/* ============================================================
           Row 2: Segments Donut + Churn Distribution (with summary)

@@ -1,0 +1,365 @@
+================================================================================
+                     DATA UPDATE DESCRIPTIONS
+           Data Scientist Agent — Incremental Update Simulator
+================================================================================
+
+This document describes how the 12 CSV datasets are incrementally updated
+by the simulate_update.py script. Each invocation simulates a configurable
+number of days of retail activity and appends new rows to all datasets.
+
+Script:  backend/scripts/simulate_update.py
+Usage:   python scripts/simulate_update.py --days <N> --scenario <name>
+
+
+================================================================================
+1. OVERVIEW
+================================================================================
+
+The update simulator picks up where the existing data left off. It reads the
+latest timestamps from each CSV, then generates new data for the specified
+number of days forward. All new rows maintain referential integrity with
+existing data and follow the same ~5% dirty data injection pattern.
+
+Default:  7 days, organic-growth scenario
+
+
+================================================================================
+2. UPDATE ORDER
+================================================================================
+
+Datasets are updated in dependency order to preserve FK relationships:
+
+  Step 1:   customers.csv              New customer sign-ups
+  Step 2:   marketing.csv              New marketing campaigns
+  Step 3:   sessions.csv               New website sessions (linked to customers & campaigns)
+  Step 4:   events.csv                 Funnel events within new sessions
+  Step 5:   web_analytics.csv          Raw web interaction logs
+  Step 6:   transactions.csv           Orders from converted sessions
+  Step 7:   transactions_with_session.csv   Same orders + session_id attribution
+  Step 8:   payments.csv               Payments for new orders
+  Step 9:   inventory.csv              Stock adjustments (in-place update, not append)
+  Step 10:  campaign_performance.csv   Daily campaign metrics for new campaigns
+  Step 11:  funnel_summary.csv         Daily funnel aggregates for new days
+
+
+================================================================================
+3. PER-DATASET UPDATE LOGIC
+================================================================================
+
+
+customers.csv
+-------------
+  Method:   Append new rows
+  Logic:    Generates new customers with unique IDs continuing from the max
+            existing customer_id. Number of new customers is scaled by the
+            scenario's new_customers_mult parameter.
+  Fields:   All fields populated with realistic data. total_spend starts at 0
+            (not backfilled during updates).
+
+
+marketing.csv
+-------------
+  Method:   Append new rows
+  Logic:    Creates new campaigns starting within the simulated time window.
+            Campaign count and ad_spend are scaled by marketing_spend_mult.
+            Seasonal-spike scenario generates more flash_sale campaign types.
+
+
+sessions.csv
+-------------
+  Method:   Append new rows
+  Logic:    Generates sessions for the simulated time window. Each session:
+            - Picks a random customer from the full customer pool
+            - Assigns traffic source weighted by scenario (marketing-blitz
+              pushes 80% to paid channels)
+            - Links to active campaigns when traffic is paid
+            - Marks ~N% as converted (N = scenario conversion_rate)
+            - Session duration scaled by session_duration_mult
+  Volume:   Base 10-30 sessions/day, scaled by volume_mult
+
+
+events.csv
+----------
+  Method:   Append new rows
+  Logic:    For each new session, generates a funnel sequence:
+            page_view (100%) -> product_view (~70%) -> add_to_cart (~30%)
+            -> begin_checkout (~15%) -> purchase (converted sessions only)
+            Each event gets a timestamp ordered within the session window.
+  Special:  new-product-launch scenario concentrates 60% of product_view
+            events on the 10 most recently added SKUs.
+
+
+web_analytics.csv
+-----------------
+  Method:   Append new rows
+  Logic:    Generates raw web events referencing existing sessions and
+            customers. Volume scaled by scenario volume_mult.
+  Volume:   Base 15-40 events/day, scaled by volume_mult
+
+
+transactions.csv
+----------------
+  Method:   Append new rows
+  Logic:    Creates order line items from converted sessions only.
+            Each converted session generates 1-5 order lines.
+  Scenario effects:
+            - unit_price scaled by aov_mult
+            - discount_amount scaled by discount_mult (capped at 50%)
+            - order_status set to "cancelled" at cancel_rate frequency
+            - order_status set to "returned" at return_rate frequency
+            - Remaining orders distributed: 65% delivered, 20% shipped, 15% processing
+
+
+transactions_with_session.csv
+-----------------------------
+  Method:   Append new rows
+  Logic:    Identical to transactions.csv rows with an additional session_id
+            column linking each order back to the originating session.
+
+
+payments.csv
+------------
+  Method:   Append new rows
+  Logic:    One payment per transaction. Payment status influenced by scenario:
+            - refund_rate controls "refunded" status frequency
+            - ~5% "failed", ~8% "pending", remainder "completed"
+
+
+inventory.csv
+-------------
+  Method:   In-place update (NOT append)
+  Logic:
+    1. Decrement stock_quantity for each SKU based on quantities sold in
+       new transactions
+    2. Scenario-dependent restocking:
+       - stockout-crisis: Drain 30% of SKUs to near-zero (0-3 units)
+       - All other scenarios: Randomly restock 10% of products (+50-200 units)
+
+
+campaign_performance.csv
+------------------------
+  Method:   Append new rows
+  Logic:    For each new campaign, generates daily performance rows covering
+            the simulated time window (capped at campaign duration).
+            Daily metrics are the campaign totals distributed across active
+            days with random noise (0.5x-1.5x).
+  Scenario effects:
+            - sessions/orders per day scaled by volume_mult
+            - attributed_revenue scaled by aov_mult
+
+
+funnel_summary.csv
+------------------
+  Method:   Append new rows
+  Logic:    One row per new day. Generates realistic daily funnel numbers:
+            sessions -> product_views -> add_to_cart -> checkout_started
+            -> purchases, with conversion_rate and cart_abandonment_rate.
+  Scenario effects:
+            - Session volume scaled by volume_mult
+            - Funnel progression rates adjusted by conversion_rate and
+              cart_abandon_rate parameters
+
+
+================================================================================
+4. DYNAMIC SCENARIOS
+================================================================================
+
+Each scenario adjusts a set of parameters that influence all update functions.
+Only one scenario can be active per invocation (mutually exclusive).
+
+
+organic-growth (DEFAULT)
+------------------------
+  Description:    Steady healthy growth across all metrics
+  Conversion:     20%
+  Volume:         1.0x (baseline)
+  AOV:            1.0x
+  Discounts:      1.0x
+  Returns:        10%
+  Cancellations:  10%
+  Cart Abandon:   55%
+  New Customers:  1.0x
+  Marketing:      1.0x
+  Refunds:        8%
+  Paid Traffic:   30%
+
+
+profit
+------
+  Description:    Business thriving — high conversions, low returns, strong margins
+  Conversion:     30% (highest)
+  Volume:         1.3x
+  AOV:            1.4x (highest)
+  Discounts:      0.5x (minimal discounting)
+  Returns:        5% (lowest)
+  Cancellations:  5% (lowest)
+  Cart Abandon:   35% (lowest)
+  New Customers:  1.2x
+  Marketing:      0.8x (efficient spend)
+  Refunds:        3% (lowest)
+  Paid Traffic:   30%
+  Effect:         More orders, higher value, fewer problems
+
+
+loss
+----
+  Description:    Business struggling — low conversions, high returns/cancellations
+  Conversion:     5% (lowest)
+  Volume:         0.4x (very low)
+  AOV:            0.6x (low baskets)
+  Discounts:      2.0x (desperate discounting)
+  Returns:        30% (highest)
+  Cancellations:  30% (highest)
+  Cart Abandon:   80% (highest)
+  New Customers:  0.5x
+  Marketing:      1.5x (spending more for less)
+  Refunds:        25% (highest)
+  Paid Traffic:   40%
+  Effect:         Few conversions, lots of returns/refunds, heavy discounts
+
+
+seasonal-spike
+--------------
+  Description:    Holiday/flash sale period — massive volume surge
+  Conversion:     25%
+  Volume:         4.0x (highest)
+  AOV:            1.2x
+  Discounts:      2.5x (highest discounting)
+  Returns:        12%
+  Cancellations:  8%
+  Cart Abandon:   45%
+  New Customers:  3.0x (flood of new shoppers)
+  Marketing:      3.0x
+  Refunds:        10%
+  Paid Traffic:   50%
+  Effect:         4x everything, heavy promotions, inventory pressure
+  Special:        Generates more flash_sale campaign types
+
+
+stockout-crisis
+---------------
+  Description:    Supply chain problems — inventory drains, cancelled orders
+  Conversion:     10%
+  Volume:         0.6x
+  AOV:            0.9x
+  Discounts:      0.5x (no promos during shortage)
+  Returns:        8%
+  Cancellations:  40% (can't fulfill)
+  Cart Abandon:   70%
+  New Customers:  0.7x
+  Marketing:      0.5x (pulled back)
+  Refunds:        5%
+  Paid Traffic:   20%
+  Effect:         High cancellation rate, inventory drained
+  Special:        Drains 30% of SKUs to 0-3 units in inventory.csv
+
+
+marketing-blitz
+---------------
+  Description:    Aggressive advertising campaign — flood of paid traffic
+  Conversion:     18%
+  Volume:         2.0x
+  AOV:            1.0x
+  Discounts:      1.5x
+  Returns:        10%
+  Cancellations:  10%
+  Cart Abandon:   50%
+  New Customers:  2.5x (lots of new acquisitions)
+  Marketing:      5.0x (highest spend)
+  Refunds:        8%
+  Paid Traffic:   80% (highest — most sessions from ads)
+  Effect:         Massive paid traffic, many new customers, high CAC
+  Special:        80% of sessions attributed to paid channels with campaign names
+
+
+churn-wave
+----------
+  Description:    Customer exodus — fewer returning customers, low engagement
+  Conversion:     8%
+  Volume:         0.5x
+  AOV:            0.7x
+  Discounts:      1.0x
+  Returns:        15%
+  Cancellations:  15%
+  Cart Abandon:   75%
+  New Customers:  0.3x (lowest — hard to acquire)
+  Marketing:      1.0x
+  Refunds:        12%
+  Paid Traffic:   10% (lowest — mostly direct/organic stragglers)
+  Effect:         Short sessions, few page views, minimal engagement
+  Special:        Session duration multiplied by 0.4x (very short visits)
+
+
+new-product-launch
+------------------
+  Description:    New products added — concentrated demand on newest items
+  Conversion:     22%
+  Volume:         1.5x
+  AOV:            1.3x
+  Discounts:      1.2x (introductory offers)
+  Returns:        12%
+  Cancellations:  10%
+  Cart Abandon:   50%
+  New Customers:  1.5x
+  Marketing:      2.0x (launch promotion)
+  Refunds:        8%
+  Paid Traffic:   50%
+  Effect:         Higher interest, concentrated on new products
+  Special:        60% of product_view events target the 10 most recent SKUs
+
+
+================================================================================
+5. EXAMPLE WORKFLOWS
+================================================================================
+
+Simulate a normal week:
+  python scripts/simulate_update.py
+
+Simulate a holiday rush:
+  python scripts/simulate_update.py --days 14 --scenario seasonal-spike
+
+Simulate a bad quarter:
+  python scripts/simulate_update.py --days 30 --scenario loss
+  python scripts/simulate_update.py --days 30 --scenario loss
+  python scripts/simulate_update.py --days 30 --scenario loss
+
+Simulate a recovery arc:
+  python scripts/simulate_update.py --days 30 --scenario loss
+  python scripts/simulate_update.py --days 14 --scenario organic-growth
+  python scripts/simulate_update.py --days 30 --scenario profit
+
+Simulate supply chain disruption then recovery:
+  python scripts/simulate_update.py --days 14 --scenario stockout-crisis
+  python scripts/simulate_update.py --days 7 --scenario organic-growth
+
+Simulate a product launch with marketing push:
+  python scripts/simulate_update.py --days 7 --scenario marketing-blitz
+  python scripts/simulate_update.py --days 14 --scenario new-product-launch
+
+
+================================================================================
+6. IMPORTANT NOTES
+================================================================================
+
+- Always run generate_synthetic_data.py first to create the base 12 CSVs
+  before running any updates.
+
+- Updates are cumulative — each run appends to the existing data. Running
+  the update script multiple times creates a growing time-series dataset.
+
+- inventory.csv is the only file updated in-place (stock levels adjusted)
+  rather than appended to.
+
+- The ~5% dirty data rate is maintained in all appended rows.
+
+- ID sequences (CUST, SESS, EVT, ORD, CAMP, etc.) continue from the max
+  existing ID to avoid collisions.
+
+- Timestamps continue from the latest existing date in each file to maintain
+  chronological continuity.
+
+- To reset to a clean state, re-run generate_synthetic_data.py which deletes
+  all existing CSVs before regenerating.
+
+
+================================================================================

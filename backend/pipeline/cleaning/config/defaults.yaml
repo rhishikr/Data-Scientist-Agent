@@ -17,81 +17,80 @@ category_maps:
       laptop: desktop
       tab: tablet
       tablet: tablet
+    gender:
+      male: Male
+      m: Male
+      female: Female
+      f: Female
+      "non-binary": Non-binary
+      nb: Non-binary
+      nonbinary: Non-binary
+      "prefer not to say": Prefer not to say
+      other: Prefer not to say
+    loyalty_status:
+      bronze: bronze
+      silver: silver
+      gold: gold
+      platinum: platinum
 
   products:
     category:
-      sneeker: sneakers
-      sneaker: sneakers
-      sneakers: sneakers
-      "sneaker ": sneakers
-      sandles: sandals
-      sandals: sandals
-      sandal: sandals
-      tshirt: t_shirt
-      "t-shirt": t_shirt
-      "t_shrt": t_shirt
-      "t shrt": t_shirt
-      "dres": dress
-      dress: dress
-      coat: coat
-      "coat ": coat
-      ankleboot: ankle_boot
-      "ankle boot": ankle_boot
+      electronics: Electronics
+      clothing: Clothing
+      beauty: Beauty
+      sports: Sports
+      books: Books
+      home: Home
+      toys: Toys
+      food: Food
 
   transactions:
-    payment_type:
-      visa: visa
-      "visa ": visa
-      mastercard: mastercard
-      "master card": mastercard
-      amex: amex
-      "credit card": card
-      creditcard: card
-      cc: card
-      card: card
-      paypal: paypal
-      giftcard: giftcard
-      "gift card": giftcard
-      cash: cash
-    channel:
-      web: online
-      browser: online
-      online: online
-      "online ": online
-      app: app
-      mobile_app: app
-      "mobile app": app
-      " in-store": in_store
-      instore: in_store
-      "in store": in_store
-      pos: in_store
+    order_status:
+      delivered: delivered
+      shipped: shipped
+      processing: processing
+      cancelled: cancelled
+      canceled: cancelled
+      returned: returned
 
   payments:
-    method:
-      visa: visa
-      "visa ": visa
-      VISA: visa
-      mastercard: mastercard
-      amex: amex
-      creditcard: card
-      "credit card": card
-      cc: card
-      debit: debit
+    payment_method:
+      credit_card: credit_card
+      "credit card": credit_card
+      creditcard: credit_card
+      cc: credit_card
+      visa: credit_card
+      mastercard: credit_card
+      debit_card: debit_card
+      "debit card": debit_card
+      debit: debit_card
       paypal: paypal
       "paypal ": paypal
-      cash: cash
-    status:
+      wallet: wallet
+      bank_transfer: bank_transfer
+      "bank transfer": bank_transfer
+      wire: bank_transfer
+    payment_status:
+      completed: completed
       done: completed
       ok: completed
       paid: completed
       success: completed
-      completed: completed
       failed: failed
       error: failed
       refunded: refunded
       refund: refunded
       pending: pending
       "?": failed
+    currency:
+      usd: USD
+      eur: EUR
+      gbp: GBP
+      cad: CAD
+      aud: AUD
+      jpy: JPY
+      inr: INR
+      brl: BRL
 
   marketing:
     channel:
@@ -99,43 +98,143 @@ category_maps:
       "email marketing": email
       "e-mail": email
       mail: email
-      "paid search": paid_search
+      google_ads: google_ads
+      "google ads": google_ads
+      "paid search": google_ads
+      paid_search: google_ads
+      facebook: facebook
+      fb: facebook
+      instagram: instagram
+      ig: instagram
+      in_app: in_app
+      "in app": in_app
+      social: social
+      "social media": social
+      tiktok: social
+    campaign_type:
+      seasonal_sale: seasonal_sale
+      "seasonal sale": seasonal_sale
+      new_arrival: new_arrival
+      "new arrival": new_arrival
+      clearance: clearance
+      loyalty: loyalty
+      flash_sale: flash_sale
+      "flash sale": flash_sale
+
+  sessions:
+    device_type:
+      mobile: mobile
+      mob: mobile
+      phone: mobile
+      "mobile phone": mobile
+      m: mobile
+      desktop: desktop
+      pc: desktop
+      laptop: desktop
+      tab: tablet
+      tablet: tablet
+    traffic_source:
+      organic_search: organic_search
+      "organic search": organic_search
+      organic: organic_search
       paid_search: paid_search
-      search: paid_search
+      "paid search": paid_search
+      email: email
+      "email marketing": email
+      social: social
+      "social media": social
+      direct: direct
+      referral: referral
+    landing_page:
+      home: home
+      product: product
+      category: category
+      deals: deals
+      new_arrivals: new_arrivals
+      "new arrivals": new_arrivals
+      search: search
+
+  events:
+    event_type:
+      page_view: page_view
+      "page view": page_view
+      pageview: page_view
+      product_view: product_view
+      "product view": product_view
+      add_to_cart: add_to_cart
+      "add to cart": add_to_cart
+      begin_checkout: begin_checkout
+      "begin checkout": begin_checkout
+      purchase: purchase
+
+  web_analytics:
+    page_type:
+      home: home
+      product: product
+      category: category
+      cart: cart
+      checkout: checkout
+      search_results: search_results
+      "search results": search_results
+    action:
+      view_page: view_page
+      "view page": view_page
+      add_to_cart: add_to_cart
+      "add to cart": add_to_cart
+      remove_from_cart: remove_from_cart
+      "remove from cart": remove_from_cart
+      purchase: purchase
+      search: search
+    referral_source:
+      direct: direct
+      organic_search: organic_search
+      "organic search": organic_search
+      organic: organic_search
+      email: email
+      "email marketing": email
       social: social
       "social media": social
       facebook: social
       instagram: social
-      tiktok: social
+      paid_ads: paid_ads
+      "paid ads": paid_ads
 
-  web_analytics:
-    device_type:
-      m: mobile
-      mobile: mobile
-      "mobile phone": mobile
-      phone: mobile
-      smartphone: mobile
-      desktop: desktop
-      pc: desktop
-      laptop: desktop
-      " desktop": desktop
-      tab: tablet
-      tablet: tablet
-    referral_source:
-      "google organic": organic
-      "google/organic": organic
-      organic: organic
-      "social": social
-      "facebook": social
-      "instagram": social
-      "email": email
-      "email marketing": email
-      mail: email
-      direct: direct
-      referral: referral
+  inventory:
+    supplier:
+      primeWholesale: PrimeWholesale
+      primewholesale: PrimeWholesale
+      globalSupplyCo: GlobalSupplyCo
+      globalsupplyco: GlobalSupplyCo
+      megadistro: MegaDistro
+      megaDistro: MegaDistro
+      nexgen logistics: NexGen Logistics
+      nexgenlogistics: NexGen Logistics
+      fastship: FastShip
+      fastShip: FastShip
+      corefreight: CoreFreight
+      coreFreight: CoreFreight
+      urbantraders: UrbanTraders
+      urbanTraders: UrbanTraders
+      atlas distribution: Atlas Distribution
+      atlasdistribution: Atlas Distribution
+      pinnacle supply: Pinnacle Supply
+      pinnaclesupply: Pinnacle Supply
+      pacific trading: Pacific Trading
+      pacifictrading: Pacific Trading
+
+  campaign_performance:
+    channel:
+      email: email
+      google_ads: google_ads
+      "google ads": google_ads
+      facebook: facebook
+      instagram: instagram
+      in_app: in_app
+      social: social
+
 
 # ------------------------------------------------------------------
-# Table schemas (aligned to your dirty_*.csv files)
+# Table schemas (aligned to new 12-CSV data generation)
 # ------------------------------------------------------------------
 tables:
 
@@ -143,263 +242,521 @@ tables:
   # 1. customers.csv
   # =========================
   customers:
-    required: [customer_id, signup_date]
+    required: [customer_id, acquisition_date]
     recommended:
       - name
+      - email
+      - age
+      - gender
       - location
       - device_type
-      - avg_session_time_min
-      - wishlist_items_count
-      - gender
-      - age_group
-      - preferred_channel
-      - lifetime_value
-      - loyalty_tier
+      - loyalty_status
+      - total_spend
 
     aliases:
       customer_id: [customer_id, cust_id, user_id]
-      signup_date: [signup_date, joined_at, account_creation_date]
       name: [name, full_name, customer_name]
+      email: [email, email_address]
+      age: [age, customer_age]
+      gender: [gender, sex]
       location: [location, city_region_country, city]
       device_type: [device_type, device, platform]
-      avg_session_time_min: [avg_session_time_min, avg_session_minutes, avg_session_time]
-      wishlist_items_count: [wishlist_items_count, wishlist_count, wishlist_items]
-      gender: [gender, sex]
-      age_group: [age_group, age_band]
-      preferred_channel: [preferred_channel, fav_channel, primary_channel]
-      lifetime_value: [lifetime_value, ltv]
-      loyalty_tier: [loyalty_tier, tier]
+      loyalty_status: [loyalty_status, loyalty_tier, tier]
+      total_spend: [total_spend, lifetime_value, ltv]
+      acquisition_date: [acquisition_date, signup_date, joined_at, account_creation_date]
 
     dtypes:
       customer_id: string
-      signup_date: datetime64[ns]
       name: string
+      email: string
+      age: Int64
+      gender: string
       location: string
       device_type: string
-      avg_session_time_min: float
-      wishlist_items_count: Int64
-      gender: string
-      age_group: string
-      preferred_channel: string
-      lifetime_value: float
-      loyalty_tier: string
+      loyalty_status: string
+      total_spend: float
+      acquisition_date: datetime64[ns]
 
     primary_key: [customer_id]
 
     outlier_cols:
-      - lifetime_value
-      - avg_session_time_min
-      - wishlist_items_count
+      - age
+      - total_spend
 
     business_rules:
-      - "lifetime_value>=0"
-      - "avg_session_time_min>=0"
-      - "wishlist_items_count>=0"
+      - "total_spend>=0"
+      - "age>=0"
 
 
   # =========================
-  # 2. feedback.csv
+  # 2. products.csv
   # =========================
-  feedback:
-    required: [feedback_id, customer_id, rating, feedback_text, created_at]
+  products:
+    required: [sku, product_name, category, retail_price]
+    recommended:
+      - brand
+      - cost_price
+      - profit_margin
+      - discount_percent
+      - average_rating
+
     aliases:
-      feedback_id: [feedback_id, fb_id, review_id]
-      customer_id: [customer_id, cust_id, user_id]
-      rating: [rating, score, stars]
-      feedback_text: [feedback_text, comment, review_text]
-      created_at: [created_at, submitted_at, review_date]
-    dtypes:
-      feedback_id: string
-      customer_id: string
-      rating: float
-      feedback_text: string
-      created_at: datetime64[ns]
-    primary_key: [feedback_id]
-    outlier_cols: [rating]
-    business_rules:
-      - "rating>=1"
-      - "rating<=5"
+      sku: [sku, product_id, item_code]
+      product_name: [product_name, name, title]
+      category: [category, cat]
+      brand: [brand, manufacturer]
+      cost_price: [cost_price, cogs, wholesale_price]
+      retail_price: [retail_price, price, msrp]
+      profit_margin: [profit_margin, margin]
+      discount_percent: [discount_percent, discount_pct, discount]
+      average_rating: [average_rating, rating, review_score, stars]
 
-  # =========================
-  # 3. inventory.csv (simple)
-  # =========================
-  inventory:
-    required:
-      [sku, product_id, quantity_available, reorder_level, warehouse_location]
-    recommended: []
-    aliases:
-      sku: [sku, item_code]
-      product_id: [product_id, sku_external]
-      quantity_available: [quantity_available, on_hand, stock]
-      reorder_level: [reorder_level, rop, reorder_point]
-      warehouse_location: [warehouse_location, warehouse, wh, location]
     dtypes:
       sku: string
-      product_id: string
-      quantity_available: Int64
-      reorder_level: Int64
-      warehouse_location: string
-    primary_key: [sku, warehouse_location]
-    outlier_cols: [quantity_available, reorder_level]
+      product_name: string
+      category: string
+      brand: string
+      cost_price: float
+      retail_price: float
+      profit_margin: float
+      discount_percent: float
+      average_rating: float
+
+    primary_key: [sku]
+
+    outlier_cols:
+      - retail_price
+      - cost_price
+      - average_rating
+
     business_rules:
-      - "quantity_available>=0"
-      - "reorder_level>=0"
-      - "reorder_level<=quantity_available?warn"
+      - "retail_price>=0"
+      - "cost_price>=0"
+      - "discount_percent>=0"
+      - "average_rating>=1"
+      - "average_rating<=5"
+
 
   # =========================
-  # 4. marketing.csv
+  # 3. inventory.csv
+  # =========================
+  inventory:
+    required: [sku, stock_quantity, reorder_level, warehouse_location]
+    recommended:
+      - supplier
+
+    aliases:
+      sku: [sku, product_id, item_code]
+      stock_quantity: [stock_quantity, quantity_available, on_hand, stock, stock_level]
+      reorder_level: [reorder_level, reorder_threshold, rop, reorder_point]
+      warehouse_location: [warehouse_location, warehouse, wh, location]
+      supplier: [supplier, vendor, distributor]
+
+    dtypes:
+      sku: string
+      stock_quantity: float
+      reorder_level: float
+      warehouse_location: string
+      supplier: string
+
+    primary_key: [sku]
+
+    outlier_cols:
+      - stock_quantity
+      - reorder_level
+
+    business_rules:
+      - "stock_quantity>=0"
+      - "reorder_level>=0"
+
+
+  # =========================
+  # 4. transactions.csv
+  # =========================
+  transactions:
+    required:
+      [order_id, customer_id, sku, quantity, unit_price, total_amount, order_datetime]
+    recommended:
+      - discount_amount
+      - order_status
+
+    aliases:
+      order_id: [order_id, transaction_id, txn_id]
+      customer_id: [customer_id, cust_id, user_id]
+      sku: [sku, product_id, item_code]
+      quantity: [quantity, qty, units]
+      unit_price: [unit_price, price_per_unit, sell_price]
+      total_amount: [total_amount, line_amount, extended_price]
+      discount_amount: [discount_amount, discount, discount_value]
+      order_status: [order_status, status]
+      order_datetime: [order_datetime, timestamp, date, sold_at, transaction_date]
+
+    dtypes:
+      order_id: string
+      customer_id: string
+      sku: string
+      quantity: float
+      unit_price: float
+      total_amount: float
+      discount_amount: float
+      order_status: string
+      order_datetime: datetime64[ns]
+
+    primary_key: [order_id, sku]
+
+    outlier_cols:
+      - quantity
+      - unit_price
+      - total_amount
+      - discount_amount
+
+    business_rules:
+      - "quantity>=0"
+      - "unit_price>=0"
+      - "total_amount>=0"
+      - "discount_amount>=0"
+
+
+  # =========================
+  # 5. transactions_with_session.csv
+  # =========================
+  transactions_with_session:
+    required:
+      [order_id, customer_id, sku, quantity, unit_price, total_amount, order_datetime, session_id]
+    recommended:
+      - discount_amount
+      - order_status
+
+    aliases:
+      order_id: [order_id, transaction_id, txn_id]
+      customer_id: [customer_id, cust_id, user_id]
+      sku: [sku, product_id, item_code]
+      quantity: [quantity, qty, units]
+      unit_price: [unit_price, price_per_unit, sell_price]
+      total_amount: [total_amount, line_amount, extended_price]
+      discount_amount: [discount_amount, discount, discount_value]
+      order_status: [order_status, status]
+      order_datetime: [order_datetime, timestamp, date, sold_at]
+      session_id: [session_id, sess_id]
+
+    dtypes:
+      order_id: string
+      customer_id: string
+      sku: string
+      quantity: float
+      unit_price: float
+      total_amount: float
+      discount_amount: float
+      order_status: string
+      order_datetime: datetime64[ns]
+      session_id: string
+
+    primary_key: [order_id, sku]
+
+    outlier_cols:
+      - quantity
+      - unit_price
+      - total_amount
+      - discount_amount
+
+    business_rules:
+      - "quantity>=0"
+      - "unit_price>=0"
+      - "total_amount>=0"
+      - "discount_amount>=0"
+
+
+  # =========================
+  # 6. payments.csv
+  # =========================
+  payments:
+    required: [order_id, payment_method, payment_status, transaction_fee, currency]
+    aliases:
+      order_id: [order_id, transaction_id, txn_id]
+      payment_method: [payment_method, method, pay_type, tender_type]
+      payment_status: [payment_status, status]
+      transaction_fee: [transaction_fee, fee, processing_fee]
+      currency: [currency, curr, ccy]
+
+    dtypes:
+      order_id: string
+      payment_method: string
+      payment_status: string
+      transaction_fee: float
+      currency: string
+
+    primary_key: [order_id]
+
+    outlier_cols:
+      - transaction_fee
+
+    business_rules:
+      - "transaction_fee>=0"
+
+
+  # =========================
+  # 7. marketing.csv
   # =========================
   marketing:
     required:
-      [campaign_id, customer_id, channel, spend,
-       impressions, clicks, conversions, campaign_date]
+      [campaign_id, channel, campaign_type, campaign_name,
+       start_date, end_date, ad_spend, impressions, clicks, conversions]
     aliases:
       campaign_id: [campaign_id, cmp_id]
-      customer_id: [customer_id, cust_id, user_id]
       channel: [channel, marketing_channel]
-      spend: [spend, cost, budget]
+      campaign_type: [campaign_type, type]
+      campaign_name: [campaign_name, name]
+      start_date: [start_date, campaign_start]
+      end_date: [end_date, campaign_end]
+      ad_spend: [ad_spend, spend, cost, budget]
       impressions: [impressions, imps]
       clicks: [clicks]
       conversions: [conversions, conv, purchases]
-      campaign_date: [campaign_date, date, start_date]
+
     dtypes:
       campaign_id: string
-      customer_id: string
       channel: string
-      spend: float
-      impressions: Int64
-      clicks: Int64
-      conversions: Int64
-      campaign_date: datetime64[ns]
-    primary_key: [campaign_id, customer_id]
-    outlier_cols: [spend, impressions, clicks, conversions]
+      campaign_type: string
+      campaign_name: string
+      start_date: datetime64[ns]
+      end_date: datetime64[ns]
+      ad_spend: float
+      impressions: float
+      clicks: float
+      conversions: float
+
+    primary_key: [campaign_id]
+
+    outlier_cols:
+      - ad_spend
+      - impressions
+      - clicks
+      - conversions
+
     business_rules:
-      - "spend>=0"
+      - "ad_spend>=0"
       - "impressions>=0"
       - "clicks>=0"
       - "conversions>=0"
       - "conversions<=clicks"
       - "clicks<=impressions"
 
-  # =========================
-  # 5. payments.csv
-  # =========================
-  payments:
-    required: [payment_id, customer_id, transaction_id, amount, method, status, timestamp]
-    aliases:
-      payment_id: [payment_id, pay_id]
-      customer_id: [customer_id, cust_id, user_id]
-      transaction_id: [transaction_id, txn_id, order_id]
-      amount: [amount, paid_amount, value]
-      method: [method, payment_method, pay_type, tender_type]
-      status: [status, payment_status]
-      timestamp: [timestamp, paid_at, payment_time]
-    dtypes:
-      payment_id: string
-      customer_id: string
-      transaction_id: string
-      amount: float
-      method: string
-      status: string
-      timestamp: datetime64[ns]
-    primary_key: [payment_id]
-    outlier_cols: [amount]
-    business_rules:
-      - "amount>=0"
 
   # =========================
-  # 6. products.csv
+  # 8. sessions.csv
   # =========================
-  products:
-    required: [product_id, name, category, price, brand]
-    recommended: [rating]
-    aliases:
-      product_id: [product_id, sku, item_code]
-      name: [name, product_name, title]
-      category: [category, cat]
-      price: [price, retail_price, msrp]
-      brand: [brand, manufacturer]
-      rating: [rating, review_score, stars]
-    dtypes:
-      product_id: string
-      name: string
-      category: string
-      price: float
-      brand: string
-      rating: float
-    primary_key: [product_id]
-    outlier_cols: [price, rating]
-    business_rules:
-      - "price>=0"
-      - "rating>=1"
-      - "rating<=5"
-
-  # =========================
-  # 7. transactions.csv
-  # =========================
-  transactions:
+  sessions:
     required:
-      [transaction_id, customer_id, product_id,
-       quantity, price_per_unit, total_amount, timestamp]
-    recommended: [payment_type, channel]
-    aliases:
-      transaction_id: [transaction_id, order_id, txn_id]
-      customer_id: [customer_id, cust_id, user_id]
-      product_id: [product_id, sku, item_code]
-      quantity: [quantity, qty, units]
-      price_per_unit: [price_per_unit, unit_price, sell_price]
-      total_amount: [total_amount, line_amount, extended_price]
-      timestamp: [timestamp, date, sold_at]
-      payment_type: [payment_type, pay_type, tender_type, method]
-      channel: [channel, sales_channel]
-    dtypes:
-      transaction_id: string
-      customer_id: string
-      product_id: string
-      quantity: Int64
-      price_per_unit: float
-      total_amount: float
-      timestamp: datetime64[ns]
-      payment_type: string
-      channel: string
-    primary_key: [transaction_id, product_id]
-    outlier_cols: [quantity, price_per_unit, total_amount]
-    business_rules:
-      - "quantity>=0"
-      - "price_per_unit>=0"
-      - "total_amount>=0"
-      - "total≈qty*price?warn"
+      [session_id, customer_id, session_start, session_end,
+       session_duration_sec, pages_viewed, device_type,
+       landing_page, traffic_source, converted_flag, revenue]
+    recommended:
+      - campaign_name
 
-  # =========================
-  # 8. web_analytics.csv (simple)
-  # =========================
-  web_analytics:
-    required:
-      [session_id, customer_id, pageviews, device_type,
-       session_duration_sec, bounce, referral_source,
-       add_to_cart, abandoned_cart]
     aliases:
-      session_id: [session_id]
+      session_id: [session_id, sess_id]
       customer_id: [customer_id, cust_id, user_id]
-      pageviews: [pageviews, page_views]
-      device_type: [device_type, device, platform]
+      session_start: [session_start, start_time]
+      session_end: [session_end, end_time]
       session_duration_sec: [session_duration_sec, duration_sec, session_time_sec]
-      bounce: [bounce, bounced]
-      referral_source: [referral_source, source]
-      add_to_cart: [add_to_cart, added_to_cart]
-      abandoned_cart: [abandoned_cart, cart_abandoned]
+      pages_viewed: [pages_viewed, pageviews, page_views]
+      device_type: [device_type, device, platform]
+      landing_page: [landing_page, entry_page]
+      traffic_source: [traffic_source, source, channel]
+      campaign_name: [campaign_name, campaign]
+      converted_flag: [converted_flag, converted, is_converted]
+      revenue: [revenue, session_revenue]
+
     dtypes:
       session_id: string
       customer_id: string
-      pageviews: Int64
-      device_type: string
+      session_start: datetime64[ns]
+      session_end: datetime64[ns]
       session_duration_sec: float
-      bounce: boolean
-      referral_source: string
-      add_to_cart: boolean
-      abandoned_cart: boolean
+      pages_viewed: float
+      device_type: string
+      landing_page: string
+      traffic_source: string
+      campaign_name: string
+      converted_flag: boolean
+      revenue: float
+
     primary_key: [session_id]
-    outlier_cols: [pageviews, session_duration_sec]
+
+    outlier_cols:
+      - session_duration_sec
+      - pages_viewed
+      - revenue
+
     business_rules:
-      - "pageviews>=0"
       - "session_duration_sec>=0"
+      - "pages_viewed>=0"
+      - "revenue>=0"
+
+
+  # =========================
+  # 9. events.csv
+  # =========================
+  events:
+    required:
+      [event_id, session_id, customer_id, event_type, event_datetime]
+    recommended:
+      - sku
+      - quantity
+      - unit_price
+
+    aliases:
+      event_id: [event_id, evt_id]
+      session_id: [session_id, sess_id]
+      customer_id: [customer_id, cust_id, user_id]
+      event_type: [event_type, type, action]
+      event_datetime: [event_datetime, timestamp, event_time]
+      sku: [sku, product_id, item_code]
+      quantity: [quantity, qty]
+      unit_price: [unit_price, price]
+
+    dtypes:
+      event_id: string
+      session_id: string
+      customer_id: string
+      event_type: string
+      event_datetime: datetime64[ns]
+      sku: string
+      quantity: float
+      unit_price: float
+
+    primary_key: [event_id]
+
+    outlier_cols:
+      - quantity
+      - unit_price
+
+    business_rules:
+      - "quantity>=0"
+      - "unit_price>=0"
+
+
+  # =========================
+  # 10. web_analytics.csv
+  # =========================
+  web_analytics:
+    required:
+      [event_id, session_id, customer_id, event_datetime,
+       page_type, action, add_to_cart, referral_source]
+    aliases:
+      event_id: [event_id, web_event_id]
+      session_id: [session_id, sess_id]
+      customer_id: [customer_id, cust_id, user_id]
+      event_datetime: [event_datetime, timestamp, event_time]
+      page_type: [page_type, page]
+      action: [action, event_action]
+      add_to_cart: [add_to_cart, added_to_cart]
+      referral_source: [referral_source, source, referral]
+
+    dtypes:
+      event_id: string
+      session_id: string
+      customer_id: string
+      event_datetime: datetime64[ns]
+      page_type: string
+      action: string
+      add_to_cart: boolean
+      referral_source: string
+
+    primary_key: [event_id]
+
+    outlier_cols: []
+
+    business_rules: []
+
+
+  # =========================
+  # 11. campaign_performance.csv
+  # =========================
+  campaign_performance:
+    required:
+      [date, campaign_id, channel, campaign_name,
+       impressions, clicks, spend, sessions, orders, attributed_revenue]
+    aliases:
+      date: [date, day, report_date]
+      campaign_id: [campaign_id, cmp_id]
+      channel: [channel, marketing_channel]
+      campaign_name: [campaign_name, name]
+      impressions: [impressions, imps]
+      clicks: [clicks]
+      spend: [spend, cost, daily_spend]
+      sessions: [sessions, session_count]
+      orders: [orders, order_count]
+      attributed_revenue: [attributed_revenue, revenue, attr_revenue]
+
+    dtypes:
+      date: datetime64[ns]
+      campaign_id: string
+      channel: string
+      campaign_name: string
+      impressions: float
+      clicks: float
+      spend: float
+      sessions: float
+      orders: float
+      attributed_revenue: float
+
+    primary_key: [date, campaign_id]
+
+    outlier_cols:
+      - impressions
+      - clicks
+      - spend
+      - attributed_revenue
+
+    business_rules:
+      - "impressions>=0"
+      - "clicks>=0"
+      - "spend>=0"
+      - "sessions>=0"
+      - "orders>=0"
+      - "attributed_revenue>=0"
+      - "clicks<=impressions"
+
+
+  # =========================
+  # 12. funnel_summary.csv
+  # =========================
+  funnel_summary:
+    required:
+      [date, sessions, product_views, add_to_cart,
+       checkout_started, purchases, conversion_rate, cart_abandonment_rate]
+    aliases:
+      date: [date, day, report_date]
+      sessions: [sessions, session_count]
+      product_views: [product_views, prod_views]
+      add_to_cart: [add_to_cart, atc, cart_adds]
+      checkout_started: [checkout_started, begin_checkout]
+      purchases: [purchases, purchase_count]
+      conversion_rate: [conversion_rate, conv_rate]
+      cart_abandonment_rate: [cart_abandonment_rate, abandon_rate]
+
+    dtypes:
+      date: datetime64[ns]
+      sessions: float
+      product_views: float
+      add_to_cart: float
+      checkout_started: float
+      purchases: float
+      conversion_rate: float
+      cart_abandonment_rate: float
+
+    primary_key: [date]
+
+    outlier_cols:
+      - sessions
+      - purchases
+
+    business_rules:
+      - "sessions>=0"
+      - "product_views>=0"
+      - "add_to_cart>=0"
+      - "checkout_started>=0"
+      - "purchases>=0"
+      - "conversion_rate>=0"
+      - "cart_abandonment_rate>=0"

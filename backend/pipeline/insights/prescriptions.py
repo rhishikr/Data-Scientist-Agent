@@ -10,7 +10,7 @@ from typing import Any, Literal
 
 
 Urgency = Literal["critical", "high", "medium", "low"]
-Category = Literal["inventory", "customer", "revenue", "marketing", "product"]
+Category = Literal["inventory", "customer", "revenue", "marketing", "product", "funnel", "pricing"]
 
 
 @dataclass

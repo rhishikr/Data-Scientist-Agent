@@ -29,19 +29,13 @@ def _to_datetime(df: pd.DataFrame, col: Optional[str]) -> None:
 
 
 def _to_numeric(s: pd.Series) -> pd.Series:
-    # safer than errors="ignore" (future warning)
     return pd.to_numeric(s, errors="coerce")
 
 
 def load_cleaned_tables(input_dir: Path) -> Dict[str, pd.DataFrame]:
     """
     Loads all cleaned CSVs into dict.
-    Key is inferred from filename:
-      customers_cleaned.csv -> customers
-      products_cleaned.csv -> products
-      inventory_cleaned.csv -> inventory
-      web_analytics_cleaned.csv -> web_analytics
-      transactions_300rows_cleaned.csv -> transactions (preferred)
+    Key is inferred from filename.
     Skips any '*sample*' files.
     """
     tables: Dict[str, pd.DataFrame] = {}
@@ -49,33 +43,41 @@ def load_cleaned_tables(input_dir: Path) -> Dict[str, pd.DataFrame]:
     for f in sorted(input_dir.glob("*.csv")):
         stem = f.stem.lower()
 
-        # skip samples always
         if "sample" in stem:
             continue
 
-        # normalize
         base = stem.replace("_cleaned", "")
 
-        # map transactions_300rows -> transactions
-        if base.startswith("transactions_300rows"):
-            key = "transactions"
+        # Map filenames to table keys
+        if base.startswith("transactions_with_session"):
+            key = "transactions_with_session"
         elif base.startswith("transactions"):
             key = "transactions"
         elif base.startswith("web_analytics") or base.startswith("webanalytics"):
             key = "web_analytics"
+        elif base.startswith("campaign_performance"):
+            key = "campaign_performance"
+        elif base.startswith("funnel_summary"):
+            key = "funnel_summary"
         elif base.startswith("inventory"):
             key = "inventory"
         elif base.startswith("customers"):
             key = "customers"
         elif base.startswith("products"):
             key = "products"
+        elif base.startswith("sessions"):
+            key = "sessions"
+        elif base.startswith("events"):
+            key = "events"
+        elif base.startswith("marketing"):
+            key = "marketing"
+        elif base.startswith("payments"):
+            key = "payments"
         else:
-            # keep other tables too (in case you add more later)
             key = base
 
         try:
             df = _read_csv_safe(f)
-            # if multiple files map to same key, prefer the larger one
             if key in tables:
                 if len(df) > len(tables[key]):
                     tables[key] = df
@@ -88,7 +90,7 @@ def load_cleaned_tables(input_dir: Path) -> Dict[str, pd.DataFrame]:
 
 
 # ----------------------------
-# Feature Engineering (old behavior)
+# Feature Engineering
 # ----------------------------
 
 def build_features_from_all_tables(
@@ -100,6 +102,8 @@ def build_features_from_all_tables(
     transactions = tables.get("transactions")
     web = tables.get("web_analytics")
     inventory = tables.get("inventory")
+    sessions = tables.get("sessions")
+    events = tables.get("events")
 
     if customers is None or products is None or transactions is None:
         raise RuntimeError(
@@ -109,10 +113,10 @@ def build_features_from_all_tables(
 
     # --- identify key columns ---
     cust_id = _pick_first(customers, ["customer_id", "cust_id", "id"])
-    prod_id = _pick_first(products, ["product_id", "prod_id", "id"])
+    prod_id = _pick_first(products, ["sku", "product_id", "prod_id", "id"])
 
     tx_cust = _pick_first(transactions, ["customer_id", "cust_id"])
-    tx_prod = _pick_first(transactions, ["product_id", "prod_id"])
+    tx_prod = _pick_first(transactions, ["sku", "product_id", "prod_id"])
     tx_order = _pick_first(transactions, ["order_id", "transaction_id", "tx_id", "id"])
     tx_time = _pick_first(transactions, ["order_datetime", "timestamp", "date", "transaction_date", "datetime"])
     qty_col = _pick_first(transactions, ["quantity", "qty", "units"])
@@ -144,7 +148,7 @@ def build_features_from_all_tables(
         p = tx[unit_price_col] if unit_price_col and unit_price_col in tx.columns else 0
         tx["line_amount"] = (q * p).fillna(0)
 
-    # cart_unique_items per order (if order id exists)
+    # cart_unique_items per order
     if tx_order and tx_order in tx.columns:
         tx["cart_unique_items"] = (
             tx.groupby(tx_order)[tx_prod].transform("nunique")
@@ -178,9 +182,13 @@ def build_features_from_all_tables(
     )
 
     # ----------------------------
-    # 2) CUSTOMERS FEATURES (transactions + web analytics)
+    # 2) CUSTOMERS FEATURES (transactions + sessions + web analytics)
     # ----------------------------
     cust_feat = customers.copy()
+
+    # Drop original total_spend from customers (we'll recompute from transactions)
+    if "total_spend" in cust_feat.columns:
+        cust_feat = cust_feat.drop(columns=["total_spend"])
 
     # transaction aggregates per customer
     grp_c = tx.groupby(tx_cust, dropna=True)
@@ -230,37 +238,84 @@ def build_features_from_all_tables(
 
     cust_feat = cust_feat.merge(cust_agg, left_on=cust_id, right_on=cust_id, how="left")
 
-    # web analytics aggregates per customer (if present)
-    if web is not None and tx_cust in web.columns or (web is not None and cust_id in web.columns):
-        web_df = web.copy()
-        web_cust = _pick_first(web_df, [tx_cust, cust_id, "customer_id", "cust_id"])
+    # Session-based features per customer (if sessions table is available)
+    if sessions is not None and not sessions.empty:
+        sess = sessions.copy()
+        sess_cust = _pick_first(sess, ["customer_id", "cust_id"])
+        if sess_cust:
+            sess_grp = sess.groupby(sess_cust, dropna=True)
+            sess_agg = pd.DataFrame({cust_id: sess_grp.size().index})
 
-        time_spent = _pick_first(web_df, ["time_spent", "session_duration", "duration", "avg_session_time_min"])
-        device = _pick_first(web_df, ["device_type", "device"])
-        wishlist = _pick_first(web_df, ["wishlist_items_count", "wishlist_items", "wishlist_count"])
+            sess_agg["sessions_count"] = sess_grp.size().values
+
+            if "session_duration_sec" in sess.columns:
+                sess["session_duration_sec"] = _to_numeric(sess["session_duration_sec"])
+                sess_agg["avg_session_duration"] = sess_grp["session_duration_sec"].mean().values
+
+            if "converted_flag" in sess.columns:
+                # Convert to boolean
+                conv_flag = sess["converted_flag"].astype(str).str.lower().isin(["true", "1", "yes"])
+                conv_rate = conv_flag.groupby(sess[sess_cust]).mean()
+                sess_agg["conversion_rate"] = conv_rate.values
+
+            if "pages_viewed" in sess.columns:
+                sess["pages_viewed"] = _to_numeric(sess["pages_viewed"])
+                sess_agg["avg_pages_viewed"] = sess_grp["pages_viewed"].mean().values
+
+            cust_feat = cust_feat.merge(sess_agg, on=cust_id, how="left")
+
+    # Web analytics aggregates per customer (fallback if no sessions)
+    elif web is not None and not web.empty:
+        web_df = web.copy()
+        web_cust = _pick_first(web_df, ["customer_id", "cust_id"])
 
         if web_cust:
             web_grp = web_df.groupby(web_cust, dropna=True)
-
             web_out = {cust_id: web_grp.size().index}
 
-            if time_spent and time_spent in web_df.columns:
-                web_df[time_spent] = _to_numeric(web_df[time_spent])
-                web_out["avg_session_time_min"] = web_grp[time_spent].mean().values
-
-            if device and device in web_df.columns:
-                # most common device
-                web_out["device_type"] = web_grp[device].agg(lambda x: x.mode().iloc[0] if not x.mode().empty else pd.NA).values
-
-            if wishlist and wishlist in web_df.columns:
-                web_df[wishlist] = _to_numeric(web_df[wishlist])
-                web_out["wishlist_items_count"] = web_grp[wishlist].max().values
+            dur_col = _pick_first(web_df, ["session_duration_sec", "time_spent", "session_duration", "duration"])
+            if dur_col and dur_col in web_df.columns:
+                web_df[dur_col] = _to_numeric(web_df[dur_col])
+                web_out["avg_session_time_min"] = web_grp[dur_col].mean().values
 
             web_agg = pd.DataFrame(web_out)
             cust_feat = cust_feat.merge(web_agg, on=cust_id, how="left")
 
+    # Funnel depth per customer (if events table available)
+    if events is not None and not events.empty and "event_type" in events.columns:
+        ev = events.copy()
+        ev_cust = _pick_first(ev, ["customer_id", "cust_id"])
+        if ev_cust:
+            # Map event types to numeric depth
+            depth_map = {
+                "page_view": 1,
+                "product_view": 2,
+                "add_to_cart": 3,
+                "begin_checkout": 4,
+                "purchase": 5,
+            }
+            ev["_depth"] = ev["event_type"].astype(str).str.lower().map(depth_map)
+            max_depth = ev.groupby(ev_cust)["_depth"].max()
+            depth_df = pd.DataFrame({cust_id: max_depth.index, "max_funnel_depth": max_depth.values})
+            cust_feat = cust_feat.merge(depth_df, on=cust_id, how="left")
+
+    # Age group buckets
+    if "age" in cust_feat.columns:
+        age = _to_numeric(cust_feat["age"])
+        bins = [0, 18, 25, 35, 45, 55, 65, 200]
+        labels = ["<18", "18-24", "25-34", "35-44", "45-54", "55-64", "65+"]
+        cust_feat["age_group"] = pd.cut(age, bins=bins, labels=labels, right=False)
+
+    # Loyalty score numeric
+    if "loyalty_status" in cust_feat.columns:
+        loyalty_map = {"bronze": 1, "silver": 2, "gold": 3, "platinum": 4}
+        cust_feat["loyalty_score"] = cust_feat["loyalty_status"].astype(str).str.lower().map(loyalty_map)
+
     # fill numeric NaNs
-    for c in ["total_orders", "total_quantity", "total_spend", "avg_order_value", "recency_days", "orders_per_active_day", "monetary_value"]:
+    for c in ["total_orders", "total_quantity", "total_spend", "avg_order_value",
+              "recency_days", "orders_per_active_day", "monetary_value",
+              "sessions_count", "avg_session_duration", "conversion_rate",
+              "avg_pages_viewed", "max_funnel_depth", "loyalty_score"]:
         if c in cust_feat.columns:
             cust_feat[c] = _to_numeric(cust_feat[c]).fillna(0)
 
@@ -292,16 +347,15 @@ def build_features_from_all_tables(
 
     prod_feat = prod_feat.merge(prod_agg, left_on=prod_id, right_on=prod_id, how="left")
 
-    # inventory stock merge (if present)
+    # inventory stock merge
     if inventory is not None:
         inv = inventory.copy()
-        inv_prod = _pick_first(inv, [prod_id, "product_id", "prod_id"])
-        stock_col = _pick_first(inv, ["stock", "inventory", "inventory_level", "qty_on_hand", "on_hand"])
+        inv_prod = _pick_first(inv, ["sku", prod_id, "product_id", "prod_id"])
+        stock_col = _pick_first(inv, ["stock_quantity", "stock", "inventory", "inventory_level", "qty_on_hand", "on_hand"])
 
         if inv_prod and stock_col and inv_prod in inv.columns and stock_col in inv.columns:
             inv[stock_col] = _to_numeric(inv[stock_col]).fillna(0)
             inv_small = inv[[inv_prod, stock_col]].rename(columns={inv_prod: prod_id, stock_col: "stock"})
-            # if multiple inventory rows per product, sum them
             inv_small = inv_small.groupby(prod_id, as_index=False)["stock"].sum()
             prod_feat = prod_feat.merge(inv_small, on=prod_id, how="left")
 
@@ -324,7 +378,6 @@ def main():
     parser.add_argument("--input_dir", required=True, help="Folder containing cleaned CSV files")
     parser.add_argument("--output_dir", required=True, help="Folder to write feature CSV files")
     parser.add_argument("--reports_dir", required=True, help="Folder to write feature_report.json")
-    # ✅ accept this so pipeline_runner can pass it without crashing
     parser.add_argument("--ontology_path", required=False, default=None, help="Optional ontology YAML path (accepted but not required)")
     args = parser.parse_args()
 
@@ -357,7 +410,7 @@ def main():
         "loaded_tables": sorted(list(tables.keys())),
         "rows": {k: int(v.shape[0]) for k, v in out_files.items()},
         "cols": {k: int(v.shape[1]) for k, v in out_files.items()},
-        "note": "Reads ALL cleaned CSVs, uses joins via transactions<->customers/products, and enriches with web_analytics + inventory when present.",
+        "note": "Reads ALL cleaned CSVs, uses joins via transactions<->customers/products, and enriches with sessions + events + web_analytics + inventory when present.",
         "ontology_path": args.ontology_path,
     }
 

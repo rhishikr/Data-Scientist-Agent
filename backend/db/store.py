@@ -130,6 +130,16 @@ def store_action_plan_snapshot(run_id: str, snapshot: dict) -> None:
     _store_snapshot("action_plan_snapshots", run_id, snapshot)
 
 
+def store_comparison_ai(current_run_id: str, previous_run_id: str, snapshot: dict) -> None:
+    composite_key = f"{current_run_id}::{previous_run_id}"
+    _store_snapshot("ai_analysis_snapshots", composite_key, snapshot)
+
+
+def get_comparison_ai(current_run_id: str, previous_run_id: str) -> dict:
+    composite_key = f"{current_run_id}::{previous_run_id}"
+    return _get_snapshot_for_run("ai_analysis_snapshots", composite_key)
+
+
 # ---------------------------------------------------------------------------
 # Cleaned / Featured dataset storage (DB metadata + Storage bucket CSV)
 # ---------------------------------------------------------------------------

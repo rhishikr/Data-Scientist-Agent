@@ -19,9 +19,12 @@ export const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
 export const safeNum = (v: any, fallback = 0) =>
   Number.isFinite(Number(v)) ? Number(v) : fallback;
 
-export const getCardValue = (cards: KpiCardRow[], id: string, fallback = 0) => {
+export const getCardValue = (cards: KpiCardRow[], id: string, fallback: any = 0) => {
   const row = cards.find((c) => c.id === id);
-  return row ? safeNum(row.value, fallback) : fallback;
+  if (!row) return fallback;
+  // If fallback is a string, return raw value as string (text KPIs)
+  if (typeof fallback === "string") return row.value != null ? String(row.value) : fallback;
+  return safeNum(row.value, fallback);
 };
 
 export const getAsOfLabel = (snap: Snapshot) => {
