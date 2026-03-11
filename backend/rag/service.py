@@ -1,310 +1,376 @@
 # backend/rag/service.py
+"""
+Main RAG service — routes queries through SQL agent, pgvector search, or hybrid.
+"""
 from pathlib import Path
-from typing import Dict, Any, List, Optional, Tuple
-import re
+from typing import Dict, Any, Generator, List
+import json
+import logging
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from openai import BadRequestError
 
-
 from .config import load_config
-from .store_faiss import FaissStore
-from .tools import DataTool
+from .store_pgvector import PgVectorStore
+from .sql_agent import create_sql_agent_instance, run_sql_agent
+from .memory import get_history, save_turn, to_langchain_messages
+from .router import classify_query
+
+logger = logging.getLogger(__name__)
 
 
-SYSTEM_PROMPT = """You are an AI Data Scientist assistant.
+# ---------------------------------------------------------------------------
+# Insight retrieval (pgvector search + LLM synthesis)
+# ---------------------------------------------------------------------------
 
-You are in SCHEMA-HELP mode.
-Use ONLY the provided CONTEXT to:
-- explain what tables/columns mean if asked
-- describe which table likely answers a question if asked
-- explain how to compute something (without making up numeric results)if asked
-
-
-IMPORTANT:
-- Do NOT invent numbers or claim computed results.
-- If the user asks for "most", "top", "highest", totals, averages, or rankings, explain which table/columns to use and what computation is needed.
-"""
+INSIGHT_SYSTEM_PROMPT = """You are an AI business analyst providing insights from an ecommerce company's data.
+Use ONLY the provided context to answer the question.
+If you don't have enough information, say so.
+Be clear, specific, and actionable."""
 
 
-# -------------------------
-# Lookup routing (POC)
-# -------------------------
+def _handle_insight(
+    question: str,
+    session_id: str,
+    cfg,
+    llm: ChatOpenAI,
+) -> Dict[str, Any]:
+    """Retrieve relevant documents via pgvector and synthesize an answer."""
+    store = PgVectorStore(cfg)
+    retrieved = store.similarity_search(question, k=cfg.top_k)
 
-def _extract_customer_id(question: str) -> Optional[str]:
-    # Match CUST1007, cust1007, etc.
-    m = re.search(r"\bCUST\d+\b", question.upper())
-    return m.group(0) if m else None
-
-def _extract_product_id(question: str) -> Optional[str]:
-    """
-    Match product ids like AA-10, AB-123, etc.
-    This is intentionally simple for POC.
-    """
-    m = re.search(r"\b[A-Z]{2,5}-\d+\b", question.upper())
-    return m.group(0) if m else None
-
-def _is_aggregation_question(q: str) -> bool:
-    q = q.lower()
-    keywords = [
-        "most", "highest", "top", "best", "spent", "spend", "popular", "expensive",
-        "max", "minimum", "min", "sum", "total", "average", "avg", "count", "rank"
-    ]
-    return any(k in q for k in keywords)
-
-
-def _try_deterministic_analytics(tool: DataTool, question: str) -> Optional[Dict[str, Any]]:
-    q = question.lower()
-
-    # ---- (1) Most popular product (units sold) ----
-    if "popular" in q and "product" in q:
-        # transactions: group by sku, sum(quantity)
-        top = tool.top_k(
-            table="transactions.csv",
-            group_by=["sku"],
-            metric_col="quantity",
-            metric_agg="sum",
-            k=1,
-            metric_name="units_sold",
-        )
-        if top:
-            sku = top[0].get("sku")
-            units = top[0].get("units_sold")
-
-            # optional: map sku -> product name
-            name = tool.lookup_value("products.csv", "sku", sku, "name")
-            product_label = f"{name} (SKU {sku})" if name else f"SKU {sku}"
-
-            return {
-                "answer": f"The most popular product (by units sold) is {product_label}, with {units} units sold.",
-                "mode": "analytics",
-                "metric": "units_sold",
-                "table_used": "transactions.csv",
-                "evidence": top,
-            }
-
-    # ---- (2) Best spender (highest total_amount by customer_id) ----
-    if ("spent the most" in q) or ("best spender" in q) or ("spent most" in q) or ("highest spender" in q):
-        top = tool.top_k(
-            table="transactions.csv",
-            group_by=["customer_id"],
-            metric_col="total_amount",
-            metric_agg="sum",
-            k=1,
-            metric_name="total_spend",
-        )
-        if top:
-            cust = top[0].get("customer_id")
-            spend = top[0].get("total_spend")
-
-            # optional: map customer_id -> name
-            name = tool.lookup_value("customers.csv", "customer_id", cust, "name")
-            customer_label = f"{name} ({cust})" if name else str(cust)
-
-            return {
-                "answer": f"The customer who spent the most is {customer_label}, with a total spend of {spend}.",
-                "mode": "analytics",
-                "metric": "total_spend",
-                "table_used": "transactions.csv",
-                "evidence": top,
-            }
-
-    # ---- (3) Most expensive product (max retail_price) ----
-    if ("most expensive" in q) and ("product" in q):
-        max_price = tool.max_value("products.csv", "retail_price")
-        # If you want the actual product (not just the price), use group/sort:
-        # Here’s a safe way without adding new DataTool methods:
-        rows = tool.filter_rows(
-            "products.csv",
-            conditions=[{"col": "retail_price", "op": "==", "value": max_price}],
-            limit=1,
-        )
-        if rows:
-            sku = rows[0].get("sku")
-            name = rows[0].get("name")
-            label = f"{name} (SKU {sku})" if name and sku else (name or sku or "the top-priced product")
-            return {
-                "answer": f"The most expensive product is {label}, priced at {max_price}.",
-                "mode": "analytics",
-                "metric": "max_retail_price",
-                "table_used": "products.csv",
-                "evidence": rows,
-            }
+    if not retrieved:
         return {
-            "answer": f"The highest retail_price in products.csv is {max_price}.",
-            "mode": "analytics",
-            "metric": "max_retail_price",
-            "table_used": "products.csv",
-            "evidence": [{"max_retail_price": max_price}],
+            "success": True,
+            "query_type": "insight",
+            "answer": "No relevant documents found in the index. Try running POST /api/rag/ingest first.",
+            "sources": [],
         }
 
-    return None
-
-def try_customer_location_lookup(tool: DataTool, customer_id: str) -> Optional[str]:
-    # Try common key/target column combinations
-    key_cols = ["customer_id", "cust_id", "id"]
-    target_cols = ["location", "city", "province", "region"]
-
-    for key in key_cols:
-        for target in target_cols:
-            val = tool.lookup_value("customers.csv", key, customer_id, target)
-            if val is not None:
-                return str(val)
-    return None
-
-
-def try_product_name_lookup(tool: DataTool, product_id: str) -> Optional[str]:
-    """
-    Try to map product_id -> product name using common schemas.
-    """
-    key_cols = ["product_id", "sku", "productID", "id"]
-    target_cols = ["name", "product_name", "title", "product"]
-
-    for key in key_cols:
-        for target in target_cols:
-            val = tool.lookup_value("products.csv", key, product_id, target)
-            if val is not None:
-                return str(val)
-    return None
-
-
-def answer_question(base_dir: Path, question: str) -> Dict[str, Any]:
-    cfg = load_config(base_dir)
-
-    # ---------- Step 1: Deterministic lookup ----------
-    tool = DataTool.from_csv_dir(cfg.data_dir)
-
-    cust_id = _extract_customer_id(question)
-    if cust_id and ("location" in question.lower() or "where" in question.lower()):
-        loc = try_customer_location_lookup(tool, cust_id)
-        if loc is not None:
-            return {
-                "answer": f"The location of customer {cust_id} is {loc}.",
-                "mode": "lookup",
-                "source": "customers.csv",
-            }
-        # Optional hard-stop for deterministic behavior:
-        return {
-            "answer": f"I couldn’t find {cust_id} in customers.csv (or location column is missing).",
-            "mode": "lookup_not_found",
-            "source": "customers.csv",
-        }
-
-    prod_id = _extract_product_id(question)
-    if prod_id and ("name" in question.lower() or "product" in question.lower() or "title" in question.lower()):
-        name = try_product_name_lookup(tool, prod_id)
-        if name is not None:
-            return {
-                "answer": f"The name of product {prod_id} is {name}.",
-                "mode": "lookup",
-                "source": "products.csv",
-            }
-        return {
-            "answer": f"I couldn’t find product {prod_id} in products.csv (or name column is missing).",
-            "mode": "lookup_not_found",
-            "source": "products.csv",
-        }
-
-    # ---------- Step 2: Deterministic analytics ----------
-    analytics = _try_deterministic_analytics(tool, question)
-    if analytics is not None:
-        return analytics
-
-    # ---------- Step 3: RAG fallback ----------
-    store = FaissStore(cfg)
-
-    if not store.index_exists():
-        return {"error": "Vector index not found. Call POST /rag/ingest first."}
-
-    # Do NOT guess aggregation via RAG
-    if _is_aggregation_question(question):
-        return {
-            "answer": (
-                "This question requires deterministic aggregation (count/sum/top/etc.). "
-                "That handler isn't implemented yet for this query, so I won't guess via RAG."
-            ),
-            "mode": "needs_handler",
-        }
-
-    vs = store.load()
-    retrieved = vs.similarity_search(question, k=cfg.top_k)
-
-    context_parts: List[str] = []
-    citations: List[Dict[str, Any]] = []
-    for d in retrieved:
-        context_parts.append(d.page_content)
-        citations.append(d.metadata or {})
+    context_parts = []
+    sources = []
+    for doc in retrieved:
+        context_parts.append(doc.page_content)
+        sources.append(doc.metadata)
 
     context = "\n\n---\n\n".join(context_parts)
 
-    # Safety cap BEFORE calling LLM
+    # Safety cap
     MAX_CONTEXT_CHARS = 120_000
     if len(context) > MAX_CONTEXT_CHARS:
         context = context[:MAX_CONTEXT_CHARS] + "\n\n[TRUNCATED]"
 
-    llm = ChatOpenAI(model=cfg.llm_model, temperature=0.2)
-    prompt = f"QUESTION:\n{question}\n\nCONTEXT:\n{context}"
+    # Include chat history for multi-turn context
+    history = get_history(session_id, cfg.db_url, max_messages=10)
+    history_text = ""
+    if history:
+        history_text = "\n".join(
+            f"{'User' if h['role'] == 'human' else 'Assistant'}: {h['content']}"
+            for h in history[-6:]  # last 3 turns
+        )
+        history_text = f"\nConversation history:\n{history_text}\n"
+
+    prompt = f"{history_text}QUESTION:\n{question}\n\nCONTEXT:\n{context}"
 
     try:
         answer = llm.invoke([
-            SystemMessage(content=SYSTEM_PROMPT),
+            SystemMessage(content=INSIGHT_SYSTEM_PROMPT),
             HumanMessage(content=prompt),
         ]).content
     except BadRequestError as e:
         return {
-            "answer": (
-                "The retrieved context is too large to send to the model. "
-                "Reduce indexed row samples or narrow the question."
-            ),
-            "mode": "error_context_too_large",
+            "success": False,
+            "query_type": "insight",
+            "answer": "The retrieved context is too large for the model. Try narrowing your question.",
             "error": str(e),
         }
 
     return {
+        "success": True,
+        "query_type": "insight",
         "answer": answer,
-        "citations": citations,
-        "top_k": cfg.top_k,
-        "mode": "rag",
+        "sources": sources,
     }
 
-def schema_help(base_dir: Path, question: str) -> Dict[str, Any]:
+
+# ---------------------------------------------------------------------------
+# SQL agent
+# ---------------------------------------------------------------------------
+
+def _handle_sql(
+    question: str,
+    session_id: str,
+    cfg,
+    llm: ChatOpenAI,
+) -> Dict[str, Any]:
+    """Route to the LangGraph ReAct SQL agent."""
+    agent = create_sql_agent_instance(cfg.db_url, llm)
+    history = get_history(session_id, cfg.db_url, max_messages=10)
+    lc_history = to_langchain_messages(history)
+
+    result = run_sql_agent(agent, question, history=lc_history)
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Hybrid (SQL + Insight combined)
+# ---------------------------------------------------------------------------
+
+SYNTHESIS_PROMPT = """You are a business analyst. Combine the following data analysis and strategic insights
+to answer the user's question comprehensively.
+
+User Question: {question}
+
+Data Analysis:
+{sql_answer}
+
+Strategic Insights:
+{insight_answer}
+
+Provide a comprehensive answer that:
+1. Presents the key data findings
+2. Explains the strategic context from insights
+3. Offers actionable recommendations
+
+Answer:"""
+
+
+def _handle_hybrid(
+    question: str,
+    session_id: str,
+    cfg,
+    llm: ChatOpenAI,
+) -> Dict[str, Any]:
+    """Run both SQL and insight paths, then synthesize."""
+    sql_result = _handle_sql(question, session_id, cfg, llm)
+    insight_result = _handle_insight(question, session_id, cfg, llm)
+
+    sql_answer = sql_result.get("answer", "No data available")
+    insight_answer = insight_result.get("answer", "No insights available")
+
+    try:
+        synthesized = llm.invoke(
+            SYNTHESIS_PROMPT.format(
+                question=question,
+                sql_answer=sql_answer,
+                insight_answer=insight_answer,
+            )
+        ).content
+    except Exception as e:
+        # Fall back to concatenation
+        synthesized = f"**Data Analysis:**\n{sql_answer}\n\n**Insights:**\n{insight_answer}"
+        logger.warning("Synthesis failed, using concatenation: %s", e)
+
+    return {
+        "success": True,
+        "query_type": "hybrid",
+        "answer": synthesized,
+        "data_summary": sql_answer,
+        "sources": insight_result.get("sources", []),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Public API
+# ---------------------------------------------------------------------------
+
+def answer_question(
+    base_dir: Path,
+    question: str,
+    session_id: str = "default",
+) -> Dict[str, Any]:
+    """
+    Main entry point for answering a user question.
+
+    Flow:
+      1. Classify query → sql / insight / hybrid
+      2. Route to appropriate handler
+      3. Save Q&A turn to chat memory
+    """
     cfg = load_config(base_dir)
-    store = FaissStore(cfg)
+    llm = ChatOpenAI(model=cfg.llm_model, temperature=0)
 
-    if not store.index_exists():
-        return {"error": "Vector index not found. Call POST /rag/ingest first."}
+    # Classify
+    query_type = classify_query(question, llm)
+    logger.info("Query classified as '%s': %s", query_type, question[:80])
 
-    vs = store.load()
-    retrieved = vs.similarity_search(question, k=cfg.top_k)
+    # Route
+    if query_type == "sql":
+        result = _handle_sql(question, session_id, cfg, llm)
+    elif query_type == "insight":
+        result = _handle_insight(question, session_id, cfg, llm)
+    else:
+        result = _handle_hybrid(question, session_id, cfg, llm)
 
-    context_parts: List[str] = []
-    citations: List[Dict[str, Any]] = []
+    # Persist conversation
+    answer = result.get("answer", "")
+    if answer:
+        try:
+            save_turn(session_id, question, answer, cfg.db_url)
+        except Exception as e:
+            logger.warning("Failed to save chat history: %s", e)
+
+    return result
+
+
+def answer_question_stream(
+    base_dir: Path,
+    question: str,
+    session_id: str = "default",
+) -> Generator[str, None, None]:
+    """
+    Streaming version of answer_question().
+    Yields SSE-formatted event strings for token-by-token delivery.
+    """
+    cfg = load_config(base_dir)
+    llm = ChatOpenAI(model=cfg.llm_model, temperature=0, streaming=True)
+
+    query_type = classify_query(question, llm)
+    logger.info("Stream query classified as '%s': %s", query_type, question[:80])
+
+    yield f"data: {json.dumps({'event': 'start', 'query_type': query_type})}\n\n"
+
+    answer = ""
+
+    try:
+        if query_type == "sql":
+            # SQL agent does multi-step tool calling — send result as one chunk
+            result = _handle_sql(question, session_id, cfg, llm)
+            answer = result.get("answer", "")
+            yield f"data: {json.dumps({'event': 'chunk', 'content': answer})}\n\n"
+
+        elif query_type == "insight":
+            store = PgVectorStore(cfg)
+            retrieved = store.similarity_search(question, k=cfg.top_k)
+
+            if not retrieved:
+                answer = "No relevant documents found in the index. Try running POST /api/rag/ingest first."
+                yield f"data: {json.dumps({'event': 'chunk', 'content': answer})}\n\n"
+            else:
+                context = "\n\n---\n\n".join(d.page_content for d in retrieved)
+                sources = [d.metadata for d in retrieved]
+
+                MAX_CONTEXT_CHARS = 120_000
+                if len(context) > MAX_CONTEXT_CHARS:
+                    context = context[:MAX_CONTEXT_CHARS] + "\n\n[TRUNCATED]"
+
+                history = get_history(session_id, cfg.db_url, max_messages=10)
+                history_text = ""
+                if history:
+                    history_text = "\n".join(
+                        f"{'User' if h['role'] == 'human' else 'Assistant'}: {h['content']}"
+                        for h in history[-6:]
+                    )
+                    history_text = f"\nConversation history:\n{history_text}\n"
+
+                prompt = f"{history_text}QUESTION:\n{question}\n\nCONTEXT:\n{context}"
+
+                answer_chunks = []
+                for chunk in llm.stream([
+                    SystemMessage(content=INSIGHT_SYSTEM_PROMPT),
+                    HumanMessage(content=prompt),
+                ]):
+                    token = chunk.content
+                    if token:
+                        answer_chunks.append(token)
+                        yield f"data: {json.dumps({'event': 'chunk', 'content': token})}\n\n"
+
+                answer = "".join(answer_chunks)
+                yield f"data: {json.dumps({'event': 'sources', 'sources': sources}, default=str)}\n\n"
+
+        else:  # hybrid
+            # SQL part (non-streaming)
+            sql_result = _handle_sql(question, session_id, cfg, llm)
+            sql_answer = sql_result.get("answer", "No data available")
+
+            # Insight context
+            store = PgVectorStore(cfg)
+            retrieved = store.similarity_search(question, k=cfg.top_k)
+            insight_answer = "No insights available"
+            sources = []
+            if retrieved:
+                context = "\n\n---\n\n".join(d.page_content for d in retrieved)
+                sources = [d.metadata for d in retrieved]
+                try:
+                    insight_answer = llm.invoke([
+                        SystemMessage(content=INSIGHT_SYSTEM_PROMPT),
+                        HumanMessage(content=f"QUESTION:\n{question}\n\nCONTEXT:\n{context}"),
+                    ]).content
+                except Exception:
+                    pass
+
+            # Stream the synthesis
+            answer_chunks = []
+            for chunk in llm.stream(
+                SYNTHESIS_PROMPT.format(
+                    question=question,
+                    sql_answer=sql_answer,
+                    insight_answer=insight_answer,
+                )
+            ):
+                token = chunk.content
+                if token:
+                    answer_chunks.append(token)
+                    yield f"data: {json.dumps({'event': 'chunk', 'content': token})}\n\n"
+
+            answer = "".join(answer_chunks)
+            yield f"data: {json.dumps({'event': 'sources', 'sources': sources}, default=str)}\n\n"
+
+    except Exception as e:
+        logger.error("Stream error: %s", e)
+        yield f"data: {json.dumps({'event': 'error', 'message': str(e)})}\n\n"
+
+    # Persist conversation
+    if answer:
+        try:
+            save_turn(session_id, question, answer, cfg.db_url)
+        except Exception as e:
+            logger.warning("Failed to save chat history: %s", e)
+
+    yield f"data: {json.dumps({'event': 'done'})}\n\n"
+
+
+def schema_help(base_dir: Path, question: str) -> Dict[str, Any]:
+    """
+    Answer schema-related questions using pgvector context.
+    """
+    cfg = load_config(base_dir)
+    store = PgVectorStore(cfg)
+
+    retrieved = store.similarity_search(question, k=cfg.top_k)
+    if not retrieved:
+        return {"error": "Vector index not found. Call POST /api/rag/ingest first."}
+
+    context_parts = []
+    citations = []
     for d in retrieved:
         context_parts.append(d.page_content)
         citations.append(d.metadata or {})
 
     context = "\n\n---\n\n".join(context_parts)
-
-    # Safety cap BEFORE calling LLM
     MAX_CONTEXT_CHARS = 120_000
     if len(context) > MAX_CONTEXT_CHARS:
         context = context[:MAX_CONTEXT_CHARS] + "\n\n[TRUNCATED]"
+
+    schema_prompt = (
+        "You are an AI Data Scientist assistant.\n"
+        "Use ONLY the provided CONTEXT to explain what tables/columns mean, "
+        "describe which table answers a question, or explain how to compute something.\n"
+        "Do NOT invent numbers or claim computed results."
+    )
 
     llm = ChatOpenAI(model=cfg.llm_model, temperature=0.0)
     prompt = f"QUESTION:\n{question}\n\nCONTEXT:\n{context}"
 
     try:
         answer = llm.invoke([
-            SystemMessage(content=SYSTEM_PROMPT),
+            SystemMessage(content=schema_prompt),
             HumanMessage(content=prompt),
         ]).content
     except BadRequestError as e:
         return {
-            "answer": (
-                "The schema context is too large to send to the model. "
-                "Reduce indexed row samples or narrow the question."
-            ),
+            "answer": "The schema context is too large for the model. Narrow your question.",
             "mode": "error_context_too_large",
             "error": str(e),
         }
@@ -315,4 +381,3 @@ def schema_help(base_dir: Path, question: str) -> Dict[str, Any]:
         "top_k": cfg.top_k,
         "mode": "schema",
     }
-

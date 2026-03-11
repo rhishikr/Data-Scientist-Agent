@@ -25,6 +25,12 @@ supabase
 langchain-openai
 langchain-core
 langchain-community
+langchain-experimental
+langgraph
 openai
-faiss-cpu
 joblib
+
+# Database / Vector store
+pgvector
+psycopg2-binary
+sqlalchemy
