@@ -807,13 +807,20 @@ def generate_funnel_summary(events: pd.DataFrame, sessions: pd.DataFrame) -> pd.
 # Main
 # ---------------------------------------------------------------------------
 
-def main():
-    RAW_DIR.mkdir(parents=True, exist_ok=True)
+def generate_all_data(local: bool = False) -> dict:
+    """Generate all 12 synthetic datasets and save to Supabase (or local CSV).
 
-    # Remove old files
-    for f in RAW_DIR.glob("*.csv"):
-        f.unlink()
-        print(f"  Removed old file: {f.name}")
+    Args:
+        local: If True, write CSVs to data/raw/ instead of Supabase.
+
+    Returns:
+        Dict with dataset name -> row count.
+    """
+    if local:
+        RAW_DIR.mkdir(parents=True, exist_ok=True)
+        for f in RAW_DIR.glob("*.csv"):
+            f.unlink()
+            print(f"  Removed old file: {f.name}")
 
     print("Generating synthetic retail data (12 datasets)...\n")
 
@@ -894,7 +901,7 @@ def main():
     funnel_summary = generate_funnel_summary(events, sessions)
     print(f"    ->{len(funnel_summary)} rows generated")
 
-    # Save all 12 datasets
+    # All 12 datasets
     datasets = {
         "customers.csv": customers,
         "products.csv": products,
@@ -910,13 +917,41 @@ def main():
         "funnel_summary.csv": funnel_summary,
     }
 
-    print("\nSaving files...")
-    for name, df in datasets.items():
-        path = RAW_DIR / name
-        df.to_csv(path, index=False)
-        print(f"  {name:40s} {len(df):>6} rows, {len(df.columns):>3} cols")
+    stats = {}
+    if local:
+        print("\nSaving to local CSV files...")
+        for name, df in datasets.items():
+            path = RAW_DIR / name
+            df.to_csv(path, index=False)
+            stats[name] = len(df)
+            print(f"  {name:40s} {len(df):>6} rows, {len(df.columns):>3} cols")
+        print(f"\nDone! {len(datasets)} files saved to {RAW_DIR}")
+    else:
+        print("\nSaving to Supabase...")
+        import sys as _sys
+        _sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+        from dotenv import load_dotenv as _load_dotenv
+        _load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+        from db.raw_store import replace_raw_table
 
-    print(f"\nDone! {len(datasets)} files saved to {RAW_DIR}")
+        for name, df in datasets.items():
+            rows = replace_raw_table(name, df)
+            stats[name] = rows
+            print(f"  {name:40s} {rows:>6} rows uploaded")
+        print(f"\nDone! {len(datasets)} datasets saved to Supabase")
+
+    return stats
+
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Generate synthetic retail data")
+    parser.add_argument(
+        "--local", action="store_true",
+        help="Write CSVs to data/raw/ instead of Supabase (for debugging)"
+    )
+    args = parser.parse_args()
+    generate_all_data(local=args.local)
 
 
 if __name__ == "__main__":

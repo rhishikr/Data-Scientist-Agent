@@ -94,6 +94,42 @@ def complete_pipeline_run(
     }).eq("id", run_id).execute()
 
 
+def delete_pipeline_run(run_id: str) -> dict:
+    """Delete a pipeline run and all associated data (CASCADE handles child tables)."""
+    sb = get_supabase()
+
+    # Check the run exists and is not currently running
+    result = sb.table("pipeline_runs").select("id, status").eq("id", run_id).execute()
+    if not result.data:
+        return {"success": False, "message": f"Run {run_id} not found"}
+    if result.data[0]["status"] == "running":
+        return {"success": False, "message": "Cannot delete a currently running pipeline"}
+
+    # Best-effort cleanup of storage bucket artifacts at runs/{run_id}/
+    try:
+        top_items = sb.storage.from_(STORAGE_BUCKET).list(f"runs/{run_id}")
+        all_paths = []
+        for item in (top_items or []):
+            if item.get("id") is None:
+                # Directory — list its contents
+                sub_prefix = f"runs/{run_id}/{item['name']}"
+                sub_files = sb.storage.from_(STORAGE_BUCKET).list(sub_prefix)
+                for sf in (sub_files or []):
+                    if sf.get("name"):
+                        all_paths.append(f"{sub_prefix}/{sf['name']}")
+            else:
+                all_paths.append(f"runs/{run_id}/{item['name']}")
+        if all_paths:
+            sb.storage.from_(STORAGE_BUCKET).remove(all_paths)
+    except Exception:
+        pass  # Storage cleanup is best-effort
+
+    # Delete the pipeline_runs row — CASCADE deletes all child rows
+    sb.table("pipeline_runs").delete().eq("id", run_id).execute()
+
+    return {"success": True, "message": f"Run {run_id} and all associated data deleted"}
+
+
 # ---------------------------------------------------------------------------
 # Snapshot storage (KPI, Forecast, Insights, Hypothesis)
 # ---------------------------------------------------------------------------

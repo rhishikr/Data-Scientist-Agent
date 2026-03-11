@@ -52,6 +52,7 @@ from db.store import (
     get_run_action_plan_snapshot as db_get_run_action_plan,
     upsert_prescription_status as db_upsert_prescription_status,
     get_prescription_statuses as db_get_prescription_statuses,
+    delete_pipeline_run,
     get_pipeline_runs,
     get_latest_run_id,
     get_run_snapshots,
@@ -94,101 +95,123 @@ def run_cmd(cmd: list[str], cwd: Path):
 # Legacy pipeline (kept for backward compat; agents are the primary path now)
 # -----------------------------------------------------------------------------
 def run_pipeline(reset: bool = True, alpha: float = 0.05):
+    import tempfile
+    import shutil
+    from db.raw_store import download_all_raw_to_dir
+
     print("\n=== STARTING FULL PIPELINE (legacy) ===")
 
     project_root = Path(__file__).resolve().parent  # backend/
-    data_dir = project_root / "data"
 
-    raw_dir = data_dir / "raw"
-    cleaned_dir = data_dir / "cleaned_data"
-    featured_dir = data_dir / "featured_data"
-    reports_dir = data_dir / "reports"
+    # All intermediate dirs use system temp
+    raw_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_raw_"))
+    cleaned_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_cleaned_"))
+    featured_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_featured_"))
+    reports_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_reports_"))
+    hypothesis_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_hypothesis_"))
+    insight_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_insight_"))
+    kpi_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_kpi_"))
+    forecast_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_forecast_"))
 
-    hypothesis_dir = data_dir / "hypothesis_outputs"
-    insight_dir = data_dir / "insight_outputs"
-    kpi_dir = data_dir / "kpi_outputs"
-    forecast_dir = data_dir / "forecast_outputs"
+    temp_dirs = [raw_dir, cleaned_dir, featured_dir, reports_dir,
+                 hypothesis_dir, insight_dir, kpi_dir, forecast_dir]
 
     clean_script = project_root / "pipeline" / "cleaning" / "clean_folder.py"
     feature_script = project_root / "pipeline" / "features" / "feature_folder.py"
 
-    if not raw_dir.exists():
-        raise RuntimeError(f"Missing raw data directory: {raw_dir}")
+    try:
+        # Download raw data from Supabase
+        print("Downloading raw data from Supabase...")
+        download_all_raw_to_dir(str(raw_dir))
 
-    # Reset output folders
-    if reset:
-        print("Resetting output folders...")
-        for p in [
-            cleaned_dir,
-            featured_dir,
-            reports_dir,
-            hypothesis_dir,
-            insight_dir,
-            kpi_dir,
-            forecast_dir,
-        ]:
-            rm_dir(p)
+        # 1. CLEANING
+        print("\n--- CLEANING ---")
+        run_cmd(
+            [
+                sys.executable,
+                str(clean_script),
+                "--input_dir",
+                str(raw_dir),
+                "--output_dir",
+                str(cleaned_dir),
+                "--reports_dir",
+                str(reports_dir),
+            ],
+            cwd=clean_script.parent,
+        )
 
-    for p in [
-        cleaned_dir,
-        featured_dir,
-        reports_dir,
-        hypothesis_dir,
-        insight_dir,
-        kpi_dir,
-        forecast_dir,
-    ]:
-        ensure_dir(p)
+        # 2. FEATURE ENGINEERING
+        print("\n--- FEATURE ENGINEERING ---")
+        run_cmd(
+            [
+                sys.executable,
+                str(feature_script),
+                "--input_dir",
+                str(cleaned_dir),
+                "--output_dir",
+                str(featured_dir),
+                "--reports_dir",
+                str(reports_dir),
+            ],
+            cwd=feature_script.parent,
+        )
 
-    # 1. CLEANING
-    print("\n--- CLEANING ---")
-    run_cmd(
-        [
-            sys.executable,
-            str(clean_script),
-            "--input_dir",
-            str(raw_dir),
-            "--output_dir",
-            str(cleaned_dir),
-            "--reports_dir",
-            str(reports_dir),
-        ],
-        cwd=clean_script.parent,
-    )
+        # 3. HYPOTHESIS TESTING
+        print("\n--- HYPOTHESIS TESTING ---")
+        run_hypothesis_agent(
+            alpha=alpha,
+            cleaned_dir=str(cleaned_dir),
+            featured_dir=str(featured_dir),
+            out_dir=str(hypothesis_dir),
+        )
 
-    # 2. FEATURE ENGINEERING
-    print("\n--- FEATURE ENGINEERING ---")
-    run_cmd(
-        [
-            sys.executable,
-            str(feature_script),
-            "--input_dir",
-            str(cleaned_dir),
-            "--output_dir",
-            str(featured_dir),
-            "--reports_dir",
-            str(reports_dir),
-        ],
-        cwd=feature_script.parent,
-    )
+        # 4. INSIGHTS
+        print("\n--- INSIGHTS ---")
+        from pipeline.insights.io import DataPaths as InsightDataPaths
+        insight_paths = InsightDataPaths(
+            base_dir=project_root,
+            _cleaned_dir=cleaned_dir,
+            _featured_dir=featured_dir,
+            _hypothesis_dir=hypothesis_dir,
+            _insights_dir=insight_dir,
+        )
+        run_insights(project_root, data_paths=insight_paths)
 
-    # 3. HYPOTHESIS TESTING
-    print("\n--- HYPOTHESIS TESTING ---")
-    run_hypothesis_agent(alpha=alpha)
+        # 5. KPI SNAPSHOT
+        print("\n--- KPI SNAPSHOT ---")
+        from pipeline.kpi.io import DataPaths as KpiDataPaths
+        kpi_paths = KpiDataPaths.from_blackboard({
+            "project_root": str(project_root),
+            "cleaned_dir": str(cleaned_dir),
+            "featured_dir": str(featured_dir),
+            "hypothesis_dir": str(hypothesis_dir),
+            "insight_dir": str(insight_dir),
+            "kpi_dir": str(kpi_dir),
+            "forecast_dir": str(forecast_dir),
+        })
+        run_kpi_snapshot(kpi_paths)
 
-    # 4. INSIGHTS
-    print("\n--- INSIGHTS ---")
-    run_insights(project_root)
+        # 6. FORECASTING
+        print("\n--- FORECASTING ---")
+        forecast_paths = ForecastPaths.from_blackboard({
+            "project_root": str(project_root),
+            "cleaned_dir": str(cleaned_dir),
+            "featured_dir": str(featured_dir),
+            "hypothesis_dir": str(hypothesis_dir),
+            "insight_dir": str(insight_dir),
+            "kpi_dir": str(kpi_dir),
+            "forecast_dir": str(forecast_dir),
+        })
+        run_forecasting(forecast_paths)
 
-    # 5. KPI SNAPSHOT
-    print("\n--- KPI SNAPSHOT ---")
-    run_kpi_snapshot(DataPaths.default())
-
-    # 6. FORECASTING
-    print("\n--- FORECASTING ---")
-    run_forecasting(ForecastPaths.default())
-
-    print("\n=== PIPELINE COMPLETE ===")
+        print("\n=== PIPELINE COMPLETE ===")
+    finally:
+        # Clean up temp dirs
+        for d in temp_dirs:
+            try:
+                shutil.rmtree(d, ignore_errors=True)
+            except Exception:
+                pass
 
 
 # -----------------------------------------------------------------------------
@@ -267,6 +290,58 @@ app.add_middleware(
 
 # Mount your RAG endpoints if you have them
 app.include_router(rag_router, prefix="/api/rag", tags=["rag"])
+
+
+# -----------------------------------------------------------------------------
+# Raw data management endpoints (Settings page)
+# -----------------------------------------------------------------------------
+@app.get("/api/data/status")
+async def data_status():
+    """Get row counts for all raw data tables."""
+    try:
+        from db.raw_store import get_raw_data_stats
+        stats = get_raw_data_stats()
+        return {"success": True, "stats": stats}
+    except Exception as e:
+        return {"success": False, "message": str(e), "stats": {}}
+
+
+@app.post("/api/data/generate")
+async def data_generate():
+    """Generate fresh synthetic data and store in Supabase."""
+    try:
+        import sys as _sys
+        _sys.path.insert(0, os.path.join(os.path.dirname(__file__), "scripts"))
+        from generate_synthetic_data import generate_all_data
+        stats = generate_all_data(local=False)
+        return {"success": True, "message": "Data generated successfully", "stats": stats}
+    except Exception as e:
+        return {"success": False, "message": str(e), "stats": {}}
+
+
+@app.post("/api/data/update")
+async def data_update(days: int = 7, scenario: str = "organic-growth"):
+    """Simulate a data update with the given scenario."""
+    try:
+        import sys as _sys
+        _sys.path.insert(0, os.path.join(os.path.dirname(__file__), "scripts"))
+        from simulate_update import run_update
+        summary = run_update(days=days, scenario=scenario, local=False)
+        return {"success": True, "message": f"{days}-day [{scenario}] update applied", "stats": summary}
+    except Exception as e:
+        return {"success": False, "message": str(e), "stats": {}}
+
+
+@app.delete("/api/data/delete")
+async def data_delete():
+    """Delete all raw data from Supabase."""
+    try:
+        from db.raw_store import delete_all_raw_data
+        deleted = delete_all_raw_data()
+        total = sum(deleted.values())
+        return {"success": True, "message": f"Deleted {total} total rows", "stats": deleted}
+    except Exception as e:
+        return {"success": False, "message": str(e), "stats": {}}
 
 
 # -----------------------------------------------------------------------------
@@ -1189,6 +1264,15 @@ CRITICAL — BE SPECIFIC, NOT VAGUE:
 def get_run_detail(run_id: str):
     """Returns all snapshots for a specific pipeline run."""
     return get_run_snapshots(run_id)
+
+
+@app.delete("/api/runs/{run_id}")
+async def delete_run(run_id: str):
+    """Delete a specific pipeline run and all its associated data."""
+    try:
+        return delete_pipeline_run(run_id)
+    except Exception as e:
+        return {"success": False, "message": str(e)}
 
 
 @app.get("/api/cleaned-data")

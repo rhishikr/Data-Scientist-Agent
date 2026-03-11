@@ -41,6 +41,25 @@ from generate_synthetic_data import (
 RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
 
 # ---------------------------------------------------------------------------
+# Storage mode: Supabase (default) or local CSV
+# ---------------------------------------------------------------------------
+_USE_LOCAL = False  # Set by CLI --local flag
+_raw_store = None   # Lazy-loaded Supabase module
+
+
+def _get_raw_store():
+    """Lazy-init Supabase raw_store module (only when not in local mode)."""
+    global _raw_store
+    if _raw_store is None:
+        sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+        from dotenv import load_dotenv as _ld
+        _ld(Path(__file__).resolve().parent.parent / ".env")
+        from db import raw_store as _rs
+        _raw_store = _rs
+    return _raw_store
+
+
+# ---------------------------------------------------------------------------
 # Scenario Definitions
 # ---------------------------------------------------------------------------
 
@@ -173,15 +192,20 @@ SCENARIOS = {
 # ---------------------------------------------------------------------------
 
 def _read_csv(name: str) -> pd.DataFrame:
-    path = RAW_DIR / name
-    if not path.exists():
-        raise FileNotFoundError(f"{path} not found. Run generate_synthetic_data.py first.")
-    return pd.read_csv(path)
+    if _USE_LOCAL:
+        path = RAW_DIR / name
+        if not path.exists():
+            raise FileNotFoundError(f"{path} not found. Run generate_synthetic_data.py first.")
+        return pd.read_csv(path)
+    return _get_raw_store().read_raw_table(name)
 
 
 def _append_csv(name: str, new_rows: pd.DataFrame) -> None:
-    path = RAW_DIR / name
-    new_rows.to_csv(path, mode="a", header=False, index=False)
+    if _USE_LOCAL:
+        path = RAW_DIR / name
+        new_rows.to_csv(path, mode="a", header=False, index=False)
+    else:
+        _get_raw_store().append_raw_rows(name, new_rows)
 
 
 def _max_id(series: pd.Series, prefix: str) -> int:
@@ -649,8 +673,7 @@ def simulate_payments(new_transactions: pd.DataFrame, sc: dict) -> pd.DataFrame:
 
 def simulate_inventory_changes(new_transactions: pd.DataFrame, sc: dict) -> None:
     """Update inventory stock levels based on new transactions (in-place update)."""
-    inv_path = RAW_DIR / "inventory.csv"
-    inventory = pd.read_csv(inv_path)
+    inventory = _read_csv("inventory.csv")
 
     # Decrement stock for sold items
     sold_qty = (
@@ -679,7 +702,11 @@ def simulate_inventory_changes(new_transactions: pd.DataFrame, sc: dict) -> None
             restock_mask, "stock_quantity"
         ].apply(lambda x: x + random.randint(50, 200) if not np.isnan(x) else x)
 
-    inventory.to_csv(inv_path, index=False)
+    if _USE_LOCAL:
+        inv_path = RAW_DIR / "inventory.csv"
+        inventory.to_csv(inv_path, index=False)
+    else:
+        _get_raw_store().replace_raw_table("inventory.csv", inventory)
 
 
 def simulate_campaign_performance(new_marketing: pd.DataFrame, days: int, sc: dict) -> pd.DataFrame:
@@ -770,52 +797,67 @@ def simulate_funnel_summary(days: int, sc: dict) -> pd.DataFrame:
 # Main
 # ---------------------------------------------------------------------------
 
-def main():
-    parser = argparse.ArgumentParser(description="Simulate retail dataset updates with dynamic scenarios")
-    parser.add_argument("--days", type=int, default=7, help="Number of days to simulate (default: 7)")
-    parser.add_argument(
-        "--scenario", type=str, default="organic-growth",
-        choices=list(SCENARIOS.keys()),
-        help="Business scenario to simulate (default: organic-growth)"
-    )
-    args = parser.parse_args()
-    days = args.days
-    sc = SCENARIOS[args.scenario]
+def run_update(days: int = 7, scenario: str = "organic-growth", local: bool = False) -> dict:
+    """Run the data update simulation.
 
-    print(f"Simulating {days} days | Scenario: {args.scenario}")
+    Args:
+        days: Number of days to simulate.
+        scenario: Business scenario name (must be a key in SCENARIOS).
+        local: If True, read/write local CSVs instead of Supabase.
+
+    Returns:
+        Dict with summary of rows added per table.
+    """
+    global _USE_LOCAL
+    _USE_LOCAL = local
+
+    if scenario not in SCENARIOS:
+        raise ValueError(f"Unknown scenario: {scenario}. Valid: {list(SCENARIOS.keys())}")
+
+    sc = SCENARIOS[scenario]
+
+    print(f"Simulating {days} days | Scenario: {scenario}")
     print(f"  {sc['description']}")
     print(f"  Conversion: {sc['conversion_rate']:.0%} | Volume: {sc['volume_mult']}x | AOV: {sc['aov_mult']}x | Marketing: {sc['marketing_spend_mult']}x")
     print()
 
+    summary = {}
+
     # 1. New customers
     new_customers = simulate_customers(days, sc)
     _append_csv("customers.csv", new_customers)
+    summary["customers"] = len(new_customers)
     print(f"  + {len(new_customers)} new customers")
 
     # 2. New marketing campaigns
     new_marketing = simulate_marketing(days, sc)
     _append_csv("marketing.csv", new_marketing)
+    summary["marketing"] = len(new_marketing)
     print(f"  + {len(new_marketing)} new campaigns")
 
     # 3. New sessions
     new_sessions = simulate_sessions(days, sc)
     _append_csv("sessions.csv", new_sessions)
     converted_count = new_sessions["converted_flag"].sum() if "converted_flag" in new_sessions else 0
+    summary["sessions"] = len(new_sessions)
     print(f"  + {len(new_sessions)} new sessions ({int(converted_count)} converted)")
 
     # 4. New events (from sessions)
     new_events = simulate_events(new_sessions, sc)
     _append_csv("events.csv", new_events)
+    summary["events"] = len(new_events)
     print(f"  + {len(new_events)} new events")
 
     # 5. Web analytics
     new_web = simulate_web_analytics(days, sc)
     _append_csv("web_analytics.csv", new_web)
+    summary["web_analytics"] = len(new_web)
     print(f"  + {len(new_web)} new web analytics events")
 
     # 6. Transactions (from converted sessions)
     new_transactions, txn_session_map = simulate_transactions(new_sessions, sc)
     _append_csv("transactions.csv", new_transactions)
+    summary["transactions"] = len(new_transactions)
     print(f"  + {len(new_transactions)} new transactions")
 
     # 7. Transactions with session
@@ -831,30 +873,52 @@ def main():
         else:
             txn_with_sess["session_id"] = np.nan
         _append_csv("transactions_with_session.csv", txn_with_sess)
+        summary["transactions_with_session"] = len(txn_with_sess)
         print(f"  + {len(txn_with_sess)} new transactions_with_session rows")
 
     # 8. Payments
     new_payments = simulate_payments(new_transactions, sc)
     _append_csv("payments.csv", new_payments)
+    summary["payments"] = len(new_payments)
     print(f"  + {len(new_payments)} new payments")
 
     # 9. Inventory adjustments
     if not new_transactions.empty:
         simulate_inventory_changes(new_transactions, sc)
-    scenario_note = " (STOCKOUT DRAIN APPLIED)" if args.scenario == "stockout-crisis" else ""
+    scenario_note = " (STOCKOUT DRAIN APPLIED)" if scenario == "stockout-crisis" else ""
     print(f"  ~ Inventory levels updated{scenario_note}")
 
     # 10. Campaign performance
     new_camp_perf = simulate_campaign_performance(new_marketing, days, sc)
     _append_csv("campaign_performance.csv", new_camp_perf)
+    summary["campaign_performance"] = len(new_camp_perf)
     print(f"  + {len(new_camp_perf)} new campaign_performance rows")
 
     # 11. Funnel summary
     new_funnel = simulate_funnel_summary(days, sc)
     _append_csv("funnel_summary.csv", new_funnel)
+    summary["funnel_summary"] = len(new_funnel)
     print(f"  + {len(new_funnel)} new funnel_summary rows")
 
-    print(f"\nDone! {days}-day [{args.scenario}] update applied to {RAW_DIR}")
+    target = RAW_DIR if local else "Supabase"
+    print(f"\nDone! {days}-day [{scenario}] update applied to {target}")
+    return summary
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Simulate retail dataset updates with dynamic scenarios")
+    parser.add_argument("--days", type=int, default=7, help="Number of days to simulate (default: 7)")
+    parser.add_argument(
+        "--scenario", type=str, default="organic-growth",
+        choices=list(SCENARIOS.keys()),
+        help="Business scenario to simulate (default: organic-growth)"
+    )
+    parser.add_argument(
+        "--local", action="store_true",
+        help="Read/write local CSVs instead of Supabase (for debugging)"
+    )
+    args = parser.parse_args()
+    run_update(days=args.days, scenario=args.scenario, local=args.local)
 
 
 if __name__ == "__main__":

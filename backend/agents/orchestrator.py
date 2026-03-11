@@ -6,6 +6,7 @@ Provides real-time status, agent logs, and LLM decision transparency.
 from __future__ import annotations
 
 import shutil
+import tempfile
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -49,21 +50,21 @@ class PipelineOrchestrator:
     ) -> "PipelineOrchestrator":
         """Factory method that creates the standard 7-agent pipeline."""
         project_root = Path(__file__).resolve().parent.parent  # backend/
-        data_dir = project_root / "data"
 
+        # Use system temp dirs for all pipeline data — nothing in the project folder
         blackboard = SharedBlackboard(
             config={"reset": reset, "alpha": alpha},
             paths={
                 "project_root": str(project_root),
-                "data_dir": str(data_dir),
-                "raw_dir": str(data_dir / "raw"),
-                "cleaned_dir": str(data_dir / "cleaned_data"),
-                "featured_dir": str(data_dir / "featured_data"),
-                "reports_dir": str(data_dir / "reports"),
-                "hypothesis_dir": str(data_dir / "hypothesis_outputs"),
-                "insight_dir": str(data_dir / "insight_outputs"),
-                "kpi_dir": str(data_dir / "kpi_outputs"),
-                "forecast_dir": str(data_dir / "forecast_outputs"),
+                "data_dir": tempfile.mkdtemp(prefix="dsa_data_"),
+                "raw_dir": tempfile.mkdtemp(prefix="dsa_raw_"),
+                "cleaned_dir": tempfile.mkdtemp(prefix="dsa_cleaned_"),
+                "featured_dir": tempfile.mkdtemp(prefix="dsa_featured_"),
+                "reports_dir": tempfile.mkdtemp(prefix="dsa_reports_"),
+                "hypothesis_dir": tempfile.mkdtemp(prefix="dsa_hypothesis_"),
+                "insight_dir": tempfile.mkdtemp(prefix="dsa_insights_"),
+                "kpi_dir": tempfile.mkdtemp(prefix="dsa_kpi_"),
+                "forecast_dir": tempfile.mkdtemp(prefix="dsa_forecast_"),
             },
         )
 
@@ -107,16 +108,13 @@ class PipelineOrchestrator:
             {"event": "pipeline_started", "total_agents": total_agents}
         )
 
-        # Optionally reset output directories
-        if self.blackboard.config.get("reset", True):
-            for key in [
-                "cleaned_dir", "featured_dir", "reports_dir",
-                "hypothesis_dir", "insight_dir", "kpi_dir", "forecast_dir",
-            ]:
-                p = Path(self.blackboard.paths.get(key, ""))
-                if p.exists():
-                    shutil.rmtree(p)
-                p.mkdir(parents=True, exist_ok=True)
+        # Download raw data from Supabase into the temp raw_dir
+        try:
+            from db.raw_store import download_all_raw_to_dir
+            download_all_raw_to_dir(self.blackboard.paths["raw_dir"])
+            print(f"[orchestrator] Raw data downloaded from Supabase to temp dir")
+        except Exception as e:
+            print(f"[orchestrator] Warning: Could not download raw data from Supabase: {e}")
 
         results = {}
         for i, agent in enumerate(self.agents):
@@ -200,4 +198,16 @@ class PipelineOrchestrator:
 
         summary["run_id"] = run_id
         self._emit(summary)
+
+        # Clean up all temp directories
+        temp_base = tempfile.gettempdir()
+        for key in [
+            "data_dir", "raw_dir", "cleaned_dir", "featured_dir",
+            "reports_dir", "hypothesis_dir", "insight_dir",
+            "kpi_dir", "forecast_dir",
+        ]:
+            p = self.blackboard.paths.get(key, "")
+            if p and Path(p).exists() and p.startswith(temp_base):
+                shutil.rmtree(p, ignore_errors=True)
+
         return summary

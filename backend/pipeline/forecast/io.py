@@ -32,6 +32,23 @@ class ForecastPaths:
             models_dir=os.path.join(root, "models"),
         )
 
+    @staticmethod
+    def from_blackboard(paths: dict) -> "ForecastPaths":
+        """Construct ForecastPaths from orchestrator blackboard paths dict."""
+        return ForecastPaths(
+            root=paths.get("project_root", ""),
+            cleaned_dir=paths.get("cleaned_dir", ""),
+            featured_dir=paths.get("featured_dir", ""),
+            hypothesis_json_path=os.path.join(
+                paths.get("hypothesis_dir", ""), "hypothesis_results.json"
+            ),
+            insights_json_path=os.path.join(
+                paths.get("insight_dir", ""), "insights.json"
+            ),
+            out_dir=paths.get("forecast_dir", ""),
+            models_dir=os.path.join(paths.get("project_root", ""), "models"),
+        )
+
 
 def _read_csv(path: str) -> pd.DataFrame:
     try:

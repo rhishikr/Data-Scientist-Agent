@@ -153,7 +153,6 @@ def _parse_dates(df: pd.DataFrame, cols: Iterable[str]) -> Tuple[pd.DataFrame, i
         parsed = pd.to_datetime(
             orig_str,
             errors="coerce",              # invalid → NaT
-            infer_datetime_format=True,   # speed + robustness
             utc=False
         )
         df[col] = parsed

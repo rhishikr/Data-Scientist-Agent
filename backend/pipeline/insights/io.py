@@ -11,6 +11,22 @@ import pandas as pd
 @dataclass
 class DataPaths:
     base_dir: Path
+    _cleaned_dir: Path | None = None
+    _featured_dir: Path | None = None
+    _hypothesis_dir: Path | None = None
+    _insights_dir: Path | None = None
+
+    @staticmethod
+    def from_blackboard(paths: dict) -> "DataPaths":
+        """Construct DataPaths from orchestrator blackboard paths dict."""
+        base = Path(paths.get("project_root", ""))
+        return DataPaths(
+            base_dir=base,
+            _cleaned_dir=Path(paths["cleaned_dir"]) if paths.get("cleaned_dir") else None,
+            _featured_dir=Path(paths["featured_dir"]) if paths.get("featured_dir") else None,
+            _hypothesis_dir=Path(paths["hypothesis_dir"]) if paths.get("hypothesis_dir") else None,
+            _insights_dir=Path(paths["insight_dir"]) if paths.get("insight_dir") else None,
+        )
 
     @property
     def data_dir(self) -> Path:
@@ -18,19 +34,19 @@ class DataPaths:
 
     @property
     def cleaned_dir(self) -> Path:
-        return self.data_dir / "cleaned_data"
+        return self._cleaned_dir or (self.data_dir / "cleaned_data")
 
     @property
     def featured_dir(self) -> Path:
-        return self.data_dir / "featured_data"
+        return self._featured_dir or (self.data_dir / "featured_data")
 
     @property
     def hypothesis_dir(self) -> Path:
-        return self.data_dir / "hypothesis_outputs"
+        return self._hypothesis_dir or (self.data_dir / "hypothesis_outputs")
 
     @property
     def insights_dir(self) -> Path:
-        return self.data_dir / "insight_outputs"
+        return self._insights_dir or (self.data_dir / "insight_outputs")
 
 
 def load_featured(paths: DataPaths) -> dict[str, pd.DataFrame]:

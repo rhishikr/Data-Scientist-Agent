@@ -75,9 +75,11 @@ class InsightsAgent(BaseAgent):
         self, plan: Dict[str, Any], blackboard: SharedBlackboard
     ) -> AgentResult:
         from pipeline.insights.runner import run_insights
+        from pipeline.insights.io import DataPaths
 
         project_root = Path(blackboard.paths["project_root"])
-        bundle = run_insights(project_root)
+        data_paths = DataPaths.from_blackboard(blackboard.paths)
+        bundle = run_insights(project_root, data_paths=data_paths)
 
         bundle_dict = bundle.to_dict() if hasattr(bundle, "to_dict") else {"ok": True}
         num_insights = bundle_dict.get("meta", {}).get("num_insights", 0)

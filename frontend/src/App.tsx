@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Toaster } from "sonner";
 import {
   Sidebar,
   SidebarContent,
@@ -65,6 +66,7 @@ export default function App() {
   };
 
   return (
+    <>
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-slate-50">
         <Sidebar className="border-r bg-white">
@@ -106,5 +108,7 @@ export default function App() {
         </SidebarInset>
       </div>
     </SidebarProvider>
+    <Toaster position="top-right" richColors />
+    </>
   );
 }

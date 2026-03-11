@@ -78,7 +78,12 @@ class HypothesisAgent(BaseAgent):
         from pipeline.hypothesis.runner import run_hypothesis_agent
 
         alpha = plan.get("alpha", blackboard.config.get("alpha", 0.05))
-        payload = run_hypothesis_agent(alpha=alpha)
+        payload = run_hypothesis_agent(
+            alpha=alpha,
+            cleaned_dir=blackboard.paths.get("cleaned_dir"),
+            featured_dir=blackboard.paths.get("featured_dir"),
+            out_dir=blackboard.paths.get("hypothesis_dir"),
+        )
 
         num_sig = payload.get("meta", {}).get("num_significant", 0)
         top_findings = payload.get("top_findings", [])

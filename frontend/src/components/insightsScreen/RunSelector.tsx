@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Badge } from "../ui/badge";
-import { useRuns, type PipelineRun } from "./dashboard/data";
+import { useRuns } from "./dashboard/data";
 
 type Props = {
   selectedRunId: string | null;
@@ -58,9 +58,9 @@ export function RunSelector({ selectedRunId, onSelectRun }: Props) {
       </span>
       <Select
         value={selectedRunId ?? runOptions[0]?.id ?? ""}
-        onValueChange={(v) => onSelectRun(v)}
+        onValueChange={(v: string) => onSelectRun(v)}
       >
-        <SelectTrigger className="w-[320px]">
+        <SelectTrigger className="w-auto min-w-[320px]">
           <SelectValue placeholder="Select a run" />
         </SelectTrigger>
         <SelectContent>
@@ -69,7 +69,7 @@ export function RunSelector({ selectedRunId, onSelectRun }: Props) {
               <div className="flex items-center gap-2">
                 <span>{run.label}</span>
                 <Badge
-                  variant={run.status === "completed" ? "default" : "destructive"}
+                  color={run.status === "completed" ? "green" : run.status === "running" ? "orange" : "red"}
                   className="text-xs"
                 >
                   {run.status}
