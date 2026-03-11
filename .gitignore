@@ -17,6 +17,7 @@ frontend/build/
 frontend/.vite/
 
 venv/
+.claude/
 
 # OS/IDE
 .DS_Store
