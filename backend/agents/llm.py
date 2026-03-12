@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from typing import Any, Dict, Optional
 
@@ -10,7 +11,7 @@ from typing import Any, Dict, Optional
 _llm: Optional[Any] = None
 
 
-def get_llm(model: str = "gpt-4o-mini", temperature: float = 0.2) -> Any:
+def get_llm(model: str = os.getenv("RAG_LLM_MODEL", "gpt-4.1-mini"), temperature: float = 0.2) -> Any:
     from langchain_openai import ChatOpenAI
 
     global _llm
@@ -22,7 +23,7 @@ def get_llm(model: str = "gpt-4o-mini", temperature: float = 0.2) -> Any:
 async def ask_llm(
     system_prompt: str,
     user_prompt: str,
-    model: str = "gpt-4o-mini",
+    model: str = os.getenv("RAG_LLM_MODEL", "gpt-4.1-mini"),
 ) -> str:
     """
     Async wrapper for LLM calls across all agents.

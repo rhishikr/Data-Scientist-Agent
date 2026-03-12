@@ -1616,7 +1616,7 @@ Guidelines:
 - Use plain business language, avoid technical jargon
 - Focus on what the retail store owner should DO next"""
 
-        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.3)
+        llm = ChatOpenAI(model=os.getenv("RAG_LLM_MODEL", "gpt-4.1-mini"), temperature=0.3)
         response = llm.invoke([
             SystemMessage(content=system_prompt),
             HumanMessage(content=f"Analyze this retail business data:\n\n{context}"),
@@ -2215,7 +2215,7 @@ Return valid JSON with this structure:
 
 Use specific numbers. Be concise. Every action_hint must start with an action verb."""
 
-        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.3)
+        llm = ChatOpenAI(model=os.getenv("RAG_LLM_MODEL", "gpt-4.1-mini"), temperature=0.3)
         response = llm.invoke([
             SystemMessage(content=system_prompt),
             HumanMessage(content=f"Business data:\n{context}"),

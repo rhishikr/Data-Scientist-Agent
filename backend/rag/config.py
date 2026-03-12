@@ -43,7 +43,7 @@ def load_config(base_dir: Path) -> RagConfig:
         data_dir=data_dir,
         artifacts_dir=artifacts_dir,
         db_url=db_url,
-        llm_model=os.getenv("RAG_LLM_MODEL", "gpt-4o-mini"),
+        llm_model=os.getenv("RAG_LLM_MODEL", "gpt-4.1-mini"),
         embed_model=os.getenv("RAG_EMBED_MODEL", "text-embedding-3-small"),
         top_k=int(os.getenv("RAG_TOP_K", "5")),
     )

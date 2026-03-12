@@ -253,7 +253,7 @@ def answer_question(
     llm = ChatOpenAI(model=cfg.llm_model, temperature=0)
 
     # --- Snapshot-first route (Tier 2: lightweight LLM fallback) ---
-    fallback_llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    fallback_llm = ChatOpenAI(model=cfg.llm_model, temperature=0)
     snapshot_result = _handle_snapshot(question, llm=fallback_llm)
     if snapshot_result is not None:
         logger.info("Query answered from snapshot (Tier 2 LLM): %s", question[:80])
@@ -301,7 +301,7 @@ def answer_question_stream(
     # --- Snapshot-first route (Tier 1: no LLM, then Tier 2: lightweight LLM) ---
     snapshot_result = _handle_snapshot(question)
     if snapshot_result is None:
-        fallback_llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        fallback_llm = ChatOpenAI(model=cfg.llm_model, temperature=0)
         snapshot_result = _handle_snapshot(question, llm=fallback_llm)
 
     if snapshot_result is not None:
