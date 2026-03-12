@@ -5,6 +5,7 @@ Provides real-time status, agent logs, and LLM decision transparency.
 """
 from __future__ import annotations
 
+import asyncio
 import shutil
 import tempfile
 import time
@@ -23,6 +24,20 @@ from .forecast_agent import ForecastAgent
 from .action_agent import ActionAgent
 
 from db.store import create_pipeline_run, complete_pipeline_run
+
+
+def _run_agent_in_thread(agent, blackboard):
+    """Run an async agent in a dedicated event loop on a background thread.
+
+    Agents contain blocking calls (subprocess.run, pd.read_csv, sync HTTP).
+    Running them in a thread prevents starving the main asyncio event loop,
+    keeping all other API endpoints responsive during pipeline execution.
+    """
+    loop = asyncio.new_event_loop()
+    try:
+        return loop.run_until_complete(agent.run(blackboard))
+    finally:
+        loop.close()
 
 
 @dataclass
@@ -96,72 +111,78 @@ class PipelineOrchestrator:
         start = time.time()
         total_agents = len(self.agents)
 
-        # Create a new pipeline run in Supabase
+        # Create a new pipeline run in Supabase (sync call → run in thread)
         try:
-            run_id = create_pipeline_run()
+            run_id = await asyncio.to_thread(create_pipeline_run)
             self.blackboard.config["run_id"] = run_id
         except Exception as e:
             print(f"[orchestrator] Warning: Could not create pipeline run in Supabase: {e}")
             self.blackboard.config["run_id"] = None
 
         self._emit(
-            {"event": "pipeline_started", "total_agents": total_agents}
+            {"event": "pipeline_started", "total_agents": total_agents, "run_id": run_id}
         )
 
-        # Download raw data from Supabase into the temp raw_dir
+        # Download raw data from Supabase into the temp raw_dir (sync I/O → thread)
         try:
             from db.raw_store import download_all_raw_to_dir
-            download_all_raw_to_dir(self.blackboard.paths["raw_dir"])
+            await asyncio.to_thread(download_all_raw_to_dir, self.blackboard.paths["raw_dir"])
             print(f"[orchestrator] Raw data downloaded from Supabase to temp dir")
         except Exception as e:
             print(f"[orchestrator] Warning: Could not download raw data from Supabase: {e}")
 
         results = {}
-        for i, agent in enumerate(self.agents):
-            self._emit(
-                {
-                    "event": "agent_started",
-                    "agent_id": agent.agent_id,
-                    "agent_name": agent.name,
-                    "step": i + 1,
-                    "total_steps": total_agents,
-                    "progress_pct": int((i / total_agents) * 100),
-                }
-            )
-
-            result = await agent.run(self.blackboard)
-            self.blackboard.set_agent_result(agent.agent_id, result)
-            results[agent.agent_id] = result
-
-            # Record LLM decisions globally
-            for decision in result.llm_decisions:
-                self.blackboard.llm_decisions.append(
-                    {"agent": agent.name, "decision": decision}
-                )
-
-            self._emit(
-                {
-                    "event": "agent_completed",
-                    "agent_id": agent.agent_id,
-                    "agent_name": agent.name,
-                    "success": result.success,
-                    "duration": result.duration_seconds,
-                    "llm_reasoning": result.llm_reasoning,
-                    "step": i + 1,
-                    "total_steps": total_agents,
-                    "progress_pct": int(((i + 1) / total_agents) * 100),
-                }
-            )
-
-            if not result.success:
+        try:
+            for i, agent in enumerate(self.agents):
                 self._emit(
                     {
-                        "event": "agent_error",
+                        "event": "agent_started",
                         "agent_id": agent.agent_id,
-                        "error": result.error,
+                        "agent_name": agent.name,
+                        "step": i + 1,
+                        "total_steps": total_agents,
+                        "progress_pct": int((i / total_agents) * 100),
                     }
                 )
-                # Log and continue — resilient pipeline
+
+                result = await asyncio.to_thread(_run_agent_in_thread, agent, self.blackboard)
+                self.blackboard.set_agent_result(agent.agent_id, result)
+                results[agent.agent_id] = result
+
+                # Record LLM decisions globally
+                for decision in result.llm_decisions:
+                    self.blackboard.llm_decisions.append(
+                        {"agent": agent.name, "decision": decision}
+                    )
+
+                self._emit(
+                    {
+                        "event": "agent_completed",
+                        "agent_id": agent.agent_id,
+                        "agent_name": agent.name,
+                        "success": result.success,
+                        "duration": result.duration_seconds,
+                        "llm_reasoning": result.llm_reasoning,
+                        "step": i + 1,
+                        "total_steps": total_agents,
+                        "progress_pct": int(((i + 1) / total_agents) * 100),
+                    }
+                )
+
+                if not result.success:
+                    self._emit(
+                        {
+                            "event": "agent_error",
+                            "agent_id": agent.agent_id,
+                            "error": result.error,
+                        }
+                    )
+                    # Log and continue — resilient pipeline
+
+        except asyncio.CancelledError:
+            print("[orchestrator] Pipeline cancelled — cleaning up temp directories")
+            self._cleanup_temp_dirs()
+            raise
 
         total_time = time.time() - start
 
@@ -186,7 +207,8 @@ class PipelineOrchestrator:
         if run_id:
             any_failed = any(not r.success for r in results.values())
             try:
-                complete_pipeline_run(
+                await asyncio.to_thread(
+                    complete_pipeline_run,
                     run_id=run_id,
                     status="failed" if any_failed else "completed",
                     duration_seconds=total_time,
@@ -199,15 +221,20 @@ class PipelineOrchestrator:
         summary["run_id"] = run_id
         self._emit(summary)
 
-        # Auto-rebuild RAG vector index with latest pipeline outputs
+        # Auto-rebuild RAG vector index with latest pipeline outputs (may do heavy I/O)
         try:
             from rag.ingest import rebuild_index
-            rebuild_index(Path(__file__).resolve().parents[1], run_id=run_id)
+            await asyncio.to_thread(rebuild_index, Path(__file__).resolve().parents[1], run_id=run_id)
             print("[orchestrator] RAG vector index rebuilt successfully")
         except Exception as e:
             print(f"[orchestrator] Warning: RAG index rebuild failed: {e}")
 
-        # Clean up all temp directories
+        self._cleanup_temp_dirs()
+
+        return summary
+
+    def _cleanup_temp_dirs(self) -> None:
+        """Remove all temporary directories created for this pipeline run."""
         temp_base = tempfile.gettempdir()
         for key in [
             "data_dir", "raw_dir", "cleaned_dir", "featured_dir",
@@ -217,5 +244,3 @@ class PipelineOrchestrator:
             p = self.blackboard.paths.get(key, "")
             if p and Path(p).exists() and p.startswith(temp_base):
                 shutil.rmtree(p, ignore_errors=True)
-
-        return summary

@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import sys
 from asyncio import Queue
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Optional
 
@@ -53,6 +54,10 @@ from db.store import (
     get_run_action_plan_snapshot as db_get_run_action_plan,
     upsert_prescription_status as db_upsert_prescription_status,
     get_prescription_statuses as db_get_prescription_statuses,
+    complete_pipeline_run,
+    update_pipeline_progress,
+    set_pipeline_current_agent,
+    get_running_pipeline,
     delete_pipeline_run,
     get_pipeline_runs,
     get_latest_run_id,
@@ -220,6 +225,60 @@ def run_pipeline(reset: bool = True, alpha: float = 0.05):
 # -----------------------------------------------------------------------------
 _pipeline_status: dict = {}
 _pipeline_running: bool = False
+_pipeline_task: asyncio.Task | None = None
+_pipeline_run_id: str | None = None
+_pipeline_subscribers: list[Queue] = []
+_db_executor = ThreadPoolExecutor(max_workers=1)
+
+
+def _broadcast_event(event: dict):
+    """Persist progress to DB (fire-and-forget in thread) and push events to all SSE subscribers."""
+    global _pipeline_run_id
+    evt = event.get("event")
+
+    if evt == "pipeline_started":
+        _pipeline_run_id = event.get("run_id")
+    elif evt == "agent_started" and _pipeline_run_id:
+        _db_executor.submit(
+            lambda rid=_pipeline_run_id, aid=event.get("agent_id"): set_pipeline_current_agent(rid, aid)
+        )
+    elif evt == "agent_completed" and _pipeline_run_id:
+        # Don't clear current_agent here — the next agent_started will overwrite it.
+        # Clearing it causes a race condition with fire-and-forget threads where
+        # agent_completed(N) nullifies current_agent AFTER agent_started(N+1) sets it.
+        _db_executor.submit(
+            lambda rid=_pipeline_run_id, aid=event["agent_id"], data={
+                "success": event.get("success"),
+                "duration": event.get("duration"),
+                "llm_reasoning": event.get("llm_reasoning"),
+                "step": event.get("step"),
+                "total_steps": event.get("total_steps"),
+                "progress_pct": event.get("progress_pct"),
+            }: update_pipeline_progress(
+                run_id=rid, agent_id=aid, agent_data=data
+            )
+        )
+    elif evt == "pipeline_complete" and _pipeline_run_id:
+        # Belt-and-suspenders: clear current_agent after all pending DB tasks.
+        # complete_pipeline_run also sets current_agent=None, but the fire-and-forget
+        # update_pipeline_progress for the last agent can race with it. This task
+        # is submitted to the SAME executor, so it runs after all prior tasks.
+        _db_executor.submit(
+            lambda rid=_pipeline_run_id: set_pipeline_current_agent(rid, None)
+        )
+
+    # SSE broadcast to all subscribers
+    dead: list[Queue] = []
+    for q in _pipeline_subscribers:
+        try:
+            q.put_nowait(event)
+        except Exception:
+            dead.append(q)
+    for q in dead:
+        try:
+            _pipeline_subscribers.remove(q)
+        except ValueError:
+            pass
 
 
 # -----------------------------------------------------------------------------
@@ -388,11 +447,33 @@ async def run_pipeline_endpoint(reset: bool = True, alpha: float = 0.05):
 
 @app.get("/api/pipeline/status")
 def get_pipeline_status():
-    """Get current pipeline execution status and all agent decisions."""
-    return {
-        "running": _pipeline_running,
-        "status": _pipeline_status,
-    }
+    """Get pipeline status from DB (survives tab switches and refreshes)."""
+    # Check DB for a running pipeline
+    try:
+        running = get_running_pipeline()
+    except Exception:
+        # Fallback if DB query fails (e.g. migration not yet applied)
+        running = None
+
+    if running:
+        return {
+            "running": True,
+            "run_id": running["id"],
+            "partial": running.get("agent_summary") or {},
+            "current_agent": running.get("current_agent"),
+        }
+
+    # Also check in-memory flag (pipeline may just have started, DB not yet updated)
+    if _pipeline_running:
+        return {
+            "running": True,
+            "run_id": _pipeline_run_id,
+            "partial": {},
+            "current_agent": None,
+        }
+
+    # Not running — return latest completed status
+    return {"running": False, "status": _pipeline_status}
 
 
 @app.get("/api/pipeline/stream")
@@ -401,37 +482,42 @@ async def stream_pipeline(reset: bool = True, alpha: float = 0.05):
     SSE endpoint for real-time pipeline status updates.
     Frontend connects via EventSource for live progress visualization.
     """
-    global _pipeline_running
+    global _pipeline_running, _pipeline_task
     if _pipeline_running:
         return {"error": "Pipeline is already running"}
 
-    queue: Queue = Queue()
-
-    def on_status(event: dict):
-        queue.put_nowait(event)
-
     orchestrator = PipelineOrchestrator.create_default(reset=reset, alpha=alpha)
-    orchestrator.on_status(on_status)
+    orchestrator.on_status(_broadcast_event)
+
+    # Create a subscriber queue for this SSE connection
+    sub_queue: Queue = Queue()
+    _pipeline_subscribers.append(sub_queue)
 
     async def event_generator():
-        global _pipeline_status, _pipeline_running
+        global _pipeline_status, _pipeline_running, _pipeline_task
         _pipeline_running = True
-        task = asyncio.create_task(orchestrator.run())
+        _pipeline_task = asyncio.create_task(orchestrator.run())
 
         try:
             while True:
                 try:
-                    event = await asyncio.wait_for(queue.get(), timeout=1.0)
+                    event = await asyncio.wait_for(sub_queue.get(), timeout=1.0)
                     yield f"data: {json.dumps(event, default=str)}\n\n"
                     if event.get("event") == "pipeline_complete":
                         break
                 except asyncio.TimeoutError:
                     yield f"data: {json.dumps({'event': 'heartbeat'})}\n\n"
 
-            result = await task
-            _pipeline_status = result
+            if _pipeline_task is not None and not _pipeline_task.cancelled():
+                result = await _pipeline_task
+                _pipeline_status = result
+        except asyncio.CancelledError:
+            pass
         finally:
             _pipeline_running = False
+            _pipeline_task = None
+            if sub_queue in _pipeline_subscribers:
+                _pipeline_subscribers.remove(sub_queue)
 
     return StreamingResponse(
         event_generator(),
@@ -442,6 +528,69 @@ async def stream_pipeline(reset: bool = True, alpha: float = 0.05):
             "X-Accel-Buffering": "no",
         },
     )
+
+
+@app.get("/api/pipeline/stream/subscribe")
+async def subscribe_pipeline():
+    """
+    SSE endpoint to reconnect to a running pipeline.
+    Replays completed agent events from DB, then streams remaining events live.
+    """
+    if not _pipeline_running:
+        return {"error": "No pipeline is currently running"}
+
+    sub_queue: Queue = Queue()
+    _pipeline_subscribers.append(sub_queue)
+
+    async def event_generator():
+        try:
+            # Replay completed agents from DB
+            running_run = get_running_pipeline()
+            if running_run:
+                agent_summary = running_run.get("agent_summary") or {}
+                for agent_id, agent_data in agent_summary.items():
+                    replay_event = {
+                        "event": "agent_completed",
+                        "agent_id": agent_id,
+                        "success": agent_data.get("success"),
+                        "duration": agent_data.get("duration"),
+                        "llm_reasoning": agent_data.get("llm_reasoning"),
+                        "step": agent_data.get("step"),
+                        "total_steps": agent_data.get("total_steps"),
+                        "progress_pct": agent_data.get("progress_pct"),
+                    }
+                    yield f"data: {json.dumps(replay_event, default=str)}\n\n"
+                # Emit current running agent if any
+                current = running_run.get("current_agent")
+                if current:
+                    yield f"data: {json.dumps({'event': 'agent_started', 'agent_id': current}, default=str)}\n\n"
+
+            # Stream remaining events
+            while True:
+                try:
+                    event = await asyncio.wait_for(sub_queue.get(), timeout=1.0)
+                    yield f"data: {json.dumps(event, default=str)}\n\n"
+                    if event.get("event") == "pipeline_complete":
+                        break
+                except asyncio.TimeoutError:
+                    # If pipeline stopped running while we wait, exit
+                    if not _pipeline_running:
+                        break
+                    yield f"data: {json.dumps({'event': 'heartbeat'})}\n\n"
+        finally:
+            if sub_queue in _pipeline_subscribers:
+                _pipeline_subscribers.remove(sub_queue)
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )
+
 
 
 @app.get("/api/pipeline/decisions")
@@ -1528,7 +1677,7 @@ def get_ai_analysis(run_id: Optional[str] = None):
             cached = db_get_run_ai_analysis(run_id)
         else:
             cached = db_get_latest_ai_analysis()
-        if cached and "error" not in cached:
+        if cached and "error" not in cached and cached.get("analysis"):
             cached["cached"] = True
             return cached
     except Exception:

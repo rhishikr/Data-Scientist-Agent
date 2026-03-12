@@ -56,7 +56,7 @@ export default function App() {
       case "data-sources":
         return <DataSourcesScreen />;
       case "pipelines":
-        return <PipelineScreen />;
+        return <PipelineScreen onNavigate={setActiveSection} />;
       case "customer-insights":
         return <CustomerInsightsScreen />;
       case "data-explorer":

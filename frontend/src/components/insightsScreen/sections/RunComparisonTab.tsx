@@ -220,70 +220,34 @@ export function RunComparisonTab({
 
   const noPrevious = comparison && !comparison.previous_snapshot;
 
+  // Effective selected run: when null, the RunSelector shows the first (latest) run
+  const effectiveSelectedRunId = selectedRunId ?? runs[0]?.id ?? null;
+
   // Runs available for comparison (completed, excluding current)
   const comparableRuns = useMemo(() => {
     return runs
-      .filter((r) => r.status === "completed" && r.id !== selectedRunId)
+      .filter((r) => r.status === "completed" && r.id !== effectiveSelectedRunId)
       .sort((a, b) => new Date(b.started_at).getTime() - new Date(a.started_at).getTime());
-  }, [runs, selectedRunId]);
+  }, [runs, effectiveSelectedRunId]);
 
   return (
     <div className="space-y-6">
       {/* Run selector + Compare button (always visible) */}
       <div className="rounded-xl bg-muted/30 px-4 py-3">
-        <div className="flex items-center gap-3 flex-wrap">
-          <History className="size-5 text-muted-foreground shrink-0" />
-          <div className="flex-1 min-w-0">
-            {comparison && !noPrevious ? (
-              <p className="text-sm">
-                <span className="font-medium text-muted-foreground">Comparing</span>{" "}
-                <span
-                  className="font-semibold text-foreground"
-                  style={{ textDecoration: "underline", textUnderlineOffset: "3px", textDecorationColor: "rgba(107,114,128,0.4)" }}
-                >
-                  {comparison.current_snapshot?.generated_at
-                    ? new Date(comparison.current_snapshot.generated_at).toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })
-                    : "current run"}
-                </span>
-                <span className="text-muted-foreground">{" vs "}</span>
-                <span
-                  className="font-semibold text-foreground"
-                  style={{ textDecoration: "underline", textUnderlineOffset: "3px", textDecorationColor: "rgba(107,114,128,0.4)" }}
-                >
-                  {comparison.previous_snapshot?.generated_at
-                    ? new Date(comparison.previous_snapshot.generated_at).toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })
-                    : "previous run"}
-                </span>
-              </p>
-            ) : comparison && noPrevious ? (
-              <p className="text-sm text-muted-foreground">
-                This is your first analysis run. Run the pipeline again after taking action
-                on prescriptions to see how your metrics change.
-              </p>
-            ) : (
-              <p className="text-sm text-muted-foreground">
-                Select a pipeline run to compare against, then click <strong>Compare</strong> to see how your metrics changed.
-              </p>
-            )}
-          </div>
+        <div className="flex items-center justify-center gap-3 flex-wrap">
               {comparableRuns.length > 0 && (
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-2">
                   <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">
                     Compare with:
                   </span>
                   <Select
-                    value={compareWithRunId ?? "__auto__"}
-                    onValueChange={(v) => onCompareWithChange(v === "__auto__" ? null : v)}
+                    value={compareWithRunId ?? comparableRuns[0]?.id ?? ""}
+                    onValueChange={(v: string) => onCompareWithChange(v)}
                   >
-                    <SelectTrigger className="w-[320px]">
+                    <SelectTrigger className="w-auto min-w-[320px]">
                       <SelectValue placeholder="Select a run to compare" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__auto__">
-                        <div className="flex items-center gap-2">
-                          <span>Auto (most recent previous)</span>
-                        </div>
-                      </SelectItem>
                       {comparableRuns.map((r) => {
                         const date = new Date(r.started_at).toLocaleDateString("en-US", {
                           month: "short",
@@ -298,7 +262,7 @@ export function RunComparisonTab({
                               <span>Run {date}</span>
                               <Badge
                                 variant={r.status === "completed" ? "default" : "destructive"}
-                                className="text-xs"
+                                className={`text-xs ${r.status === "completed" ? "bg-emerald-100 text-emerald-700" : ""}`}
                               >
                                 {r.status}
                               </Badge>

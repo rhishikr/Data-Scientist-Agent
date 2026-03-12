@@ -172,6 +172,7 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [historyLoading, setHistoryLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<number | null>(null);
   const [showSessionPanel, setShowSessionPanel] = useState(false);
   const [sessionList, setSessionList] = useState<SessionInfo[]>([]);
@@ -212,7 +213,8 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
           setMessages(restored);
         }
       })
-      .catch(() => {}); // silently fail — fresh session is fine
+      .catch(() => {}) // silently fail — fresh session is fine
+      .finally(() => setHistoryLoading(false));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ---- Auto-scroll ----
@@ -597,7 +599,15 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
         </div>
 
       {/* ── Main area ── */}
-      {!hasMessages ? (
+      {historyLoading ? (
+        /* ── Loading state ── */
+        <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
+          <div className="flex size-10 items-center justify-center rounded-full bg-teal-100 mb-4 animate-pulse">
+            <Sparkles className="size-5 text-teal-600" />
+          </div>
+          <p className="text-sm text-muted-foreground">Loading conversation...</p>
+        </div>
+      ) : !hasMessages ? (
         /* ── Welcome state ── */
         <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
           <div className="flex size-16 items-center justify-center rounded-2xl bg-linear-to-br from-teal-500 to-blue-600 mb-6">

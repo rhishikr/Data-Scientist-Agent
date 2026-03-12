@@ -71,6 +71,8 @@ def create_pipeline_run() -> str:
     row = {
         "started_at": datetime.now(timezone.utc).isoformat(),
         "status": "running",
+        "agent_summary": {},
+        "current_agent": None,
     }
     result = sb.table("pipeline_runs").insert(row).execute()
     return result.data[0]["id"]
@@ -83,18 +85,98 @@ def complete_pipeline_run(
     agent_summary: dict | None = None,
     llm_decisions_log: list | None = None,
 ) -> None:
-    """Mark a pipeline run as completed/failed."""
+    """Mark a pipeline run as completed/failed.
+
+    Merges the provided agent_summary with any existing data in the DB
+    (written by fire-and-forget progress updates) so no agent data is lost
+    to race conditions.
+    """
     sb = get_supabase()
+    # Read existing agent_summary to merge with (fire-and-forget may have written data)
+    existing = {}
+    try:
+        row = sb.table("pipeline_runs").select("agent_summary").eq("id", run_id).execute()
+        if row.data and row.data[0].get("agent_summary"):
+            existing = row.data[0]["agent_summary"]
+    except Exception:
+        pass
+    # Merge: the caller's data (from in-memory results) takes precedence
+    merged = {**existing, **_sanitize_json(agent_summary or {})}
     sb.table("pipeline_runs").update({
         "completed_at": datetime.now(timezone.utc).isoformat(),
         "status": status,
         "duration_seconds": round(duration_seconds, 2),
-        "agent_summary": _sanitize_json(agent_summary or {}),
+        "agent_summary": merged,
         "llm_decisions_log": _sanitize_json(llm_decisions_log or []),
+        "current_agent": None,
     }).eq("id", run_id).execute()
 
 
-def delete_pipeline_run(run_id: str) -> dict:
+_UNSET = object()  # sentinel for "don't update this field"
+
+def update_pipeline_progress(
+    run_id: str,
+    agent_id: str,
+    agent_data: dict,
+    current_agent: str | None | object = _UNSET,
+) -> None:
+    """Incrementally update agent_summary with a completed agent's data.
+
+    Skips the write if the pipeline has already been marked completed/failed,
+    to avoid overwriting the final agent_summary set by complete_pipeline_run.
+    """
+    sb = get_supabase()
+    result = sb.table("pipeline_runs").select("agent_summary, status").eq("id", run_id).execute()
+    if not result.data:
+        return
+    row = result.data[0]
+    # Don't overwrite if pipeline already completed — complete_pipeline_run wrote the final data
+    if row.get("status") in ("completed", "failed"):
+        return
+    existing = (row["agent_summary"] or {}) if row.get("agent_summary") else {}
+    existing[agent_id] = _sanitize_json(agent_data)
+    update_data: dict = {"agent_summary": existing}
+    if current_agent is not _UNSET:
+        update_data["current_agent"] = current_agent
+    sb.table("pipeline_runs").update(update_data).eq("id", run_id).execute()
+
+
+def set_pipeline_current_agent(run_id: str, agent_id: str | None) -> None:
+    """Set or clear the currently running agent."""
+    sb = get_supabase()
+    sb.table("pipeline_runs").update({
+        "current_agent": agent_id,
+    }).eq("id", run_id).execute()
+
+
+def get_running_pipeline() -> dict | None:
+    """Fetch the currently running pipeline run, if any."""
+    sb = get_supabase()
+    try:
+        result = (
+            sb.table("pipeline_runs")
+            .select("id, status, agent_summary, current_agent, started_at")
+            .eq("status", "running")
+            .order("started_at", desc=True)
+            .limit(1)
+            .execute()
+        )
+    except Exception:
+        # Fallback if current_agent column doesn't exist yet
+        result = (
+            sb.table("pipeline_runs")
+            .select("id, status, agent_summary, started_at")
+            .eq("status", "running")
+            .order("started_at", desc=True)
+            .limit(1)
+            .execute()
+        )
+    if result.data:
+        return result.data[0]
+    return None
+
+
+def delete_pipeline_run(run_id: str, force: bool = False) -> dict:
     """Delete a pipeline run and all associated data (CASCADE handles child tables)."""
     sb = get_supabase()
 
@@ -102,7 +184,7 @@ def delete_pipeline_run(run_id: str) -> dict:
     result = sb.table("pipeline_runs").select("id, status").eq("id", run_id).execute()
     if not result.data:
         return {"success": False, "message": f"Run {run_id} not found"}
-    if result.data[0]["status"] == "running":
+    if not force and result.data[0]["status"] == "running":
         return {"success": False, "message": "Cannot delete a currently running pipeline"}
 
     # Best-effort cleanup of storage bucket artifacts at runs/{run_id}/
