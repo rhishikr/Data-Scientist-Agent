@@ -3,7 +3,7 @@
 Ingestion: rebuild the pgvector index from Supabase data + pipeline snapshots.
 """
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import logging
 
 from .config import load_config
@@ -18,13 +18,19 @@ from .etl import (
 logger = logging.getLogger(__name__)
 
 
-def rebuild_index(base_dir: Path) -> Dict[str, Any]:
+def rebuild_index(base_dir: Path, run_id: Optional[str] = None) -> Dict[str, Any]:
     """
     Rebuild the pgvector index from scratch:
-      1. Table profiles + sample rows from Supabase raw_* tables
+      1. Table profiles + sample rows from cleaned datasets (fallback to raw)
       2. Insights from latest insight_snapshots
       3. Hypothesis results from latest hypothesis_snapshots
       4. KPI cards from latest kpi_snapshots
+
+    Args:
+        base_dir: Project base directory for config loading.
+        run_id: Optional pipeline run ID. If provided, uses cleaned data
+                from that run. If None, uses the latest completed run
+                (falls back to raw tables if no pipeline run exists).
 
     Each source category is fully replaced (delete + insert).
     """
@@ -32,7 +38,7 @@ def rebuild_index(base_dir: Path) -> Dict[str, Any]:
     store = PgVectorStore(cfg)
 
     # Build all document types (all read from Supabase)
-    table_docs = build_table_profile_documents()
+    table_docs = build_table_profile_documents(run_id=run_id)
     insight_docs = build_insight_documents()
     hypothesis_docs = build_hypothesis_documents()
     kpi_docs = build_kpi_documents()

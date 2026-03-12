@@ -8,25 +8,7 @@ import type {
   FunnelSnapshot, SessionsAnalytics, RunComparison,
   ComparisonAiAnalysis,
 } from "./types";
-
-const API_BASE = "http://127.0.0.1:8000";
-
-async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(url, {
-    ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...(init?.headers ?? {}),
-    },
-  });
-
-  if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    throw new Error(`Request failed ${res.status} ${res.statusText}: ${text}`);
-  }
-
-  return (await res.json()) as T;
-}
+import { API_BASE, apiFetchJson as fetchJson } from "../../../lib/api";
 
 export type DashboardData = {
   snapshot: Snapshot | null;
@@ -510,9 +492,10 @@ export function useSessionsAnalytics(runId?: string | null) {
 export function useRunComparison(
   currentRunId?: string | null,
   previousRunId?: string | null,
+  enabled: boolean = true,
 ) {
   const [data, setData] = useState<RunComparison | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -532,7 +515,7 @@ export function useRunComparison(
     }
   }, [currentRunId, previousRunId]);
 
-  useEffect(() => { refresh(); }, [refresh]);
+  useEffect(() => { if (enabled) refresh(); }, [enabled, refresh]);
   return { data, loading, refresh };
 }
 
@@ -543,6 +526,7 @@ export function useRunComparison(
 export function useComparisonAiAnalysis(
   currentRunId?: string | null,
   previousRunId?: string | null,
+  enabled: boolean = true,
 ) {
   const [data, setData] = useState<ComparisonAiAnalysis | null>(null);
   const [loading, setLoading] = useState(false);
@@ -565,7 +549,7 @@ export function useComparisonAiAnalysis(
     }
   }, [currentRunId, previousRunId]);
 
-  useEffect(() => { refresh(); }, [refresh]);
+  useEffect(() => { if (enabled) refresh(); }, [enabled, refresh]);
   return { data, loading, refresh };
 }
 

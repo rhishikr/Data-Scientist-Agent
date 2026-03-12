@@ -8,7 +8,7 @@ import type { ActionPlan, Prescription, PrescriptionStatus } from "../dashboard/
 import { HealthGauge } from "../charts/HealthGauge";
 import { PrescriptionCard } from "../charts/PrescriptionCard";
 
-const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+import { API_BASE, apiFetch } from "../../../lib/api";
 
 const CATEGORY_FILTERS = ["all", "inventory", "customer", "revenue", "marketing", "product", "funnel", "pricing"] as const;
 const STATUS_FILTERS = ["all", "pending", "done", "dismissed"] as const;
@@ -30,7 +30,7 @@ export function ActionQueueTab({ actionPlan, loading, runId }: ActionQueueTabPro
     const url = runId
       ? `${API_BASE}/api/action-plan/prescriptions/statuses?run_id=${runId}`
       : `${API_BASE}/api/action-plan/prescriptions/statuses`;
-    fetch(url)
+    apiFetch(url)
       .then((r) => r.json())
       .then((data) => {
         const map: Record<string, PrescriptionStatus> = {};
@@ -55,7 +55,7 @@ export function ActionQueueTab({ actionPlan, loading, runId }: ActionQueueTabPro
       // Optimistic update
       setStatuses((prev) => ({ ...prev, [id]: status }));
       // Persist to backend
-      fetch(`${API_BASE}/api/action-plan/prescriptions/${id}/status`, {
+      apiFetch(`${API_BASE}/api/action-plan/prescriptions/${id}/status`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status, run_id: runId ?? undefined }),

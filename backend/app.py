@@ -16,8 +16,9 @@ load_dotenv(Path(__file__).resolve().parent / ".env")
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from starlette.responses import StreamingResponse
 
 from pipeline.hypothesis.runner import run_hypothesis_agent
@@ -287,6 +288,28 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# API key protection – reject requests without valid key
+_API_SECRET = os.getenv("API_SECRET_KEY", "")
+_PUBLIC_PATHS = {"/docs", "/openapi.json", "/redoc"}
+_allowed_origins = [o.strip() for o in _origins.split(",") if o.strip()]
+
+@app.middleware("http")
+async def api_key_guard(request: Request, call_next):
+    if request.method == "OPTIONS":          # CORS preflight
+        return await call_next(request)
+    if request.url.path in _PUBLIC_PATHS:    # Swagger / docs
+        return await call_next(request)
+    key = request.headers.get("X-API-Key") or request.query_params.get("api_key")
+    if _API_SECRET and key != _API_SECRET:
+        # Must include CORS headers so the browser can read the 403 response
+        origin = request.headers.get("origin", "")
+        headers = {}
+        if origin in _allowed_origins:
+            headers["Access-Control-Allow-Origin"] = origin
+            headers["Access-Control-Allow-Credentials"] = "true"
+        return JSONResponse(status_code=403, content={"detail": "Forbidden"}, headers=headers)
+    return await call_next(request)
 
 # Mount your RAG endpoints if you have them
 app.include_router(rag_router, prefix="/api/rag", tags=["rag"])

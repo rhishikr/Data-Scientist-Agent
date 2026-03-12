@@ -2,13 +2,14 @@
 """
 ETL: Build embeddable documents from Supabase data sources.
 
-All data is read from Supabase (raw tables + pipeline snapshot tables).
+All data is read from Supabase (cleaned datasets + pipeline snapshot tables).
+Falls back to raw tables if no cleaned data is available.
 No local file dependencies.
 
 Each builder returns a list of dicts:
     {"text": str, "metadata": {"source": str, "source_id": str, ...}}
 """
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from collections import defaultdict
 import logging
 
@@ -18,21 +19,126 @@ logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
-# 1. Table profiles + sampled rows  (from Supabase raw_* tables)
+# Helper: build profile + sample docs from a DataFrame
+# ---------------------------------------------------------------------------
+
+def _build_docs_from_df(
+    df: pd.DataFrame,
+    table_name: str,
+    max_sample_rows: int = 100,
+    max_cols_per_row: int = 20,
+) -> List[Dict[str, Any]]:
+    """Build profile + sample documents from a single DataFrame."""
+    docs: List[Dict[str, Any]] = []
+
+    if df.empty:
+        return docs
+
+    # Profile doc
+    missing = df.isna().mean().sort_values(ascending=False).head(15)
+    profile_lines = [
+        f"TABLE: {table_name}",
+        f"ROWS: {len(df)}",
+        f"COLS: {df.shape[1]}",
+        "",
+        "COLUMNS (name : dtype):",
+        *[f"- {c}: {df[c].dtype}" for c in df.columns],
+        "",
+        "TOP MISSINGNESS (fraction):",
+        *[f"- {k}: {v:.3f}" for k, v in missing.items()],
+        "",
+        "HEAD (5 rows):",
+        df.head(5).to_string(index=False),
+    ]
+    docs.append({
+        "text": "\n".join(profile_lines),
+        "metadata": {"source": "table_profile", "source_id": table_name, "doc_type": "profile"},
+    })
+
+    # Sampled rows doc
+    if len(df) > 0 and max_sample_rows > 0:
+        sample = df.sample(min(len(df), max_sample_rows), random_state=42)
+        cols = list(df.columns)[:max_cols_per_row]
+
+        rows_text = []
+        for _, row in sample.iterrows():
+            pairs = [f"{c}={row[c]}" for c in cols]
+            rows_text.append(f"{table_name} | " + " | ".join(pairs))
+
+        docs.append({
+            "text": "\n".join(rows_text),
+            "metadata": {"source": "rows_sample", "source_id": table_name, "doc_type": "rows_sample"},
+        })
+
+    return docs
+
+
+# ---------------------------------------------------------------------------
+# 1. Table profiles + sampled rows  (from cleaned data, fallback to raw)
 # ---------------------------------------------------------------------------
 
 def build_table_profile_documents(
+    run_id: Optional[str] = None,
     max_sample_rows: int = 100,
     max_cols_per_row: int = 20,
 ) -> List[Dict[str, Any]]:
     """
-    Build profile + sample documents for each raw data table in Supabase.
-    Uses db.raw_store.read_raw_table() to fetch data.
+    Build profile + sample documents from cleaned datasets of a pipeline run.
+    Falls back to raw Supabase tables if no cleaned data is available.
     """
+    docs = _build_from_cleaned(run_id, max_sample_rows, max_cols_per_row)
+    if docs:
+        return docs
+
+    # Fallback: use raw tables if no cleaned data available
+    logger.info("No cleaned datasets found, falling back to raw tables")
+    return _build_from_raw(max_sample_rows, max_cols_per_row)
+
+
+def _build_from_cleaned(
+    run_id: Optional[str],
+    max_sample_rows: int,
+    max_cols_per_row: int,
+) -> List[Dict[str, Any]]:
+    """Build documents from cleaned datasets of a specific (or latest) pipeline run."""
+    from db.store import get_latest_run_id, get_cleaned_datasets, download_cleaned_csv
+
+    if run_id is None:
+        run_id = get_latest_run_id()
+    if run_id is None:
+        logger.info("No completed pipeline run found")
+        return []
+
+    cleaned_tables = get_cleaned_datasets(run_id)
+    if not cleaned_tables:
+        logger.info("No cleaned datasets for run %s", run_id)
+        return []
+
+    docs: List[Dict[str, Any]] = []
+    for table_info in cleaned_tables:
+        table_name = table_info["table_name"]
+        storage_path = table_info.get("storage_path", "")
+        try:
+            df = download_cleaned_csv(storage_path)
+        except Exception as e:
+            logger.warning("Skipping cleaned table %s: %s", table_name, e)
+            continue
+
+        table_docs = _build_docs_from_df(df, table_name, max_sample_rows, max_cols_per_row)
+        docs.extend(table_docs)
+
+    logger.info("Built %d documents from %d cleaned tables (run %s)", len(docs), len(cleaned_tables), run_id)
+    return docs
+
+
+def _build_from_raw(
+    max_sample_rows: int,
+    max_cols_per_row: int,
+) -> List[Dict[str, Any]]:
+    """Fallback: build documents from raw Supabase tables."""
     from db.raw_store import read_raw_table, TABLE_MAP
 
     docs: List[Dict[str, Any]] = []
-
     for csv_name, table_name in TABLE_MAP.items():
         try:
             df = read_raw_table(csv_name)
@@ -40,45 +146,8 @@ def build_table_profile_documents(
             logger.warning("Skipping %s: %s", table_name, e)
             continue
 
-        if df.empty:
-            logger.info("Table %s is empty, skipping", table_name)
-            continue
-
-        # Profile doc
-        missing = df.isna().mean().sort_values(ascending=False).head(15)
-        profile_lines = [
-            f"TABLE: {table_name}",
-            f"ROWS: {len(df)}",
-            f"COLS: {df.shape[1]}",
-            "",
-            "COLUMNS (name : dtype):",
-            *[f"- {c}: {df[c].dtype}" for c in df.columns],
-            "",
-            "TOP MISSINGNESS (fraction):",
-            *[f"- {k}: {v:.3f}" for k, v in missing.items()],
-            "",
-            "HEAD (5 rows):",
-            df.head(5).to_string(index=False),
-        ]
-        docs.append({
-            "text": "\n".join(profile_lines),
-            "metadata": {"source": "table_profile", "source_id": table_name, "doc_type": "profile"},
-        })
-
-        # Sampled rows doc
-        if len(df) > 0 and max_sample_rows > 0:
-            sample = df.sample(min(len(df), max_sample_rows), random_state=42)
-            cols = list(df.columns)[:max_cols_per_row]
-
-            rows_text = []
-            for _, row in sample.iterrows():
-                pairs = [f"{c}={row[c]}" for c in cols]
-                rows_text.append(f"{table_name} | " + " | ".join(pairs))
-
-            docs.append({
-                "text": "\n".join(rows_text),
-                "metadata": {"source": "rows_sample", "source_id": table_name, "doc_type": "rows_sample"},
-            })
+        table_docs = _build_docs_from_df(df, table_name, max_sample_rows, max_cols_per_row)
+        docs.extend(table_docs)
 
     logger.info("Built %d documents from %d Supabase raw tables", len(docs), len(TABLE_MAP))
     return docs

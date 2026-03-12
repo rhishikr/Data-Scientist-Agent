@@ -1,9 +1,10 @@
 # backend/rag/service.py
 """
-Main RAG service — routes queries through SQL agent, pgvector search, or hybrid.
+Main RAG service — routes queries through snapshot lookup, SQL agent,
+pgvector search, or hybrid.
 """
 from pathlib import Path
-from typing import Dict, Any, Generator, List
+from typing import Dict, Any, Generator, List, Optional
 import json
 import logging
 
@@ -16,6 +17,7 @@ from .store_pgvector import PgVectorStore
 from .sql_agent import create_sql_agent_instance, run_sql_agent
 from .memory import get_history, save_turn, to_langchain_messages
 from .router import classify_query
+from .snapshot_matcher import match_snapshot_metric, format_snapshot_response
 
 logger = logging.getLogger(__name__)
 
@@ -172,6 +174,52 @@ def _handle_hybrid(
 
 
 # ---------------------------------------------------------------------------
+# Snapshot lookup (pre-computed KPI metrics — no LLM needed)
+# ---------------------------------------------------------------------------
+
+def _handle_snapshot(
+    question: str,
+    llm=None,
+) -> Optional[Dict[str, Any]]:
+    """
+    Try to match the question to a pre-computed KPI metric from the dashboard.
+    Returns None if no match (caller should fall through to sql/insight/hybrid).
+
+    Two-tier matching:
+      Tier 1: keyword alias matching (free, instant)
+      Tier 2: lightweight LLM classification (if llm provided)
+    """
+    match = match_snapshot_metric(question, llm=llm)
+    if match is None:
+        return None
+
+    if match.source == "kpi":
+        from db.store import get_latest_kpi_snapshot
+
+        snapshot = get_latest_kpi_snapshot()
+        if "error" in snapshot:
+            logger.info("No KPI snapshot available, falling through: %s", snapshot.get("error"))
+            return None
+
+        cards = snapshot.get("cards", [])
+        card = next((c for c in cards if c.get("id") == match.card_id), None)
+        if card is None or card.get("value") is None:
+            logger.info("KPI card '%s' not found or has no value, falling through", match.card_id)
+            return None
+
+        answer = format_snapshot_response(card, cards)
+
+        return {
+            "success": True,
+            "query_type": "snapshot",
+            "answer": answer,
+            "sources": [{"type": "dashboard_snapshot", "note": "Pre-computed from cleaned data"}],
+        }
+
+    return None
+
+
+# ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
@@ -184,14 +232,39 @@ def answer_question(
     Main entry point for answering a user question.
 
     Flow:
+      0. Try snapshot route first (fast, no LLM, consistent with dashboard)
       1. Classify query → sql / insight / hybrid
       2. Route to appropriate handler
       3. Save Q&A turn to chat memory
     """
     cfg = load_config(base_dir)
+
+    # --- Snapshot-first route (Tier 1: no LLM) ---
+    snapshot_result = _handle_snapshot(question)
+    if snapshot_result is not None:
+        logger.info("Query answered from snapshot (Tier 1): %s", question[:80])
+        if snapshot_result.get("answer"):
+            try:
+                save_turn(session_id, question, snapshot_result["answer"], cfg.db_url)
+            except Exception as e:
+                logger.warning("Failed to save chat history: %s", e)
+        return snapshot_result
+
     llm = ChatOpenAI(model=cfg.llm_model, temperature=0)
 
-    # Classify
+    # --- Snapshot-first route (Tier 2: lightweight LLM fallback) ---
+    fallback_llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    snapshot_result = _handle_snapshot(question, llm=fallback_llm)
+    if snapshot_result is not None:
+        logger.info("Query answered from snapshot (Tier 2 LLM): %s", question[:80])
+        if snapshot_result.get("answer"):
+            try:
+                save_turn(session_id, question, snapshot_result["answer"], cfg.db_url)
+            except Exception as e:
+                logger.warning("Failed to save chat history: %s", e)
+        return snapshot_result
+
+    # --- Existing classification + routing ---
     query_type = classify_query(question, llm)
     logger.info("Query classified as '%s': %s", query_type, question[:80])
 
@@ -224,6 +297,27 @@ def answer_question_stream(
     Yields SSE-formatted event strings for token-by-token delivery.
     """
     cfg = load_config(base_dir)
+
+    # --- Snapshot-first route (Tier 1: no LLM, then Tier 2: lightweight LLM) ---
+    snapshot_result = _handle_snapshot(question)
+    if snapshot_result is None:
+        fallback_llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        snapshot_result = _handle_snapshot(question, llm=fallback_llm)
+
+    if snapshot_result is not None:
+        answer = snapshot_result.get("answer", "")
+        logger.info("Stream query answered from snapshot: %s", question[:80])
+        yield f"data: {json.dumps({'event': 'start', 'query_type': 'snapshot'})}\n\n"
+        yield f"data: {json.dumps({'event': 'chunk', 'content': answer})}\n\n"
+        if answer:
+            try:
+                save_turn(session_id, question, answer, cfg.db_url)
+            except Exception as e:
+                logger.warning("Failed to save chat history: %s", e)
+        yield f"data: {json.dumps({'event': 'done'})}\n\n"
+        return
+
+    # --- Existing classification + routing ---
     llm = ChatOpenAI(model=cfg.llm_model, temperature=0, streaming=True)
 
     query_type = classify_query(question, llm)

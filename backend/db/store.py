@@ -167,13 +167,22 @@ def store_action_plan_snapshot(run_id: str, snapshot: dict) -> None:
 
 
 def store_comparison_ai(current_run_id: str, previous_run_id: str, snapshot: dict) -> None:
-    composite_key = f"{current_run_id}::{previous_run_id}"
-    _store_snapshot("ai_analysis_snapshots", composite_key, snapshot)
+    snapshot_with_meta = {**snapshot, "_comparison_previous_run_id": previous_run_id}
+    _store_snapshot("ai_analysis_snapshots", current_run_id, snapshot_with_meta)
 
 
 def get_comparison_ai(current_run_id: str, previous_run_id: str) -> dict:
-    composite_key = f"{current_run_id}::{previous_run_id}"
-    return _get_snapshot_for_run("ai_analysis_snapshots", composite_key)
+    sb = get_supabase()
+    rows = (sb.table("ai_analysis_snapshots")
+            .select("snapshot")
+            .eq("run_id", current_run_id)
+            .order("created_at", desc=True)
+            .execute()).data
+    for row in (rows or []):
+        snap = row.get("snapshot", {})
+        if snap.get("_comparison_previous_run_id") == previous_run_id:
+            return snap
+    return {}
 
 
 # ---------------------------------------------------------------------------
@@ -437,6 +446,15 @@ def get_signed_url(storage_path: str, expires_in: int = 3600) -> str:
         )
     result = with_retry(_query)
     return result.get("signedURL", "")
+
+
+def download_cleaned_csv(storage_path: str) -> pd.DataFrame:
+    """Download a cleaned CSV from the pipeline-artifacts Storage bucket."""
+    def _download():
+        sb = get_supabase()
+        return sb.storage.from_(STORAGE_BUCKET).download(storage_path)
+    content = with_retry(_download)
+    return pd.read_csv(io.BytesIO(content))
 
 
 # ---------------------------------------------------------------------------

@@ -36,6 +36,18 @@ PIPELINE OUTPUT TABLES (JSONB snapshots):
 - hypothesis_snapshots: statistical test results (snapshot JSONB)
 - pipeline_runs: pipeline execution metadata
 
+IMPORTANT — DATA SOURCE PRIORITY:
+Standard KPI metrics (AOV, revenue, churn rate, conversion rate, etc.) are already
+pre-computed from CLEANED data and stored in kpi_snapshots. When the user asks for
+a standard metric, PREFER querying the kpi_snapshots table (using JSONB operators)
+over re-calculating from raw_* tables. The raw_* tables contain UNCLEANED data and
+will produce different numbers than the dashboard.
+
+Only query raw_* tables when:
+- The user asks for a specific slice/filter not available in snapshots (e.g., "revenue for customers in NYC")
+- The user explicitly asks for raw or unprocessed data
+- The metric is not available in any snapshot table
+
 When answering questions:
 1. Write efficient PostgreSQL queries
 2. Use proper JOINs when combining tables
@@ -45,10 +57,13 @@ When answering questions:
 6. For JSONB snapshot tables, use jsonb operators (->>, ->, jsonb_array_elements) to extract data
 7. LIMIT large result sets to avoid overwhelming output
 
-Common metrics:
-- Revenue: SUM(total_amount) from raw_transactions
-- AOV: AVG(total_amount) from raw_transactions
-- Customer lifetime value: SUM(total_amount) grouped by customer_id
+To query KPI snapshots (preferred for standard metrics):
+- Get latest snapshot: SELECT snapshot FROM kpi_snapshots ORDER BY created_at DESC LIMIT 1
+- Extract a card: SELECT elem->>'value' FROM kpi_snapshots, jsonb_array_elements(snapshot->'cards') elem WHERE elem->>'id' = 'aov' ORDER BY created_at DESC LIMIT 1
+
+For custom queries not in snapshots, use raw_* tables:
+- Revenue by filter: SUM(total_amount) from raw_transactions WHERE ...
+- Customer segments: GROUP BY from raw_customers WHERE ...
 - Conversion rate: from raw_funnel_summary or calculated from raw_sessions
 
 Always explain findings in business terms."""

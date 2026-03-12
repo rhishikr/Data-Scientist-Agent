@@ -34,6 +34,7 @@ import type {
 import { fmtCurrency, fmtPercent, safeNum } from "../dashboard/formatters";
 import { RevenueLineChart } from "../charts/RevenueLineChart";
 import { ChartEnlargeWrapper } from "../charts/ChartEnlargeWrapper";
+import { API_BASE, apiFetch } from "../../../lib/api";
 
 /* ------------------------------------------------------------------ */
 /* Chart colors                                                        */
@@ -111,13 +112,12 @@ export function OverviewTab({
   runId = null,
 }: OverviewTabProps) {
   /* ---------- Fetch persisted prescription statuses ---------- */
-  const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
   const [statuses, setStatuses] = useState<Record<string, string>>({});
   useEffect(() => {
     const url = runId
       ? `${API_BASE}/api/action-plan/prescriptions/statuses?run_id=${runId}`
       : `${API_BASE}/api/action-plan/prescriptions/statuses`;
-    fetch(url)
+    apiFetch(url)
       .then((r) => r.json())
       .then((data) => {
         const map: Record<string, string> = {};
@@ -127,7 +127,7 @@ export function OverviewTab({
         setStatuses(map);
       })
       .catch(() => {});
-  }, [runId, API_BASE]);
+  }, [runId]);
 
   /* ---------- Stock alert counts ---------- */
   const criticalCount = useMemo(

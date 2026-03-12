@@ -31,6 +31,7 @@ import type {
 } from "../dashboard/types";
 import type { PipelineRun } from "../dashboard/data";
 
+import { Button } from "../../ui/button";
 import {
   ArrowUp,
   ArrowDown,
@@ -51,6 +52,7 @@ import {
   RefreshCw,
   Search,
   ChevronRight,
+  GitCompareArrows,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -121,6 +123,8 @@ interface RunComparisonTabProps {
   onSelectRun: (runId: string | null) => void;
   compareWithRunId: string | null;
   onCompareWithChange: (runId: string | null) => void;
+  compareEnabled: boolean;
+  onCompare: () => void;
 }
 
 /* ------------------------------------------------------------------ */
@@ -155,6 +159,8 @@ export function RunComparisonTab({
   onSelectRun,
   compareWithRunId,
   onCompareWithChange,
+  compareEnabled,
+  onCompare,
 }: RunComparisonTabProps) {
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(GROUP_ORDER));
 
@@ -223,40 +229,43 @@ export function RunComparisonTab({
 
   return (
     <div className="space-y-6">
-      {/* Run Info Banner + Compare-with selector */}
-      {comparison && (
-        <div className="rounded-xl bg-muted/30 px-4 py-3">
-            <div className="flex items-center gap-3 flex-wrap">
-              <History className="size-5 text-muted-foreground shrink-0" />
-              <div className="flex-1 min-w-0">
-                {noPrevious ? (
-                  <p className="text-sm text-muted-foreground">
-                    This is your first analysis run. Run the pipeline again after taking action
-                    on prescriptions to see how your metrics change.
-                  </p>
-                ) : (
-                  <p className="text-sm">
-                    <span className="font-medium text-muted-foreground">Comparing</span>{" "}
-                    <span
-                      className="font-semibold text-foreground"
-                      style={{ textDecoration: "underline", textUnderlineOffset: "3px", textDecorationColor: "rgba(107,114,128,0.4)" }}
-                    >
-                      {comparison.current_snapshot?.generated_at
-                        ? new Date(comparison.current_snapshot.generated_at).toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })
-                        : "current run"}
-                    </span>
-                    <span className="text-muted-foreground">{" vs "}</span>
-                    <span
-                      className="font-semibold text-foreground"
-                      style={{ textDecoration: "underline", textUnderlineOffset: "3px", textDecorationColor: "rgba(107,114,128,0.4)" }}
-                    >
-                      {comparison.previous_snapshot?.generated_at
-                        ? new Date(comparison.previous_snapshot.generated_at).toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })
-                        : "previous run"}
-                    </span>
-                  </p>
-                )}
-              </div>
+      {/* Run selector + Compare button (always visible) */}
+      <div className="rounded-xl bg-muted/30 px-4 py-3">
+        <div className="flex items-center gap-3 flex-wrap">
+          <History className="size-5 text-muted-foreground shrink-0" />
+          <div className="flex-1 min-w-0">
+            {comparison && !noPrevious ? (
+              <p className="text-sm">
+                <span className="font-medium text-muted-foreground">Comparing</span>{" "}
+                <span
+                  className="font-semibold text-foreground"
+                  style={{ textDecoration: "underline", textUnderlineOffset: "3px", textDecorationColor: "rgba(107,114,128,0.4)" }}
+                >
+                  {comparison.current_snapshot?.generated_at
+                    ? new Date(comparison.current_snapshot.generated_at).toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })
+                    : "current run"}
+                </span>
+                <span className="text-muted-foreground">{" vs "}</span>
+                <span
+                  className="font-semibold text-foreground"
+                  style={{ textDecoration: "underline", textUnderlineOffset: "3px", textDecorationColor: "rgba(107,114,128,0.4)" }}
+                >
+                  {comparison.previous_snapshot?.generated_at
+                    ? new Date(comparison.previous_snapshot.generated_at).toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })
+                    : "previous run"}
+                </span>
+              </p>
+            ) : comparison && noPrevious ? (
+              <p className="text-sm text-muted-foreground">
+                This is your first analysis run. Run the pipeline again after taking action
+                on prescriptions to see how your metrics change.
+              </p>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Select a pipeline run to compare against, then click <strong>Compare</strong> to see how your metrics changed.
+              </p>
+            )}
+          </div>
               {comparableRuns.length > 0 && (
                 <div className="flex items-center gap-2 shrink-0">
                   <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">
@@ -304,14 +313,19 @@ export function RunComparisonTab({
                       })}
                     </SelectContent>
                   </Select>
-                  {comparisonLoading && (
-                    <span className="text-xs text-muted-foreground animate-pulse">Loading…</span>
-                  )}
+                  <Button
+                    onClick={onCompare}
+                    disabled={comparisonLoading}
+                    className="bg-teal-600 hover:bg-teal-700 gap-1.5"
+                    size="sm"
+                  >
+                    <GitCompareArrows className="size-4" />
+                    {comparisonLoading ? "Comparing…" : "Compare"}
+                  </Button>
                 </div>
               )}
             </div>
         </div>
-      )}
 
       {/* Loading state */}
       {comparisonLoading && (

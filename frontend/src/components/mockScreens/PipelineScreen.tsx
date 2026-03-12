@@ -69,7 +69,7 @@ interface SSEEvent {
   llm_decisions_log?: { agent: string; decision: string }[];
 }
 
-const API_BASE = "http://127.0.0.1:8000";
+import { API_BASE, apiFetch } from "../../lib/api";
 
 // ---------------------------------------------------------------------------
 // Default stage definitions (order matches backend agents)
@@ -197,7 +197,7 @@ export function PipelineScreen() {
 
   // Fetch initial status on mount (in case pipeline already ran at startup)
   useEffect(() => {
-    fetch(`${API_BASE}/api/pipeline/status`)
+    apiFetch(`${API_BASE}/api/pipeline/status`)
       .then((r) => r.json())
       .then((data) => {
         if (data.status?.agents) {
@@ -217,7 +217,7 @@ export function PipelineScreen() {
     setExpandedAgent(null);
 
     const es = new EventSource(
-      `${API_BASE}/api/pipeline/stream?reset=true&alpha=0.05`
+      `${API_BASE}/api/pipeline/stream?reset=true&alpha=0.05&api_key=${import.meta.env.VITE_API_KEY ?? ""}`
     );
     esRef.current = es;
 

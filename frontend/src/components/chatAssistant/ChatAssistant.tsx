@@ -152,8 +152,9 @@ const markdownComponents = {
 // Constants
 // ---------------------------------------------------------------------------
 
-const API_URL = "http://127.0.0.1:8000/api/rag/chat";
-const STREAM_URL = "http://127.0.0.1:8000/api/rag/chat/stream";
+import { API_BASE, apiFetch } from "../../lib/api";
+
+const STREAM_URL = `${API_BASE}/api/rag/chat/stream`;
 
 const QUERY_TYPE_CONFIG: Record<string, { label: string; color: string }> = {
   sql: { label: "SQL Query", color: "blue" },
@@ -194,8 +195,8 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
 
   useEffect(() => {
     const sessionId = getSessionId();
-    fetch(
-      `http://127.0.0.1:8000/api/rag/history?session_id=${encodeURIComponent(sessionId)}`,
+    apiFetch(
+      `${API_BASE}/api/rag/history?session_id=${encodeURIComponent(sessionId)}`,
     )
       .then((res) => res.json())
       .then((data) => {
@@ -264,7 +265,7 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
   const fetchSessions = useCallback(async () => {
     setSessionsLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/rag/sessions");
+      const res = await apiFetch(`${API_BASE}/api/rag/sessions`);
       const data = await res.json();
       setSessionList(data.sessions || []);
     } catch {
@@ -283,8 +284,8 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
     window.localStorage.setItem("rag_session_id", sessionId);
     setShowSessionPanel(false);
     try {
-      const res = await fetch(
-        `http://127.0.0.1:8000/api/rag/history?session_id=${encodeURIComponent(sessionId)}`,
+      const res = await apiFetch(
+        `${API_BASE}/api/rag/history?session_id=${encodeURIComponent(sessionId)}`,
       );
       const data = await res.json();
       if (data.messages && data.messages.length > 0) {
@@ -307,7 +308,7 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
 
   const handleDeleteSession = useCallback(async (sessionId: string) => {
     try {
-      await fetch(`http://127.0.0.1:8000/api/rag/sessions/${encodeURIComponent(sessionId)}`, {
+      await apiFetch(`${API_BASE}/api/rag/sessions/${encodeURIComponent(sessionId)}`, {
         method: "DELETE",
       });
       setSessionList((prev) => prev.filter((s) => s.session_id !== sessionId));
@@ -344,9 +345,8 @@ export function ChatAssistant({ context = "general" }: ChatAssistantProps) {
     ]);
 
     try {
-      const res = await fetch(STREAM_URL, {
+      const res = await apiFetch(STREAM_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           question: messageText,
           session_id: getSessionId(),

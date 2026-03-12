@@ -51,8 +51,7 @@ import {
   ChevronDown,
   ListChecks,
 } from "lucide-react";
-
-const API_BASE = "http://127.0.0.1:8000";
+import { API_BASE, apiFetch } from "../../lib/api";
 
 const SCENARIOS = [
   { value: "organic-growth", label: "Organic Growth", description: "Steady healthy growth across all metrics" },
@@ -94,7 +93,7 @@ export function SettingsScreen() {
   const fetchRuns = useCallback(async () => {
     setLoadingRuns(true);
     try {
-      const res = await fetch(`${API_BASE}/api/runs`);
+      const res = await apiFetch(`${API_BASE}/api/runs`);
       const data = await res.json();
       setRuns(Array.isArray(data) ? data : []);
     } catch {
@@ -107,7 +106,7 @@ export function SettingsScreen() {
   const fetchStats = useCallback(async () => {
     setLoadingStats(true);
     try {
-      const res = await fetch(`${API_BASE}/api/data/status`);
+      const res = await apiFetch(`${API_BASE}/api/data/status`);
       const data = await res.json();
       if (data.success) {
         setStats(data.stats);
@@ -131,7 +130,7 @@ export function SettingsScreen() {
     setShowGenerateConfirm(false);
     setGenerating(true);
     try {
-      const res = await fetch(`${API_BASE}/api/data/generate`, { method: "POST" });
+      const res = await apiFetch(`${API_BASE}/api/data/generate`, { method: "POST" });
       const data = await res.json();
       if (data.success) {
         toast.success("Data generated successfully");
@@ -150,7 +149,7 @@ export function SettingsScreen() {
     setShowUpdateModal(false);
     setUpdating(true);
     try {
-      const res = await fetch(
+      const res = await apiFetch(
         `${API_BASE}/api/data/update?days=${updateDays}&scenario=${updateScenario}`,
         { method: "POST" }
       );
@@ -172,7 +171,7 @@ export function SettingsScreen() {
     setShowDeleteConfirm(false);
     setDeleting(true);
     try {
-      const res = await fetch(`${API_BASE}/api/data/delete`, { method: "DELETE" });
+      const res = await apiFetch(`${API_BASE}/api/data/delete`, { method: "DELETE" });
       const data = await res.json();
       if (data.success) {
         toast.success(data.message);
@@ -216,7 +215,7 @@ export function SettingsScreen() {
     let failed = 0;
     for (const runId of selectedRunIds) {
       try {
-        const res = await fetch(`${API_BASE}/api/runs/${runId}`, { method: "DELETE" });
+        const res = await apiFetch(`${API_BASE}/api/runs/${runId}`, { method: "DELETE" });
         const data = await res.json();
         if (data.success) succeeded++;
         else failed++;

@@ -202,7 +202,7 @@ class PipelineOrchestrator:
         # Auto-rebuild RAG vector index with latest pipeline outputs
         try:
             from rag.ingest import rebuild_index
-            rebuild_index(Path(__file__).resolve().parents[1])
+            rebuild_index(Path(__file__).resolve().parents[1], run_id=run_id)
             print("[orchestrator] RAG vector index rebuilt successfully")
         except Exception as e:
             print(f"[orchestrator] Warning: RAG index rebuild failed: {e}")

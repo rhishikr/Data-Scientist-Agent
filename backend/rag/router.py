@@ -5,7 +5,7 @@ Two-tier: fast pattern matching first, LLM fallback when ambiguous.
 """
 from typing import Literal
 
-QueryType = Literal["sql", "insight", "hybrid"]
+QueryType = Literal["snapshot", "sql", "insight", "hybrid"]
 
 # ---------------------------------------------------------------------------
 # Tier 1: Pattern-based (free, instant)

@@ -61,6 +61,7 @@ import { RunComparisonTab } from "./sections/RunComparisonTab";
 export function CustomerInsightsScreen() {
   const [selectedRunId, setSelectedRunId] = useState<string | null>(null);
   const [compareWithRunId, setCompareWithRunId] = useState<string | null>(null);
+  const [compareEnabled, setCompareEnabled] = useState(false);
 
   // Existing data hooks
   const {
@@ -92,9 +93,9 @@ export function CustomerInsightsScreen() {
   const { data: funnelSnapshot } = useFunnelSnapshot(selectedRunId);
   const { data: sessionsAnalytics } = useSessionsAnalytics(selectedRunId);
   const { data: runComparison, loading: comparisonLoading } =
-    useRunComparison(selectedRunId, compareWithRunId);
+    useRunComparison(selectedRunId, compareWithRunId, compareEnabled);
   const { data: comparisonAi, loading: comparisonAiLoading } =
-    useComparisonAiAnalysis(selectedRunId, compareWithRunId);
+    useComparisonAiAnalysis(selectedRunId, compareWithRunId, compareEnabled);
   const { runs } = useRuns();
   const { data: campaignPerformance } = useCampaignPerformance(selectedRunId);
 
@@ -370,7 +371,12 @@ export function CustomerInsightsScreen() {
             selectedRunId={selectedRunId}
             onSelectRun={setSelectedRunId}
             compareWithRunId={compareWithRunId}
-            onCompareWithChange={setCompareWithRunId}
+            onCompareWithChange={(id) => {
+              setCompareWithRunId(id);
+              setCompareEnabled(false);
+            }}
+            compareEnabled={compareEnabled}
+            onCompare={() => setCompareEnabled(true)}
           />
         </TabsContent>
 
