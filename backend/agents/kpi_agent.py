@@ -70,7 +70,7 @@ class KPIAgent(BaseAgent):
         from pipeline.kpi.runner import run_kpi_snapshot
         from pipeline.kpi.io import DataPaths
 
-        snapshot = run_kpi_snapshot(DataPaths.default())
+        snapshot = run_kpi_snapshot(DataPaths.from_blackboard(blackboard.paths))
 
         # POST-ACT LLM: Contextualize KPI values
         cards = snapshot.get("cards", [])[:10]

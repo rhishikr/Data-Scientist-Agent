@@ -73,7 +73,7 @@ class ForecastAgent(BaseAgent):
         from pipeline.forecast.runner import run_forecasting
         from pipeline.forecast.io import ForecastPaths
 
-        snapshot = run_forecasting(ForecastPaths.default())
+        snapshot = run_forecasting(ForecastPaths.from_blackboard(blackboard.paths))
         forecasts = snapshot.get("forecasts", {})
 
         # POST-ACT LLM: Strategic risk assessment

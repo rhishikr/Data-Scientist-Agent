@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Skeleton } from "../ui/skeleton";
 import { Button } from "../ui/button";
+import { Progress } from "../ui/progress";
 
 import {
   LayoutDashboard,
@@ -18,8 +19,12 @@ import {
   MousePointerClick,
   GitCompareArrows,
   BarChart3,
+  Brain,
+  CheckCircle2,
+  Loader2,
 } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
+import { API_BASE, apiFetch } from "../../lib/api";
 
 import {
   useDashboardData,
@@ -58,9 +63,54 @@ import { AiInsightsTab } from "./sections/AiInsightsTab";
 import { FunnelSessionsTab } from "./sections/FunnelSessionsTab";
 import { RunComparisonTab } from "./sections/RunComparisonTab";
 
+const AGENT_LABELS: Record<string, string> = {
+  cleaning: "Data Cleaning",
+  features: "Feature Engineering",
+  hypothesis: "Hypothesis Testing",
+  insights: "Insights Generation",
+  kpi: "KPI Snapshot",
+  forecast: "Forecasting",
+  actions: "Action Plan",
+};
+const AGENT_ORDER = ["cleaning", "features", "hypothesis", "insights", "kpi", "forecast", "actions"];
+
 export function CustomerInsightsScreen() {
   const [selectedRunId, setSelectedRunId] = useState<string | null>(null);
   const [compareWithRunId, setCompareWithRunId] = useState<string | null>(null);
+  const [compareEnabled, setCompareEnabled] = useState(false);
+
+  // Pipeline running state
+  const [pipelineRunning, setPipelineRunning] = useState(false);
+  const [pipelinePartial, setPipelinePartial] = useState<Record<string, any>>({});
+  const [pipelineCurrentAgent, setPipelineCurrentAgent] = useState<string | null>(null);
+
+  // Check pipeline status on mount and poll while running
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval> | null = null;
+
+    const checkStatus = async () => {
+      try {
+        const r = await apiFetch(`${API_BASE}/api/pipeline/status`);
+        const data = await r.json();
+        if (data.running) {
+          setPipelineRunning(true);
+          setPipelinePartial(data.partial || {});
+          setPipelineCurrentAgent(data.current_agent || null);
+        } else {
+          setPipelineRunning(false);
+          setPipelinePartial({});
+          setPipelineCurrentAgent(null);
+          if (interval) clearInterval(interval);
+        }
+      } catch {
+        // Ignore errors
+      }
+    };
+
+    checkStatus();
+    interval = setInterval(checkStatus, 4000);
+    return () => { if (interval) clearInterval(interval); };
+  }, []);
 
   // Existing data hooks
   const {
@@ -92,9 +142,9 @@ export function CustomerInsightsScreen() {
   const { data: funnelSnapshot } = useFunnelSnapshot(selectedRunId);
   const { data: sessionsAnalytics } = useSessionsAnalytics(selectedRunId);
   const { data: runComparison, loading: comparisonLoading } =
-    useRunComparison(selectedRunId, compareWithRunId);
+    useRunComparison(selectedRunId, compareWithRunId, compareEnabled);
   const { data: comparisonAi, loading: comparisonAiLoading } =
-    useComparisonAiAnalysis(selectedRunId, compareWithRunId);
+    useComparisonAiAnalysis(selectedRunId, compareWithRunId, compareEnabled);
   const { runs } = useRuns();
   const { data: campaignPerformance } = useCampaignPerformance(selectedRunId);
 
@@ -117,6 +167,117 @@ export function CustomerInsightsScreen() {
       return (insightsData as any).insights;
     return [];
   }, [insightsData]);
+
+  // Show pipeline-generating UI only when running AND no specific completed run is selected
+  const showPipelineRunningUI = pipelineRunning && selectedRunId === null;
+
+  if (showPipelineRunningUI) {
+    const completedCount = Object.keys(pipelinePartial).length;
+    const totalAgents = AGENT_ORDER.length;
+    const overallProgress = Math.round((completedCount / totalAgents) * 100);
+
+    return (
+      <div>
+        <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-xl font-semibold">Insights & Predictions</h1>
+              <p className="text-xs text-muted-foreground">
+                AI-powered retail analytics dashboard
+              </p>
+            </div>
+            <RunSelector
+              selectedRunId={selectedRunId}
+              onSelectRun={setSelectedRunId}
+            />
+          </div>
+        </div>
+
+        <div className="p-6 flex items-center justify-center min-h-[70vh]">
+          <div className="max-w-lg w-full space-y-8">
+            {/* Main status card */}
+            <Card className="border-2 border-blue-100 shadow-lg">
+              <CardContent className="pt-8 pb-8 flex flex-col items-center text-center gap-5">
+                <div className="relative">
+                  <div className="rounded-full bg-gradient-to-br from-blue-100 to-teal-100 p-5">
+                    <Brain className="size-10 text-blue-600 animate-pulse" />
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold mb-1">
+                    Generating AI Insights & Predictions
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    The multi-agent pipeline is analyzing your data. Insights will
+                    appear here once processing is complete.
+                  </p>
+                </div>
+
+                {/* Progress bar */}
+                <div className="w-full space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Overall progress</span>
+                    <span className="font-medium">
+                      {completedCount} of {totalAgents} agents complete
+                    </span>
+                  </div>
+                  <Progress value={overallProgress} className="h-2" />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Agent list */}
+            <div className="space-y-2">
+              {AGENT_ORDER.map((agentId) => {
+                const isCompleted = agentId in pipelinePartial;
+                const isRunning = pipelineCurrentAgent === agentId;
+
+                return (
+                  <div
+                    key={agentId}
+                    className={`flex items-center gap-3 rounded-lg border px-4 py-3 transition-all ${
+                      isRunning
+                        ? "border-blue-200 bg-blue-50"
+                        : isCompleted
+                          ? "border-green-100 bg-green-50/50"
+                          : "border-slate-100 bg-slate-50/50"
+                    }`}
+                  >
+                    {isCompleted ? (
+                      <CheckCircle2 className="size-4 text-green-600 shrink-0" />
+                    ) : isRunning ? (
+                      <Loader2 className="size-4 text-blue-600 animate-spin shrink-0" />
+                    ) : (
+                      <div className="size-4 rounded-full border-2 border-slate-300 shrink-0" />
+                    )}
+                    <span
+                      className={`text-sm ${
+                        isRunning
+                          ? "font-medium text-blue-700"
+                          : isCompleted
+                            ? "text-green-700"
+                            : "text-muted-foreground"
+                      }`}
+                    >
+                      {AGENT_LABELS[agentId] || agentId}
+                    </span>
+                    {isRunning && (
+                      <span className="ml-auto text-xs text-blue-500 animate-pulse">
+                        Processing...
+                      </span>
+                    )}
+                    {isCompleted && (
+                      <span className="ml-auto text-xs text-green-600">Done</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -370,7 +531,12 @@ export function CustomerInsightsScreen() {
             selectedRunId={selectedRunId}
             onSelectRun={setSelectedRunId}
             compareWithRunId={compareWithRunId}
-            onCompareWithChange={setCompareWithRunId}
+            onCompareWithChange={(id) => {
+              setCompareWithRunId(id);
+              setCompareEnabled(false);
+            }}
+            compareEnabled={compareEnabled}
+            onCompare={() => setCompareEnabled(true)}
           />
         </TabsContent>
 

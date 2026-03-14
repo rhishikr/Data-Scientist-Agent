@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Toaster } from "sonner";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
@@ -16,7 +18,10 @@ import {
   MessageSquare,
   Settings,
   Table2,
+  LogOut,
 } from "lucide-react";
+import { useAuth } from "./contexts/AuthContext";
+import { LoginPage } from "./components/LoginPage";
 import { DataSourcesScreen } from "./components/mockScreens/DataSourcesScreen";
 import { PipelineScreen } from "./components/mockScreens/PipelineScreen";
 import { CustomerInsightsScreen } from "./components/insightsScreen/CustomerInsightsScreen";
@@ -37,7 +42,12 @@ const menuItems = [
 ];
 
 export default function App() {
+  const { isAuthenticated, logout } = useAuth();
   const [activeSection, setActiveSection] = useState("home");
+
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
 
   const renderContent = () => {
     switch (activeSection) {
@@ -46,7 +56,7 @@ export default function App() {
       case "data-sources":
         return <DataSourcesScreen />;
       case "pipelines":
-        return <PipelineScreen />;
+        return <PipelineScreen onNavigate={setActiveSection} />;
       case "customer-insights":
         return <CustomerInsightsScreen />;
       case "data-explorer":
@@ -65,6 +75,7 @@ export default function App() {
   };
 
   return (
+    <>
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-slate-50">
         <Sidebar className="border-r bg-white">
@@ -99,6 +110,19 @@ export default function App() {
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
+          <SidebarFooter>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  onClick={logout}
+                  className="px-4 py-3 text-muted-foreground hover:text-red-600"
+                >
+                  <LogOut className="size-5" />
+                  <span>Sign Out</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarFooter>
         </Sidebar>
 
         <SidebarInset className="flex-1 min-w-0">
@@ -106,5 +130,7 @@ export default function App() {
         </SidebarInset>
       </div>
     </SidebarProvider>
+    <Toaster position="top-right" richColors />
+    </>
   );
 }

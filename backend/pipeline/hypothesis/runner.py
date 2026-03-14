@@ -17,9 +17,6 @@ CLEAN_DIR = os.path.join(ROOT, "data", "cleaned_data")
 FEAT_DIR  = os.path.join(ROOT, "data", "featured_data")
 OUT_DIR   = os.path.join(ROOT, "data", "hypothesis_outputs")
 
-    # datasets: Dict[str, pd.DataFrame] = {}
-    # datasets.update(cleaned)
-    # datasets.update({f"{k}_features": v for k, v in featured.items()})
 # Keep only these cleaned datasets
 KEEP_CLEANED = {"inventory", "marketing", "payments", "web_analytics"}
 # Keep only these featured datasets
@@ -65,11 +62,19 @@ def _passes_effect_size(r: Dict[str, Any]) -> bool:
     # fallback
     return True
 
-def run_hypothesis_agent(alpha: float = 0.05) -> Dict[str, Any]:
-    os.makedirs(OUT_DIR, exist_ok=True)
+def run_hypothesis_agent(
+    alpha: float = 0.05,
+    cleaned_dir: str | None = None,
+    featured_dir: str | None = None,
+    out_dir: str | None = None,
+) -> Dict[str, Any]:
+    _clean = cleaned_dir or CLEAN_DIR
+    _feat = featured_dir or FEAT_DIR
+    _out = out_dir or OUT_DIR
+    os.makedirs(_out, exist_ok=True)
 
-    cleaned = read_csv_folder(CLEAN_DIR)
-    featured = read_csv_folder(FEAT_DIR)
+    cleaned = read_csv_folder(_clean)
+    featured = read_csv_folder(_feat)
 
     # Build the datasets dict based on your rule:
     datasets: Dict[str, pd.DataFrame] = {}
@@ -208,14 +213,11 @@ def run_hypothesis_agent(alpha: float = 0.05) -> Dict[str, Any]:
     }
 
     # Save JSON + CSV
-    json_path = os.path.join(OUT_DIR, "hypothesis_results.json")
+    json_path = os.path.join(_out, "hypothesis_results.json")
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
 
-    csv_path = os.path.join(OUT_DIR, "hypothesis_results.csv")
+    csv_path = os.path.join(_out, "hypothesis_results.csv")
     pd.DataFrame(results).to_csv(csv_path, index=False)
 
     return payload
-    datasets: Dict[str, pd.DataFrame] = {}
-    datasets.update(cleaned)
-    datasets.update({f"{k}_features": v for k, v in featured.items()})

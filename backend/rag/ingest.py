@@ -1,35 +1,69 @@
 # backend/rag/ingest.py
+"""
+Ingestion: rebuild the pgvector index from Supabase data + pipeline snapshots.
+"""
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, Optional
+import logging
 
 from .config import load_config
-from .etl import build_documents_from_csv_dir
-from .store_faiss import FaissStore
+from .store_pgvector import PgVectorStore
+from .etl import (
+    build_table_profile_documents,
+    build_insight_documents,
+    build_hypothesis_documents,
+    build_kpi_documents,
+)
+
+logger = logging.getLogger(__name__)
 
 
-def rebuild_index(base_dir: Path) -> Dict[str, Any]:
+def rebuild_index(base_dir: Path, run_id: Optional[str] = None) -> Dict[str, Any]:
     """
-    POC ingestion: rebuild embeddings + FAISS index from scratch.
-    Fast to implement, reliable for demos.
+    Rebuild the pgvector index from scratch:
+      1. Table profiles + sample rows from cleaned datasets (fallback to raw)
+      2. Insights from latest insight_snapshots
+      3. Hypothesis results from latest hypothesis_snapshots
+      4. KPI cards from latest kpi_snapshots
+
+    Args:
+        base_dir: Project base directory for config loading.
+        run_id: Optional pipeline run ID. If provided, uses cleaned data
+                from that run. If None, uses the latest completed run
+                (falls back to raw tables if no pipeline run exists).
+
+    Each source category is fully replaced (delete + insert).
     """
     cfg = load_config(base_dir)
+    store = PgVectorStore(cfg)
 
-    docs = build_documents_from_csv_dir(
-        data_dir=cfg.data_dir,
-        max_sample_rows=10000,   # tune for speed
-        max_cols_per_row=2000
-    )
+    # Build all document types (all read from Supabase)
+    table_docs = build_table_profile_documents(run_id=run_id)
+    insight_docs = build_insight_documents()
+    hypothesis_docs = build_hypothesis_documents()
+    kpi_docs = build_kpi_documents()
 
-    store = FaissStore(cfg)
-    vs = store.build_from_docs(docs)
-    store.save(vs)
+    all_docs = table_docs + insight_docs + hypothesis_docs + kpi_docs
 
-    return {
+    if all_docs:
+        count = store.upsert_documents(all_docs)
+    else:
+        count = 0
+        logger.warning("No documents to index")
+
+    summary = {
         "status": "rebuilt",
-        "docs_indexed": len(docs),
-        "data_dir": str(cfg.data_dir),
-        "vector_dir": str(cfg.vector_dir),
+        "docs_indexed": count,
+        "breakdown": {
+            "table_profiles_and_samples": len(table_docs),
+            "insights": len(insight_docs),
+            "hypothesis_results": len(hypothesis_docs),
+            "kpi_cards": len(kpi_docs),
+        },
         "llm_model": cfg.llm_model,
         "embed_model": cfg.embed_model,
         "top_k": cfg.top_k,
     }
+
+    logger.info("Index rebuilt: %s", summary)
+    return summary

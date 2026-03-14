@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import sys
 from asyncio import Queue
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Optional
 
@@ -16,8 +17,9 @@ load_dotenv(Path(__file__).resolve().parent / ".env")
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from starlette.responses import StreamingResponse
 
 from pipeline.hypothesis.runner import run_hypothesis_agent
@@ -52,6 +54,11 @@ from db.store import (
     get_run_action_plan_snapshot as db_get_run_action_plan,
     upsert_prescription_status as db_upsert_prescription_status,
     get_prescription_statuses as db_get_prescription_statuses,
+    complete_pipeline_run,
+    update_pipeline_progress,
+    set_pipeline_current_agent,
+    get_running_pipeline,
+    delete_pipeline_run,
     get_pipeline_runs,
     get_latest_run_id,
     get_run_snapshots,
@@ -94,101 +101,123 @@ def run_cmd(cmd: list[str], cwd: Path):
 # Legacy pipeline (kept for backward compat; agents are the primary path now)
 # -----------------------------------------------------------------------------
 def run_pipeline(reset: bool = True, alpha: float = 0.05):
+    import tempfile
+    import shutil
+    from db.raw_store import download_all_raw_to_dir
+
     print("\n=== STARTING FULL PIPELINE (legacy) ===")
 
     project_root = Path(__file__).resolve().parent  # backend/
-    data_dir = project_root / "data"
 
-    raw_dir = data_dir / "raw"
-    cleaned_dir = data_dir / "cleaned_data"
-    featured_dir = data_dir / "featured_data"
-    reports_dir = data_dir / "reports"
+    # All intermediate dirs use system temp
+    raw_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_raw_"))
+    cleaned_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_cleaned_"))
+    featured_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_featured_"))
+    reports_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_reports_"))
+    hypothesis_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_hypothesis_"))
+    insight_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_insight_"))
+    kpi_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_kpi_"))
+    forecast_dir = Path(tempfile.mkdtemp(prefix="dsa_legacy_forecast_"))
 
-    hypothesis_dir = data_dir / "hypothesis_outputs"
-    insight_dir = data_dir / "insight_outputs"
-    kpi_dir = data_dir / "kpi_outputs"
-    forecast_dir = data_dir / "forecast_outputs"
+    temp_dirs = [raw_dir, cleaned_dir, featured_dir, reports_dir,
+                 hypothesis_dir, insight_dir, kpi_dir, forecast_dir]
 
     clean_script = project_root / "pipeline" / "cleaning" / "clean_folder.py"
     feature_script = project_root / "pipeline" / "features" / "feature_folder.py"
 
-    if not raw_dir.exists():
-        raise RuntimeError(f"Missing raw data directory: {raw_dir}")
+    try:
+        # Download raw data from Supabase
+        print("Downloading raw data from Supabase...")
+        download_all_raw_to_dir(str(raw_dir))
 
-    # Reset output folders
-    if reset:
-        print("Resetting output folders...")
-        for p in [
-            cleaned_dir,
-            featured_dir,
-            reports_dir,
-            hypothesis_dir,
-            insight_dir,
-            kpi_dir,
-            forecast_dir,
-        ]:
-            rm_dir(p)
+        # 1. CLEANING
+        print("\n--- CLEANING ---")
+        run_cmd(
+            [
+                sys.executable,
+                str(clean_script),
+                "--input_dir",
+                str(raw_dir),
+                "--output_dir",
+                str(cleaned_dir),
+                "--reports_dir",
+                str(reports_dir),
+            ],
+            cwd=clean_script.parent,
+        )
 
-    for p in [
-        cleaned_dir,
-        featured_dir,
-        reports_dir,
-        hypothesis_dir,
-        insight_dir,
-        kpi_dir,
-        forecast_dir,
-    ]:
-        ensure_dir(p)
+        # 2. FEATURE ENGINEERING
+        print("\n--- FEATURE ENGINEERING ---")
+        run_cmd(
+            [
+                sys.executable,
+                str(feature_script),
+                "--input_dir",
+                str(cleaned_dir),
+                "--output_dir",
+                str(featured_dir),
+                "--reports_dir",
+                str(reports_dir),
+            ],
+            cwd=feature_script.parent,
+        )
 
-    # 1. CLEANING
-    print("\n--- CLEANING ---")
-    run_cmd(
-        [
-            sys.executable,
-            str(clean_script),
-            "--input_dir",
-            str(raw_dir),
-            "--output_dir",
-            str(cleaned_dir),
-            "--reports_dir",
-            str(reports_dir),
-        ],
-        cwd=clean_script.parent,
-    )
+        # 3. HYPOTHESIS TESTING
+        print("\n--- HYPOTHESIS TESTING ---")
+        run_hypothesis_agent(
+            alpha=alpha,
+            cleaned_dir=str(cleaned_dir),
+            featured_dir=str(featured_dir),
+            out_dir=str(hypothesis_dir),
+        )
 
-    # 2. FEATURE ENGINEERING
-    print("\n--- FEATURE ENGINEERING ---")
-    run_cmd(
-        [
-            sys.executable,
-            str(feature_script),
-            "--input_dir",
-            str(cleaned_dir),
-            "--output_dir",
-            str(featured_dir),
-            "--reports_dir",
-            str(reports_dir),
-        ],
-        cwd=feature_script.parent,
-    )
+        # 4. INSIGHTS
+        print("\n--- INSIGHTS ---")
+        from pipeline.insights.io import DataPaths as InsightDataPaths
+        insight_paths = InsightDataPaths(
+            base_dir=project_root,
+            _cleaned_dir=cleaned_dir,
+            _featured_dir=featured_dir,
+            _hypothesis_dir=hypothesis_dir,
+            _insights_dir=insight_dir,
+        )
+        run_insights(project_root, data_paths=insight_paths)
 
-    # 3. HYPOTHESIS TESTING
-    print("\n--- HYPOTHESIS TESTING ---")
-    run_hypothesis_agent(alpha=alpha)
+        # 5. KPI SNAPSHOT
+        print("\n--- KPI SNAPSHOT ---")
+        from pipeline.kpi.io import DataPaths as KpiDataPaths
+        kpi_paths = KpiDataPaths.from_blackboard({
+            "project_root": str(project_root),
+            "cleaned_dir": str(cleaned_dir),
+            "featured_dir": str(featured_dir),
+            "hypothesis_dir": str(hypothesis_dir),
+            "insight_dir": str(insight_dir),
+            "kpi_dir": str(kpi_dir),
+            "forecast_dir": str(forecast_dir),
+        })
+        run_kpi_snapshot(kpi_paths)
 
-    # 4. INSIGHTS
-    print("\n--- INSIGHTS ---")
-    run_insights(project_root)
+        # 6. FORECASTING
+        print("\n--- FORECASTING ---")
+        forecast_paths = ForecastPaths.from_blackboard({
+            "project_root": str(project_root),
+            "cleaned_dir": str(cleaned_dir),
+            "featured_dir": str(featured_dir),
+            "hypothesis_dir": str(hypothesis_dir),
+            "insight_dir": str(insight_dir),
+            "kpi_dir": str(kpi_dir),
+            "forecast_dir": str(forecast_dir),
+        })
+        run_forecasting(forecast_paths)
 
-    # 5. KPI SNAPSHOT
-    print("\n--- KPI SNAPSHOT ---")
-    run_kpi_snapshot(DataPaths.default())
-
-    # 6. FORECASTING
-    print("\n--- FORECASTING ---")
-    run_forecasting(ForecastPaths.default())
-
-    print("\n=== PIPELINE COMPLETE ===")
+        print("\n=== PIPELINE COMPLETE ===")
+    finally:
+        # Clean up temp dirs
+        for d in temp_dirs:
+            try:
+                shutil.rmtree(d, ignore_errors=True)
+            except Exception:
+                pass
 
 
 # -----------------------------------------------------------------------------
@@ -196,6 +225,60 @@ def run_pipeline(reset: bool = True, alpha: float = 0.05):
 # -----------------------------------------------------------------------------
 _pipeline_status: dict = {}
 _pipeline_running: bool = False
+_pipeline_task: asyncio.Task | None = None
+_pipeline_run_id: str | None = None
+_pipeline_subscribers: list[Queue] = []
+_db_executor = ThreadPoolExecutor(max_workers=1)
+
+
+def _broadcast_event(event: dict):
+    """Persist progress to DB (fire-and-forget in thread) and push events to all SSE subscribers."""
+    global _pipeline_run_id
+    evt = event.get("event")
+
+    if evt == "pipeline_started":
+        _pipeline_run_id = event.get("run_id")
+    elif evt == "agent_started" and _pipeline_run_id:
+        _db_executor.submit(
+            lambda rid=_pipeline_run_id, aid=event.get("agent_id"): set_pipeline_current_agent(rid, aid)
+        )
+    elif evt == "agent_completed" and _pipeline_run_id:
+        # Don't clear current_agent here — the next agent_started will overwrite it.
+        # Clearing it causes a race condition with fire-and-forget threads where
+        # agent_completed(N) nullifies current_agent AFTER agent_started(N+1) sets it.
+        _db_executor.submit(
+            lambda rid=_pipeline_run_id, aid=event["agent_id"], data={
+                "success": event.get("success"),
+                "duration": event.get("duration"),
+                "llm_reasoning": event.get("llm_reasoning"),
+                "step": event.get("step"),
+                "total_steps": event.get("total_steps"),
+                "progress_pct": event.get("progress_pct"),
+            }: update_pipeline_progress(
+                run_id=rid, agent_id=aid, agent_data=data
+            )
+        )
+    elif evt == "pipeline_complete" and _pipeline_run_id:
+        # Belt-and-suspenders: clear current_agent after all pending DB tasks.
+        # complete_pipeline_run also sets current_agent=None, but the fire-and-forget
+        # update_pipeline_progress for the last agent can race with it. This task
+        # is submitted to the SAME executor, so it runs after all prior tasks.
+        _db_executor.submit(
+            lambda rid=_pipeline_run_id: set_pipeline_current_agent(rid, None)
+        )
+
+    # SSE broadcast to all subscribers
+    dead: list[Queue] = []
+    for q in _pipeline_subscribers:
+        try:
+            q.put_nowait(event)
+        except Exception:
+            dead.append(q)
+    for q in dead:
+        try:
+            _pipeline_subscribers.remove(q)
+        except ValueError:
+            pass
 
 
 # -----------------------------------------------------------------------------
@@ -265,8 +348,82 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# API key protection – reject requests without valid key
+_API_SECRET = os.getenv("API_SECRET_KEY", "")
+_PUBLIC_PATHS = {"/docs", "/openapi.json", "/redoc"}
+_allowed_origins = [o.strip() for o in _origins.split(",") if o.strip()]
+
+@app.middleware("http")
+async def api_key_guard(request: Request, call_next):
+    if request.method == "OPTIONS":          # CORS preflight
+        return await call_next(request)
+    if request.url.path in _PUBLIC_PATHS:    # Swagger / docs
+        return await call_next(request)
+    key = request.headers.get("X-API-Key") or request.query_params.get("api_key")
+    if _API_SECRET and key != _API_SECRET:
+        # Must include CORS headers so the browser can read the 403 response
+        origin = request.headers.get("origin", "")
+        headers = {}
+        if origin in _allowed_origins:
+            headers["Access-Control-Allow-Origin"] = origin
+            headers["Access-Control-Allow-Credentials"] = "true"
+        return JSONResponse(status_code=403, content={"detail": "Forbidden"}, headers=headers)
+    return await call_next(request)
+
 # Mount your RAG endpoints if you have them
 app.include_router(rag_router, prefix="/api/rag", tags=["rag"])
+
+
+# -----------------------------------------------------------------------------
+# Raw data management endpoints (Settings page)
+# -----------------------------------------------------------------------------
+@app.get("/api/data/status")
+async def data_status():
+    """Get row counts for all raw data tables."""
+    try:
+        from db.raw_store import get_raw_data_stats
+        stats = get_raw_data_stats()
+        return {"success": True, "stats": stats}
+    except Exception as e:
+        return {"success": False, "message": str(e), "stats": {}}
+
+
+@app.post("/api/data/generate")
+async def data_generate():
+    """Generate fresh synthetic data and store in Supabase."""
+    try:
+        import sys as _sys
+        _sys.path.insert(0, os.path.join(os.path.dirname(__file__), "scripts"))
+        from generate_synthetic_data import generate_all_data
+        stats = generate_all_data(local=False)
+        return {"success": True, "message": "Data generated successfully", "stats": stats}
+    except Exception as e:
+        return {"success": False, "message": str(e), "stats": {}}
+
+
+@app.post("/api/data/update")
+async def data_update(days: int = 7, scenario: str = "organic-growth"):
+    """Simulate a data update with the given scenario."""
+    try:
+        import sys as _sys
+        _sys.path.insert(0, os.path.join(os.path.dirname(__file__), "scripts"))
+        from simulate_update import run_update
+        summary = run_update(days=days, scenario=scenario, local=False)
+        return {"success": True, "message": f"{days}-day [{scenario}] update applied", "stats": summary}
+    except Exception as e:
+        return {"success": False, "message": str(e), "stats": {}}
+
+
+@app.delete("/api/data/delete")
+async def data_delete():
+    """Delete all raw data from Supabase."""
+    try:
+        from db.raw_store import delete_all_raw_data
+        deleted = delete_all_raw_data()
+        total = sum(deleted.values())
+        return {"success": True, "message": f"Deleted {total} total rows", "stats": deleted}
+    except Exception as e:
+        return {"success": False, "message": str(e), "stats": {}}
 
 
 # -----------------------------------------------------------------------------
@@ -290,11 +447,33 @@ async def run_pipeline_endpoint(reset: bool = True, alpha: float = 0.05):
 
 @app.get("/api/pipeline/status")
 def get_pipeline_status():
-    """Get current pipeline execution status and all agent decisions."""
-    return {
-        "running": _pipeline_running,
-        "status": _pipeline_status,
-    }
+    """Get pipeline status from DB (survives tab switches and refreshes)."""
+    # Check DB for a running pipeline
+    try:
+        running = get_running_pipeline()
+    except Exception:
+        # Fallback if DB query fails (e.g. migration not yet applied)
+        running = None
+
+    if running:
+        return {
+            "running": True,
+            "run_id": running["id"],
+            "partial": running.get("agent_summary") or {},
+            "current_agent": running.get("current_agent"),
+        }
+
+    # Also check in-memory flag (pipeline may just have started, DB not yet updated)
+    if _pipeline_running:
+        return {
+            "running": True,
+            "run_id": _pipeline_run_id,
+            "partial": {},
+            "current_agent": None,
+        }
+
+    # Not running — return latest completed status
+    return {"running": False, "status": _pipeline_status}
 
 
 @app.get("/api/pipeline/stream")
@@ -303,37 +482,42 @@ async def stream_pipeline(reset: bool = True, alpha: float = 0.05):
     SSE endpoint for real-time pipeline status updates.
     Frontend connects via EventSource for live progress visualization.
     """
-    global _pipeline_running
+    global _pipeline_running, _pipeline_task
     if _pipeline_running:
         return {"error": "Pipeline is already running"}
 
-    queue: Queue = Queue()
-
-    def on_status(event: dict):
-        queue.put_nowait(event)
-
     orchestrator = PipelineOrchestrator.create_default(reset=reset, alpha=alpha)
-    orchestrator.on_status(on_status)
+    orchestrator.on_status(_broadcast_event)
+
+    # Create a subscriber queue for this SSE connection
+    sub_queue: Queue = Queue()
+    _pipeline_subscribers.append(sub_queue)
 
     async def event_generator():
-        global _pipeline_status, _pipeline_running
+        global _pipeline_status, _pipeline_running, _pipeline_task
         _pipeline_running = True
-        task = asyncio.create_task(orchestrator.run())
+        _pipeline_task = asyncio.create_task(orchestrator.run())
 
         try:
             while True:
                 try:
-                    event = await asyncio.wait_for(queue.get(), timeout=1.0)
+                    event = await asyncio.wait_for(sub_queue.get(), timeout=1.0)
                     yield f"data: {json.dumps(event, default=str)}\n\n"
                     if event.get("event") == "pipeline_complete":
                         break
                 except asyncio.TimeoutError:
                     yield f"data: {json.dumps({'event': 'heartbeat'})}\n\n"
 
-            result = await task
-            _pipeline_status = result
+            if _pipeline_task is not None and not _pipeline_task.cancelled():
+                result = await _pipeline_task
+                _pipeline_status = result
+        except asyncio.CancelledError:
+            pass
         finally:
             _pipeline_running = False
+            _pipeline_task = None
+            if sub_queue in _pipeline_subscribers:
+                _pipeline_subscribers.remove(sub_queue)
 
     return StreamingResponse(
         event_generator(),
@@ -344,6 +528,69 @@ async def stream_pipeline(reset: bool = True, alpha: float = 0.05):
             "X-Accel-Buffering": "no",
         },
     )
+
+
+@app.get("/api/pipeline/stream/subscribe")
+async def subscribe_pipeline():
+    """
+    SSE endpoint to reconnect to a running pipeline.
+    Replays completed agent events from DB, then streams remaining events live.
+    """
+    if not _pipeline_running:
+        return {"error": "No pipeline is currently running"}
+
+    sub_queue: Queue = Queue()
+    _pipeline_subscribers.append(sub_queue)
+
+    async def event_generator():
+        try:
+            # Replay completed agents from DB
+            running_run = get_running_pipeline()
+            if running_run:
+                agent_summary = running_run.get("agent_summary") or {}
+                for agent_id, agent_data in agent_summary.items():
+                    replay_event = {
+                        "event": "agent_completed",
+                        "agent_id": agent_id,
+                        "success": agent_data.get("success"),
+                        "duration": agent_data.get("duration"),
+                        "llm_reasoning": agent_data.get("llm_reasoning"),
+                        "step": agent_data.get("step"),
+                        "total_steps": agent_data.get("total_steps"),
+                        "progress_pct": agent_data.get("progress_pct"),
+                    }
+                    yield f"data: {json.dumps(replay_event, default=str)}\n\n"
+                # Emit current running agent if any
+                current = running_run.get("current_agent")
+                if current:
+                    yield f"data: {json.dumps({'event': 'agent_started', 'agent_id': current}, default=str)}\n\n"
+
+            # Stream remaining events
+            while True:
+                try:
+                    event = await asyncio.wait_for(sub_queue.get(), timeout=1.0)
+                    yield f"data: {json.dumps(event, default=str)}\n\n"
+                    if event.get("event") == "pipeline_complete":
+                        break
+                except asyncio.TimeoutError:
+                    # If pipeline stopped running while we wait, exit
+                    if not _pipeline_running:
+                        break
+                    yield f"data: {json.dumps({'event': 'heartbeat'})}\n\n"
+        finally:
+            if sub_queue in _pipeline_subscribers:
+                _pipeline_subscribers.remove(sub_queue)
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )
+
 
 
 @app.get("/api/pipeline/decisions")
@@ -1191,6 +1438,15 @@ def get_run_detail(run_id: str):
     return get_run_snapshots(run_id)
 
 
+@app.delete("/api/runs/{run_id}")
+async def delete_run(run_id: str):
+    """Delete a specific pipeline run and all its associated data."""
+    try:
+        return delete_pipeline_run(run_id)
+    except Exception as e:
+        return {"success": False, "message": str(e)}
+
+
 @app.get("/api/cleaned-data")
 def get_cleaned_data(run_id: Optional[str] = None):
     """Returns cleaned dataset previews + column stats + download URLs."""
@@ -1421,7 +1677,7 @@ def get_ai_analysis(run_id: Optional[str] = None):
             cached = db_get_run_ai_analysis(run_id)
         else:
             cached = db_get_latest_ai_analysis()
-        if cached and "error" not in cached:
+        if cached and "error" not in cached and cached.get("analysis"):
             cached["cached"] = True
             return cached
     except Exception:
@@ -1509,7 +1765,7 @@ Guidelines:
 - Use plain business language, avoid technical jargon
 - Focus on what the retail store owner should DO next"""
 
-        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.3)
+        llm = ChatOpenAI(model=os.getenv("RAG_LLM_MODEL", "gpt-4.1-mini"), temperature=0.3)
         response = llm.invoke([
             SystemMessage(content=system_prompt),
             HumanMessage(content=f"Analyze this retail business data:\n\n{context}"),
@@ -2108,7 +2364,7 @@ Return valid JSON with this structure:
 
 Use specific numbers. Be concise. Every action_hint must start with an action verb."""
 
-        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.3)
+        llm = ChatOpenAI(model=os.getenv("RAG_LLM_MODEL", "gpt-4.1-mini"), temperature=0.3)
         response = llm.invoke([
             SystemMessage(content=system_prompt),
             HumanMessage(content=f"Business data:\n{context}"),

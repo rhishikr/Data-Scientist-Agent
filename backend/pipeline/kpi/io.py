@@ -28,6 +28,19 @@ class DataPaths:
             out_dir=os.path.join(root, "data", "kpi_outputs"),
         )
 
+    @staticmethod
+    def from_blackboard(paths: dict) -> "DataPaths":
+        """Construct DataPaths from orchestrator blackboard paths dict."""
+        return DataPaths(
+            root=paths.get("project_root", ""),
+            cleaned_dir=paths.get("cleaned_dir", ""),
+            featured_dir=paths.get("featured_dir", ""),
+            hypothesis_json_path=os.path.join(
+                paths.get("hypothesis_dir", ""), "hypothesis_results.json"
+            ),
+            out_dir=paths.get("kpi_dir", ""),
+        )
+
 
 def _read_csv(path: str) -> pd.DataFrame:
     try:

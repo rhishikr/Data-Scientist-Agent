@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   Card,
   CardContent,
@@ -20,10 +20,7 @@ import {
   ArrowDown,
   Play,
   Brain,
-  ChevronDown,
-  ChevronRight,
   Eye,
-  MessageSquare,
   Zap,
   BarChart3,
   ClipboardList,
@@ -69,7 +66,14 @@ interface SSEEvent {
   llm_decisions_log?: { agent: string; decision: string }[];
 }
 
-const API_BASE = "http://127.0.0.1:8000";
+import { API_BASE, apiFetch } from "../../lib/api";
+
+// ---------------------------------------------------------------------------
+// Props
+// ---------------------------------------------------------------------------
+interface PipelineScreenProps {
+  onNavigate?: (section: string) => void;
+}
 
 // ---------------------------------------------------------------------------
 // Default stage definitions (order matches backend agents)
@@ -155,9 +159,54 @@ const defaultStages: AgentStage[] = [
 ];
 
 // ---------------------------------------------------------------------------
+// Truncated text with inline "see more" / "see less"
+// ---------------------------------------------------------------------------
+function TruncatedReasoning({ text }: { text: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const [isClamped, setIsClamped] = useState(false);
+  const textRef = useRef<HTMLParagraphElement>(null);
+
+  useLayoutEffect(() => {
+    const el = textRef.current;
+    if (el) setIsClamped(el.scrollHeight > el.clientHeight + 1);
+  }, [text]);
+
+  return (
+    <div className="mt-1">
+      <p
+        ref={textRef}
+        className={`text-sm text-muted-foreground inline ${!expanded ? "line-clamp-2" : ""}`}
+      >
+        <Brain className="size-3 inline mr-1 text-amber-500" />
+        {text}
+        {expanded && isClamped && (
+          <>
+            {" "}
+            <button
+              className="text-xs text-teal-600 hover:text-teal-700 font-medium inline"
+              onClick={() => setExpanded(false)}
+            >
+              see less
+            </button>
+          </>
+        )}
+      </p>
+      {!expanded && isClamped && (
+        <button
+          className="text-xs text-teal-600 hover:text-teal-700 font-medium"
+          onClick={() => setExpanded(true)}
+        >
+          ...see more
+        </button>
+      )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
-export function PipelineScreen() {
+export function PipelineScreen({ onNavigate }: PipelineScreenProps) {
   const [stages, setStages] = useState<AgentStage[]>(defaultStages);
   const [pipelineRunning, setPipelineRunning] = useState(false);
   const [pipelineDone, setPipelineDone] = useState(false);
@@ -165,8 +214,8 @@ export function PipelineScreen() {
   const [llmDecisionsLog, setLlmDecisionsLog] = useState<
     { agent: string; decision: string }[]
   >([]);
-  const [expandedAgent, setExpandedAgent] = useState<string | null>(null);
   const esRef = useRef<EventSource | null>(null);
+
 
   // Apply completed pipeline status from API response
   const applyCompletedStatus = useCallback((status: SSEEvent) => {
@@ -195,35 +244,9 @@ export function PipelineScreen() {
     setPipelineDone(true);
   }, []);
 
-  // Fetch initial status on mount (in case pipeline already ran at startup)
-  useEffect(() => {
-    fetch(`${API_BASE}/api/pipeline/status`)
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.status?.agents) {
-          applyCompletedStatus(data.status);
-        }
-      })
-      .catch(() => {});
-  }, [applyCompletedStatus]);
-
-  // Start pipeline via SSE stream
-  const startPipeline = useCallback(() => {
-    setStages(defaultStages.map((s) => ({ ...s })));
-    setPipelineRunning(true);
-    setPipelineDone(false);
-    setTotalDuration(null);
-    setLlmDecisionsLog([]);
-    setExpandedAgent(null);
-
-    const es = new EventSource(
-      `${API_BASE}/api/pipeline/stream?reset=true&alpha=0.05`
-    );
-    esRef.current = es;
-
-    es.onmessage = (event) => {
-      const data: SSEEvent = JSON.parse(event.data);
-
+  // Shared SSE event handler used by both startPipeline and reconnect
+  const handleSSEEvent = useCallback(
+    (data: SSEEvent) => {
       if (data.event === "agent_started") {
         setStages((prev) =>
           prev.map((s) =>
@@ -261,17 +284,115 @@ export function PipelineScreen() {
       if (data.event === "pipeline_complete") {
         setPipelineRunning(false);
         applyCompletedStatus(data);
-        es.close();
+        esRef.current?.close();
         esRef.current = null;
       }
+
+    },
+    [applyCompletedStatus]
+  );
+
+  // Connect to the subscribe-only SSE stream (for reconnecting to a running pipeline)
+  const connectToSubscribeStream = useCallback(() => {
+    const es = new EventSource(
+      `${API_BASE}/api/pipeline/stream/subscribe?api_key=${import.meta.env.VITE_API_KEY ?? ""}`
+    );
+    esRef.current = es;
+
+    es.onmessage = (event) => {
+      const data: SSEEvent = JSON.parse(event.data);
+      handleSSEEvent(data);
     };
 
     es.onerror = () => {
-      setPipelineRunning(false);
+      // Don't set pipelineRunning=false here — the polling fallback
+      // will read from DB and determine the actual state
       es.close();
       esRef.current = null;
     };
-  }, [applyCompletedStatus]);
+  }, [handleSSEEvent]);
+
+  // Fetch initial status on mount — handles both completed and running pipelines
+  useEffect(() => {
+    apiFetch(`${API_BASE}/api/pipeline/status`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.running) {
+          // Pipeline is currently running — restore partial state and reconnect
+          setPipelineRunning(true);
+          setPipelineDone(false);
+
+          // Apply completed agents from partial progress
+          if (data.partial && Object.keys(data.partial).length > 0) {
+            setStages((prev) =>
+              prev.map((s) => {
+                const evt = data.partial[s.id];
+                if (!evt) return s;
+                return {
+                  ...s,
+                  status: evt.success
+                    ? ("completed" as const)
+                    : ("error" as const),
+                  progress: 100,
+                  llmReasoning: evt.llm_reasoning || null,
+                  duration: evt.duration || null,
+                  phase: "idle",
+                };
+              })
+            );
+          }
+
+          // Mark current agent as running
+          if (data.current_agent) {
+            setStages((prev) =>
+              prev.map((s) =>
+                s.id === data.current_agent
+                  ? {
+                      ...s,
+                      status: "running" as const,
+                      progress: 0,
+                      phase: "perceiving",
+                    }
+                  : s
+              )
+            );
+          }
+
+          // Reconnect to SSE stream for remaining events
+          connectToSubscribeStream();
+        } else if (data.status?.agents) {
+          // Pipeline already completed — show results
+          applyCompletedStatus(data.status);
+        }
+      })
+      .catch(() => {});
+  }, [applyCompletedStatus, connectToSubscribeStream]);
+
+  // Start pipeline via SSE stream
+  const startPipeline = useCallback(() => {
+    setStages(defaultStages.map((s) => ({ ...s })));
+    setPipelineRunning(true);
+    setPipelineDone(false);
+    setTotalDuration(null);
+    setLlmDecisionsLog([]);
+
+    const es = new EventSource(
+      `${API_BASE}/api/pipeline/stream?reset=true&alpha=0.05&api_key=${import.meta.env.VITE_API_KEY ?? ""}`
+    );
+    esRef.current = es;
+
+    es.onmessage = (event) => {
+      const data: SSEEvent = JSON.parse(event.data);
+      handleSSEEvent(data);
+    };
+
+    es.onerror = () => {
+      // Don't set pipelineRunning=false here — the polling fallback
+      // will read from DB and determine the actual state
+      es.close();
+      esRef.current = null;
+    };
+  }, [handleSSEEvent]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -279,6 +400,54 @@ export function PipelineScreen() {
       esRef.current?.close();
     };
   }, []);
+
+  // Polling fallback: if pipeline is running but SSE is down, poll DB for progress.
+  useEffect(() => {
+    if (!pipelineRunning) return;
+    const interval = setInterval(async () => {
+      // Only poll if SSE is not connected
+      if (esRef.current?.readyState === EventSource.OPEN) return;
+      try {
+        const r = await apiFetch(`${API_BASE}/api/pipeline/status`);
+        const data = await r.json();
+        if (data.partial) {
+          setStages((prev) =>
+            prev.map((s) => {
+              const evt = data.partial[s.id];
+              if (!evt) return s;
+              return {
+                ...s,
+                status: evt.success
+                  ? ("completed" as const)
+                  : ("error" as const),
+                progress: 100,
+                llmReasoning: evt.llm_reasoning || null,
+                duration: evt.duration || null,
+                phase: "idle",
+              };
+            })
+          );
+        }
+        if (data.current_agent) {
+          setStages((prev) =>
+            prev.map((s) =>
+              s.id === data.current_agent && s.status !== "completed" && s.status !== "error"
+                ? { ...s, status: "running" as const, progress: 0, phase: "perceiving" }
+                : s
+            )
+          );
+        }
+        if (!data.running) {
+          setPipelineRunning(false);
+          setPipelineDone(true);
+          clearInterval(interval);
+        }
+      } catch {
+        // Ignore polling errors
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [pipelineRunning]);
 
   const completedCount = stages.filter((s) => s.status === "completed").length;
   const overallProgress = Math.round((completedCount / stages.length) * 100);
@@ -351,6 +520,16 @@ export function PipelineScreen() {
             </p>
           </div>
           <div className="flex items-center gap-3">
+            {pipelineDone && onNavigate && (
+              <Button
+                variant="outline"
+                className="gap-2"
+                onClick={() => onNavigate("customer-insights")}
+              >
+                <Eye className="size-4" />
+                View Insights
+              </Button>
+            )}
             <Button
               className="bg-teal-600 hover:bg-teal-700 gap-2"
               onClick={startPipeline}
@@ -420,10 +599,6 @@ export function PipelineScreen() {
       {/* Pipeline Stages */}
       <div className="space-y-4">
         {stages.map((stage, index) => {
-          const isExpanded = expandedAgent === stage.id;
-          const hasDecisions =
-            stage.llmReasoning || stage.llmDecisions.length > 0;
-
           return (
             <div key={stage.id}>
               <Card
@@ -493,73 +668,12 @@ export function PipelineScreen() {
                         </div>
                       )}
 
-                      {/* LLM Reasoning preview */}
+                      {/* LLM Reasoning with see more/less */}
                       {stage.llmReasoning && stage.status !== "running" && (
-                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                          <Brain className="size-3 inline mr-1 text-amber-500" />
-                          {stage.llmReasoning}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex items-center gap-2">
-                      {hasDecisions && stage.status !== "running" && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="gap-1"
-                          onClick={() =>
-                            setExpandedAgent(isExpanded ? null : stage.id)
-                          }
-                        >
-                          <MessageSquare className="size-3" />
-                          LLM Decisions
-                          {isExpanded ? (
-                            <ChevronDown className="size-3" />
-                          ) : (
-                            <ChevronRight className="size-3" />
-                          )}
-                        </Button>
+                        <TruncatedReasoning text={stage.llmReasoning} />
                       )}
                     </div>
                   </div>
-
-                  {/* Expanded LLM Decisions */}
-                  {isExpanded && hasDecisions && (
-                    <div className="mt-4 ml-[72px] rounded-lg border bg-slate-50 p-4">
-                      {stage.llmReasoning && (
-                        <div className="mb-3">
-                          <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
-                            LLM Reasoning
-                          </h4>
-                          <p className="text-sm text-slate-700">
-                            {stage.llmReasoning}
-                          </p>
-                        </div>
-                      )}
-                      {stage.llmDecisions.length > 0 && (
-                        <div>
-                          <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
-                            Decisions Made
-                          </h4>
-                          <ul className="space-y-1">
-                            {stage.llmDecisions.map((d, i) => (
-                              <li
-                                key={i}
-                                className="text-sm text-slate-700 flex items-start gap-2"
-                              >
-                                <span className="text-amber-500 mt-0.5">
-                                  &bull;
-                                </span>
-                                {d}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  )}
                 </CardContent>
               </Card>
 

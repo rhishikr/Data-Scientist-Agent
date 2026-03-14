@@ -46,9 +46,12 @@ def _write_csv(path: Path, rows: list[dict]) -> None:
     df.to_csv(path, index=False)
 
 
-def run_insights(project_root: str | Path) -> InsightBundle:
+def run_insights(
+    project_root: str | Path,
+    data_paths: DataPaths | None = None,
+) -> InsightBundle:
     root = Path(project_root)
-    paths = DataPaths(base_dir=root)
+    paths = data_paths or DataPaths(base_dir=root)
 
     featured = load_featured(paths)
 

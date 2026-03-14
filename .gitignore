@@ -17,6 +17,7 @@ frontend/build/
 frontend/.vite/
 
 venv/
+.claude/
 
 # OS/IDE
 .DS_Store
@@ -24,7 +25,8 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Pipeline output directories (stored in Supabase now)
+# Pipeline data directories (raw data in Supabase, intermediates in system temp)
+backend/data/raw/*.csv
 backend/data/cleaned_data/
 backend/data/featured_data/
 backend/data/hypothesis_outputs/
