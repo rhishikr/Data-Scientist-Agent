@@ -327,33 +327,45 @@ def build_health_summary(
     demand_skus: list[dict[str, Any]],
     churn_predictions: list[dict[str, Any]],
 ) -> str:
-    """Generate a plain-English health summary."""
+    """Generate a styled HTML health summary (fallback when LLM is unavailable)."""
     critical_count = sum(1 for p in prescriptions if p.urgency == "critical")
     high_count = sum(1 for p in prescriptions if p.urgency == "high")
     stockout_count = sum(1 for s in demand_skus if s.get("status") == "critical")
     churn_count = sum(1 for c in churn_predictions if (c.get("churn_prob_30d") or 0) >= 0.7)
 
+    green = "color:#16a34a;font-weight:600"
+    red = "color:#dc2626;font-weight:600"
+    bold = "font-weight:600"
+
     if health_score >= 80:
-        status = "Your store is in good health"
+        status = f"Your store is in <span style='{green}'>good health</span>"
     elif health_score >= 60:
-        status = "Your store needs attention"
+        status = f"Your store <span style='{bold}'>needs attention</span>"
     elif health_score >= 40:
-        status = "Your store has several issues that need action"
+        status = f"Your store has <span style='{red}'>several issues</span> that need action"
     else:
-        status = "Your store requires urgent attention"
+        status = f"Your store requires <span style='{red}'>urgent attention</span>"
 
     parts = [status + "."]
 
     alerts = []
     if stockout_count:
-        alerts.append(f"{stockout_count} SKU{'s' if stockout_count > 1 else ''} near stockout")
+        alerts.append(
+            f"<span style='{red}'>{stockout_count} SKU{'s' if stockout_count > 1 else ''}</span> near stockout"
+        )
     if churn_count:
-        alerts.append(f"{churn_count} customer{'s' if churn_count > 1 else ''} at high churn risk")
+        alerts.append(
+            f"<span style='{red}'>{churn_count} customer{'s' if churn_count > 1 else ''}</span> at high churn risk"
+        )
     if alerts:
         parts.append(" and ".join(alerts).capitalize() + ".")
 
     if critical_count + high_count > 0:
-        parts.append(f"{critical_count + high_count} action{'s' if critical_count + high_count > 1 else ''} need{'s' if critical_count + high_count == 1 else ''} your attention this week.")
+        total = critical_count + high_count
+        parts.append(
+            f"<span style='{bold}'>{total} action{'s' if total > 1 else ''}</span>"
+            f" need{'s' if total == 1 else ''} your attention this week."
+        )
 
     return " ".join(parts)
 

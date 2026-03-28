@@ -597,9 +597,17 @@ class ActionAgent(BaseAgent):
                 "{\n"
                 '  "health_score": <integer 0-100>,\n'
                 '  "health_score_reasoning": "1 sentence justifying the score with specific numbers",\n'
-                '  "health_diagnosis": "4-6 sentence paragraph diagnosing the store\'s overall health. '
+                '  "health_diagnosis": "4-6 sentence diagnostic paragraph as styled inline HTML. '
                 "Connect dots across inventory, customers, revenue, marketing, and products. "
-                'Use specific numbers from the data.",\n'
+                "Use specific numbers from the data. "
+                "FORMATTING RULES: "
+                "1) Wrap positive metrics/numbers in <span style='color:#16a34a;font-weight:600'>...</span> (green). "
+                "2) Wrap negative/concerning metrics in <span style='color:#dc2626;font-weight:600'>...</span> (red). "
+                "3) Wrap neutral but important metrics in <span style='font-weight:600'>...</span> (bold). "
+                "4) Separate logical sections (revenue, customers, marketing, inventory, overall) with a single <br/> for a new line without extra gap. "
+                "5) Do NOT wrap in outer <p> or <div> tags. Return only the inner HTML content. "
+                "Example: Revenue is <span style='color:#16a34a;font-weight:600'>$787K YTD</span> but MTD dropped "
+                '<span style=\'color:#dc2626;font-weight:600\'>81.3%</span>.",\n'
                 '  "prescriptions": [\n'
                 "    {\n"
                 '      "id": "<unique 8-char alphanumeric>",\n'
@@ -649,6 +657,8 @@ class ActionAgent(BaseAgent):
             llm_result = parse_llm_json(llm_response, fallback=None)
 
             if not llm_result or "prescriptions" not in llm_result:
+                print(f"[ActionAgent] LLM raw response (first 500 chars): {llm_response[:500]}")
+                print(f"[ActionAgent] Parsed keys: {list(llm_result.keys()) if llm_result else 'None'}")
                 raise ValueError("LLM response missing prescriptions key")
 
             # Post-process: validate fields, attach real evidence
