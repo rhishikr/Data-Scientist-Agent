@@ -286,63 +286,31 @@ export function FunnelSessionsTab({
   return (
     <div className="space-y-6">
       {/* Row 1: KPI Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-        <MiniKpi
-          icon={MousePointerClick}
-          label="Conversion Rate"
-          value={fmtPercent(conversionRate)}
-          subtitle="Sessions → Purchase"
-          iconColor="text-emerald-600"
-          iconBg="bg-emerald-50"
-        />
-        <MiniKpi
-          icon={ShoppingCart}
-          label="Cart Abandonment"
-          value={fmtPercent(cartAbandonment)}
-          subtitle="Added but didn't buy"
-          iconColor="text-red-600"
-          iconBg="bg-red-50"
-        />
-        <MiniKpi
-          icon={Timer}
-          label="Avg Session"
-          value={`${Math.round(avgSessionDuration)}s`}
-          subtitle="Session duration"
-          iconColor="text-blue-600"
-          iconBg="bg-blue-50"
-        />
-        <MiniKpi
-          icon={CreditCard}
-          label="Rev / Session"
-          value={fmtCurrency2(revenuePerSession)}
-          subtitle="Revenue per session"
-          iconColor="text-violet-600"
-          iconBg="bg-violet-50"
-        />
-        <MiniKpi
-          icon={Monitor}
-          label="Desktop Conv"
-          value={fmtPercent(desktopConv)}
-          subtitle="Desktop conversion"
-          iconColor="text-blue-600"
-          iconBg="bg-blue-50"
-        />
-        <MiniKpi
-          icon={Smartphone}
-          label="Mobile Conv"
-          value={fmtPercent(mobileConv)}
-          subtitle="Mobile conversion"
-          iconColor="text-green-600"
-          iconBg="bg-green-50"
-        />
-        <MiniKpi
-          icon={TrendingDown}
-          label="Bounce Rate"
-          value={fmtPercent(bounceRate)}
-          subtitle="Single-page sessions"
-          iconColor="text-amber-600"
-          iconBg="bg-amber-50"
-        />
+      <div className="flex rounded-xl border bg-card text-card-foreground">
+        {([
+          { icon: MousePointerClick, label: "Conversion Rate", value: fmtPercent(conversionRate), color: "text-emerald-600" },
+          { icon: ShoppingCart, label: "Cart Abandonment", value: fmtPercent(cartAbandonment), color: "text-red-600" },
+          { icon: Timer, label: "Avg Session", value: `${Math.round(avgSessionDuration)}s`, color: "text-blue-600" },
+          { icon: CreditCard, label: "Rev / Session", value: fmtCurrency2(revenuePerSession), color: "text-violet-600" },
+          { icon: Monitor, label: "Desktop Conv", value: fmtPercent(desktopConv), color: "text-blue-600" },
+          { icon: Smartphone, label: "Mobile Conv", value: fmtPercent(mobileConv), color: "text-green-600" },
+          { icon: TrendingDown, label: "Bounce Rate", value: fmtPercent(bounceRate), color: "text-amber-600" },
+        ] as const).map((item) => {
+          const Icon = item.icon;
+          return (
+            <div key={item.label} className="flex-1 px-4 py-3 text-center">
+              <div className="flex items-center justify-center gap-1.5 mb-0.5">
+                <Icon className={`size-3.5 ${item.color}`} />
+                <span className="text-base font-semibold tracking-tight">
+                  {item.value}
+                </span>
+              </div>
+              <p className="whitespace-nowrap" style={{ fontSize: 12, lineHeight: 1.2, color: "#6b7280" }}>
+                {item.label}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
       {/* Row 2: Conversion Funnel */}

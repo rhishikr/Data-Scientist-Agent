@@ -44,12 +44,30 @@ async def ask_llm(
 def parse_llm_json(raw: str, fallback: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Parse JSON from LLM response, stripping markdown code fences if present."""
     text = raw.strip()
-    match = re.match(r"^```(?:json)?\s*\n?(.*?)```\s*$", text, re.DOTALL)
-    if match:
-        text = match.group(1).strip()
+
+    # 1. Try direct parse first
     try:
         return json.loads(text)
     except json.JSONDecodeError:
-        if fallback is not None:
-            return fallback
-        return {"assessment": raw[:200], "proceed": True}
+        pass
+
+    # 2. Strip markdown code fences (anywhere in the string, not just anchored)
+    fence_match = re.search(r"```(?:json)?\s*\n?(.*?)```", text, re.DOTALL)
+    if fence_match:
+        try:
+            return json.loads(fence_match.group(1).strip())
+        except json.JSONDecodeError:
+            pass
+
+    # 3. Find the outermost JSON object braces
+    first_brace = text.find("{")
+    last_brace = text.rfind("}")
+    if first_brace != -1 and last_brace > first_brace:
+        try:
+            return json.loads(text[first_brace : last_brace + 1])
+        except json.JSONDecodeError:
+            pass
+
+    if fallback is not None:
+        return fallback
+    return {"assessment": raw[:200], "proceed": True}
