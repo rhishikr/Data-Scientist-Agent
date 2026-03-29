@@ -67,6 +67,7 @@ from db.store import (
     get_cleaning_report,
     get_feature_report,
     get_signed_url,
+    download_cleaned_csv,
 )
 
 
@@ -319,6 +320,7 @@ async def lifespan(app: FastAPI):
                 _pipeline_running = True
                 _pipeline_status = await orchestrator.run()
                 _pipeline_running = False
+                _csv_cache.clear()
                 print("\n=== MULTI-AGENT PIPELINE COMPLETE ===")
             except Exception as e:
                 _pipeline_running = False
@@ -442,6 +444,7 @@ async def run_pipeline_endpoint(reset: bool = True, alpha: float = 0.05):
         _pipeline_status = await orchestrator.run()
     finally:
         _pipeline_running = False
+        _csv_cache.clear()
     return _pipeline_status
 
 
@@ -515,6 +518,7 @@ async def stream_pipeline(reset: bool = True, alpha: float = 0.05):
             pass
         finally:
             _pipeline_running = False
+            _csv_cache.clear()
             _pipeline_task = None
             if sub_queue in _pipeline_subscribers:
                 _pipeline_subscribers.remove(sub_queue)
@@ -1147,7 +1151,7 @@ async def get_comparison_ai_analysis(current: Optional[str] = None, previous: Op
             digest_parts.append("## PREVIOUS RUN PRESCRIPTIONS (with status)\n" + "\n".join(rx_lines))
 
     # 4i. Demand forecast context
-    demand_csv = _read_local_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
+    demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
     if demand_csv is not None and not demand_csv.empty and "status" in demand_csv.columns:
         critical = demand_csv[demand_csv["status"] == "critical"].head(5)
         warning = demand_csv[demand_csv["status"] == "warning"].head(5)
@@ -1159,7 +1163,7 @@ async def get_comparison_ai_analysis(current: Optional[str] = None, previous: Op
             digest_parts.append(f"## WARNING DEMAND SKUS\n{warning[cols].to_string(index=False)}")
 
     # 4j. Churn risk context
-    churn_csv = _read_local_csv(_FORECAST_DIR / "churn_predictions.csv")
+    churn_csv = _read_csv(_FORECAST_DIR / "churn_predictions.csv")
     if churn_csv is not None and not churn_csv.empty and "churn_prob_30d" in churn_csv.columns:
         high_churn = churn_csv[churn_csv["churn_prob_30d"] >= 0.7].sort_values("churn_prob_30d", ascending=False).head(5)
         if not high_churn.empty:
@@ -1455,7 +1459,10 @@ def get_cleaned_data(run_id: Optional[str] = None):
         return {"error": "No completed pipeline runs found.", "tables": [], "report": {}}
     tables = get_cleaned_datasets(rid)
     for t in tables:
-        t["download_url"] = get_signed_url(t["storage_path"])
+        try:
+            t["download_url"] = get_signed_url(t["storage_path"]) if t.get("storage_path") else ""
+        except Exception:
+            t["download_url"] = ""
     return {"run_id": rid, "tables": tables, "report": get_cleaning_report(rid)}
 
 
@@ -1467,7 +1474,10 @@ def get_featured_data(run_id: Optional[str] = None):
         return {"error": "No completed pipeline runs found.", "tables": [], "report": {}}
     tables = get_featured_datasets(rid)
     for t in tables:
-        t["download_url"] = get_signed_url(t["storage_path"])
+        try:
+            t["download_url"] = get_signed_url(t["storage_path"]) if t.get("storage_path") else ""
+        except Exception:
+            t["download_url"] = ""
     return {"run_id": rid, "tables": tables, "report": get_feature_report(rid)}
 
 
@@ -1478,7 +1488,6 @@ _BACKEND_ROOT = Path(__file__).resolve().parent
 _FORECAST_DIR = _BACKEND_ROOT / "data" / "forecast_outputs"
 _CLEANED_DIR = _BACKEND_ROOT / "data" / "cleaned_data"
 _FEATURED_DIR = _BACKEND_ROOT / "data" / "featured_data"
-_INSIGHT_DIR = _BACKEND_ROOT / "data" / "insight_outputs"
 
 
 def _safe_json(obj):
@@ -1492,9 +1501,57 @@ def _safe_json(obj):
     return obj
 
 
-def _read_local_csv(path: Path) -> pd.DataFrame | None:
-    if path.is_file():
-        return pd.read_csv(path)
+import time as _time
+
+# In-memory CSV cache: path_key -> (DataFrame, timestamp)
+_csv_cache: dict[str, tuple[pd.DataFrame, float]] = {}
+_CSV_CACHE_TTL = 300  # 5 minutes
+
+
+def _read_csv(path: Path) -> pd.DataFrame | None:
+    """Read a CSV from Supabase Storage (with 5-min in-memory cache).
+
+    Maps legacy local path to Supabase Storage path:
+      cleaned_data/X_cleaned.csv  -> runs/{run_id}/cleaned/X.csv
+      featured_data/X.csv         -> runs/{run_id}/featured/X.csv
+      forecast_outputs/X.csv      -> runs/{run_id}/forecast/X.csv
+    """
+    cache_key = str(path)
+    now = _time.time()
+
+    # Check in-memory cache
+    if cache_key in _csv_cache:
+        df, ts = _csv_cache[cache_key]
+        if now - ts < _CSV_CACHE_TTL:
+            return df
+        del _csv_cache[cache_key]
+
+    # Resolve Supabase Storage path
+    try:
+        run_id = get_latest_run_id()
+        if not run_id:
+            return None
+
+        name = path.stem
+        parent = path.parent.name
+
+        if parent == "cleaned_data":
+            table_name = name.replace("_cleaned", "").replace("_dirty", "")
+            storage_path = f"runs/{run_id}/cleaned/{table_name}.csv"
+        elif parent == "featured_data":
+            storage_path = f"runs/{run_id}/featured/{name}.csv"
+        elif parent == "forecast_outputs":
+            storage_path = f"runs/{run_id}/forecast/{name}.csv"
+        else:
+            return None
+
+        df = download_cleaned_csv(storage_path)
+        if df is not None and not df.empty:
+            _csv_cache[cache_key] = (df, now)
+            return df
+    except Exception:
+        pass
+
     return None
 
 
@@ -1504,20 +1561,7 @@ def _sanitize(obj):
 
 
 def _load_kpi_snapshot(run_id: Optional[str] = None) -> dict | None:
-    """Load KPI snapshot from local file first, then Supabase fallback.
-
-    Local file is preferred because it reflects the latest pipeline run
-    (including newly added KPI groups) without needing a Supabase re-upload.
-    """
-    # Prefer local file (always up-to-date with latest pipeline output)
-    kpi_path = _BACKEND_ROOT / "data" / "kpi_outputs" / "kpi_snapshot.json"
-    if kpi_path.is_file() and not run_id:
-        try:
-            with open(kpi_path, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            pass
-    # Fallback: Supabase (needed for historical run_id lookups)
+    """Load KPI snapshot from Supabase."""
     try:
         if run_id:
             result = db_get_run_kpi(run_id)
@@ -1534,14 +1578,14 @@ def _load_kpi_snapshot(run_id: Optional[str] = None) -> dict | None:
 def get_revenue_forecast_series(run_id: Optional[str] = None):
     """Returns daily revenue forecast time-series data."""
     # Try local CSV first (works without Supabase)
-    rev_csv = _read_local_csv(_FORECAST_DIR / "revenue_forecast_daily.csv")
+    rev_csv = _read_csv(_FORECAST_DIR / "revenue_forecast_daily.csv")
     if rev_csv is not None and not rev_csv.empty:
         rev_csv["date"] = pd.to_datetime(rev_csv["date"]).dt.strftime("%Y-%m-%d")
         series = rev_csv.rename(columns={"revenue_forecast": "revenue_forecast"}).to_dict(orient="records")
         return _safe_json({"series": series})
 
     # Fallback: derive daily revenue from transactions
-    txn_csv = _read_local_csv(_CLEANED_DIR / "transactions_cleaned.csv")
+    txn_csv = _read_csv(_CLEANED_DIR / "transactions_cleaned.csv")
     if txn_csv is not None and not txn_csv.empty:
         txn_csv["date"] = pd.to_datetime(txn_csv["order_datetime"], errors="coerce").dt.date
         daily = txn_csv.groupby("date")["total_amount"].sum().reset_index()
@@ -1556,13 +1600,13 @@ def get_revenue_forecast_series(run_id: Optional[str] = None):
 @app.get("/api/forecast/series/demand")
 def get_demand_forecast(run_id: Optional[str] = None):
     """Returns per-SKU demand forecast with stock health data."""
-    demand_csv = _read_local_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
+    demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
     if demand_csv is None or demand_csv.empty:
         return {"skus": [], "error": "No demand forecast available. Run the pipeline first."}
 
     # Join with inventory for stock levels
-    inv_csv = _read_local_csv(_CLEANED_DIR / "inventory_cleaned.csv")
-    prod_csv = _read_local_csv(_CLEANED_DIR / "products_cleaned.csv")
+    inv_csv = _read_csv(_CLEANED_DIR / "inventory_cleaned.csv")
+    prod_csv = _read_csv(_CLEANED_DIR / "products_cleaned.csv")
 
     demand_csv["sku"] = demand_csv["sku"].astype(str).str.upper()
 
@@ -1632,14 +1676,14 @@ def get_demand_forecast(run_id: Optional[str] = None):
 @app.get("/api/forecast/series/churn")
 def get_churn_predictions(run_id: Optional[str] = None):
     """Returns churn predictions with customer details."""
-    churn_csv = _read_local_csv(_FORECAST_DIR / "churn_predictions.csv")
+    churn_csv = _read_csv(_FORECAST_DIR / "churn_predictions.csv")
     if churn_csv is None or churn_csv.empty:
         return {"customers": [], "error": "No churn predictions available. Run the pipeline first."}
 
     churn_csv["customer_id"] = churn_csv["customer_id"].astype(str)
 
     # Join with customer features for names and details
-    cust_csv = _read_local_csv(_FEATURED_DIR / "customers_features.csv")
+    cust_csv = _read_csv(_FEATURED_DIR / "customers_features.csv")
     if cust_csv is not None and not cust_csv.empty:
         cust_csv["customer_id"] = cust_csv["customer_id"].astype(str)
         join_cols = ["customer_id"]
@@ -1683,19 +1727,7 @@ def get_ai_analysis(run_id: Optional[str] = None):
     except Exception:
         pass
 
-    # 2. Check local JSON cache
-    local_path = _INSIGHT_DIR / "ai_analysis.json"
-    if local_path.is_file():
-        try:
-            with open(local_path, "r", encoding="utf-8") as f:
-                local_cached = json.load(f)
-            if local_cached and local_cached.get("analysis"):
-                local_cached["cached"] = True
-                return local_cached
-        except Exception:
-            pass
-
-    # 3. Generate new analysis via LLM
+    # 2. Generate new analysis via LLM
     try:
         from langchain_openai import ChatOpenAI
         from langchain_core.messages import SystemMessage, HumanMessage
@@ -1737,7 +1769,7 @@ def get_ai_analysis(run_id: Optional[str] = None):
                 context_parts.append(f"Generated Insights:\n{json.dumps(insight_summaries, indent=2, default=str)}")
 
         # Demand forecast context
-        demand_csv = _read_local_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
+        demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
         if demand_csv is not None and not demand_csv.empty:
             top_demand = demand_csv.sort_values("forecast_qty_30d", ascending=False).head(10)
             context_parts.append(f"Top Demand SKUs (30d forecast):\n{top_demand.to_string(index=False)}")
@@ -1794,11 +1826,6 @@ Guidelines:
             except Exception as e:
                 print(f"[ai-analysis] Failed to store in Supabase: {e}")
 
-        # 5. Persist locally
-        os.makedirs(str(_INSIGHT_DIR), exist_ok=True)
-        with open(local_path, "w", encoding="utf-8") as f:
-            json.dump(result, f, indent=2, default=str)
-
         return result
 
     except Exception as e:
@@ -1830,18 +1857,7 @@ def get_action_plan(run_id: Optional[str] = None):
     except Exception:
         pass
 
-    # 2. Try local cached file
-    cache_path = _INSIGHT_DIR / "action_plan.json"
-    if cache_path.is_file():
-        try:
-            with open(cache_path, "r", encoding="utf-8") as f:
-                cached = json.load(f)
-            if cached and cached.get("prescriptions"):
-                return _safe_json(cached)
-        except Exception:
-            pass
-
-    # 3. Fallback: compute rule-based action plan on-the-fly
+    # 2. Fallback: compute rule-based action plan on-the-fly
     from datetime import datetime, timezone
     from pipeline.insights.prescriptions import build_action_plan
 
@@ -1880,12 +1896,12 @@ def get_action_plan(run_id: Optional[str] = None):
 def get_demand_by_location(run_id: Optional[str] = None):
     """Returns per-SKU stock levels broken down by warehouse location,
     with store transfer recommendations where stock imbalances exist."""
-    inv_csv = _read_local_csv(_CLEANED_DIR / "inventory_cleaned.csv")
+    inv_csv = _read_csv(_CLEANED_DIR / "inventory_cleaned.csv")
     if inv_csv is None or inv_csv.empty:
         return {"locations": [], "transfers": [], "error": "No inventory data available."}
 
-    demand_csv = _read_local_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
-    prod_csv = _read_local_csv(_CLEANED_DIR / "products_cleaned.csv")
+    demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
+    prod_csv = _read_csv(_CLEANED_DIR / "products_cleaned.csv")
 
     inv_csv["sku"] = inv_csv["sku"].astype(str).str.upper()
 
@@ -2056,10 +2072,9 @@ def get_funnel_snapshot(run_id: Optional[str] = None):
 
     # Load funnel_summary for daily trends
     daily_trends = []
-    funnel_csv = _CLEANED_DIR / "funnel_summary_cleaned.csv"
-    if funnel_csv.is_file():
+    df = _read_csv(_CLEANED_DIR / "funnel_summary_cleaned.csv")
+    if df is not None:
         try:
-            df = pd.read_csv(funnel_csv)
             for col in ["sessions", "product_views", "add_to_cart", "checkout_started", "purchases", "conversion_rate", "cart_abandonment_rate"]:
                 if col in df.columns:
                     df[col] = pd.to_numeric(df[col], errors="coerce")
@@ -2079,14 +2094,9 @@ def get_funnel_snapshot(run_id: Optional[str] = None):
 @app.get("/api/sessions/analytics")
 def get_sessions_analytics(run_id: Optional[str] = None):
     """Returns session analytics: device, source, landing page breakdowns."""
-    sessions_csv = _CLEANED_DIR / "sessions_cleaned.csv"
-    if not sessions_csv.is_file():
+    df = _read_csv(_CLEANED_DIR / "sessions_cleaned.csv")
+    if df is None:
         return {"error": "No sessions data found"}
-
-    try:
-        df = pd.read_csv(sessions_csv)
-    except Exception as e:
-        return {"error": str(e)}
 
     result = {}
 
@@ -2165,10 +2175,9 @@ def get_campaigns_performance(run_id: Optional[str] = None):
     result = {"campaigns": [], "by_channel": {}, "by_type": {}}
 
     # Campaign performance from cleaned data
-    cp_csv = _CLEANED_DIR / "campaign_performance_cleaned.csv"
-    if cp_csv.is_file():
+    df = _read_csv(_CLEANED_DIR / "campaign_performance_cleaned.csv")
+    if df is not None:
         try:
-            df = pd.read_csv(cp_csv)
             for col in ["impressions", "clicks", "spend", "sessions", "orders", "attributed_revenue"]:
                 if col in df.columns:
                     df[col] = pd.to_numeric(df[col], errors="coerce")
@@ -2203,10 +2212,9 @@ def get_campaigns_performance(run_id: Optional[str] = None):
             pass
 
     # Campaign type breakdown from marketing table
-    mkt_csv = _CLEANED_DIR / "marketing_cleaned.csv"
-    if mkt_csv.is_file():
+    mdf = _read_csv(_CLEANED_DIR / "marketing_cleaned.csv")
+    if mdf is not None:
         try:
-            mdf = pd.read_csv(mkt_csv)
             if "campaign_type" in mdf.columns:
                 for col in ["ad_spend", "impressions", "clicks", "conversions"]:
                     if col in mdf.columns:
@@ -2293,18 +2301,6 @@ def get_chart_narratives(run_id: Optional[str] = None):
     """Returns natural-language annotations for each dashboard chart."""
     from datetime import datetime, timezone
 
-    # Check local cache
-    cache_path = _INSIGHT_DIR / "chart_narratives.json"
-    if cache_path.is_file():
-        try:
-            with open(cache_path, "r", encoding="utf-8") as f:
-                cached = json.load(f)
-            if cached and cached.get("narratives"):
-                cached["cached"] = True
-                return cached
-        except Exception:
-            pass
-
     # Gather context
     kpi_data = db_get_run_kpi(run_id) if run_id else db_get_latest_kpi()
     forecast_data = db_get_run_forecast(run_id) if run_id else db_get_latest_forecast()
@@ -2383,11 +2379,6 @@ Use specific numbers. Be concise. Every action_hint must start with an action ve
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "cached": False,
         }
-
-        # Cache locally
-        os.makedirs(str(_INSIGHT_DIR), exist_ok=True)
-        with open(cache_path, "w", encoding="utf-8") as f:
-            json.dump(result, f, indent=2, default=str)
 
         return result
 

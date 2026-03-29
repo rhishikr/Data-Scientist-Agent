@@ -604,7 +604,7 @@ class ActionAgent(BaseAgent):
                 "1) Wrap positive metrics/numbers in <span style='color:#16a34a;font-weight:600'>...</span> (green). "
                 "2) Wrap negative/concerning metrics in <span style='color:#dc2626;font-weight:600'>...</span> (red). "
                 "3) Wrap neutral but important metrics in <span style='font-weight:600'>...</span> (bold). "
-                "4) Separate logical sections (revenue, customers, marketing, inventory, overall) with a single <br/> for a new line without extra gap. "
+                "4) Write everything as ONE continuous flowing paragraph — do NOT use <br/>, <br>, or any line-break tags. Sentences should flow naturally one after another separated only by spaces. "
                 "5) Do NOT wrap in outer <p> or <div> tags. Return only the inner HTML content. "
                 "Example: Revenue is <span style='color:#16a34a;font-weight:600'>$787K YTD</span> but MTD dropped "
                 '<span style=\'color:#dc2626;font-weight:600\'>81.3%</span>.",\n'
