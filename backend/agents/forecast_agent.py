@@ -116,7 +116,20 @@ class ForecastAgent(BaseAgent):
                 from db.store import store_forecast_snapshot
                 store_forecast_snapshot(run_id, snapshot)
             except Exception as e:
-                print(f"[ForecastAgent] Warning: Supabase storage failed: {e}")
+                print(f"[ForecastAgent] Warning: Supabase snapshot storage failed: {e}")
+
+            # Upload forecast CSVs to Supabase Storage
+            try:
+                import pandas as _pd
+                from pathlib import Path
+                from db.store import upload_csv_to_storage
+
+                forecast_dir = Path(blackboard.paths["forecast_dir"])
+                for csv_file in sorted(forecast_dir.glob("*.csv")):
+                    df = _pd.read_csv(csv_file)
+                    upload_csv_to_storage(run_id, "forecast", csv_file.stem, df)
+            except Exception as e:
+                print(f"[ForecastAgent] Warning: Forecast CSV upload failed: {e}")
 
         return AgentResult(
             agent_id=self.agent_id,

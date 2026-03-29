@@ -134,9 +134,10 @@ export function ActionQueueTab({ actionPlan, loading, runId }: ActionQueueTabPro
                   </span>
                 )}
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {actionPlan.health_summary}
-              </p>
+              <div
+                className="text-sm leading-loose text-gray-700"
+                dangerouslySetInnerHTML={{ __html: actionPlan.health_summary }}
+              />
               {/* Progress bar */}
               {prescriptions.length > 0 && (
                 <div className="flex items-center gap-2">

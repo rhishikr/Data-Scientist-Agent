@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 def rebuild_index(base_dir: Path, run_id: Optional[str] = None) -> Dict[str, Any]:
     """
     Rebuild the pgvector index from scratch:
-      1. Table profiles + sample rows from cleaned datasets (fallback to raw)
+      1. Table profiles + sample rows from cleaned datasets
       2. Insights from latest insight_snapshots
       3. Hypothesis results from latest hypothesis_snapshots
       4. KPI cards from latest kpi_snapshots
@@ -29,8 +29,7 @@ def rebuild_index(base_dir: Path, run_id: Optional[str] = None) -> Dict[str, Any
     Args:
         base_dir: Project base directory for config loading.
         run_id: Optional pipeline run ID. If provided, uses cleaned data
-                from that run. If None, uses the latest completed run
-                (falls back to raw tables if no pipeline run exists).
+                from that run. If None, uses the latest completed run.
 
     Each source category is fully replaced (delete + insert).
     """
