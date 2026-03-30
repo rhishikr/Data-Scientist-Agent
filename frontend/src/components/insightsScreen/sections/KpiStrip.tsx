@@ -85,7 +85,7 @@ interface KpiStripProps {
 
 export function KpiStrip({ cards }: KpiStripProps) {
   return (
-    <div className="flex rounded-xl border bg-card text-card-foreground">
+    <div className="flex rounded-md border bg-card text-card-foreground">
       {KPI_DEFS.map((def, idx) => {
         const value = getCardValue(cards, def.id);
         const Icon = def.icon;

@@ -1,10 +1,13 @@
 # backend/rag/service.py
 """
-Main RAG service — routes queries through snapshot lookup, SQL agent,
-pgvector search, or hybrid.
+Main RAG service — routes queries through snapshot lookup or pgvector retrieval.
+
+Two-path architecture (no raw table access):
+  1. Snapshot: instant KPI / forecast / health-score lookup (no LLM)
+  2. Retrieval: pgvector semantic search + LLM synthesis (all cleaned data)
 """
 from pathlib import Path
-from typing import Dict, Any, Generator, List, Optional
+from typing import Dict, Any, Generator, Optional
 import json
 import logging
 
@@ -14,25 +17,48 @@ from openai import BadRequestError
 
 from .config import load_config
 from .store_pgvector import PgVectorStore
-from .sql_agent import create_sql_agent_instance, run_sql_agent
-from .memory import get_history, save_turn, to_langchain_messages
-from .router import classify_query
-from .snapshot_matcher import match_snapshot_metric, format_snapshot_response
+from .memory import get_history, save_turn
+from .snapshot_matcher import (
+    match_snapshot_metric,
+    format_snapshot_response,
+    format_forecast_response,
+    format_action_plan_response,
+)
 
 logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
-# Insight retrieval (pgvector search + LLM synthesis)
+# System prompt for retrieval-based synthesis
 # ---------------------------------------------------------------------------
 
-INSIGHT_SYSTEM_PROMPT = """You are an AI business analyst providing insights from an ecommerce company's data.
-Use ONLY the provided context to answer the question.
-If you don't have enough information, say so.
-Be clear, specific, and actionable."""
+SYSTEM_PROMPT = """You are an AI business analyst for an ecommerce company.
+You answer questions using ONLY the provided context, which comes from the
+company's cleaned data pipeline — the same source powering the executive dashboard.
+
+Your context may include:
+- KPI metrics (revenue, AOV, churn, conversion, etc.)
+- Forecast data (revenue/churn/demand projections)
+- Business insights with severity and confidence scores
+- Action plan prescriptions with urgency and impact estimates
+- Top/bottom customer and product rankings
+- Statistical hypothesis test results
+- Executive summaries and health scores
+
+RULES:
+1. Use ONLY numbers and facts from the provided context. Never estimate or calculate.
+2. When citing a metric, state its exact value as given in context.
+3. If the context doesn't contain enough information, say so explicitly.
+4. Be specific and actionable. Reference concrete data points.
+5. When multiple context documents are relevant, synthesize them coherently.
+6. Indicate the source type (KPI, forecast, insight, action plan, etc.)."""
 
 
-def _handle_insight(
+# ---------------------------------------------------------------------------
+# Retrieval handler (pgvector search + LLM synthesis)
+# ---------------------------------------------------------------------------
+
+def _handle_retrieval(
     question: str,
     session_id: str,
     cfg,
@@ -45,7 +71,7 @@ def _handle_insight(
     if not retrieved:
         return {
             "success": True,
-            "query_type": "insight",
+            "query_type": "retrieval",
             "answer": "No relevant documents found in the index. Try running POST /api/rag/ingest first.",
             "sources": [],
         }
@@ -77,104 +103,27 @@ def _handle_insight(
 
     try:
         answer = llm.invoke([
-            SystemMessage(content=INSIGHT_SYSTEM_PROMPT),
+            SystemMessage(content=SYSTEM_PROMPT),
             HumanMessage(content=prompt),
         ]).content
     except BadRequestError as e:
         return {
             "success": False,
-            "query_type": "insight",
+            "query_type": "retrieval",
             "answer": "The retrieved context is too large for the model. Try narrowing your question.",
             "error": str(e),
         }
 
     return {
         "success": True,
-        "query_type": "insight",
+        "query_type": "retrieval",
         "answer": answer,
         "sources": sources,
     }
 
 
 # ---------------------------------------------------------------------------
-# SQL agent
-# ---------------------------------------------------------------------------
-
-def _handle_sql(
-    question: str,
-    session_id: str,
-    cfg,
-    llm: ChatOpenAI,
-) -> Dict[str, Any]:
-    """Route to the LangGraph ReAct SQL agent."""
-    agent = create_sql_agent_instance(cfg.db_url, llm)
-    history = get_history(session_id, cfg.db_url, max_messages=10)
-    lc_history = to_langchain_messages(history)
-
-    result = run_sql_agent(agent, question, history=lc_history)
-    return result
-
-
-# ---------------------------------------------------------------------------
-# Hybrid (SQL + Insight combined)
-# ---------------------------------------------------------------------------
-
-SYNTHESIS_PROMPT = """You are a business analyst. Combine the following data analysis and strategic insights
-to answer the user's question comprehensively.
-
-User Question: {question}
-
-Data Analysis:
-{sql_answer}
-
-Strategic Insights:
-{insight_answer}
-
-Provide a comprehensive answer that:
-1. Presents the key data findings
-2. Explains the strategic context from insights
-3. Offers actionable recommendations
-
-Answer:"""
-
-
-def _handle_hybrid(
-    question: str,
-    session_id: str,
-    cfg,
-    llm: ChatOpenAI,
-) -> Dict[str, Any]:
-    """Run both SQL and insight paths, then synthesize."""
-    sql_result = _handle_sql(question, session_id, cfg, llm)
-    insight_result = _handle_insight(question, session_id, cfg, llm)
-
-    sql_answer = sql_result.get("answer", "No data available")
-    insight_answer = insight_result.get("answer", "No insights available")
-
-    try:
-        synthesized = llm.invoke(
-            SYNTHESIS_PROMPT.format(
-                question=question,
-                sql_answer=sql_answer,
-                insight_answer=insight_answer,
-            )
-        ).content
-    except Exception as e:
-        # Fall back to concatenation
-        synthesized = f"**Data Analysis:**\n{sql_answer}\n\n**Insights:**\n{insight_answer}"
-        logger.warning("Synthesis failed, using concatenation: %s", e)
-
-    return {
-        "success": True,
-        "query_type": "hybrid",
-        "answer": synthesized,
-        "data_summary": sql_answer,
-        "sources": insight_result.get("sources", []),
-    }
-
-
-# ---------------------------------------------------------------------------
-# Snapshot lookup (pre-computed KPI metrics — no LLM needed)
+# Snapshot lookup (pre-computed metrics — no LLM needed)
 # ---------------------------------------------------------------------------
 
 def _handle_snapshot(
@@ -182,12 +131,9 @@ def _handle_snapshot(
     llm=None,
 ) -> Optional[Dict[str, Any]]:
     """
-    Try to match the question to a pre-computed KPI metric from the dashboard.
-    Returns None if no match (caller should fall through to sql/insight/hybrid).
-
-    Two-tier matching:
-      Tier 1: keyword alias matching (free, instant)
-      Tier 2: lightweight LLM classification (if llm provided)
+    Try to match the question to a pre-computed metric from the dashboard.
+    Supports KPI cards, forecast metrics, and health score.
+    Returns None if no match (caller falls through to retrieval).
     """
     match = match_snapshot_metric(question, llm=llm)
     if match is None:
@@ -216,6 +162,46 @@ def _handle_snapshot(
             "sources": [{"type": "dashboard_snapshot", "note": "Pre-computed from cleaned data"}],
         }
 
+    if match.source == "forecast":
+        from db.store import get_latest_forecast_snapshot
+
+        snapshot = get_latest_forecast_snapshot()
+        if "error" in snapshot:
+            logger.info("No forecast snapshot available, falling through: %s", snapshot.get("error"))
+            return None
+
+        answer = format_forecast_response(match.card_id, snapshot)
+        if answer is None:
+            logger.info("Forecast metric '%s' not found, falling through", match.card_id)
+            return None
+
+        return {
+            "success": True,
+            "query_type": "snapshot",
+            "answer": answer,
+            "sources": [{"type": "forecast_snapshot", "note": "Pre-computed from cleaned data"}],
+        }
+
+    if match.source == "action_plan":
+        from db.store import get_latest_action_plan_snapshot
+
+        snapshot = get_latest_action_plan_snapshot()
+        if "error" in snapshot:
+            logger.info("No action plan snapshot available, falling through: %s", snapshot.get("error"))
+            return None
+
+        answer = format_action_plan_response(match.card_id, snapshot)
+        if answer is None:
+            logger.info("Action plan metric '%s' not found, falling through", match.card_id)
+            return None
+
+        return {
+            "success": True,
+            "query_type": "snapshot",
+            "answer": answer,
+            "sources": [{"type": "action_plan_snapshot", "note": "Pre-computed from cleaned data"}],
+        }
+
     return None
 
 
@@ -232,9 +218,8 @@ def answer_question(
     Main entry point for answering a user question.
 
     Flow:
-      0. Try snapshot route first (fast, no LLM, consistent with dashboard)
-      1. Classify query → sql / insight / hybrid
-      2. Route to appropriate handler
+      1. Try snapshot route (Tier 1 keyword → Tier 2 LLM)
+      2. Fall through to pgvector retrieval + LLM synthesis
       3. Save Q&A turn to chat memory
     """
     cfg = load_config(base_dir)
@@ -264,17 +249,9 @@ def answer_question(
                 logger.warning("Failed to save chat history: %s", e)
         return snapshot_result
 
-    # --- Existing classification + routing ---
-    query_type = classify_query(question, llm)
-    logger.info("Query classified as '%s': %s", query_type, question[:80])
-
-    # Route
-    if query_type == "sql":
-        result = _handle_sql(question, session_id, cfg, llm)
-    elif query_type == "insight":
-        result = _handle_insight(question, session_id, cfg, llm)
-    else:
-        result = _handle_hybrid(question, session_id, cfg, llm)
+    # --- Retrieval path (pgvector + LLM synthesis) ---
+    logger.info("Query routed to retrieval: %s", question[:80])
+    result = _handle_retrieval(question, session_id, cfg, llm)
 
     # Persist conversation
     answer = result.get("answer", "")
@@ -317,92 +294,45 @@ def answer_question_stream(
         yield f"data: {json.dumps({'event': 'done'})}\n\n"
         return
 
-    # --- Existing classification + routing ---
+    # --- Retrieval path (pgvector search + streamed LLM synthesis) ---
     llm = ChatOpenAI(model=cfg.llm_model, temperature=0, streaming=True)
 
-    query_type = classify_query(question, llm)
-    logger.info("Stream query classified as '%s': %s", query_type, question[:80])
-
-    yield f"data: {json.dumps({'event': 'start', 'query_type': query_type})}\n\n"
+    logger.info("Stream query routed to retrieval: %s", question[:80])
+    yield f"data: {json.dumps({'event': 'start', 'query_type': 'retrieval'})}\n\n"
 
     answer = ""
 
     try:
-        if query_type == "sql":
-            # SQL agent does multi-step tool calling — send result as one chunk
-            result = _handle_sql(question, session_id, cfg, llm)
-            answer = result.get("answer", "")
+        store = PgVectorStore(cfg)
+        retrieved = store.similarity_search(question, k=cfg.top_k)
+
+        if not retrieved:
+            answer = "No relevant documents found in the index. Try running POST /api/rag/ingest first."
             yield f"data: {json.dumps({'event': 'chunk', 'content': answer})}\n\n"
+        else:
+            context = "\n\n---\n\n".join(d.page_content for d in retrieved)
+            sources = [d.metadata for d in retrieved]
 
-        elif query_type == "insight":
-            store = PgVectorStore(cfg)
-            retrieved = store.similarity_search(question, k=cfg.top_k)
+            MAX_CONTEXT_CHARS = 120_000
+            if len(context) > MAX_CONTEXT_CHARS:
+                context = context[:MAX_CONTEXT_CHARS] + "\n\n[TRUNCATED]"
 
-            if not retrieved:
-                answer = "No relevant documents found in the index. Try running POST /api/rag/ingest first."
-                yield f"data: {json.dumps({'event': 'chunk', 'content': answer})}\n\n"
-            else:
-                context = "\n\n---\n\n".join(d.page_content for d in retrieved)
-                sources = [d.metadata for d in retrieved]
-
-                MAX_CONTEXT_CHARS = 120_000
-                if len(context) > MAX_CONTEXT_CHARS:
-                    context = context[:MAX_CONTEXT_CHARS] + "\n\n[TRUNCATED]"
-
-                history = get_history(session_id, cfg.db_url, max_messages=10)
-                history_text = ""
-                if history:
-                    history_text = "\n".join(
-                        f"{'User' if h['role'] == 'human' else 'Assistant'}: {h['content']}"
-                        for h in history[-6:]
-                    )
-                    history_text = f"\nConversation history:\n{history_text}\n"
-
-                prompt = f"{history_text}QUESTION:\n{question}\n\nCONTEXT:\n{context}"
-
-                answer_chunks = []
-                for chunk in llm.stream([
-                    SystemMessage(content=INSIGHT_SYSTEM_PROMPT),
-                    HumanMessage(content=prompt),
-                ]):
-                    token = chunk.content
-                    if token:
-                        answer_chunks.append(token)
-                        yield f"data: {json.dumps({'event': 'chunk', 'content': token})}\n\n"
-
-                answer = "".join(answer_chunks)
-                yield f"data: {json.dumps({'event': 'sources', 'sources': sources}, default=str)}\n\n"
-
-        else:  # hybrid
-            # SQL part (non-streaming)
-            sql_result = _handle_sql(question, session_id, cfg, llm)
-            sql_answer = sql_result.get("answer", "No data available")
-
-            # Insight context
-            store = PgVectorStore(cfg)
-            retrieved = store.similarity_search(question, k=cfg.top_k)
-            insight_answer = "No insights available"
-            sources = []
-            if retrieved:
-                context = "\n\n---\n\n".join(d.page_content for d in retrieved)
-                sources = [d.metadata for d in retrieved]
-                try:
-                    insight_answer = llm.invoke([
-                        SystemMessage(content=INSIGHT_SYSTEM_PROMPT),
-                        HumanMessage(content=f"QUESTION:\n{question}\n\nCONTEXT:\n{context}"),
-                    ]).content
-                except Exception:
-                    pass
-
-            # Stream the synthesis
-            answer_chunks = []
-            for chunk in llm.stream(
-                SYNTHESIS_PROMPT.format(
-                    question=question,
-                    sql_answer=sql_answer,
-                    insight_answer=insight_answer,
+            history = get_history(session_id, cfg.db_url, max_messages=10)
+            history_text = ""
+            if history:
+                history_text = "\n".join(
+                    f"{'User' if h['role'] == 'human' else 'Assistant'}: {h['content']}"
+                    for h in history[-6:]
                 )
-            ):
+                history_text = f"\nConversation history:\n{history_text}\n"
+
+            prompt = f"{history_text}QUESTION:\n{question}\n\nCONTEXT:\n{context}"
+
+            answer_chunks = []
+            for chunk in llm.stream([
+                SystemMessage(content=SYSTEM_PROMPT),
+                HumanMessage(content=prompt),
+            ]):
                 token = chunk.content
                 if token:
                     answer_chunks.append(token)

@@ -82,7 +82,7 @@ export default function App() {
           <SidebarContent>
             <div className="px-4 py-6">
               <div className="flex items-center gap-2">
-                <div className="size-8 rounded-lg bg-gradient-to-br from-teal-500 to-blue-600 flex items-center justify-center">
+                <div className="size-8 rounded-md bg-gradient-to-br from-teal-500 to-blue-600 flex items-center justify-center">
                   <GitBranch className="size-4 text-white" />
                 </div>
                 <div>

@@ -90,7 +90,7 @@ export function Chatbot() {
                   )}
                 </div>
                 <div
-                  className={`rounded-lg px-4 py-2 max-w-[80%] ${
+                  className={`rounded-md px-4 py-2 max-w-[80%] ${
                     message.sender === "user"
                       ? "bg-primary text-primary-foreground"
                       : "bg-muted"

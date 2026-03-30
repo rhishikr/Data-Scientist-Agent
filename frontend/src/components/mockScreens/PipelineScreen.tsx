@@ -612,7 +612,7 @@ export function PipelineScreen({ onNavigate }: PipelineScreenProps) {
                   <div className="flex items-start gap-4">
                     {/* Stage Icon */}
                     <div
-                      className={`flex size-14 shrink-0 items-center justify-center rounded-xl ${
+                      className={`flex size-14 shrink-0 items-center justify-center rounded-md ${
                         stage.status === "completed"
                           ? "bg-green-100"
                           : stage.status === "running"
@@ -707,7 +707,7 @@ export function PipelineScreen({ onNavigate }: PipelineScreenProps) {
               {llmDecisionsLog.map((entry, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-3 rounded-lg border p-3 text-sm"
+                  className="flex items-start gap-3 rounded-md border p-3 text-sm"
                 >
                   <Badge variant="outline" className="shrink-0 text-xs">
                     {entry.agent.replace(" Agent", "")}
@@ -721,7 +721,7 @@ export function PipelineScreen({ onNavigate }: PipelineScreenProps) {
       )}
 
       {/* Pipeline Info */}
-      <div className="rounded-lg border border-teal-200 bg-teal-50 p-4">
+      <div className="rounded-md border border-teal-200 bg-teal-50 p-4">
         <div className="flex gap-3">
           <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-teal-100">
             <Sparkles className="size-4 text-teal-600" />

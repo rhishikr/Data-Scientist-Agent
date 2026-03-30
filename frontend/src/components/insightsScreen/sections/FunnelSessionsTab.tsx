@@ -286,7 +286,7 @@ export function FunnelSessionsTab({
   return (
     <div className="space-y-6">
       {/* Row 1: KPI Cards */}
-      <div className="flex rounded-xl border bg-card text-card-foreground">
+      <div className="flex rounded-md border bg-card text-card-foreground">
         {([
           { icon: MousePointerClick, label: "Conversion Rate", value: fmtPercent(conversionRate), color: "text-emerald-600" },
           { icon: ShoppingCart, label: "Cart Abandonment", value: fmtPercent(cartAbandonment), color: "text-red-600" },

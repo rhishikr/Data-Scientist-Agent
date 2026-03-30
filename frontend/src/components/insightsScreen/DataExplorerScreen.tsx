@@ -44,7 +44,7 @@ function SummaryCard({
   return (
     <Card>
       <CardContent className="p-4 flex items-center gap-3">
-        <div className="rounded-lg bg-teal-50 p-2">
+        <div className="rounded-md bg-teal-50 p-2">
           <Icon className="size-5 text-teal-600" />
         </div>
         <div>
@@ -219,7 +219,7 @@ function DataStageSection({
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <div className="rounded-lg bg-teal-100 p-2">
+        <div className="rounded-md bg-teal-100 p-2">
           <Icon className="size-5 text-teal-700" />
         </div>
         <h2 className="text-lg font-semibold">{title}</h2>

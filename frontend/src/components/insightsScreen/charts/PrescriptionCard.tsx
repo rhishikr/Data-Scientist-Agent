@@ -61,7 +61,7 @@ export function PrescriptionCard({ prescription, onStatusChange }: PrescriptionC
   const isResolved = isDone || isDismissed;
 
   return (
-    <Card className={`${urgStyle.border} gap-0 transition-opacity ${isResolved ? "opacity-60" : ""}`}>
+    <Card className={`${urgStyle.border} gap-0 transition-opacity break-inside-avoid ${isResolved ? "opacity-60" : ""}`}>
       <CardContent className="p-4 space-y-3">
         {/* Top row: urgency + effort + impact + action buttons */}
         <div className="flex items-center gap-2 flex-wrap">
@@ -108,9 +108,10 @@ export function PrescriptionCard({ prescription, onStatusChange }: PrescriptionC
         </div>
 
         {/* Description */}
-        <p className={`text-sm leading-relaxed ${isDone ? "line-through text-muted-foreground" : "text-muted-foreground"}`}>
-          {prescription.description}
-        </p>
+        <p
+          className={`text-sm leading-relaxed ${isDone ? "line-through text-muted-foreground" : "text-muted-foreground"}`}
+          dangerouslySetInnerHTML={{ __html: prescription.description }}
+        />
 
         {/* Action buttons + Evidence row */}
         <div className="flex items-center gap-2 flex-wrap">

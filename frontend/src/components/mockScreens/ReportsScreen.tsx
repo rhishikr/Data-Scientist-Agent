@@ -120,7 +120,7 @@ export function ReportsScreen() {
                 {reportSections.map((section) => (
                   <div
                     key={section.id}
-                    className="flex items-start space-x-3 p-3 rounded-lg border hover:bg-slate-50"
+                    className="flex items-start space-x-3 p-3 rounded-md border hover:bg-slate-50"
                   >
                     <Checkbox
                       id={section.id}
@@ -144,15 +144,15 @@ export function ReportsScreen() {
               <div className="space-y-3">
                 <Label>Export Format</Label>
                 <div className="grid grid-cols-3 gap-3">
-                  <button className="p-4 rounded-lg border border-teal-200 bg-teal-50 hover:bg-teal-100 transition-colors">
+                  <button className="p-4 rounded-md border border-teal-200 bg-teal-50 hover:bg-teal-100 transition-colors">
                     <FileText className="size-6 text-teal-600 mx-auto mb-2" />
                     <p className="text-sm">PDF</p>
                   </button>
-                  <button className="p-4 rounded-lg border hover:border-teal-200 hover:bg-slate-50 transition-colors">
+                  <button className="p-4 rounded-md border hover:border-teal-200 hover:bg-slate-50 transition-colors">
                     <FileBarChart className="size-6 text-slate-600 mx-auto mb-2" />
                     <p className="text-sm">PowerPoint</p>
                   </button>
-                  <button className="p-4 rounded-lg border hover:border-teal-200 hover:bg-slate-50 transition-colors">
+                  <button className="p-4 rounded-md border hover:border-teal-200 hover:bg-slate-50 transition-colors">
                     <FileText className="size-6 text-slate-600 mx-auto mb-2" />
                     <p className="text-sm">CSV Summary</p>
                   </button>
@@ -162,7 +162,7 @@ export function ReportsScreen() {
               {/* Preview */}
               <div className="space-y-3">
                 <Label>Report Preview</Label>
-                <div className="rounded-lg border p-4 bg-slate-50">
+                <div className="rounded-md border p-4 bg-slate-50">
                   <div className="aspect-[8.5/11] bg-white rounded shadow-sm flex items-center justify-center">
                     <div className="text-center space-y-2">
                       <FileText className="size-12 text-slate-300 mx-auto" />
@@ -242,9 +242,9 @@ export function ReportsScreen() {
             {recentReports.map((report, index) => (
               <div
                 key={index}
-                className="flex items-center gap-4 p-4 rounded-lg border hover:bg-slate-50"
+                className="flex items-center gap-4 p-4 rounded-md border hover:bg-slate-50"
               >
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-teal-50">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-teal-50">
                   <FileText className="size-6 text-teal-600" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -272,8 +272,8 @@ export function ReportsScreen() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            <div className="flex items-center gap-4 p-4 rounded-lg border">
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-blue-50">
+            <div className="flex items-center gap-4 p-4 rounded-md border">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-blue-50">
                 <Calendar className="size-6 text-blue-600" />
               </div>
               <div className="flex-1">
@@ -288,8 +288,8 @@ export function ReportsScreen() {
               </Button>
             </div>
 
-            <div className="flex items-center gap-4 p-4 rounded-lg border">
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-purple-50">
+            <div className="flex items-center gap-4 p-4 rounded-md border">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-purple-50">
                 <Calendar className="size-6 text-purple-600" />
               </div>
               <div className="flex-1">

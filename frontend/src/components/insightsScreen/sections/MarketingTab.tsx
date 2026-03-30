@@ -358,7 +358,7 @@ export function MarketingTab({
                 {recommendedActions.map((action, idx) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-3 rounded-lg border bg-muted/30 p-3"
+                    className="flex items-start gap-3 rounded-md border bg-muted/30 p-3"
                   >
                     <div className="rounded-full bg-teal-100 p-1 mt-0.5">
                       <ArrowRight className="size-3 text-teal-700" />

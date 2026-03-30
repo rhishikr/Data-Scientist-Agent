@@ -60,7 +60,7 @@ export function DashboardWidget({
             )}
           </div>
 
-          <div className="absolute inset-0 border-2 border-dashed border-teal-300 rounded-lg pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 border-2 border-dashed border-teal-300 rounded-md pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" />
         </>
       )}
       {children}
