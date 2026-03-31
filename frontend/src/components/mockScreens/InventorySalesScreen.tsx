@@ -328,7 +328,7 @@ export function InventorySalesScreen() {
         </Card>
 
         {/* Alert Banner */}
-        <div className="rounded-lg border border-orange-200 bg-orange-50 p-4">
+        <div className="rounded-md border border-orange-200 bg-orange-50 p-4">
           <div className="flex gap-3">
             <AlertTriangle className="size-5 text-orange-600 shrink-0 mt-0.5" />
             <div>

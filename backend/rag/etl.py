@@ -301,3 +301,381 @@ def build_kpi_documents() -> List[Dict[str, Any]]:
 
     logger.info("Built %d KPI documents from Supabase", len(docs))
     return docs
+
+
+# ---------------------------------------------------------------------------
+# 5. KPI tables: top/bottom customers, products, etc.
+# ---------------------------------------------------------------------------
+
+def build_kpi_table_documents() -> List[Dict[str, Any]]:
+    """
+    Build documents from the tables embedded in the KPI snapshot
+    (top_customers, top_products, low_products, risky_products, discount_watchlist).
+    """
+    from db.store import get_latest_kpi_snapshot
+
+    snapshot = get_latest_kpi_snapshot()
+
+    if "error" in snapshot:
+        logger.info("No KPI snapshot available for tables: %s", snapshot.get("error"))
+        return []
+
+    tables = snapshot.get("tables", {})
+    if not tables:
+        logger.info("KPI snapshot has no tables")
+        return []
+
+    TABLE_LABELS = {
+        "top_customers": "TOP CUSTOMERS BY TOTAL SPEND",
+        "top_products": "TOP PRODUCTS BY REVENUE",
+        "low_products": "LOWEST PERFORMING PRODUCTS",
+        "risky_products": "PRODUCTS AT STOCK RISK",
+        "discount_watchlist": "DISCOUNT WATCHLIST (HIGH DISCOUNT ITEMS)",
+    }
+
+    docs = []
+    for table_key, label in TABLE_LABELS.items():
+        rows = tables.get(table_key, [])
+        if not rows:
+            continue
+
+        parts = [f"{label}:", ""]
+        for i, row in enumerate(rows, 1):
+            # Build a readable line from whatever columns the row has
+            cols = [f"{k}={v}" for k, v in row.items() if v is not None]
+            parts.append(f"{i}. " + " | ".join(cols))
+
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {"source": "kpi_table", "source_id": f"kpi_table_{table_key}"},
+        })
+
+    logger.info("Built %d KPI table documents from Supabase", len(docs))
+    return docs
+
+
+# ---------------------------------------------------------------------------
+# 6. KPI executive insights
+# ---------------------------------------------------------------------------
+
+def build_kpi_executive_documents() -> List[Dict[str, Any]]:
+    """
+    Build documents from the executive_insights section of the KPI snapshot
+    (summary sentences + top drivers from hypothesis).
+    """
+    from db.store import get_latest_kpi_snapshot
+
+    snapshot = get_latest_kpi_snapshot()
+
+    if "error" in snapshot:
+        logger.info("No KPI snapshot for executive insights: %s", snapshot.get("error"))
+        return []
+
+    exec_insights = snapshot.get("executive_insights", {})
+    if not exec_insights:
+        logger.info("KPI snapshot has no executive_insights")
+        return []
+
+    parts = ["KPI EXECUTIVE SUMMARY:", ""]
+
+    summary = exec_insights.get("summary", [])
+    if summary:
+        parts.append("Key Findings:")
+        for s in summary:
+            parts.append(f"- {s}")
+        parts.append("")
+
+    drivers = exec_insights.get("top_drivers_from_hypothesis", [])
+    if drivers:
+        parts.append("Top Drivers (from hypothesis testing):")
+        for d in drivers:
+            parts.append(f"- {d}")
+
+    if len(parts) <= 2:
+        return []
+
+    docs = [{
+        "text": "\n".join(parts),
+        "metadata": {"source": "kpi_executive", "source_id": "kpi_executive_summary"},
+    }]
+
+    logger.info("Built %d KPI executive documents from Supabase", len(docs))
+    return docs
+
+
+# ---------------------------------------------------------------------------
+# 7. Forecast data (revenue, churn, demand, cashflow)
+# ---------------------------------------------------------------------------
+
+def build_forecast_documents() -> List[Dict[str, Any]]:
+    """
+    Build documents from the forecasts section of the forecast snapshot.
+    One document per forecast type (revenue, churn, demand, cashflow).
+    """
+    from db.store import get_latest_forecast_snapshot
+
+    snapshot = get_latest_forecast_snapshot()
+
+    if "error" in snapshot:
+        logger.info("No forecast snapshot available: %s", snapshot.get("error"))
+        return []
+
+    forecasts = snapshot.get("forecasts", {})
+    if not forecasts:
+        logger.info("Forecast snapshot has no forecasts")
+        return []
+
+    docs = []
+
+    # Revenue forecast
+    rev = forecasts.get("forecasted_revenue", {})
+    if rev:
+        parts = [
+            "FORECAST: Revenue",
+            f"As of: {rev.get('as_of', 'N/A')}",
+            f"Next 7 days: ${rev.get('next_7d', 'N/A'):,.2f}" if isinstance(rev.get('next_7d'), (int, float)) else f"Next 7 days: {rev.get('next_7d', 'N/A')}",
+            f"Next 30 days: ${rev.get('next_30d', 'N/A'):,.2f}" if isinstance(rev.get('next_30d'), (int, float)) else f"Next 30 days: {rev.get('next_30d', 'N/A')}",
+            f"Next 90 days: ${rev.get('next_90d', 'N/A'):,.2f}" if isinstance(rev.get('next_90d'), (int, float)) else f"Next 90 days: {rev.get('next_90d', 'N/A')}",
+        ]
+        metrics = rev.get("metrics", {})
+        if metrics:
+            parts.append(f"Model accuracy — RMSE: {metrics.get('rmse', 'N/A')}, MAE: {metrics.get('mae', 'N/A')}, MAPE: {metrics.get('mape', 'N/A')}")
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {"source": "forecast", "source_id": "forecast_revenue"},
+        })
+
+    # Churn forecast
+    churn = forecasts.get("expected_churn_next_month", {})
+    if churn:
+        rate = churn.get("expected_churn_rate_next_30d")
+        rate_display = f"{rate:.2%}" if isinstance(rate, (int, float)) and abs(rate) < 10 else str(rate)
+        parts = [
+            "FORECAST: Customer Churn",
+            f"Snapshot date: {churn.get('snapshot_date', churn.get('as_of', 'N/A'))}",
+            f"Expected churn rate (next 30 days): {rate_display}",
+            f"Definition: {churn.get('definition', 'no purchase in next 30 days')}",
+        ]
+        metrics = churn.get("metrics", {})
+        if metrics:
+            parts.append(f"Model accuracy — AUC: {metrics.get('auc', metrics.get('roc_auc', 'N/A'))}")
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {"source": "forecast", "source_id": "forecast_churn"},
+        })
+
+    # Demand per SKU forecast
+    demand = forecasts.get("forecasted_demand_per_sku", {})
+    if demand:
+        parts = [
+            "FORECAST: Demand per SKU",
+            f"As of: {demand.get('as_of', 'N/A')}",
+        ]
+        top_skus = demand.get("top_skus", [])
+        if top_skus:
+            parts.append("")
+            parts.append("Top SKUs by forecasted demand:")
+            for sku in top_skus[:20]:
+                parts.append(
+                    f"- {sku.get('sku', '?')}: "
+                    f"7d={sku.get('next_7d_qty', 'N/A')}, "
+                    f"30d={sku.get('next_30d_qty', 'N/A')}, "
+                    f"90d={sku.get('next_90d_qty', 'N/A')}"
+                )
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {"source": "forecast", "source_id": "forecast_demand"},
+        })
+
+    # Cashflow forecast
+    cashflow = forecasts.get("projected_cashflow", {})
+    if cashflow:
+        proxy = cashflow.get("next_30d_cash_proxy")
+        proxy_display = f"${proxy:,.2f}" if isinstance(proxy, (int, float)) else str(proxy)
+        parts = [
+            "FORECAST: Projected Cashflow",
+            f"As of: {cashflow.get('as_of', 'N/A')}",
+            f"Next 30 days proxy: {proxy_display}",
+            f"Note: {cashflow.get('note', 'Proxy cashflow = revenue - refunds')}",
+        ]
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {"source": "forecast", "source_id": "forecast_cashflow"},
+        })
+
+    logger.info("Built %d forecast documents from Supabase", len(docs))
+    return docs
+
+
+# ---------------------------------------------------------------------------
+# 8. Forecast executive insights (risks, opportunities, drivers, actions)
+# ---------------------------------------------------------------------------
+
+def build_forecast_executive_documents() -> List[Dict[str, Any]]:
+    """
+    Build documents from the executive_insights section of the forecast snapshot.
+    """
+    from db.store import get_latest_forecast_snapshot
+
+    snapshot = get_latest_forecast_snapshot()
+
+    if "error" in snapshot:
+        logger.info("No forecast snapshot for executive insights: %s", snapshot.get("error"))
+        return []
+
+    exec_insights = snapshot.get("executive_insights", {})
+    if not exec_insights:
+        logger.info("Forecast snapshot has no executive_insights")
+        return []
+
+    docs = []
+
+    # Key drivers
+    drivers = exec_insights.get("key_drivers_of_growth_decline", [])
+    if drivers:
+        parts = ["FORECAST EXECUTIVE: Key Drivers of Growth/Decline", ""]
+        for d in drivers:
+            parts.append(f"- {d}")
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {"source": "forecast_executive", "source_id": "forecast_exec_drivers"},
+        })
+
+    # Top risks
+    risks = exec_insights.get("top_3_risks", [])
+    if risks:
+        parts = ["FORECAST EXECUTIVE: Top Risks", ""]
+        for r in risks:
+            if isinstance(r, dict):
+                parts.append(f"- {r.get('title', 'Unknown risk')}")
+                evidence = r.get("evidence", {})
+                if evidence:
+                    for k, v in evidence.items():
+                        parts.append(f"  Evidence: {k} = {v}")
+            else:
+                parts.append(f"- {r}")
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {"source": "forecast_executive", "source_id": "forecast_exec_risks"},
+        })
+
+    # Top opportunities
+    opps = exec_insights.get("top_3_opportunities", [])
+    if opps:
+        parts = ["FORECAST EXECUTIVE: Top Opportunities", ""]
+        for o in opps:
+            if isinstance(o, dict):
+                parts.append(f"- {o.get('title', 'Unknown opportunity')}")
+                evidence = o.get("evidence", {})
+                if evidence:
+                    for k, v in evidence.items():
+                        parts.append(f"  Evidence: {k} = {v}")
+            else:
+                parts.append(f"- {o}")
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {"source": "forecast_executive", "source_id": "forecast_exec_opportunities"},
+        })
+
+    # Recommended actions
+    actions = exec_insights.get("recommended_actions_rule_based", [])
+    if actions:
+        parts = ["FORECAST EXECUTIVE: Recommended Actions", ""]
+        for a in actions:
+            parts.append(f"- {a}")
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {"source": "forecast_executive", "source_id": "forecast_exec_actions"},
+        })
+
+    # Summary
+    summary = exec_insights.get("summary", [])
+    if summary:
+        parts = ["FORECAST EXECUTIVE: Summary", ""]
+        for s in summary:
+            parts.append(f"- {s}")
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {"source": "forecast_executive", "source_id": "forecast_exec_summary"},
+        })
+
+    logger.info("Built %d forecast executive documents from Supabase", len(docs))
+    return docs
+
+
+# ---------------------------------------------------------------------------
+# 9. Action plan prescriptions (from action_plan_snapshots)
+# ---------------------------------------------------------------------------
+
+def build_action_plan_documents() -> List[Dict[str, Any]]:
+    """
+    Build documents from the latest action plan snapshot.
+    One doc per prescription + one summary doc with health score.
+    """
+    from db.store import get_latest_action_plan_snapshot
+
+    snapshot = get_latest_action_plan_snapshot()
+
+    if "error" in snapshot:
+        logger.info("No action plan snapshot available: %s", snapshot.get("error"))
+        return []
+
+    docs = []
+
+    # Health score summary
+    health_score = snapshot.get("health_score")
+    health_summary = snapshot.get("health_summary", "")
+    prescriptions = snapshot.get("prescriptions", [])
+
+    if health_score is not None or prescriptions:
+        parts = ["ACTION PLAN SUMMARY", ""]
+        if health_score is not None:
+            parts.append(f"Overall Business Health Score: {health_score}/100")
+        if health_summary:
+            parts.append(f"Health Summary: {health_summary}")
+        if prescriptions:
+            parts.append(f"Total Prescriptions: {len(prescriptions)}")
+            critical = sum(1 for p in prescriptions if p.get("urgency") == "critical")
+            high = sum(1 for p in prescriptions if p.get("urgency") == "high")
+            if critical:
+                parts.append(f"Critical urgency: {critical}")
+            if high:
+                parts.append(f"High urgency: {high}")
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {"source": "action_plan", "source_id": "action_plan_summary"},
+        })
+
+    # Individual prescriptions
+    for p in prescriptions:
+        pid = p.get("prescription_id", p.get("id", ""))
+        parts = [
+            f"ACTION PLAN PRESCRIPTION: {p.get('title', 'Untitled')}",
+            f"Priority: {p.get('priority', 'N/A')} | Urgency: {p.get('urgency', 'N/A')} | Category: {p.get('category', 'N/A')}",
+            f"Effort: {p.get('effort', 'N/A')} | Action Type: {p.get('action_type', 'N/A')}",
+        ]
+        if p.get("description"):
+            parts.append(f"Description: {p['description']}")
+        if p.get("rationale"):
+            parts.append(f"Rationale: {p['rationale']}")
+        if p.get("action"):
+            parts.append(f"Action: {p['action']}")
+        if p.get("impact_estimate"):
+            parts.append(f"Impact Estimate: {p['impact_estimate']}")
+        if p.get("estimated_impact_dollars"):
+            parts.append(f"Estimated Impact: ${p['estimated_impact_dollars']:,.2f}")
+        if p.get("success_metrics"):
+            parts.append("Success Metrics: " + "; ".join(p["success_metrics"]))
+
+        docs.append({
+            "text": "\n".join(parts),
+            "metadata": {
+                "source": "action_plan",
+                "source_id": f"prescription_{pid}",
+                "urgency": str(p.get("urgency", "")),
+                "category": str(p.get("category", "")),
+            },
+        })
+
+    logger.info("Built %d action plan documents from Supabase", len(docs))
+    return docs

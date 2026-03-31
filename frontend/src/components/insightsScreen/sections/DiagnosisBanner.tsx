@@ -49,7 +49,7 @@ export function DiagnosisBanner({ cards, actionPlan }: DiagnosisBannerProps) {
   return (
     <div className="space-y-2">
       {/* KPI strip */}
-      <div className="flex overflow-x-auto rounded-xl border bg-card text-card-foreground">
+      <div className="flex overflow-x-auto rounded-md border bg-card text-card-foreground">
         {KPI_DEFS.map((def) => {
           const value = getCardValue(cards, def.id);
           const Icon = def.icon;

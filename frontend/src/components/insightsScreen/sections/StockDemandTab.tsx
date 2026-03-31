@@ -559,7 +559,7 @@ export function StockDemandTab({ cards, demandSkus, chartNarrative, locationSumm
               {locationSummary.map((loc) => (
                 <div
                   key={loc.location}
-                  className="rounded-lg border p-3 space-y-1"
+                  className="rounded-md border p-3 space-y-1"
                 >
                   <div className="flex items-center gap-1.5">
                     <MapPin className="size-3 text-muted-foreground" />
@@ -697,7 +697,7 @@ export function StockDemandTab({ cards, demandSkus, chartNarrative, locationSumm
                   return (
                     <div
                       key={name}
-                      className={`rounded-lg border p-4 space-y-2 ${colorClasses}`}
+                      className={`rounded-md border p-4 space-y-2 ${colorClasses}`}
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-sm font-semibold">{name}</span>

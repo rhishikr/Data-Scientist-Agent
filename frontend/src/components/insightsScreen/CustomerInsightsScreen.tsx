@@ -178,7 +178,7 @@ export function CustomerInsightsScreen() {
 
     return (
       <div>
-        <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
+        <div className="sticky top-0 z-20 bg-white border-b px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-xl font-semibold">Insights & Predictions</h1>
@@ -235,7 +235,7 @@ export function CustomerInsightsScreen() {
                 return (
                   <div
                     key={agentId}
-                    className={`flex items-center gap-3 rounded-lg border px-4 py-3 transition-all ${
+                    className={`flex items-center gap-3 rounded-md border px-4 py-3 transition-all ${
                       isRunning
                         ? "border-blue-200 bg-blue-50"
                         : isCompleted
@@ -282,7 +282,7 @@ export function CustomerInsightsScreen() {
   if (loading) {
     return (
       <div>
-        <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
+        <div className="sticky top-0 z-20 bg-white border-b px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-xl font-semibold">Insights & Predictions</h1>
@@ -290,24 +290,24 @@ export function CustomerInsightsScreen() {
                 AI-powered retail analytics dashboard
               </p>
             </div>
-            <Skeleton className="h-10 w-48 rounded-lg" />
+            <Skeleton className="h-10 w-48 rounded-md" />
           </div>
         </div>
         <div className="p-6 space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {Array.from({ length: 6 }).map((_, i) => (
-              <Skeleton key={i} className="h-24 rounded-xl" />
+              <Skeleton key={i} className="h-24 rounded-md" />
             ))}
           </div>
-          <Skeleton className="h-10 w-full rounded-xl" />
+          <Skeleton className="h-10 w-full rounded-md" />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <Skeleton className="h-72 rounded-xl lg:col-span-2" />
-            <Skeleton className="h-72 rounded-xl" />
+            <Skeleton className="h-72 rounded-md lg:col-span-2" />
+            <Skeleton className="h-72 rounded-md" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Skeleton className="h-32 rounded-xl" />
-            <Skeleton className="h-32 rounded-xl" />
-            <Skeleton className="h-32 rounded-xl" />
+            <Skeleton className="h-32 rounded-md" />
+            <Skeleton className="h-32 rounded-md" />
+            <Skeleton className="h-32 rounded-md" />
           </div>
         </div>
       </div>
@@ -317,7 +317,7 @@ export function CustomerInsightsScreen() {
   if (error) {
     return (
       <div>
-        <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
+        <div className="sticky top-0 z-20 bg-white border-b px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-xl font-semibold">Insights & Predictions</h1>
@@ -359,7 +359,7 @@ export function CustomerInsightsScreen() {
   return (
     <div>
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-white border-b px-6 py-4">
+      <div className="sticky top-0 z-20 bg-white border-b px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-semibold">Insights & Predictions</h1>

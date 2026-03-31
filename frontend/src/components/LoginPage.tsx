@@ -30,7 +30,7 @@ export function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-slate-50">
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-2 flex size-12 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-blue-600">
+          <div className="mx-auto mb-2 flex size-12 items-center justify-center rounded-md bg-gradient-to-br from-teal-500 to-blue-600">
             <GitBranch className="size-6 text-white" />
           </div>
           <CardTitle className="text-xl">AI Data Scientist</CardTitle>

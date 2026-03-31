@@ -86,16 +86,16 @@ export function Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              <button className="w-full rounded-lg border p-3 text-left hover:bg-accent">
+              <button className="w-full rounded-md border p-3 text-left hover:bg-accent">
                 Create New Project
               </button>
-              <button className="w-full rounded-lg border p-3 text-left hover:bg-accent">
+              <button className="w-full rounded-md border p-3 text-left hover:bg-accent">
                 Invite Team Member
               </button>
-              <button className="w-full rounded-lg border p-3 text-left hover:bg-accent">
+              <button className="w-full rounded-md border p-3 text-left hover:bg-accent">
                 Generate Report
               </button>
-              <button className="w-full rounded-lg border p-3 text-left hover:bg-accent">
+              <button className="w-full rounded-md border p-3 text-left hover:bg-accent">
                 View Documentation
               </button>
             </div>

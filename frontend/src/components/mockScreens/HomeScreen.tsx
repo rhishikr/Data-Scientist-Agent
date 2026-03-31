@@ -93,7 +93,7 @@ export function HomeScreen() {
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-green-50">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-green-50">
                   <CheckCircle2 className="size-5 text-green-600" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -106,7 +106,7 @@ export function HomeScreen() {
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-blue-50">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-blue-50">
                   <Clock className="size-5 text-blue-600" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -119,7 +119,7 @@ export function HomeScreen() {
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-green-50">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-green-50">
                   <CheckCircle2 className="size-5 text-green-600" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -132,7 +132,7 @@ export function HomeScreen() {
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-orange-50">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-orange-50">
                   <AlertCircle className="size-5 text-orange-600" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -154,7 +154,7 @@ export function HomeScreen() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="rounded-lg border border-teal-200 bg-teal-50 p-4">
+              <div className="rounded-md border border-teal-200 bg-teal-50 p-4">
                 <div className="flex items-start gap-3">
                   <TrendingUp className="size-5 text-teal-600 mt-0.5" />
                   <div>
@@ -174,7 +174,7 @@ export function HomeScreen() {
                 </div>
               </div>
 
-              <div className="rounded-lg border border-orange-200 bg-orange-50 p-4">
+              <div className="rounded-md border border-orange-200 bg-orange-50 p-4">
                 <div className="flex items-start gap-3">
                   <Package className="size-5 text-orange-600 mt-0.5" />
                   <div>
@@ -194,7 +194,7 @@ export function HomeScreen() {
                 </div>
               </div>
 
-              <div className="rounded-lg border border-purple-200 bg-purple-50 p-4">
+              <div className="rounded-md border border-purple-200 bg-purple-50 p-4">
                 <div className="flex items-start gap-3">
                   <Users className="size-5 text-purple-600 mt-0.5" />
                   <div>

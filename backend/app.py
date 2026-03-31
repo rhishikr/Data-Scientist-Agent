@@ -1151,7 +1151,7 @@ async def get_comparison_ai_analysis(current: Optional[str] = None, previous: Op
             digest_parts.append("## PREVIOUS RUN PRESCRIPTIONS (with status)\n" + "\n".join(rx_lines))
 
     # 4i. Demand forecast context
-    demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
+    demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv", current_run_id)
     if demand_csv is not None and not demand_csv.empty and "status" in demand_csv.columns:
         critical = demand_csv[demand_csv["status"] == "critical"].head(5)
         warning = demand_csv[demand_csv["status"] == "warning"].head(5)
@@ -1163,7 +1163,7 @@ async def get_comparison_ai_analysis(current: Optional[str] = None, previous: Op
             digest_parts.append(f"## WARNING DEMAND SKUS\n{warning[cols].to_string(index=False)}")
 
     # 4j. Churn risk context
-    churn_csv = _read_csv(_FORECAST_DIR / "churn_predictions.csv")
+    churn_csv = _read_csv(_FORECAST_DIR / "churn_predictions.csv", current_run_id)
     if churn_csv is not None and not churn_csv.empty and "churn_prob_30d" in churn_csv.columns:
         high_churn = churn_csv[churn_csv["churn_prob_30d"] >= 0.7].sort_values("churn_prob_30d", ascending=False).head(5)
         if not high_churn.empty:
@@ -1508,7 +1508,7 @@ _csv_cache: dict[str, tuple[pd.DataFrame, float]] = {}
 _CSV_CACHE_TTL = 300  # 5 minutes
 
 
-def _read_csv(path: Path) -> pd.DataFrame | None:
+def _read_csv(path: Path, run_id: Optional[str] = None) -> pd.DataFrame | None:
     """Read a CSV from Supabase Storage (with 5-min in-memory cache).
 
     Maps legacy local path to Supabase Storage path:
@@ -1516,7 +1516,15 @@ def _read_csv(path: Path) -> pd.DataFrame | None:
       featured_data/X.csv         -> runs/{run_id}/featured/X.csv
       forecast_outputs/X.csv      -> runs/{run_id}/forecast/X.csv
     """
-    cache_key = str(path)
+    # Resolve run_id up front so the cache key is run-aware
+    try:
+        resolved_run_id = run_id or get_latest_run_id()
+    except Exception:
+        resolved_run_id = None
+    if not resolved_run_id:
+        return None
+
+    cache_key = f"{resolved_run_id}:{path}"
     now = _time.time()
 
     # Check in-memory cache
@@ -1528,7 +1536,7 @@ def _read_csv(path: Path) -> pd.DataFrame | None:
 
     # Resolve Supabase Storage path
     try:
-        run_id = get_latest_run_id()
+        run_id = resolved_run_id
         if not run_id:
             return None
 
@@ -1578,14 +1586,14 @@ def _load_kpi_snapshot(run_id: Optional[str] = None) -> dict | None:
 def get_revenue_forecast_series(run_id: Optional[str] = None):
     """Returns daily revenue forecast time-series data."""
     # Try local CSV first (works without Supabase)
-    rev_csv = _read_csv(_FORECAST_DIR / "revenue_forecast_daily.csv")
+    rev_csv = _read_csv(_FORECAST_DIR / "revenue_forecast_daily.csv", run_id)
     if rev_csv is not None and not rev_csv.empty:
         rev_csv["date"] = pd.to_datetime(rev_csv["date"]).dt.strftime("%Y-%m-%d")
         series = rev_csv.rename(columns={"revenue_forecast": "revenue_forecast"}).to_dict(orient="records")
         return _safe_json({"series": series})
 
     # Fallback: derive daily revenue from transactions
-    txn_csv = _read_csv(_CLEANED_DIR / "transactions_cleaned.csv")
+    txn_csv = _read_csv(_CLEANED_DIR / "transactions_cleaned.csv", run_id)
     if txn_csv is not None and not txn_csv.empty:
         txn_csv["date"] = pd.to_datetime(txn_csv["order_datetime"], errors="coerce").dt.date
         daily = txn_csv.groupby("date")["total_amount"].sum().reset_index()
@@ -1600,13 +1608,13 @@ def get_revenue_forecast_series(run_id: Optional[str] = None):
 @app.get("/api/forecast/series/demand")
 def get_demand_forecast(run_id: Optional[str] = None):
     """Returns per-SKU demand forecast with stock health data."""
-    demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
+    demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv", run_id)
     if demand_csv is None or demand_csv.empty:
         return {"skus": [], "error": "No demand forecast available. Run the pipeline first."}
 
     # Join with inventory for stock levels
-    inv_csv = _read_csv(_CLEANED_DIR / "inventory_cleaned.csv")
-    prod_csv = _read_csv(_CLEANED_DIR / "products_cleaned.csv")
+    inv_csv = _read_csv(_CLEANED_DIR / "inventory_cleaned.csv", run_id)
+    prod_csv = _read_csv(_CLEANED_DIR / "products_cleaned.csv", run_id)
 
     demand_csv["sku"] = demand_csv["sku"].astype(str).str.upper()
 
@@ -1676,14 +1684,14 @@ def get_demand_forecast(run_id: Optional[str] = None):
 @app.get("/api/forecast/series/churn")
 def get_churn_predictions(run_id: Optional[str] = None):
     """Returns churn predictions with customer details."""
-    churn_csv = _read_csv(_FORECAST_DIR / "churn_predictions.csv")
+    churn_csv = _read_csv(_FORECAST_DIR / "churn_predictions.csv", run_id)
     if churn_csv is None or churn_csv.empty:
         return {"customers": [], "error": "No churn predictions available. Run the pipeline first."}
 
     churn_csv["customer_id"] = churn_csv["customer_id"].astype(str)
 
     # Join with customer features for names and details
-    cust_csv = _read_csv(_FEATURED_DIR / "customers_features.csv")
+    cust_csv = _read_csv(_FEATURED_DIR / "customers_features.csv", run_id)
     if cust_csv is not None and not cust_csv.empty:
         cust_csv["customer_id"] = cust_csv["customer_id"].astype(str)
         join_cols = ["customer_id"]
@@ -1769,7 +1777,7 @@ def get_ai_analysis(run_id: Optional[str] = None):
                 context_parts.append(f"Generated Insights:\n{json.dumps(insight_summaries, indent=2, default=str)}")
 
         # Demand forecast context
-        demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
+        demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv", run_id)
         if demand_csv is not None and not demand_csv.empty:
             top_demand = demand_csv.sort_values("forecast_qty_30d", ascending=False).head(10)
             context_parts.append(f"Top Demand SKUs (30d forecast):\n{top_demand.to_string(index=False)}")
@@ -1896,12 +1904,12 @@ def get_action_plan(run_id: Optional[str] = None):
 def get_demand_by_location(run_id: Optional[str] = None):
     """Returns per-SKU stock levels broken down by warehouse location,
     with store transfer recommendations where stock imbalances exist."""
-    inv_csv = _read_csv(_CLEANED_DIR / "inventory_cleaned.csv")
+    inv_csv = _read_csv(_CLEANED_DIR / "inventory_cleaned.csv", run_id)
     if inv_csv is None or inv_csv.empty:
         return {"locations": [], "transfers": [], "error": "No inventory data available."}
 
-    demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv")
-    prod_csv = _read_csv(_CLEANED_DIR / "products_cleaned.csv")
+    demand_csv = _read_csv(_FORECAST_DIR / "demand_forecast_sku.csv", run_id)
+    prod_csv = _read_csv(_CLEANED_DIR / "products_cleaned.csv", run_id)
 
     inv_csv["sku"] = inv_csv["sku"].astype(str).str.upper()
 
@@ -2072,7 +2080,7 @@ def get_funnel_snapshot(run_id: Optional[str] = None):
 
     # Load funnel_summary for daily trends
     daily_trends = []
-    df = _read_csv(_CLEANED_DIR / "funnel_summary_cleaned.csv")
+    df = _read_csv(_CLEANED_DIR / "funnel_summary_cleaned.csv", run_id)
     if df is not None:
         try:
             for col in ["sessions", "product_views", "add_to_cart", "checkout_started", "purchases", "conversion_rate", "cart_abandonment_rate"]:
@@ -2094,7 +2102,7 @@ def get_funnel_snapshot(run_id: Optional[str] = None):
 @app.get("/api/sessions/analytics")
 def get_sessions_analytics(run_id: Optional[str] = None):
     """Returns session analytics: device, source, landing page breakdowns."""
-    df = _read_csv(_CLEANED_DIR / "sessions_cleaned.csv")
+    df = _read_csv(_CLEANED_DIR / "sessions_cleaned.csv", run_id)
     if df is None:
         return {"error": "No sessions data found"}
 
@@ -2175,7 +2183,7 @@ def get_campaigns_performance(run_id: Optional[str] = None):
     result = {"campaigns": [], "by_channel": {}, "by_type": {}}
 
     # Campaign performance from cleaned data
-    df = _read_csv(_CLEANED_DIR / "campaign_performance_cleaned.csv")
+    df = _read_csv(_CLEANED_DIR / "campaign_performance_cleaned.csv", run_id)
     if df is not None:
         try:
             for col in ["impressions", "clicks", "spend", "sessions", "orders", "attributed_revenue"]:
@@ -2212,7 +2220,7 @@ def get_campaigns_performance(run_id: Optional[str] = None):
             pass
 
     # Campaign type breakdown from marketing table
-    mdf = _read_csv(_CLEANED_DIR / "marketing_cleaned.csv")
+    mdf = _read_csv(_CLEANED_DIR / "marketing_cleaned.csv", run_id)
     if mdf is not None:
         try:
             if "campaign_type" in mdf.columns:
