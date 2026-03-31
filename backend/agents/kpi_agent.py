@@ -24,6 +24,7 @@ class KPIAgent(BaseAgent):
         )
 
     async def perceive(self, blackboard: SharedBlackboard) -> Dict[str, Any]:
+        self.emit_hint("Reviewing insights for KPI context...")
         insights_state = blackboard.data_state.get("insights", {})
         return {
             "num_insights": insights_state.get("num_insights", 0),
@@ -47,6 +48,7 @@ class KPIAgent(BaseAgent):
             f"Executive narrative: {perception['executive_narrative'][:500]}"
         )
 
+        self.emit_hint("Determining KPI focus areas with LLM...")
         llm_response = await ask_llm(system_prompt, user_prompt)
 
         try:
@@ -67,11 +69,13 @@ class KPIAgent(BaseAgent):
     async def act(
         self, plan: Dict[str, Any], blackboard: SharedBlackboard
     ) -> AgentResult:
+        self.emit_hint("Computing KPI metrics...")
         from pipeline.kpi.runner import run_kpi_snapshot
         from pipeline.kpi.io import DataPaths
 
         snapshot = run_kpi_snapshot(DataPaths.from_blackboard(blackboard.paths))
 
+        self.emit_hint("Contextualizing KPIs with business commentary...")
         # POST-ACT LLM: Contextualize KPI values
         cards = snapshot.get("cards", [])[:10]
         commentary = "KPI snapshot computed but no notable values to highlight."

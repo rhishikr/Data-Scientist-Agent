@@ -6,7 +6,7 @@ import os
 import shutil
 import subprocess
 import sys
-from asyncio import Queue
+from queue import Queue, Empty as QueueEmpty
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Optional
@@ -464,6 +464,7 @@ def get_pipeline_status():
             "run_id": running["id"],
             "partial": running.get("agent_summary") or {},
             "current_agent": running.get("current_agent"),
+            "started_at": running.get("started_at"),
         }
 
     # Also check in-memory flag (pipeline may just have started, DB not yet updated)
@@ -475,8 +476,16 @@ def get_pipeline_status():
             "current_agent": None,
         }
 
-    # Not running — return latest completed status
-    return {"running": False, "status": _pipeline_status}
+    # Not running — return latest completed status, enriched with completed_at from DB
+    status = _pipeline_status
+    if status and isinstance(status, dict) and "completed_at" not in status:
+        try:
+            runs = get_pipeline_runs()
+            if runs:
+                status = {**status, "completed_at": runs[0].get("completed_at")}
+        except Exception:
+            pass
+    return {"running": False, "status": status}
 
 
 @app.get("/api/pipeline/stream")
@@ -504,11 +513,11 @@ async def stream_pipeline(reset: bool = True, alpha: float = 0.05):
         try:
             while True:
                 try:
-                    event = await asyncio.wait_for(sub_queue.get(), timeout=1.0)
+                    event = await asyncio.to_thread(sub_queue.get, timeout=1.0)
                     yield f"data: {json.dumps(event, default=str)}\n\n"
                     if event.get("event") == "pipeline_complete":
                         break
-                except asyncio.TimeoutError:
+                except QueueEmpty:
                     yield f"data: {json.dumps({'event': 'heartbeat'})}\n\n"
 
             if _pipeline_task is not None and not _pipeline_task.cancelled():
@@ -572,11 +581,11 @@ async def subscribe_pipeline():
             # Stream remaining events
             while True:
                 try:
-                    event = await asyncio.wait_for(sub_queue.get(), timeout=1.0)
+                    event = await asyncio.to_thread(sub_queue.get, timeout=1.0)
                     yield f"data: {json.dumps(event, default=str)}\n\n"
                     if event.get("event") == "pipeline_complete":
                         break
-                except asyncio.TimeoutError:
+                except QueueEmpty:
                     # If pipeline stopped running while we wait, exit
                     if not _pipeline_running:
                         break

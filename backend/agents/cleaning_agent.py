@@ -30,6 +30,7 @@ class CleaningAgent(BaseAgent):
         """Scan raw CSVs for basic quality signals."""
         import pandas as pd
 
+        self.emit_hint("Scanning raw CSV files...")
         raw_dir = Path(blackboard.paths["raw_dir"])
         csv_files = sorted(raw_dir.glob("*.csv"))
 
@@ -76,6 +77,7 @@ class CleaningAgent(BaseAgent):
             f"Raw data profile ({perception['num_files']} files):\n{profiles_str}"
         )
 
+        self.emit_hint("Asking LLM for cleaning strategy...")
         llm_response = await ask_llm(system_prompt, user_prompt)
 
         try:
@@ -101,6 +103,7 @@ class CleaningAgent(BaseAgent):
         self, plan: Dict[str, Any], blackboard: SharedBlackboard
     ) -> AgentResult:
         """Execute the existing clean_folder.py subprocess."""
+        self.emit_hint("Running data cleaner subprocess...")
         project_root = Path(blackboard.paths["project_root"])
         raw_dir = blackboard.paths["raw_dir"]
         cleaned_dir = blackboard.paths["cleaned_dir"]
@@ -146,6 +149,7 @@ class CleaningAgent(BaseAgent):
             "files_cleaned": list(Path(cleaned_dir).glob("*.csv")),
         }
 
+        self.emit_hint("Uploading cleaned data to database...")
         # Store cleaned data + report to Supabase
         run_id = blackboard.config.get("run_id")
         if run_id:
