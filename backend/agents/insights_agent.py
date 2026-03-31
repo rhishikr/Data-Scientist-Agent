@@ -25,6 +25,7 @@ class InsightsAgent(BaseAgent):
         )
 
     async def perceive(self, blackboard: SharedBlackboard) -> Dict[str, Any]:
+        self.emit_hint("Analyzing hypothesis results...")
         hyp_state = blackboard.data_state.get("hypothesis", {})
         return {
             "hypothesis_significant": hyp_state.get("num_significant", 0),
@@ -54,6 +55,7 @@ class InsightsAgent(BaseAgent):
             f"Available tables: {perception['featured_tables']}"
         )
 
+        self.emit_hint("Prioritizing insight categories with LLM...")
         llm_response = await ask_llm(system_prompt, user_prompt)
 
         try:
@@ -74,6 +76,7 @@ class InsightsAgent(BaseAgent):
     async def act(
         self, plan: Dict[str, Any], blackboard: SharedBlackboard
     ) -> AgentResult:
+        self.emit_hint("Generating business insights...")
         from pipeline.insights.runner import run_insights
         from pipeline.insights.io import DataPaths
 
@@ -84,6 +87,7 @@ class InsightsAgent(BaseAgent):
         bundle_dict = bundle.to_dict() if hasattr(bundle, "to_dict") else {"ok": True}
         num_insights = bundle_dict.get("meta", {}).get("num_insights", 0)
 
+        self.emit_hint("Writing executive narrative...")
         # POST-ACT LLM: Generate executive narrative
         narrative = "No actionable insights generated from current data."
         insights_list = bundle_dict.get("insights", [])

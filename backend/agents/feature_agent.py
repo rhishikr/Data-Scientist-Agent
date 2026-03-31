@@ -30,6 +30,7 @@ class FeatureAgent(BaseAgent):
         """Read cleaning results from blackboard to understand what we have."""
         import pandas as pd
 
+        self.emit_hint("Reading cleaned datasets...")
         cleaned_dir = Path(blackboard.paths["cleaned_dir"])
         cleaning_result = blackboard.data_state.get("cleaning", {})
 
@@ -87,6 +88,7 @@ class FeatureAgent(BaseAgent):
         ]
         user_prompt = f"Cleaned tables:\n{tables_str}"
 
+        self.emit_hint("Planning feature engineering strategy...")
         llm_response = await ask_llm(system_prompt, user_prompt)
         plan = parse_llm_json(
             llm_response,
@@ -107,6 +109,7 @@ class FeatureAgent(BaseAgent):
         self, plan: Dict[str, Any], blackboard: SharedBlackboard
     ) -> AgentResult:
         """Execute the existing feature_folder.py subprocess."""
+        self.emit_hint("Running feature engineering subprocess...")
         project_root = Path(blackboard.paths["project_root"])
         feature_script = project_root / "pipeline" / "features" / "feature_folder.py"
 
@@ -139,6 +142,7 @@ class FeatureAgent(BaseAgent):
         if report_path.exists():
             report = json.loads(report_path.read_text(encoding="utf-8"))
 
+        self.emit_hint("Evaluating engineered features...")
         # POST-ACT LLM: Evaluate the features that were actually built
         interpretation = "Feature engineering completed."
         if report:
@@ -184,6 +188,7 @@ class FeatureAgent(BaseAgent):
             "interpretation": interpretation,
         }
 
+        self.emit_hint("Storing featured data to database...")
         # Store featured data + report to Supabase
         run_id = blackboard.config.get("run_id")
         if run_id:

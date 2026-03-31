@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Any, Dict, List, Optional, TYPE_CHECKING
+from typing import Any, Callable, Dict, List, Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .blackboard import SharedBlackboard
@@ -85,6 +85,16 @@ class BaseAgent(ABC):
         self.description = description
         self.status = AgentStatus.IDLE
         self._log: List[AgentMessage] = []
+        self._phase_callback: Optional[Callable[[str, str], None]] = None
+        self._hint_callback: Optional[Callable[[str, str], None]] = None
+
+    def emit_hint(self, message: str) -> None:
+        """Emit a human-readable activity hint for the frontend ticker."""
+        if self._hint_callback:
+            try:
+                self._hint_callback(self.agent_id, message)
+            except Exception:
+                pass
 
     def log(
         self,
@@ -127,6 +137,8 @@ class BaseAgent(ABC):
 
         try:
             self.status = AgentStatus.PERCEIVING
+            if self._phase_callback:
+                self._phase_callback(self.agent_id, "perceiving")
             self.log(
                 MessageType.STATUS_UPDATE,
                 {"status": "perceiving", "agent": self.name},
@@ -134,6 +146,8 @@ class BaseAgent(ABC):
             perception = await self.perceive(blackboard)
 
             self.status = AgentStatus.REASONING
+            if self._phase_callback:
+                self._phase_callback(self.agent_id, "reasoning")
             self.log(
                 MessageType.STATUS_UPDATE,
                 {"status": "reasoning", "agent": self.name},
@@ -141,6 +155,8 @@ class BaseAgent(ABC):
             plan = await self.reason(perception)
 
             self.status = AgentStatus.ACTING
+            if self._phase_callback:
+                self._phase_callback(self.agent_id, "acting")
             self.log(
                 MessageType.STATUS_UPDATE,
                 {"status": "acting", "agent": self.name},

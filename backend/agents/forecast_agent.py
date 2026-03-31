@@ -24,6 +24,7 @@ class ForecastAgent(BaseAgent):
         )
 
     async def perceive(self, blackboard: SharedBlackboard) -> Dict[str, Any]:
+        self.emit_hint("Gathering KPI and hypothesis context...")
         kpi_state = blackboard.data_state.get("kpi", {})
         hyp_state = blackboard.data_state.get("hypothesis", {})
         return {
@@ -50,6 +51,7 @@ class ForecastAgent(BaseAgent):
             f"Significant hypotheses: {perception['num_significant_hypotheses']}"
         )
 
+        self.emit_hint("Identifying forecast risks with LLM...")
         llm_response = await ask_llm(system_prompt, user_prompt)
 
         try:
@@ -70,12 +72,14 @@ class ForecastAgent(BaseAgent):
     async def act(
         self, plan: Dict[str, Any], blackboard: SharedBlackboard
     ) -> AgentResult:
+        self.emit_hint("Training ML models (revenue, demand, churn, cashflow)...")
         from pipeline.forecast.runner import run_forecasting
         from pipeline.forecast.io import ForecastPaths
 
         snapshot = run_forecasting(ForecastPaths.from_blackboard(blackboard.paths))
         forecasts = snapshot.get("forecasts", {})
 
+        self.emit_hint("Generating 90-day forecasts and risk assessment...")
         # POST-ACT LLM: Strategic risk assessment
         rev_30 = forecasts.get("forecasted_revenue", {}).get("next_30d", "N/A")
         rev_90 = forecasts.get("forecasted_revenue", {}).get("next_90d", "N/A")
