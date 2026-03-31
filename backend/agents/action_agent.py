@@ -42,6 +42,7 @@ class ActionAgent(BaseAgent):
     # ------------------------------------------------------------------
 
     async def perceive(self, blackboard: SharedBlackboard) -> Dict[str, Any]:
+        self.emit_hint("Aggregating all pipeline outputs...")
         insights_state = blackboard.data_state.get("insights", {})
         kpi_state = blackboard.data_state.get("kpi", {})
         forecast_state = blackboard.data_state.get("forecast", {})
@@ -132,6 +133,7 @@ class ActionAgent(BaseAgent):
             f"${churn_value:,.0f} at risk"
         )
 
+        self.emit_hint("Determining prioritization strategy...")
         llm_response = await ask_llm(system_prompt, user_prompt)
         plan = parse_llm_json(llm_response)
 
@@ -497,6 +499,7 @@ class ActionAgent(BaseAgent):
     async def act(
         self, plan: Dict[str, Any], blackboard: SharedBlackboard
     ) -> AgentResult:
+        self.emit_hint("Building strategic action plan...")
         p = self._perception
 
         # Inject comparison data if a previous run exists
@@ -653,6 +656,7 @@ class ActionAgent(BaseAgent):
                 f"Cross-domain connections: {plan.get('cross_domain_connections', [])}"
             )
 
+            self.emit_hint("Generating strategic recommendations with LLM...")
             llm_response = await ask_llm(system_prompt, user_prompt)
             llm_result = parse_llm_json(llm_response, fallback=None)
 

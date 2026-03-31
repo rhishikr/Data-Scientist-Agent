@@ -119,17 +119,22 @@ class PipelineOrchestrator:
             print(f"[orchestrator] Warning: Could not create pipeline run in Supabase: {e}")
             self.blackboard.config["run_id"] = None
 
+        from datetime import datetime, timezone
+        started_at = datetime.now(timezone.utc).isoformat()
         self._emit(
-            {"event": "pipeline_started", "total_agents": total_agents, "run_id": run_id}
+            {"event": "pipeline_started", "total_agents": total_agents, "run_id": run_id, "started_at": started_at}
         )
 
         # Download raw data from Supabase into the temp raw_dir (sync I/O → thread)
+        self._emit({"event": "pipeline_preparing", "message": "Downloading raw data from database..."})
         try:
             from db.raw_store import download_all_raw_to_dir
             await asyncio.to_thread(download_all_raw_to_dir, self.blackboard.paths["raw_dir"])
             print(f"[orchestrator] Raw data downloaded from Supabase to temp dir")
+            self._emit({"event": "pipeline_preparing", "message": "Raw data ready — starting agents..."})
         except Exception as e:
             print(f"[orchestrator] Warning: Could not download raw data from Supabase: {e}")
+            self._emit({"event": "pipeline_preparing", "message": "Data download issue — proceeding with available data..."})
 
         results = {}
         try:
@@ -143,6 +148,15 @@ class PipelineOrchestrator:
                         "total_steps": total_agents,
                         "progress_pct": int((i / total_agents) * 100),
                     }
+                )
+
+                # Inject phase & hint callbacks so the agent can emit
+                # granular SSE events from within its background thread.
+                agent._phase_callback = lambda aid, phase: self._emit(
+                    {"event": "agent_phase_changed", "agent_id": aid, "phase": phase}
+                )
+                agent._hint_callback = lambda aid, msg: self._emit(
+                    {"event": "agent_activity_hint", "agent_id": aid, "message": msg}
                 )
 
                 result = await asyncio.to_thread(_run_agent_in_thread, agent, self.blackboard)

@@ -24,6 +24,7 @@ class HypothesisAgent(BaseAgent):
         )
 
     async def perceive(self, blackboard: SharedBlackboard) -> Dict[str, Any]:
+        self.emit_hint("Reviewing feature data for hypothesis tests...")
         feature_state = blackboard.data_state.get("features", {})
         report = feature_state.get("report", {})
         return {
@@ -51,6 +52,7 @@ class HypothesisAgent(BaseAgent):
             f"Alpha level: {perception['alpha']}"
         )
 
+        self.emit_hint("Selecting statistical tests with LLM...")
         llm_response = await ask_llm(system_prompt, user_prompt)
 
         try:
@@ -75,6 +77,7 @@ class HypothesisAgent(BaseAgent):
     async def act(
         self, plan: Dict[str, Any], blackboard: SharedBlackboard
     ) -> AgentResult:
+        self.emit_hint("Running correlation analysis and statistical tests...")
         from pipeline.hypothesis.runner import run_hypothesis_agent
 
         alpha = plan.get("alpha", blackboard.config.get("alpha", 0.05))
@@ -88,6 +91,7 @@ class HypothesisAgent(BaseAgent):
         num_sig = payload.get("meta", {}).get("num_significant", 0)
         top_findings = payload.get("top_findings", [])
 
+        self.emit_hint("Interpreting significant findings...")
         # POST-ACT LLM: Interpret the top findings in natural language
         interpretation = "No statistically significant findings after FDR correction."
         if top_findings:

@@ -188,3 +188,52 @@ html {
   font-size: var(--font-size);
 }
 
+/* Pipeline UI animations */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.3); }
+  50% { box-shadow: 0 0 12px 4px rgba(59, 130, 246, 0.15); }
+}
+
+@keyframes flow-down {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(3px); opacity: 1; }
+}
+
+@keyframes progress-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.animate-progress-shimmer {
+  animation: progress-shimmer 2s ease-in-out infinite;
+}
+
+.agent-card-active {
+  background-image: linear-gradient(
+    90deg,
+    transparent 25%,
+    rgba(59, 130, 246, 0.04) 50%,
+    transparent 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite, pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.3s ease-out;
+}
+
+.animate-flow-down {
+  animation: flow-down 1.5s ease-in-out infinite;
+}
+
