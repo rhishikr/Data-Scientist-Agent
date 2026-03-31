@@ -94,9 +94,9 @@ export function DataSourcesScreen() {
                     {uploadedFiles.map((file, index) => (
                       <div
                         key={index}
-                        className="flex items-center gap-4 p-3 rounded-lg border bg-white hover:bg-slate-50"
+                        className="flex items-center gap-4 p-3 rounded-md border bg-white hover:bg-slate-50"
                       >
-                        <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-slate-100">
+                        <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-slate-100">
                           <FileText className="size-5 text-slate-600" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -127,7 +127,7 @@ export function DataSourcesScreen() {
               </Card>
 
               {/* Info Card */}
-              <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+              <div className="rounded-md border border-blue-200 bg-blue-50 p-4">
                 <div className="flex gap-3">
                   <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-blue-100">
                     <Database className="size-4 text-blue-600" />
@@ -175,7 +175,7 @@ export function DataSourcesScreen() {
                     </div>
                   </div>
 
-                  <div className="border rounded-lg overflow-hidden">
+                  <div className="border rounded-md overflow-hidden">
                     <div className="bg-slate-50 px-3 py-2 text-xs border-b">
                       Sample Data (First 5 rows)
                     </div>
@@ -222,7 +222,7 @@ export function DataSourcesScreen() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-blue-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-blue-100 mb-2">
                   <Cloud className="size-6 text-blue-600" />
                 </div>
                 <CardTitle className="text-base">Amazon S3</CardTitle>
@@ -239,7 +239,7 @@ export function DataSourcesScreen() {
 
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-orange-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-orange-100 mb-2">
                   <Database className="size-6 text-orange-600" />
                 </div>
                 <CardTitle className="text-base">Google BigQuery</CardTitle>
@@ -256,7 +256,7 @@ export function DataSourcesScreen() {
 
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-cyan-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-cyan-100 mb-2">
                   <Cloud className="size-6 text-cyan-600" />
                 </div>
                 <CardTitle className="text-base">Snowflake</CardTitle>
@@ -273,7 +273,7 @@ export function DataSourcesScreen() {
 
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-purple-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-purple-100 mb-2">
                   <Database className="size-6 text-purple-600" />
                 </div>
                 <CardTitle className="text-base">Azure Data Lake</CardTitle>
@@ -290,7 +290,7 @@ export function DataSourcesScreen() {
 
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-red-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-red-100 mb-2">
                   <Cloud className="size-6 text-red-600" />
                 </div>
                 <CardTitle className="text-base">Databricks</CardTitle>
@@ -307,7 +307,7 @@ export function DataSourcesScreen() {
 
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-green-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-green-100 mb-2">
                   <Database className="size-6 text-green-600" />
                 </div>
                 <CardTitle className="text-base">Redshift</CardTitle>
@@ -328,7 +328,7 @@ export function DataSourcesScreen() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-blue-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-blue-100 mb-2">
                   <Database className="size-6 text-blue-600" />
                 </div>
                 <CardTitle className="text-base">PostgreSQL</CardTitle>
@@ -345,7 +345,7 @@ export function DataSourcesScreen() {
 
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-orange-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-orange-100 mb-2">
                   <Database className="size-6 text-orange-600" />
                 </div>
                 <CardTitle className="text-base">MySQL</CardTitle>
@@ -360,7 +360,7 @@ export function DataSourcesScreen() {
 
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-slate-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-slate-100 mb-2">
                   <Database className="size-6 text-slate-600" />
                 </div>
                 <CardTitle className="text-base">SQL Server</CardTitle>
@@ -377,7 +377,7 @@ export function DataSourcesScreen() {
 
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-red-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-red-100 mb-2">
                   <Database className="size-6 text-red-600" />
                 </div>
                 <CardTitle className="text-base">Oracle</CardTitle>
@@ -392,7 +392,7 @@ export function DataSourcesScreen() {
 
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-green-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-green-100 mb-2">
                   <Database className="size-6 text-green-600" />
                 </div>
                 <CardTitle className="text-base">MariaDB</CardTitle>
@@ -407,7 +407,7 @@ export function DataSourcesScreen() {
 
             <Card className="hover:border-teal-200 hover:shadow-sm transition-all cursor-pointer">
               <CardHeader>
-                <div className="flex size-12 items-center justify-center rounded-lg bg-purple-100 mb-2">
+                <div className="flex size-12 items-center justify-center rounded-md bg-purple-100 mb-2">
                   <Database className="size-6 text-purple-600" />
                 </div>
                 <CardTitle className="text-base">MongoDB</CardTitle>

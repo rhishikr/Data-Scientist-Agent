@@ -233,7 +233,7 @@ export function RunComparisonTab({
   return (
     <div className="space-y-6">
       {/* Run selector + Compare button (always visible) */}
-      <div className="rounded-xl bg-muted/30 px-4 py-3">
+      <div className="rounded-md bg-muted/30 px-4 py-3">
         <div className="flex items-center justify-center gap-3 flex-wrap">
               {comparableRuns.length > 0 && (
                 <div className="flex items-center gap-2">
@@ -329,7 +329,7 @@ export function RunComparisonTab({
           {/* 1. Trend Verdict Banner */}
           {comparisonAi.trend_verdict && (
             <div
-              className={`rounded-xl px-4 py-3 flex items-center gap-3 ${
+              className={`rounded-md px-4 py-3 flex items-center gap-3 ${
                 comparisonAi.trend_verdict.direction === "improving"
                   ? "bg-emerald-50 border border-emerald-200"
                   : comparisonAi.trend_verdict.direction === "declining"
@@ -467,7 +467,7 @@ export function RunComparisonTab({
               </CardHeader>
               <CardContent className="space-y-4">
                 {comparisonAi.root_causes.map((rc, i) => (
-                  <div key={i} className="rounded-lg border p-3 space-y-2">
+                  <div key={i} className="rounded-md border p-3 space-y-2">
                     <div className="flex items-center gap-2">
                       {rc.direction === "up" ? (
                         <ArrowUp className="size-4 text-emerald-600" />
@@ -490,7 +490,7 @@ export function RunComparisonTab({
                 ))}
                 {/* Causal chains */}
                 {comparisonAi.causal_chains.map((chain, i) => (
-                  <div key={`chain-${i}`} className="rounded-lg bg-muted/30 p-3 space-y-2">
+                  <div key={`chain-${i}`} className="rounded-md bg-muted/30 p-3 space-y-2">
                     <div className="flex items-center flex-wrap gap-1.5">
                       {chain.chain.map((step, j) => (
                         <React.Fragment key={j}>
@@ -569,7 +569,7 @@ export function RunComparisonTab({
                     too_early: "bg-blue-100 text-blue-700 border-blue-300",
                   };
                   return (
-                    <div key={i} className="rounded-lg border p-3 space-y-1.5">
+                    <div key={i} className="rounded-md border p-3 space-y-1.5">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-medium text-sm">{rx.prescription_title}</span>
                         <Badge variant="outline" className={`text-xs ${verdictStyle[rx.verdict] || ""}`}>
@@ -599,7 +599,7 @@ export function RunComparisonTab({
               </CardHeader>
               <CardContent className="space-y-3">
                 {comparisonAi.missed_opportunities.map((mo, i) => (
-                  <div key={i} className="flex items-start gap-3 rounded-lg border p-3">
+                  <div key={i} className="flex items-start gap-3 rounded-md border p-3">
                     <div className="flex-1 space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-medium text-sm">{mo.prescription_title}</span>
@@ -634,7 +634,7 @@ export function RunComparisonTab({
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {comparisonAi.quick_wins.map((qw, i) => (
-                    <div key={i} className="rounded-lg border p-3 space-y-1.5">
+                    <div key={i} className="rounded-md border p-3 space-y-1.5">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-medium text-sm">{qw.action}</span>
                         <Badge variant="outline" className="text-xs">{qw.effort}</Badge>
@@ -659,7 +659,7 @@ export function RunComparisonTab({
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {comparisonAi.next_30_day_targets.map((t, i) => (
-                    <div key={i} className="rounded-lg border p-3 space-y-1.5">
+                    <div key={i} className="rounded-md border p-3 space-y-1.5">
                       <span className="font-medium text-sm">{t.target}</span>
                       <div className="flex items-center gap-2 text-xs">
                         <span className="text-muted-foreground">{t.current_value}</span>
@@ -745,7 +745,7 @@ export function RunComparisonTab({
               </CardHeader>
               <CardContent className="space-y-3">
                 {comparisonAi.anomalies.map((a, i) => (
-                  <div key={i} className="rounded-lg border border-red-100 bg-red-50/30 p-3 space-y-1.5">
+                  <div key={i} className="rounded-md border border-red-100 bg-red-50/30 p-3 space-y-1.5">
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-sm">{a.metric}</span>
                       <Badge variant="outline" className="text-xs text-red-600 border-red-200">{a.change}</Badge>
@@ -798,7 +798,7 @@ export function RunComparisonTab({
               </CardHeader>
               {expandedGroups.has(group) && (
                 <CardContent className="pt-0">
-                  <div className="border rounded-lg overflow-hidden">
+                  <div className="border rounded-md overflow-hidden">
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="bg-muted/50 text-muted-foreground">
@@ -948,7 +948,7 @@ export function RunComparisonTab({
             </CardHeader>
             <CardContent className="space-y-4">
               {comparison.completed_prescriptions.map((rx) => (
-                <div key={rx.id} className="rounded-lg border p-4 space-y-3">
+                <div key={rx.id} className="rounded-md border p-4 space-y-3">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-medium text-sm">{rx.title}</span>
                     <Badge variant="outline" className="text-xs">
@@ -1044,7 +1044,7 @@ export function RunComparisonTab({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="border rounded-lg overflow-hidden">
+            <div className="border rounded-md overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-muted/50 text-muted-foreground">

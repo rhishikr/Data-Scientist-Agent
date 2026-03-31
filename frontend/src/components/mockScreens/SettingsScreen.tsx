@@ -328,7 +328,7 @@ export function SettingsScreen() {
                       .map(([table, count]) => (
                         <div
                           key={table}
-                          className="rounded-lg border p-3 text-center"
+                          className="rounded-md border p-3 text-center"
                         >
                           <p className="text-xs text-muted-foreground truncate">
                             {table}
@@ -338,7 +338,7 @@ export function SettingsScreen() {
                           </p>
                         </div>
                       ))}
-                    <div className="rounded-lg border p-3 text-center bg-teal-50 border-teal-200">
+                    <div className="rounded-md border p-3 text-center bg-teal-50 border-teal-200">
                       <p className="text-xs text-teal-700 font-medium">Total Rows</p>
                       <p className="text-lg font-semibold tabular-nums text-teal-700">
                         {totalRows.toLocaleString()}

@@ -294,7 +294,7 @@ export function RevenueSalesTab({
             ) : (
               <div className="space-y-4">
                 {/* 7-day */}
-                <div className="flex items-center justify-between rounded-lg border p-4">
+                <div className="flex items-center justify-between rounded-md border p-4">
                   <div>
                     <p className="text-sm font-medium">Next 7 Days</p>
                     <p className="text-xs text-muted-foreground">
@@ -307,7 +307,7 @@ export function RevenueSalesTab({
                 </div>
 
                 {/* 30-day */}
-                <div className="flex items-center justify-between rounded-lg border p-4">
+                <div className="flex items-center justify-between rounded-md border p-4">
                   <div>
                     <p className="text-sm font-medium">Next 30 Days</p>
                     <p className="text-xs text-muted-foreground">
@@ -320,7 +320,7 @@ export function RevenueSalesTab({
                 </div>
 
                 {/* 90-day */}
-                <div className="flex items-center justify-between rounded-lg border p-4">
+                <div className="flex items-center justify-between rounded-md border p-4">
                   <div>
                     <p className="text-sm font-medium">Next 90 Days</p>
                     <p className="text-xs text-muted-foreground">
@@ -334,7 +334,7 @@ export function RevenueSalesTab({
 
                 {/* Model metrics */}
                 {forecasted?.metrics && (
-                  <div className="rounded-lg bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
+                  <div className="rounded-md bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
                     <p>
                       MAE:{" "}
                       <span className="font-medium">

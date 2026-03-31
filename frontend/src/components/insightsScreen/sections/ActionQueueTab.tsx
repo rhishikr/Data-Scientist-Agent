@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Search } from "lucide-react";
 
 import { Card, CardContent } from "../../ui/card";
@@ -10,8 +10,7 @@ import { PrescriptionCard } from "../charts/PrescriptionCard";
 
 import { API_BASE, apiFetch } from "../../../lib/api";
 
-const CATEGORY_FILTERS = ["all", "inventory", "customer", "revenue", "marketing", "product", "funnel", "pricing"] as const;
-const STATUS_FILTERS = ["all", "pending", "done", "dismissed"] as const;
+const STATUS_FILTERS = ["pending", "done", "dismissed"] as const;
 
 interface ActionQueueTabProps {
   actionPlan: ActionPlan | null;
@@ -20,10 +19,29 @@ interface ActionQueueTabProps {
 }
 
 export function ActionQueueTab({ actionPlan, loading, runId }: ActionQueueTabProps) {
-  const [categoryFilter, setCategoryFilter] = useState<string>("all");
-  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string>("pending");
   const [search, setSearch] = useState("");
   const [statuses, setStatuses] = useState<Record<string, PrescriptionStatus>>({});
+
+  // Sliding pill indicator
+  const pillContainerRef = useRef<HTMLDivElement>(null);
+  const pillButtonRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
+  const [pillStyle, setPillStyle] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
+  const pillReady = useRef(false);
+
+  useLayoutEffect(() => {
+    const container = pillContainerRef.current;
+    const activeBtn = pillButtonRefs.current.get(statusFilter);
+    if (container && activeBtn) {
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = activeBtn.getBoundingClientRect();
+      setPillStyle({
+        left: btnRect.left - containerRect.left,
+        width: btnRect.width,
+      });
+      pillReady.current = true;
+    }
+  }, [statusFilter, loading, actionPlan]);
 
   // Fetch saved statuses on mount
   useEffect(() => {
@@ -66,9 +84,6 @@ export function ActionQueueTab({ actionPlan, loading, runId }: ActionQueueTabPro
 
   const filtered = useMemo(() => {
     let result = prescriptions;
-    if (categoryFilter !== "all") {
-      result = result.filter((p) => p.category === categoryFilter);
-    }
     if (statusFilter !== "all") {
       result = result.filter((p) => (p.status ?? "pending") === statusFilter);
     }
@@ -81,7 +96,7 @@ export function ActionQueueTab({ actionPlan, loading, runId }: ActionQueueTabPro
       );
     }
     return result;
-  }, [prescriptions, categoryFilter, statusFilter, search]);
+  }, [prescriptions, statusFilter, search]);
 
   const urgencyCounts = useMemo(() => {
     const counts: Record<string, number> = { critical: 0, high: 0, medium: 0, low: 0 };
@@ -99,9 +114,9 @@ export function ActionQueueTab({ actionPlan, loading, runId }: ActionQueueTabPro
   if (loading) {
     return (
       <div className="space-y-4">
-        <div className="h-32 rounded-xl bg-muted animate-pulse" />
-        <div className="h-24 rounded-xl bg-muted animate-pulse" />
-        <div className="h-24 rounded-xl bg-muted animate-pulse" />
+        <div className="h-32 rounded-md bg-muted animate-pulse" />
+        <div className="h-24 rounded-md bg-muted animate-pulse" />
+        <div className="h-24 rounded-md bg-muted animate-pulse" />
       </div>
     );
   }
@@ -176,58 +191,45 @@ export function ActionQueueTab({ actionPlan, loading, runId }: ActionQueueTabPro
         </CardContent>
       </Card>
 
-      {/* Filters */}
-      <div className="flex items-center gap-3 flex-wrap">
-        {/* Search */}
-        <div className="relative flex-1 min-w-[200px]">
+      {/* Toolbar: label + status pills + search */}
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="text-lg font-semibold whitespace-nowrap">Action Queue</h3>
+
+        <div ref={pillContainerRef} className="relative flex items-center rounded-md bg-muted p-1">
+          <div
+            className={`absolute rounded-md bg-background shadow-sm ${pillReady.current ? "transition-all duration-300 ease-in-out" : ""}`}
+            style={{ left: pillStyle.left, width: pillStyle.width, top: 4, bottom: 4 }}
+          />
+          {STATUS_FILTERS.map((s) => (
+            <button
+              type="button"
+              key={s}
+              ref={(el) => { if (el) pillButtonRefs.current.set(s, el); }}
+              onClick={() => setStatusFilter(s)}
+              className={`relative z-10 rounded-md px-4 py-1.5 text-xs font-medium transition-colors duration-300 cursor-pointer ${
+                statusFilter === s
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {s.charAt(0).toUpperCase() + s.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
           <Input
             placeholder="Search actions..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
+            className="pl-9 w-48"
           />
-        </div>
-
-        {/* Status filter */}
-        <div className="flex items-center gap-1">
-          {STATUS_FILTERS.map((s) => (
-            <button
-              type="button"
-              key={s}
-              onClick={() => setStatusFilter(s)}
-              className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors cursor-pointer ${
-                statusFilter === s
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
-              }`}
-            >
-              {s === "all" ? "All" : s.charAt(0).toUpperCase() + s.slice(1)}
-            </button>
-          ))}
-        </div>
-
-        {/* Category filter */}
-        <div className="flex items-center gap-1">
-          {CATEGORY_FILTERS.map((cat) => (
-            <button
-              type="button"
-              key={cat}
-              onClick={() => setCategoryFilter(cat)}
-              className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors cursor-pointer ${
-                categoryFilter === cat
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
-              }`}
-            >
-              {cat === "all" ? "All" : cat.charAt(0).toUpperCase() + cat.slice(1)}
-            </button>
-          ))}
         </div>
       </div>
 
       {/* Prescription cards */}
-      <div className="space-y-3">
+      <div className="columns-1 md:columns-2 lg:columns-3 gap-3 space-y-3">
         {filtered.length === 0 ? (
           <Card>
             <CardContent className="py-8 text-center text-muted-foreground">

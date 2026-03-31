@@ -335,7 +335,7 @@ export function CustomersTab({
       {/* ============================================================
           Row 1: 6 KPI cards
           ============================================================ */}
-      <div className="flex rounded-xl border bg-card text-card-foreground">
+      <div className="flex rounded-md border bg-card text-card-foreground">
         {([
           { icon: Users, label: "Active 30d", value: Math.round(active30d).toLocaleString(), color: "text-teal-600" },
           { icon: UserPlus, label: "New 30d", value: Math.round(new30d).toLocaleString(), color: "text-blue-600" },
@@ -605,7 +605,7 @@ export function CustomersTab({
           <CardContent className="space-y-4">
             {/* Churn risk summary */}
             {churnPredictions.length > 0 && (
-              <div className={`rounded-lg border p-3 ${
+              <div className={`rounded-md border p-3 ${
                 churnSummary.pct >= 30 ? "border-red-200 bg-red-50" :
                 churnSummary.pct >= 15 ? "border-orange-200 bg-orange-50" :
                 "border-green-200 bg-green-50"

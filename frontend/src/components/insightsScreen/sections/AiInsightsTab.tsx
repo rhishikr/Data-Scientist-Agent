@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import {
   Card,
@@ -68,6 +68,30 @@ export function AiInsightsTab({
     useState<SeverityFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Sliding pill indicator
+  const pillContainerRef = useRef<HTMLDivElement>(null);
+  const pillButtonRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
+  const [pillStyle, setPillStyle] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
+  const pillReady = useRef(false);
+
+  const measurePill = useCallback(() => {
+    const container = pillContainerRef.current;
+    const activeBtn = pillButtonRefs.current.get(selectedSeverity);
+    if (container && activeBtn) {
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = activeBtn.getBoundingClientRect();
+      setPillStyle({
+        left: btnRect.left - containerRect.left,
+        width: btnRect.width,
+      });
+      pillReady.current = true;
+    }
+  }, [selectedSeverity]);
+
+  useLayoutEffect(() => {
+    measurePill();
+  }, [measurePill]);
+
   // Executive insights
   const keyDrivers =
     forecastSnapshot?.executive_insights?.key_drivers_of_growth_decline ?? [];
@@ -123,55 +147,40 @@ export function AiInsightsTab({
       <AiAnalysisPanel data={aiAnalysis} loading={aiAnalysisLoading} />
 
       {/* ------------------------------------------------------------------ */}
-      {/* Row 2: Filter Bar                                                   */}
+      {/* Row 2: Label + Pill Filter + Search                                 */}
       {/* ------------------------------------------------------------------ */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-        {/* Severity filter buttons */}
-        <div className="flex items-center gap-1.5">
-          {severityOptions.map((opt) => {
-            const isActive = selectedSeverity === opt.value;
-            return (
-              <button
-                key={opt.value}
-                type="button"
-                onClick={() => setSelectedSeverity(opt.value)}
-                className={`
-                  inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5
-                  text-xs font-medium transition-colors
-                  ${
-                    isActive
-                      ? "border-transparent"
-                      : "border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground"
-                  }
-                `}
-                style={
-                  isActive
-                    ? { backgroundColor: severityColorMap[opt.value].bg, color: severityColorMap[opt.value].text }
-                    : undefined
-                }
-              >
-                {opt.label}
-                <span
-                  className={`
-                    ml-0.5 rounded-full px-1.5 py-0.5 text-[10px] leading-none
-                    ${isActive ? "bg-white/20" : "bg-muted"}
-                  `}
-                >
-                  {severityCounts[opt.value]}
-                </span>
-              </button>
-            );
-          })}
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="text-lg font-semibold whitespace-nowrap">AI Insights</h3>
+
+        <div ref={pillContainerRef} className="relative flex items-center rounded-md bg-muted p-1">
+          <div
+            className={`absolute rounded-md bg-background shadow-sm ${pillReady.current ? "transition-all duration-300 ease-in-out" : ""}`}
+            style={{ left: pillStyle.left, width: pillStyle.width, top: 4, bottom: 4 }}
+          />
+          {severityOptions.map((opt) => (
+            <button
+              type="button"
+              key={opt.value}
+              ref={(el) => { if (el) pillButtonRefs.current.set(opt.value, el); }}
+              onClick={() => setSelectedSeverity(opt.value)}
+              className={`relative z-10 rounded-md px-4 py-1.5 text-xs font-medium transition-colors duration-300 cursor-pointer ${
+                selectedSeverity === opt.value
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
         </div>
 
-        {/* Search input */}
-        <div className="relative flex-1 w-full sm:max-w-xs">
+        <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
           <Input
             placeholder="Search insights..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
+            className="pl-9 w-48"
           />
         </div>
       </div>

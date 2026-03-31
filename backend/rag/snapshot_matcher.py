@@ -1,13 +1,14 @@
 # backend/rag/snapshot_matcher.py
 """
-Snapshot-first metric lookup — matches user questions to pre-computed KPI cards.
+Snapshot-first metric lookup — matches user questions to pre-computed
+KPI cards, forecast metrics, and action plan health score.
 
 Two-tier matching:
   Tier 1: Fast keyword/alias substring matching (free, instant)
   Tier 2: Lightweight LLM fallback for creative phrasings (gpt-4o-mini, ~300ms)
 
 Skips analytical questions (containing "why", "trend", "compare", etc.)
-so they still route to insight/hybrid handlers.
+so they still route to the retrieval handler.
 """
 from __future__ import annotations
 
@@ -102,8 +103,40 @@ KPI_ALIASES: Dict[str, List[str]] = {
     "supplier_reliability": ["supplier reliability", "supplier reliability scores"],
 }
 
+# ---------------------------------------------------------------------------
+# Forecast & action plan alias dictionaries
+# ---------------------------------------------------------------------------
+
+FORECAST_ALIASES: Dict[str, List[str]] = {
+    "revenue_forecast_7d": [
+        "revenue forecast 7 day", "forecasted revenue 7d", "revenue next 7 days",
+        "revenue next week", "next week revenue",
+    ],
+    "revenue_forecast_30d": [
+        "revenue forecast 30 day", "forecasted revenue 30d", "revenue next 30 days",
+        "revenue next month forecast", "revenue forecast next month",
+        "revenue forecast", "forecasted revenue",
+    ],
+    "revenue_forecast_90d": [
+        "revenue forecast 90 day", "forecasted revenue 90d", "revenue next 90 days",
+        "revenue next quarter forecast", "revenue forecast next quarter",
+    ],
+    "churn_forecast": [
+        "churn forecast", "expected churn", "predicted churn",
+        "churn prediction", "forecasted churn rate", "churn next month",
+    ],
+    "cashflow_forecast": [
+        "cashflow forecast", "cash flow forecast", "projected cashflow",
+        "cashflow next month", "projected cash flow",
+    ],
+    "health_score": [
+        "health score", "business health", "store health",
+        "overall health", "business health score",
+    ],
+}
+
 # All valid card IDs for LLM fallback validation
-VALID_CARD_IDS = set(KPI_ALIASES.keys())
+VALID_CARD_IDS = set(KPI_ALIASES.keys()) | set(FORECAST_ALIASES.keys())
 
 
 # ---------------------------------------------------------------------------
@@ -139,20 +172,30 @@ def _normalize(text: str) -> str:
 
 def _tier1_match(query_norm: str) -> Optional[MatchResult]:
     """
-    Substring-match against alias lists.
+    Substring-match against alias lists (KPI + forecast + action plan).
     Returns the match with the longest alias (most specific).
     """
     best_id: Optional[str] = None
+    best_source: str = "kpi"
     best_len: int = 0
 
     for card_id, aliases in KPI_ALIASES.items():
         for alias in aliases:
             if alias in query_norm and len(alias) > best_len:
                 best_id = card_id
+                best_source = "kpi"
+                best_len = len(alias)
+
+    for card_id, aliases in FORECAST_ALIASES.items():
+        source = "action_plan" if card_id == "health_score" else "forecast"
+        for alias in aliases:
+            if alias in query_norm and len(alias) > best_len:
+                best_id = card_id
+                best_source = source
                 best_len = len(alias)
 
     if best_id is not None:
-        return MatchResult(card_id=best_id, source="kpi")
+        return MatchResult(card_id=best_id, source=best_source)
     return None
 
 
@@ -235,6 +278,14 @@ def _tier2_match(question: str, llm) -> Optional[MatchResult]:
         "brand_count": "Total Brands",
         "supplier_stockouts": "Stockouts by Supplier",
         "supplier_reliability": "Supplier Reliability Scores",
+        # Forecast metrics
+        "revenue_forecast_7d": "Revenue Forecast (next 7 days)",
+        "revenue_forecast_30d": "Revenue Forecast (next 30 days)",
+        "revenue_forecast_90d": "Revenue Forecast (next 90 days)",
+        "churn_forecast": "Churn Forecast (next 30 days)",
+        "cashflow_forecast": "Cashflow Forecast (next 30 days)",
+        # Action plan
+        "health_score": "Overall Business Health Score",
     }
 
     card_list = "\n".join(f"- {cid}: {title}" for cid, title in card_titles.items())
@@ -247,7 +298,11 @@ def _tier2_match(question: str, llm) -> Optional[MatchResult]:
 
         if response in VALID_CARD_IDS:
             logger.info("Tier 2 LLM matched '%s' → %s", question[:60], response)
-            return MatchResult(card_id=response, source="kpi")
+            if response in FORECAST_ALIASES:
+                source = "action_plan" if response == "health_score" else "forecast"
+            else:
+                source = "kpi"
+            return MatchResult(card_id=response, source=source)
     except Exception as e:
         logger.warning("Tier 2 LLM match failed: %s", e)
 
@@ -331,6 +386,107 @@ def format_snapshot_response(
     parts.append("\n_Source: Dashboard KPI snapshot (computed from cleaned data)_")
 
     return "\n".join(parts)
+
+
+def format_forecast_response(card_id: str, snapshot: Dict[str, Any]) -> Optional[str]:
+    """Format a forecast metric into a natural-language answer."""
+    forecasts = snapshot.get("forecasts", {})
+
+    if card_id == "revenue_forecast_7d":
+        rev = forecasts.get("forecasted_revenue", {})
+        val = rev.get("next_7d")
+        if val is None:
+            return None
+        display = f"${val:,.2f}" if isinstance(val, (int, float)) else str(val)
+        parts = [f"The **forecasted revenue for the next 7 days** is **{display}**."]
+        for key, label in [("next_30d", "Next 30 days"), ("next_90d", "Next 90 days")]:
+            v = rev.get(key)
+            if v is not None and isinstance(v, (int, float)):
+                parts.append(f"- {label}: ${v:,.2f}")
+        parts.append("\n_Source: Forecast snapshot (computed from cleaned data)_")
+        return "\n".join(parts)
+
+    if card_id == "revenue_forecast_30d":
+        rev = forecasts.get("forecasted_revenue", {})
+        val = rev.get("next_30d")
+        if val is None:
+            return None
+        display = f"${val:,.2f}" if isinstance(val, (int, float)) else str(val)
+        parts = [f"The **forecasted revenue for the next 30 days** is **{display}**."]
+        for key, label in [("next_7d", "Next 7 days"), ("next_90d", "Next 90 days")]:
+            v = rev.get(key)
+            if v is not None and isinstance(v, (int, float)):
+                parts.append(f"- {label}: ${v:,.2f}")
+        parts.append("\n_Source: Forecast snapshot (computed from cleaned data)_")
+        return "\n".join(parts)
+
+    if card_id == "revenue_forecast_90d":
+        rev = forecasts.get("forecasted_revenue", {})
+        val = rev.get("next_90d")
+        if val is None:
+            return None
+        display = f"${val:,.2f}" if isinstance(val, (int, float)) else str(val)
+        parts = [f"The **forecasted revenue for the next 90 days** is **{display}**."]
+        for key, label in [("next_7d", "Next 7 days"), ("next_30d", "Next 30 days")]:
+            v = rev.get(key)
+            if v is not None and isinstance(v, (int, float)):
+                parts.append(f"- {label}: ${v:,.2f}")
+        parts.append("\n_Source: Forecast snapshot (computed from cleaned data)_")
+        return "\n".join(parts)
+
+    if card_id == "churn_forecast":
+        churn = forecasts.get("expected_churn_next_month", {})
+        rate = churn.get("expected_churn_rate_next_30d")
+        if rate is None:
+            return None
+        if isinstance(rate, (int, float)) and abs(rate) < 1:
+            display = f"{rate * 100:.1f}%"
+        elif isinstance(rate, (int, float)):
+            display = f"{rate:.1f}%"
+        else:
+            display = str(rate)
+        parts = [
+            f"The **expected churn rate for the next 30 days** is **{display}**.",
+            f"Definition: {churn.get('definition', 'no purchase in next 30 days')}",
+        ]
+        parts.append("\n_Source: Forecast snapshot (computed from cleaned data)_")
+        return "\n".join(parts)
+
+    if card_id == "cashflow_forecast":
+        cf = forecasts.get("projected_cashflow", {})
+        val = cf.get("next_30d_cash_proxy")
+        if val is None:
+            return None
+        display = f"${val:,.2f}" if isinstance(val, (int, float)) else str(val)
+        parts = [
+            f"The **projected cashflow for the next 30 days** is **{display}**.",
+            f"Note: {cf.get('note', 'Proxy cashflow = revenue - refunds')}",
+        ]
+        parts.append("\n_Source: Forecast snapshot (computed from cleaned data)_")
+        return "\n".join(parts)
+
+    return None
+
+
+def format_action_plan_response(card_id: str, snapshot: Dict[str, Any]) -> Optional[str]:
+    """Format an action plan metric into a natural-language answer."""
+    if card_id == "health_score":
+        score = snapshot.get("health_score")
+        if score is None:
+            return None
+        parts = [f"The **overall business health score** is **{score}/100**."]
+        summary = snapshot.get("health_summary", "")
+        if summary:
+            parts.append(f"\n{summary}")
+        prescriptions = snapshot.get("prescriptions", [])
+        if prescriptions:
+            critical = sum(1 for p in prescriptions if p.get("urgency") == "critical")
+            high = sum(1 for p in prescriptions if p.get("urgency") == "high")
+            parts.append(f"\nActive prescriptions: {len(prescriptions)} (critical: {critical}, high: {high})")
+        parts.append("\n_Source: Action plan snapshot (computed from cleaned data)_")
+        return "\n".join(parts)
+
+    return None
 
 
 def _format_value(value: Any, fmt: str, unit: str) -> str:
