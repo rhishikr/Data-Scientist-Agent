@@ -36,7 +36,7 @@ const menuItems = [
   { id: "customer-insights", label: "Insights and Predictions", icon: Users },
   { id: "data-explorer", label: "Data Explorer", icon: Table2 },
   // { id: "inventory-sales", label: "Inventory & Sales", icon: Package },
-  { id: "llm-assistant", label: "LLM Assistant", icon: MessageSquare },
+  { id: "llm-assistant", label: "Assistant", icon: MessageSquare },
   // { id: "reports", label: "Reports", icon: FileText },
   { id: "settings", label: "Settings", icon: Settings },
 ];
@@ -76,61 +76,61 @@ export default function App() {
 
   return (
     <>
-    <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-slate-50">
-        <Sidebar className="border-r bg-white">
-          <SidebarContent>
-            <div className="px-4 py-6">
-              <div className="flex items-center gap-2">
-                <div className="size-8 rounded-md bg-gradient-to-br from-teal-500 to-blue-600 flex items-center justify-center">
-                  <GitBranch className="size-4 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-sm">AI Data Scientist</h2>
-                  <p className="text-xs text-muted-foreground">Agent</p>
+      <SidebarProvider>
+        <div className="flex min-h-screen w-full bg-slate-50">
+          <Sidebar className="border-r bg-white">
+            <SidebarContent>
+              <div className="px-4 py-6">
+                <div className="flex items-center gap-2">
+                  <div className="size-8 rounded-md bg-gradient-to-br from-teal-500 to-blue-600 flex items-center justify-center">
+                    <GitBranch className="size-4 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-sm">AI Data Scientist</h2>
+                    <p className="text-xs text-muted-foreground">Agent</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <SidebarGroup>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {menuItems.map((item) => (
-                    <SidebarMenuItem key={item.id}>
-                      <SidebarMenuButton
-                        onClick={() => setActiveSection(item.id)}
-                        isActive={activeSection === item.id}
-                        className="px-4 py-3"
-                      >
-                        <item.icon className="size-5" />
-                        <span>{item.label}</span>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-          <SidebarFooter>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  onClick={logout}
-                  className="px-4 py-3 text-muted-foreground hover:text-red-600"
-                >
-                  <LogOut className="size-5" />
-                  <span>Sign Out</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarFooter>
-        </Sidebar>
+              <SidebarGroup>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {menuItems.map((item) => (
+                      <SidebarMenuItem key={item.id}>
+                        <SidebarMenuButton
+                          onClick={() => setActiveSection(item.id)}
+                          isActive={activeSection === item.id}
+                          className="px-4 py-3"
+                        >
+                          <item.icon className="size-5" />
+                          <span>{item.label}</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            </SidebarContent>
+            <SidebarFooter>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={logout}
+                    className="px-4 py-3 text-muted-foreground hover:text-red-600"
+                  >
+                    <LogOut className="size-5" />
+                    <span>Sign Out</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarFooter>
+          </Sidebar>
 
-        <SidebarInset className="flex-1 min-w-0">
-          <div>{renderContent()}</div>
-        </SidebarInset>
-      </div>
-    </SidebarProvider>
-    <Toaster position="top-right" richColors />
+          <SidebarInset className="flex-1 min-w-0">
+            <div>{renderContent()}</div>
+          </SidebarInset>
+        </div>
+      </SidebarProvider>
+      <Toaster position="top-right" richColors />
     </>
   );
 }
