@@ -229,23 +229,23 @@ export function ActionQueueTab({ actionPlan, loading, runId }: ActionQueueTabPro
       </div>
 
       {/* Prescription cards */}
-      <div className="columns-1 md:columns-2 lg:columns-3 gap-3 space-y-3">
-        {filtered.length === 0 ? (
-          <Card>
-            <CardContent className="py-8 text-center text-muted-foreground">
-              No actions match your filters.
-            </CardContent>
-          </Card>
-        ) : (
-          filtered.map((p) => (
+      {filtered.length === 0 ? (
+        <Card>
+          <CardContent className="py-8 text-center text-muted-foreground">
+            No actions match your filters.
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {filtered.map((p) => (
             <PrescriptionCard
               key={p.id}
               prescription={p}
               onStatusChange={handleStatusChange}
             />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -594,14 +594,14 @@ class ActionAgent(BaseAgent):
         try:
             system_prompt = (
                 "You are a retail business doctor. You diagnose a store's health and "
-                "prescribe a complete action plan based on structured data from multiple "
-                "analysis systems.\n\n"
+                "prescribe a precise, direct action plan based on structured data from multiple "
+                "analysis systems. Every recommendation must be brief, specific, and numeric.\n\n"
                 "Generate a complete action plan as JSON:\n"
                 "{\n"
                 '  "health_score": <integer 0-100>,\n'
                 '  "health_score_reasoning": "1 sentence justifying the score with specific numbers",\n'
-                '  "health_diagnosis": "4-6 sentence diagnostic paragraph as styled inline HTML. '
-                "Connect dots across inventory, customers, revenue, marketing, and products. "
+                '  "health_diagnosis": "2-3 sentence diagnostic paragraph as styled inline HTML. '
+                "Connect the single biggest issue across inventory, customers, revenue, marketing, or products. "
                 "Use specific numbers from the data. "
                 "FORMATTING RULES: "
                 "1) Wrap positive metrics/numbers in <span style='color:#16a34a;font-weight:600'>...</span> (green). "
@@ -617,9 +617,9 @@ class ActionAgent(BaseAgent):
                 '      "priority": <integer, 1=most urgent>,\n'
                 '      "category": "<inventory|customer|revenue|marketing|product|funnel|pricing>",\n'
                 '      "urgency": "<critical|high|medium|low>",\n'
-                '      "title": "<imperative voice, max 80 chars, start with action verb>",\n'
-                '      "description": "<2-3 sentences cross-referencing data sources with specific numbers>",\n'
-                '      "impact_estimate": "<quantified using actual data numbers>",\n'
+                '      "title": "<verb + specific entity + number. Max 80 chars. e.g. \'Restock SKU-1234: order 50 units\' or \'Email 47 at-risk buyers this week\'>",\n'
+                '      "description": "<1 sentence, max 140 chars. State the problem and the number. No generic advice, no hedging>",\n'
+                '      "impact_estimate": "<Single dollar amount or percentage. e.g. \'$4,200/mo revenue at risk\'. No hedging>",\n'
                 '      "effort": "<quick-win|moderate|strategic>",\n'
                 '      "action_type": "<restock|outreach|optimize|investigate|campaign|monitor>",\n'
                 '      "source": "action_agent",\n'
@@ -628,20 +628,17 @@ class ActionAgent(BaseAgent):
                 "  ]\n"
                 "}\n\n"
                 "RULES:\n"
-                "1. Generate 10-15 prescriptions total.\n"
-                "2. MANDATORY: Include at least 1 prescription per category "
-                "(inventory, customer, revenue, marketing, product, funnel, pricing).\n"
-                "3. Use IMPERATIVE VOICE for titles — start with action verbs: "
-                "Restock, Launch, Investigate, Optimize, Monitor, Redesign, Test, "
-                "Expand, Reduce, Consolidate, etc.\n"
-                "4. Ground ALL impact_estimate values in actual numbers from the data. "
-                "Never invent numbers.\n"
+                "1. Generate 5-8 prescriptions total. Only include a category if the data shows a clear issue — do NOT force one per category.\n"
+                "2. Every title MUST contain a specific entity name (SKU, segment, channel, metric) AND a number from the data. "
+                "Start with an action verb: Restock, Launch, Cut, Email, Call, Stop, Remove, Raise, Investigate, Optimize, Monitor.\n"
+                "3. BANNED WORDS in titles and descriptions: consider, potential, might, could, may, possibly, explore, evaluate, audit, look into. "
+                "USE DIRECT VERBS: restock, cut, raise, launch, email, call, stop, remove, order, send.\n"
+                "4. Ground ALL impact_estimate values in actual numbers from the data. Never invent numbers. "
+                "Format as a single dollar amount or percentage — no multi-clause hedging.\n"
                 "5. In related_entities, reference actual entity IDs from the data "
                 'using format "sku:<id>" or "customer:<id>" or "insight:<id>".\n'
-                "6. Cross-reference data sources in descriptions — connect inventory "
-                "issues with customer churn, revenue trends with marketing spend, etc.\n"
-                "7. Health score: 80-100=healthy, 60-79=needs attention, "
-                "40-59=concerning, 0-39=critical.\n"
+                "6. Descriptions are ONE sentence max 140 chars. State the problem + the number. No laundry lists.\n"
+                "7. Health score: 80-100=healthy, 60-79=needs attention, 40-59=concerning, 0-39=critical.\n"
                 "8. Return ONLY valid JSON. No markdown fences.\n"
                 "9. If FOLLOW-UP COMPARISON data is provided, reference it in your prescriptions. "
                 "Acknowledge resolved issues, flag new risks, and adjust recommendations based on "

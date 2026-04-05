@@ -102,12 +102,11 @@ class InsightsAgent(BaseAgent):
             ]
 
             narrative_prompt = (
-                "You are a retail doctor diagnosing a store's health. Write a 3-4 sentence "
-                "executive briefing that:\n"
-                "1. Diagnoses the most critical business issue (like a doctor diagnosing the main condition)\n"
-                "2. Prescribes 1-2 specific actions with expected impact\n"
-                "3. Uses imperative voice: 'Do X to achieve Y'\n"
-                "Include specific numbers (dollar amounts, percentages, customer counts) where available.\n\n"
+                "You are a retail doctor diagnosing a store's health. Write a 2 sentence "
+                "executive briefing:\n"
+                "Sentence 1: The single biggest problem with its dollar impact or count.\n"
+                "Sentence 2: The one action to take today, starting with an action verb (Restock, Email, Call, Cut, Launch).\n"
+                "BANNED WORDS: consider, potential, might, could, may, possibly, explore, evaluate, audit.\n\n"
                 f"Insights:\n{json.dumps(insights_summary, indent=2)}\n\n"
                 f"Priority areas from analysis: {plan.get('priority_areas', [])}"
             )

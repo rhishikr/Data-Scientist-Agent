@@ -114,9 +114,8 @@ def detect_low_rating_risk(
         ),
         evidence=evidence,
         recommendation=(
-            "Prioritize investigation of the highest-impact low-rated SKUs first. "
-            "Check quality issues, supplier consistency, and whether product pages set correct expectations. "
-            "Improve, replace, or de-list persistent offenders."
+            f"Pull the {min(int(len(low)), 3)} worst-rated SKUs from promotion and investigate quality. "
+            f"${low_rev:,.0f} in revenue is tied to products rated below {thr:.1f} stars."
         ),
         severity=sev,
         confidence=float(conf),
@@ -221,8 +220,8 @@ def detect_high_discount_underperformance(
         ),
         evidence=evidence,
         recommendation=(
-            "Audit high-discount SKUs: validate pricing strategy, check product page quality, and compare against competitors. "
-            "Shift discounts toward products with stronger demand response and reduce discounts where performance remains weak."
+            f"Cut discounts on {int(len(flagged))} underperforming SKUs (currently >{thr:.0f}% off). "
+            f"They generate only ${flagged_rev:,.0f} despite heavy markdowns."
         ),
         severity=sev,
         confidence=float(conf),
@@ -309,8 +308,8 @@ def detect_high_demand_low_stock(
         ),
         evidence=evidence,
         recommendation=(
-            "Prioritize replenishment for these SKUs. If lead times are long, adjust reorder planning and monitor stock more frequently. "
-            "Consider redistributing inventory from lower-performing locations if applicable."
+            f"Restock {int(len(cand))} high-demand SKUs immediately — "
+            f"${cand_rev:,.0f} in revenue at risk from stockouts."
         ),
         severity=sev,
         confidence=float(conf),

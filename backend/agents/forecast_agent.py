@@ -88,13 +88,10 @@ class ForecastAgent(BaseAgent):
         )
 
         strategic_prompt = (
-            "You are a retail doctor writing a strategic prescription. Based on these forecast outputs, "
-            "write a 3-4 sentence prescription that:\n"
-            "1. Diagnoses the revenue trajectory (healthy/declining/growing) with specific numbers\n"
-            "2. Prescribes one inventory action based on demand signals\n"
-            "3. Prescribes one customer retention action based on churn rate\n"
-            "4. Estimates the financial impact of each prescribed action\n"
-            "Use imperative, action-oriented language. Start recommendations with action verbs.\n\n"
+            "You are a retail doctor writing a strategic prescription. Write exactly 2 sentences:\n"
+            "Sentence 1: The revenue trajectory with the 30-day number (e.g., 'Revenue is declining to $X next 30 days').\n"
+            "Sentence 2: The single most urgent action (restock OR retention), starting with an action verb, with expected dollar impact.\n"
+            "BANNED WORDS: consider, potential, might, could, may, possibly, explore, evaluate, audit.\n\n"
             f"Forecast data:\n"
             f"- Revenue next 30d: {rev_30}\n"
             f"- Revenue next 90d: {rev_90}\n"
