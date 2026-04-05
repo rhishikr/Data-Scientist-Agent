@@ -118,6 +118,7 @@ def prescriptions_from_demand(demand_skus: list[dict[str, Any]]) -> list[Prescri
         days_str = f" ({days_left} days until stockout)" if days_left is not None else ""
         title = f"Restock {name} immediately" if is_critical else f"Restock {name} this week"
 
+        unmet = max(int(forecast_qty) - int(current_stock), 0) if isinstance(forecast_qty, (int, float)) and isinstance(current_stock, (int, float)) else 0
         out.append(Prescription(
             id=_make_id("demand", sku_id),
             priority=1 if is_critical else 8,
@@ -125,10 +126,9 @@ def prescriptions_from_demand(demand_skus: list[dict[str, Any]]) -> list[Prescri
             urgency=urgency,
             title=title,
             description=(
-                f"Current stock: {current_stock}. 30-day forecast demand: {forecast_qty}{days_str}. "
-                f"{'Stock will run out imminently.' if is_critical else 'Stock is running low and needs replenishment.'}"
+                f"Order {unmet} units of {name}. Current stock: {current_stock}, 30-day demand: {forecast_qty}{days_str}."
             ),
-            impact_estimate=f"Potential lost sales on {name}",
+            impact_estimate=f"{unmet} units of unmet demand on {name}" if unmet > 0 else f"Stockout risk on {name}",
             effort="quick-win",
             evidence=sku,
             source="forecast_agent",
@@ -155,11 +155,11 @@ def prescriptions_from_churn(
         priority=12,
         category="customer",
         urgency="high",
-        title=f"Launch retention outreach for {len(high_risk)} high-risk customers",
+        title=f"Email {len(high_risk)} high-risk customers a retention offer this week",
         description=(
-            f"{len(high_risk)} customers have >70% churn probability in the next 30 days, "
-            f"representing ${total_value:,.0f} in historical spend. Personalized outreach "
-            f"could prevent significant revenue loss."
+            f"{len(high_risk)} customers have >70% churn probability next 30 days. "
+            f"Email the top {min(len(high_risk), 20)} highest-value at-risk customers a retention offer. "
+            f"${total_value:,.0f} lifetime spend at risk."
         ),
         impact_estimate=f"${total_value:,.0f} customer lifetime value at risk",
         effort="moderate",

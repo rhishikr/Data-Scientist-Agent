@@ -117,8 +117,8 @@ def detect_engaged_no_purchase(
         ),
         evidence=evidence,
         recommendation=(
-            "Investigate conversion friction for this segment: audit checkout steps, validate pricing/competitiveness, "
-            "improve trust signals, and run targeted retargeting campaigns. Track the conversion rate of this segment after changes."
+            f"Email {int(len(candidates))} engaged non-buyers a first-purchase offer this week. "
+            f"Target the top {min(int(len(candidates)), 20)} by session time first."
         ),
         severity="medium" if prevalence > 0 else "low",
         confidence=float(conf),
@@ -167,10 +167,11 @@ def detect_at_risk_and_churn(
 
     def make_insight(
         segment_name: str, seg_df: pd.DataFrame, thr: float,
-        insight_id: str, title: str, descr: str, rec_text: str,
+        insight_id: str, title: str, descr: str, rec_builder,
         action_type: str = "outreach", effort: str = "moderate", priority: int = 20,
     ) -> Insight:
         seg_rev = float(_num(seg_df.get("total_spend", pd.Series(dtype=float))).fillna(0.0).sum())
+        rec_text = rec_builder(seg_df, seg_rev)
         impact_share = (seg_rev / total_rev) if total_rev > 0 else None
 
         conf = confidence_score(
@@ -236,9 +237,9 @@ def detect_at_risk_and_churn(
                         "Buyers with purchase history show elevated inactivity based on the natural separation in the recency distribution. "
                         "This is an early warning signal for churn if they are not re-engaged."
                     ),
-                    rec_text=(
-                        "Trigger re-engagement for this segment: personalized messages based on past purchases, replenishment reminders, "
-                        "and targeted offers. Prioritize high historical spenders first and measure win-back conversion rate."
+                    rec_builder=lambda seg_df, seg_rev: (
+                        f"Send win-back offers to {int(len(seg_df))} at-risk buyers this week, starting with the highest spenders. "
+                        f"${seg_rev:,.0f} in revenue depends on re-engaging them."
                     ),
                     action_type="outreach",
                     effort="moderate",
@@ -261,9 +262,9 @@ def detect_at_risk_and_churn(
                         "A subset of buyers has been inactive for a prolonged period based on the natural separation in the recency distribution. "
                         "These customers are likely churned unless reactivated quickly."
                     ),
-                    rec_text=(
-                        "Launch a win-back campaign: personalized offers, product reminders based on top_product_id, "
-                        "and outreach that prioritizes customers with the highest historical spend. Track time-to-reactivation."
+                    rec_builder=lambda seg_df, seg_rev: (
+                        f"Launch win-back emails to {int(len(seg_df))} churned buyers with their top purchased product. "
+                        f"${seg_rev:,.0f} in lifetime spend at risk."
                     ),
                     action_type="campaign",
                     effort="moderate",
@@ -343,8 +344,9 @@ def detect_revenue_concentration(
         ),
         evidence=evidence,
         recommendation=(
-            "Create a retention plan for the top group: proactive outreach, loyalty benefits, and early-warning alerts when recency increases. "
-            "Also invest in converting engaged non-buyers and growing mid-tier customers to reduce dependency."
+            f"Call your top {int(len(top))} customers this month — they drive ${top_rev:,.0f}"
+            f"{f' ({(share * 100):.0f}% of revenue)' if share else ''}. "
+            f"Losing 1 costs ~${top_rev / max(len(top), 1):,.0f}."
         ),
         severity=sev,
         confidence=float(conf),
