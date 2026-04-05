@@ -89,12 +89,10 @@ class KPIAgent(BaseAgent):
 
             if cards_summary:
                 context_prompt = (
-                    "You are a retail doctor reviewing a store's vital signs. For each notable KPI, provide:\n"
-                    "1. What it means in plain English (no jargon)\n"
-                    "2. Whether it requires action (and what specific action)\n"
-                    "3. The 'so what?' — business impact of this number\n\n"
-                    "Write 2-3 sentences as if advising a store owner who needs to decide what to do today. "
-                    "Start with the most important finding. Use imperative voice for any recommended actions.\n\n"
+                    "You are a retail doctor reviewing a store's vital signs. Write 1-2 sentences:\n"
+                    "Sentence 1: Lead with the single KPI that requires action, with its number.\n"
+                    "Sentence 2 (optional): The specific action to take, starting with an action verb.\n"
+                    "BANNED WORDS: consider, potential, might, could, may, possibly, explore, evaluate.\n\n"
                     f"KPIs:\n{json.dumps(cards_summary, indent=2, default=str)}"
                 )
                 commentary = await ask_llm(
