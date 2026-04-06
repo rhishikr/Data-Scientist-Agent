@@ -107,10 +107,9 @@ def detect_low_rating_risk(
 
     ins = Insight(
         insight_id="prod_low_rating_risk",
-        title="Low-rated products may be creating quality and satisfaction risk",
+        title=f"{int(len(low))} products rated below {thr:.1f} stars — quality risk",
         description=(
-            "A naturally separated low-rating group exists in the catalog. Low ratings typically reduce conversion "
-            "and can increase returns or refund pressure."
+            f"{int(len(low))} SKUs rated below {thr:.1f} stars account for ${low_rev:,.0f} in revenue — expect lower conversion and higher returns."
         ),
         evidence=evidence,
         recommendation=(
@@ -213,10 +212,9 @@ def detect_high_discount_underperformance(
 
     ins = Insight(
         insight_id="prod_high_discount_underperformance",
-        title="Some high-discount products may be underperforming relative to their discount level",
+        title=f"{int(len(flagged))} discounted SKUs underperforming (>{thr:.0f}% off)",
         description=(
-            "A naturally separated high-discount group exists. Within it, a subset shows weaker performance patterns "
-            "(when measured by revenue-per-purchase where available). This suggests discounts may not be efficiently driving demand."
+            f"{int(len(flagged))} products discounted >{thr:.0f}% generate only ${flagged_rev:,.0f} — discounts not driving enough demand."
         ),
         evidence=evidence,
         recommendation=(
@@ -301,10 +299,9 @@ def detect_high_demand_low_stock(
 
     ins = Insight(
         insight_id="prod_high_demand_low_stock",
-        title="Stockout risk detected for high-demand products",
+        title=f"{int(len(cand))} high-demand SKUs near stockout",
         description=(
-            "A naturally separated group of products shows high demand signals while also having unusually low stock. "
-            "This combination increases near-term stockout risk and potential lost revenue."
+            f"{int(len(cand))} top-selling SKUs have critically low stock — ${cand_rev:,.0f} revenue at risk of lost sales."
         ),
         evidence=evidence,
         recommendation=(
