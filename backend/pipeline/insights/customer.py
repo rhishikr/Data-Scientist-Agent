@@ -110,10 +110,9 @@ def detect_engaged_no_purchase(
 
     ins = Insight(
         insight_id="cust_engaged_no_purchase",
-        title="Engaged customers are not converting into purchases",
+        title=f"{int(len(candidates))} engaged visitors not converting",
         description=(
-            "A segment of customers shows high engagement signals (time on site and/or wishlist activity) "
-            "but no recorded purchases. This often indicates conversion friction (checkout, pricing, shipping trust, or product fit)."
+            f"{int(len(candidates))} of {int(len(df))} customers show high engagement but zero purchases — likely conversion friction."
         ),
         evidence=evidence,
         recommendation=(
@@ -232,10 +231,9 @@ def detect_at_risk_and_churn(
                     seg_df=at_risk,
                     thr=thr,
                     insight_id="cust_at_risk",
-                    title="A segment of buyers is becoming inactive (at-risk)",
+                    title=f"{int(len(at_risk))} buyers going inactive (at-risk)",
                     descr=(
-                        "Buyers with purchase history show elevated inactivity based on the natural separation in the recency distribution. "
-                        "This is an early warning signal for churn if they are not re-engaged."
+                        f"{int(len(at_risk))} buyers inactive {int(thr)}+ days — early churn warning, re-engage before they lapse."
                     ),
                     rec_builder=lambda seg_df, seg_rev: (
                         f"Send win-back offers to {int(len(seg_df))} at-risk buyers this week, starting with the highest spenders. "
@@ -257,10 +255,9 @@ def detect_at_risk_and_churn(
                     seg_df=churn,
                     thr=thr,
                     insight_id="cust_churn_candidates",
-                    title="Churn candidates detected from prolonged inactivity",
+                    title=f"{int(len(churn))} buyers likely churned",
                     descr=(
-                        "A subset of buyers has been inactive for a prolonged period based on the natural separation in the recency distribution. "
-                        "These customers are likely churned unless reactivated quickly."
+                        f"{int(len(churn))} buyers inactive {int(thr)}+ days — likely churned, reactivate now or write off."
                     ),
                     rec_builder=lambda seg_df, seg_rev: (
                         f"Launch win-back emails to {int(len(seg_df))} churned buyers with their top purchased product. "
@@ -337,10 +334,9 @@ def detect_revenue_concentration(
 
     ins = Insight(
         insight_id="cust_revenue_concentration",
-        title="Revenue is concentrated among a small group of customers",
+        title=f"{int(len(top))} customers drive {f'{(share * 100):.0f}%' if share else 'most'} of revenue",
         description=(
-            "Customer spend forms a naturally separated top group. Revenue concentration increases risk: "
-            "if a small number of customers churn, total revenue can drop disproportionately."
+            f"Top {int(len(top))} of {int(len(spenders))} spenders account for ${top_rev:,.0f} — losing 1 costs ~${top_rev / max(len(top), 1):,.0f}."
         ),
         evidence=evidence,
         recommendation=(

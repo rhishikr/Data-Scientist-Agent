@@ -35,7 +35,6 @@ import { Button } from "../../ui/button";
 import {
   ArrowUp,
   ArrowDown,
-  ArrowRight,
   Minus,
   Sparkles,
   History,
@@ -44,14 +43,11 @@ import {
   CheckCircle,
   CheckCircle2,
   AlertTriangle,
-  Activity,
+  ChevronDown,
   Zap,
-  Target,
   Play,
   Square,
   RefreshCw,
-  Search,
-  ChevronRight,
   GitCompareArrows,
 } from "lucide-react";
 
@@ -162,7 +158,7 @@ export function RunComparisonTab({
   compareEnabled,
   onCompare,
 }: RunComparisonTabProps) {
-  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(GROUP_ORDER));
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
   // Group deltas by KPI group
   const groupedDeltas = useMemo(() => {
@@ -327,47 +323,7 @@ export function RunComparisonTab({
       {!comparisonLoading && comparison && !noPrevious && comparisonAi && !comparisonAi.error && !comparisonAiLoading && (
         <>
           {/* 1. Trend Verdict Banner */}
-          {comparisonAi.trend_verdict && (
-            <div
-              className={`rounded-md px-4 py-3 flex items-center gap-3 ${
-                comparisonAi.trend_verdict.direction === "improving"
-                  ? "bg-emerald-50 border border-emerald-200"
-                  : comparisonAi.trend_verdict.direction === "declining"
-                    ? "bg-red-50 border border-red-200"
-                    : "bg-amber-50 border border-amber-200"
-              }`}
-            >
-              {comparisonAi.trend_verdict.direction === "improving" ? (
-                <TrendingUp className="size-5 text-emerald-600 shrink-0" />
-              ) : comparisonAi.trend_verdict.direction === "declining" ? (
-                <TrendingDown className="size-5 text-red-600 shrink-0" />
-              ) : (
-                <Activity className="size-5 text-amber-600 shrink-0" />
-              )}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className={`font-semibold text-sm capitalize ${
-                    comparisonAi.trend_verdict.direction === "improving"
-                      ? "text-emerald-700"
-                      : comparisonAi.trend_verdict.direction === "declining"
-                        ? "text-red-700"
-                        : "text-amber-700"
-                  }`}>
-                    Business is {comparisonAi.trend_verdict.direction}
-                  </span>
-                  <Badge variant="outline" className="text-xs">
-                    {comparisonAi.trend_verdict.confidence} confidence
-                  </Badge>
-                  {comparisonAi.cached && (
-                    <Badge variant="outline" className="text-xs text-muted-foreground">cached</Badge>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground">{comparisonAi.trend_verdict.summary}</p>
-              </div>
-            </div>
-          )}
-
-          {/* 2. Executive Summary */}
+          {/* 1. Executive Summary */}
           {comparisonAi.executive_summary && (
             <Card className="border-l-4 border-l-violet-400">
               <CardHeader className="pb-2">
@@ -423,47 +379,74 @@ export function RunComparisonTab({
             </div>
           )}
 
-          {/* 4. Revenue Bridge */}
-          {comparisonAi.revenue_bridge && comparisonAi.revenue_bridge.components.length > 0 && (
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-base">Revenue Bridge</CardTitle>
-                <CardDescription>
-                  How the revenue change of {fmtCurrency(comparisonAi.revenue_bridge.total_change)} breaks down
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  {comparisonAi.revenue_bridge.components.map((comp, i) => {
-                    const maxAbs = Math.max(...comparisonAi.revenue_bridge!.components.map((c) => Math.abs(c.impact)));
-                    const widthPct = maxAbs > 0 ? (Math.abs(comp.impact) / maxAbs) * 100 : 0;
-                    const isPositive = comp.impact >= 0;
-                    return (
-                      <div key={i} className="flex items-center gap-3">
-                        <span className="text-sm w-48 shrink-0 text-right">{comp.label}</span>
-                        <div className="flex-1 flex items-center gap-2">
-                          <div
-                            className={`h-6 rounded ${isPositive ? "bg-emerald-200" : "bg-red-200"}`}
-                            style={{ width: `${Math.max(widthPct, 4)}%` }}
-                          />
-                          <span className={`text-sm font-medium tabular-nums ${isPositive ? "text-emerald-700" : "text-red-700"}`}>
-                            {isPositive ? "+" : ""}{fmtCurrency(comp.impact)}
-                          </span>
+          {/* 4. Action Items */}
+          {comparisonAi.action_items && comparisonAi.action_items.length > 0 && (() => {
+            const startItems = comparisonAi.action_items.filter((item) => item.startsWith("START:")).map((item) => item.replace(/^START:\s*/, ""));
+            const stopItems = comparisonAi.action_items.filter((item) => item.startsWith("STOP:")).map((item) => item.replace(/^STOP:\s*/, ""));
+            const keepItems = comparisonAi.action_items.filter((item) => item.startsWith("KEEP:")).map((item) => item.replace(/^KEEP:\s*/, ""));
+            return (
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base">Action Items</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {startItems.length > 0 && (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-1.5 text-emerald-700 font-medium text-sm">
+                          <Play className="size-4" />
+                          <span>Start</span>
                         </div>
+                        <ul className="space-y-1.5">
+                          {startItems.map((s, i) => (
+                            <li key={i} className="text-sm text-muted-foreground pl-5 relative before:content-[''] before:absolute before:left-1 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-emerald-400">
+                              {s}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-          )}
+                    )}
+                    {stopItems.length > 0 && (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-1.5 text-red-700 font-medium text-sm">
+                          <Square className="size-4" />
+                          <span>Stop</span>
+                        </div>
+                        <ul className="space-y-1.5">
+                          {stopItems.map((s, i) => (
+                            <li key={i} className="text-sm text-muted-foreground pl-5 relative before:content-[''] before:absolute before:left-1 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-red-400">
+                              {s}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {keepItems.length > 0 && (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-1.5 text-blue-700 font-medium text-sm">
+                          <RefreshCw className="size-4" />
+                          <span>Keep</span>
+                        </div>
+                        <ul className="space-y-1.5">
+                          {keepItems.map((s, i) => (
+                            <li key={i} className="text-sm text-muted-foreground pl-5 relative before:content-[''] before:absolute before:left-1 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-blue-400">
+                              {s}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })()}
 
-          {/* 5. Root Causes + Causal Chains */}
-          {(comparisonAi.root_causes.length > 0 || comparisonAi.causal_chains.length > 0) && (
+          {/* 5. Root Causes */}
+          {comparisonAi.root_causes.length > 0 && (
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-base">Root Cause Analysis</CardTitle>
-                <CardDescription>Why your key metrics changed</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 {comparisonAi.root_causes.map((rc, i) => (
@@ -488,69 +471,11 @@ export function RunComparisonTab({
                     )}
                   </div>
                 ))}
-                {/* Causal chains */}
-                {comparisonAi.causal_chains.map((chain, i) => (
-                  <div key={`chain-${i}`} className="rounded-md bg-muted/30 p-3 space-y-2">
-                    <div className="flex items-center flex-wrap gap-1.5">
-                      {chain.chain.map((step, j) => (
-                        <React.Fragment key={j}>
-                          <Badge variant="secondary" className="text-xs">{step}</Badge>
-                          {j < chain.chain.length - 1 && (
-                            <ChevronRight className="size-3.5 text-muted-foreground" />
-                          )}
-                        </React.Fragment>
-                      ))}
-                    </div>
-                    <p className="text-xs text-muted-foreground">{chain.narrative}</p>
-                  </div>
-                ))}
               </CardContent>
             </Card>
           )}
 
-          {/* 6. Profit/Loss Drivers */}
-          {(comparisonAi.profit_loss_drivers.positive.length > 0 || comparisonAi.profit_loss_drivers.negative.length > 0) && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card>
-                <CardHeader className="pb-2">
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="size-4 text-emerald-600" />
-                    <CardTitle className="text-base text-emerald-700">Positive Drivers</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {comparisonAi.profit_loss_drivers.positive.map((d, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm">
-                        <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
-                        <span>{d}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="pb-2">
-                  <div className="flex items-center gap-2">
-                    <TrendingDown className="size-4 text-red-500" />
-                    <CardTitle className="text-base text-red-700">Negative Drivers</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {comparisonAi.profit_loss_drivers.negative.map((d, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm">
-                        <AlertTriangle className="size-4 text-red-400 shrink-0 mt-0.5" />
-                        <span>{d}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-
-          {/* 7. Prescription Report Card */}
+          {/* 6. Prescription Report Card */}
           {comparisonAi.prescription_report_card.length > 0 && (
             <Card>
               <CardHeader className="pb-2">
@@ -587,50 +512,14 @@ export function RunComparisonTab({
             </Card>
           )}
 
-          {/* 8. Missed Opportunities */}
-          {comparisonAi.missed_opportunities.length > 0 && (
-            <Card className="border-l-4 border-l-amber-400">
-              <CardHeader className="pb-2">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="size-5 text-amber-500" />
-                  <CardTitle className="text-base">Missed Opportunities</CardTitle>
-                </div>
-                <CardDescription>Prescriptions not acted on and their estimated cost</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {comparisonAi.missed_opportunities.map((mo, i) => (
-                  <div key={i} className="flex items-start gap-3 rounded-md border p-3">
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-medium text-sm">{mo.prescription_title}</span>
-                        <Badge variant="outline" className={`text-xs ${
-                          mo.urgency_now === "critical" ? "border-red-200 bg-red-50 text-red-700"
-                            : mo.urgency_now === "high" ? "border-orange-200 bg-orange-50 text-orange-700"
-                              : "border-gray-200 bg-gray-50 text-gray-700"
-                        }`}>
-                          {mo.urgency_now}
-                        </Badge>
-                        <Badge variant="outline" className="text-xs">{mo.status}</Badge>
-                      </div>
-                      <p className="text-sm text-red-600 font-medium">{mo.estimated_cost_of_inaction}</p>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          )}
-
-          {/* 9. Quick Wins + Next 30-Day Targets */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Quick Wins */}
-            {comparisonAi.quick_wins.length > 0 && (
+          {/* 7. Quick Wins */}
+          {comparisonAi.quick_wins.length > 0 && (
               <Card>
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-2">
                     <Zap className="size-5 text-amber-500" />
                     <CardTitle className="text-base">Quick Wins</CardTitle>
                   </div>
-                  <CardDescription>Low-effort actions you can take right now</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {comparisonAi.quick_wins.map((qw, i) => (
@@ -646,117 +535,6 @@ export function RunComparisonTab({
                 </CardContent>
               </Card>
             )}
-
-            {/* Next 30-Day Targets */}
-            {comparisonAi.next_30_day_targets.length > 0 && (
-              <Card>
-                <CardHeader className="pb-2">
-                  <div className="flex items-center gap-2">
-                    <Target className="size-5 text-blue-500" />
-                    <CardTitle className="text-base">Next 30-Day Targets</CardTitle>
-                  </div>
-                  <CardDescription>Measurable goals to hit this month</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {comparisonAi.next_30_day_targets.map((t, i) => (
-                    <div key={i} className="rounded-md border p-3 space-y-1.5">
-                      <span className="font-medium text-sm">{t.target}</span>
-                      <div className="flex items-center gap-2 text-xs">
-                        <span className="text-muted-foreground">{t.current_value}</span>
-                        <ArrowRight className="size-3 text-muted-foreground" />
-                        <span className="font-medium text-blue-600">{t.target_value}</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground">{t.how}</p>
-                      <p className="text-xs text-emerald-600 font-medium">{t.expected_impact}</p>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            )}
-          </div>
-
-          {/* 10. Start / Stop / Keep Doing */}
-          {(comparisonAi.start_doing.length > 0 || comparisonAi.stop_doing.length > 0 || comparisonAi.keep_doing.length > 0) && (
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-base">Strategic Recommendations</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {comparisonAi.start_doing.length > 0 && (
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-1.5 text-emerald-700 font-medium text-sm">
-                        <Play className="size-4" />
-                        <span>Start Doing</span>
-                      </div>
-                      <ul className="space-y-1.5">
-                        {comparisonAi.start_doing.map((s, i) => (
-                          <li key={i} className="text-sm text-muted-foreground pl-5 relative before:content-[''] before:absolute before:left-1 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-emerald-400">
-                            {s}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {comparisonAi.stop_doing.length > 0 && (
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-1.5 text-red-700 font-medium text-sm">
-                        <Square className="size-4" />
-                        <span>Stop Doing</span>
-                      </div>
-                      <ul className="space-y-1.5">
-                        {comparisonAi.stop_doing.map((s, i) => (
-                          <li key={i} className="text-sm text-muted-foreground pl-5 relative before:content-[''] before:absolute before:left-1 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-red-400">
-                            {s}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {comparisonAi.keep_doing.length > 0 && (
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-1.5 text-blue-700 font-medium text-sm">
-                        <RefreshCw className="size-4" />
-                        <span>Keep Doing</span>
-                      </div>
-                      <ul className="space-y-1.5">
-                        {comparisonAi.keep_doing.map((s, i) => (
-                          <li key={i} className="text-sm text-muted-foreground pl-5 relative before:content-[''] before:absolute before:left-1 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-blue-400">
-                            {s}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* 11. Anomalies */}
-          {comparisonAi.anomalies.length > 0 && (
-            <Card className="border-l-4 border-l-red-400">
-              <CardHeader className="pb-2">
-                <div className="flex items-center gap-2">
-                  <Search className="size-5 text-red-500" />
-                  <CardTitle className="text-base">Anomalies Detected</CardTitle>
-                </div>
-                <CardDescription>Unexpected changes that need investigation</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {comparisonAi.anomalies.map((a, i) => (
-                  <div key={i} className="rounded-md border border-red-100 bg-red-50/30 p-3 space-y-1.5">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-sm">{a.metric}</span>
-                      <Badge variant="outline" className="text-xs text-red-600 border-red-200">{a.change}</Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{a.why_unexpected}</p>
-                    <p className="text-xs text-blue-600">Investigate: {a.suggested_investigation}</p>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          )}
         </>
       )}
 
@@ -766,12 +544,15 @@ export function RunComparisonTab({
           {Array.from(groupedDeltas.entries()).map(([group, deltas]) => (
             <Card key={group}>
               <CardHeader
-                className="cursor-pointer select-none"
+                className="cursor-pointer select-none py-3"
                 onClick={() => toggleGroup(group)}
               >
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-base">{group}</CardTitle>
                   <div className="flex items-center gap-2">
+                    <ChevronDown className={`size-4 text-muted-foreground transition-transform ${expandedGroups.has(group) ? "" : "-rotate-90"}`} />
+                    <CardTitle className="text-base">{group}</CardTitle>
+                  </div>
+                  <div className="flex items-center gap-2 w-36 justify-end">
                     {(() => {
                       const up = deltas.filter((d) => d.direction === "up").length;
                       const down = deltas.filter((d) => d.direction === "down").length;
@@ -790,9 +571,6 @@ export function RunComparisonTab({
                         </>
                       );
                     })()}
-                    <span className="text-xs text-muted-foreground">
-                      {expandedGroups.has(group) ? "collapse" : "expand"}
-                    </span>
                   </div>
                 </div>
               </CardHeader>
@@ -1034,70 +812,6 @@ export function RunComparisonTab({
         </Card>
       )}
 
-      {/* Run History */}
-      {runs.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Run History</CardTitle>
-            <CardDescription>
-              Past pipeline runs — click to view that run's data
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="border rounded-md overflow-hidden">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-muted/50 text-muted-foreground">
-                    <th className="text-left p-3 font-medium">Run</th>
-                    <th className="text-left p-3 font-medium">Started</th>
-                    <th className="text-left p-3 font-medium">Status</th>
-                    <th className="text-right p-3 font-medium">Duration</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {runs.slice(0, 10).map((run) => (
-                    <tr
-                      key={run.id}
-                      className={`border-t cursor-pointer hover:bg-muted/20 ${
-                        selectedRunId === run.id ? "bg-teal-50" : ""
-                      }`}
-                      onClick={() =>
-                        onSelectRun(selectedRunId === run.id ? null : run.id)
-                      }
-                    >
-                      <td className="p-3 font-mono text-xs">{run.id.slice(0, 8)}...</td>
-                      <td className="p-3">
-                        {run.started_at
-                          ? new Date(run.started_at).toLocaleString()
-                          : "—"}
-                      </td>
-                      <td className="p-3">
-                        <Badge
-                          variant={run.status === "completed" ? "default" : "secondary"}
-                          className={
-                            run.status === "completed"
-                              ? "bg-emerald-100 text-emerald-700"
-                              : run.status === "failed"
-                                ? "bg-red-100 text-red-700"
-                                : ""
-                          }
-                        >
-                          {run.status}
-                        </Badge>
-                      </td>
-                      <td className="p-3 text-right tabular-nums">
-                        {run.duration_seconds != null
-                          ? `${run.duration_seconds.toFixed(0)}s`
-                          : "—"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 }
