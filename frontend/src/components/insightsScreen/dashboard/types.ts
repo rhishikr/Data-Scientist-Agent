@@ -355,36 +355,11 @@ export type RootCause = {
   contributing_factors: string[];
 };
 
-export type CausalChain = {
-  chain: string[];
-  narrative: string;
-};
-
-export type RevenueBridgeComponent = {
-  label: string;
-  impact: number;
-};
-
 export type PrescriptionVerdict = {
   prescription_title: string;
   verdict: "effective" | "partially_effective" | "no_impact" | "too_early";
   evidence: string;
   related_kpi_impact: string;
-};
-
-export type MissedOpportunity = {
-  prescription_title: string;
-  status: string;
-  estimated_cost_of_inaction: string;
-  urgency_now: string;
-};
-
-export type Target30Day = {
-  target: string;
-  current_value: string;
-  target_value: string;
-  how: string;
-  expected_impact: string;
 };
 
 export type QuickWin = {
@@ -394,31 +369,13 @@ export type QuickWin = {
   data_point: string;
 };
 
-export type Anomaly = {
-  metric: string;
-  change: string;
-  why_unexpected: string;
-  suggested_investigation: string;
-};
-
 export type ComparisonAiAnalysis = {
   executive_summary: string | null;
   department_grades: DepartmentGrade[];
   root_causes: RootCause[];
-  causal_chains: CausalChain[];
-  revenue_bridge: {
-    total_change: number;
-    components: RevenueBridgeComponent[];
-  } | null;
-  profit_loss_drivers: { positive: string[]; negative: string[] };
   prescription_report_card: PrescriptionVerdict[];
-  missed_opportunities: MissedOpportunity[];
-  next_30_day_targets: Target30Day[];
   quick_wins: QuickWin[];
-  start_doing: string[];
-  stop_doing: string[];
-  keep_doing: string[];
-  anomalies: Anomaly[];
+  action_items: string[];
   trend_verdict: {
     direction: "improving" | "stable" | "declining";
     confidence: "high" | "medium" | "low";
@@ -427,6 +384,17 @@ export type ComparisonAiAnalysis = {
   generated_at?: string;
   cached?: boolean;
   error?: string;
+
+  // Legacy fields from cached responses (backward compat)
+  causal_chains?: unknown[];
+  revenue_bridge?: unknown;
+  profit_loss_drivers?: unknown;
+  missed_opportunities?: unknown[];
+  next_30_day_targets?: unknown[];
+  start_doing?: string[];
+  stop_doing?: string[];
+  keep_doing?: string[];
+  anomalies?: unknown[];
 };
 
 // ------------------------

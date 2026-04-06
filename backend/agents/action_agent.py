@@ -640,9 +640,8 @@ class ActionAgent(BaseAgent):
                 "6. Descriptions are ONE sentence max 140 chars. State the problem + the number. No laundry lists.\n"
                 "7. Health score: 80-100=healthy, 60-79=needs attention, 40-59=concerning, 0-39=critical.\n"
                 "8. Return ONLY valid JSON. No markdown fences.\n"
-                "9. If FOLLOW-UP COMPARISON data is provided, reference it in your prescriptions. "
-                "Acknowledge resolved issues, flag new risks, and adjust recommendations based on "
-                "what improved and what declined since the last analysis.\n"
+                "9. If FOLLOW-UP COMPARISON data is provided, mention at most 2 resolved issues and 2 new risks. "
+                "Only reference changes directly relevant to a prescription you are writing.\n"
             )
 
             user_prompt = (

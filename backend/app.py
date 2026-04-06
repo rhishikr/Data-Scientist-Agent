@@ -962,10 +962,8 @@ async def get_comparison_ai_analysis(current: Optional[str] = None, previous: Op
         return _safe_json({
             "error": "Need at least two completed runs for AI comparison analysis",
             "executive_summary": None, "department_grades": [], "root_causes": [],
-            "causal_chains": [], "revenue_bridge": None, "profit_loss_drivers": {"positive": [], "negative": []},
-            "prescription_report_card": [], "missed_opportunities": [], "next_30_day_targets": [],
-            "quick_wins": [], "start_doing": [], "stop_doing": [], "keep_doing": [],
-            "anomalies": [], "trend_verdict": None,
+            "prescription_report_card": [], "quick_wins": [],
+            "action_items": [], "trend_verdict": None,
         })
 
     # ---- 2. Check cache ----------------------------------------------------
@@ -994,10 +992,8 @@ async def get_comparison_ai_analysis(current: Optional[str] = None, previous: Op
         return _safe_json({
             "error": "Could not load KPI snapshots for comparison",
             "executive_summary": None, "department_grades": [], "root_causes": [],
-            "causal_chains": [], "revenue_bridge": None, "profit_loss_drivers": {"positive": [], "negative": []},
-            "prescription_report_card": [], "missed_opportunities": [], "next_30_day_targets": [],
-            "quick_wins": [], "start_doing": [], "stop_doing": [], "keep_doing": [],
-            "anomalies": [], "trend_verdict": None,
+            "prescription_report_card": [], "quick_wins": [],
+            "action_items": [], "trend_verdict": None,
         })
 
     # ---- 4. Build data digest for LLM -------------------------------------
@@ -1325,82 +1321,58 @@ async def get_comparison_ai_analysis(current: Optional[str] = None, previous: Op
         digest = digest[:15000] + "\n... (truncated)"
 
     # ---- 5. System prompt --------------------------------------------------
-    system_prompt = """You are an expert retail analytics advisor. You are comparing two pipeline analysis runs of a retail store and must explain WHAT changed, WHY it changed (root causes), and WHAT TO DO about it.
+    system_prompt = """You are an expert retail analytics advisor. You are comparing two pipeline analysis runs of a retail store. Be direct and concise — state WHAT changed, WHY, and WHAT TO DO.
 
 Return ONLY valid JSON with this exact structure:
 {
-  "executive_summary": "2-3 sentences connecting the biggest changes with their root causes, referencing specific numbers from the data.",
+  "executive_summary": "1-2 sentences connecting the biggest changes with root causes and specific numbers.",
 
   "department_grades": [
-    {"department": "Revenue|Customers|Inventory|Marketing|Funnel|Product|Payments", "grade": "A|B|C|D|F", "trend": "improving|stable|declining", "one_liner": "Short assessment"}
+    {"department": "Revenue|Customers|Inventory|Marketing|Funnel|Product|Payments", "grade": "A|B|C|D|F", "trend": "improving|stable|declining", "one_liner": "Max 15 words with key metric value and change"}
   ],
 
   "root_causes": [
-    {"metric": "metric_id", "direction": "up|down", "explanation": "1-2 sentences explaining likely cause", "contributing_factors": ["factor1", "factor2"]}
+    {"metric": "metric_id", "direction": "up|down", "explanation": "One sentence with specific data evidence.", "contributing_factors": ["factor1", "factor2"]}
   ],
-
-  "causal_chains": [
-    {"chain": ["Metric A changed X%", "Which caused Metric B to change Y%", "Leading to Z impact"], "narrative": "One sentence connecting the chain"}
-  ],
-
-  "revenue_bridge": {
-    "total_change": <number>,
-    "components": [{"label": "Component name", "impact": <positive or negative number>}]
-  },
-
-  "profit_loss_drivers": {
-    "positive": ["Specific driver that helped, with numbers"],
-    "negative": ["Specific driver that hurt, with numbers"]
-  },
 
   "prescription_report_card": [
     {"prescription_title": "Title of completed prescription", "verdict": "effective|partially_effective|no_impact|too_early", "evidence": "What changed as a result", "related_kpi_impact": "e.g. +20% metric"}
   ],
 
-  "missed_opportunities": [
-    {"prescription_title": "Title of undone prescription", "status": "pending|dismissed", "estimated_cost_of_inaction": "$X in lost Y", "urgency_now": "critical|high|medium"}
-  ],
-
-  "next_30_day_targets": [
-    {"target": "Specific measurable goal", "current_value": "68%", "target_value": "55%", "how": "Specific steps to achieve this", "expected_impact": "Estimated business impact"}
-  ],
-
   "quick_wins": [
-    {"action": "Specific immediate action", "effort": "Time estimate", "expected_impact": "Quantified impact", "data_point": "Supporting data"}
+    {"action": "Max 20 words — name specific SKUs, customers, or campaigns", "effort": "Time estimate", "expected_impact": "Quantified impact", "data_point": "Supporting data"}
   ],
 
-  "start_doing": ["Actionable recommendation to START, with data backing"],
-  "stop_doing": ["Thing to STOP or reduce, with data backing"],
-  "keep_doing": ["Thing that IS working well, with data backing"],
-
-  "anomalies": [
-    {"metric": "metric_id", "change": "+X%", "why_unexpected": "Why this is unusual", "suggested_investigation": "What to check"}
+  "action_items": [
+    "START: Actionable thing to begin, with data backing (max 20 words)",
+    "STOP: Thing to stop or reduce, with data backing (max 20 words)",
+    "KEEP: Thing that is working well, with data backing (max 20 words)"
   ],
 
   "trend_verdict": {
     "direction": "improving|stable|declining",
     "confidence": "high|medium|low",
-    "summary": "2-3 sentence overall trajectory assessment"
+    "summary": "One sentence overall trajectory assessment"
   }
 }
 
 RULES:
-1. Focus on the TOP 5 most significant metric changes by percent_change magnitude.
-2. Cross-reference metrics: if revenue dropped and churn rose, connect them in causal_chains.
-3. For prescription_report_card, ONLY include prescriptions marked DONE. Evaluate their effectiveness by checking if related KPIs improved.
-4. For missed_opportunities, include prescriptions still PENDING or DISMISSED that are now more urgent.
-5. Revenue bridge components should sum approximately to total_change. Use revenue waterfall data.
-6. Generate 5-7 department_grades (one per department that has data).
-7. Generate 3-5 root_causes, 1-3 causal_chains, 2-4 items per start/stop/keep.
-8. Generate 2-3 next_30_day_targets with realistic target values based on current data.
-9. Generate 2-4 quick_wins — things that can be done in < 1 week.
-10. Only include anomalies for truly unexpected changes (max 3).
-11. Ground ALL claims in actual numbers from the data. Never invent numbers.
-12. Return ONLY valid JSON. No markdown fences, no extra text.
+1. Focus on the TOP 3 most significant metric changes by percent_change magnitude.
+2. For prescription_report_card, ONLY include prescriptions marked DONE. Evaluate their effectiveness by checking if related KPIs improved.
+3. Generate max 5 department_grades, max 3 root_causes, max 3 quick_wins, max 5 action_items.
+4. executive_summary: 1-2 sentences only. No preamble, no filler.
+5. department_grades one_liner: max 15 words, must include key metric value and its change.
+6. root_causes explanation: exactly 1 sentence with specific data evidence.
+7. quick_wins action: max 20 words. Name specific SKUs, customers, or campaigns.
+8. action_items: each max 20 words. Must start with START:, STOP:, or KEEP:.
+9. trend_verdict summary: 1 sentence only.
+10. Ground ALL claims in actual numbers from the data. Never invent numbers.
+11. Return ONLY valid JSON. No markdown fences, no extra text.
+12. If a section has no strong data-backed content, return an empty array. Do not pad with filler.
 
 CRITICAL — BE SPECIFIC, NOT VAGUE:
 13. ALWAYS reference specific product names, SKU IDs, customer names, brand names, supplier names, and dollar amounts from the data provided. Never use generic language like "some products", "certain customers", or "strong growth". Instead say "Nike Air Max (SKU-101) revenue dropped 12% from $25K to $22K" or "Customer John D ($12,500 lifetime spend) is at 85% churn risk".
-14. In department_grades one_liner: include the most important metric value and its change. E.g. "Revenue MTD dropped 8% ($45K → $41K) driven by Nike brand decline, but YTD up 15% at $600K".
+14. In department_grades one_liner: include the most important metric value and its change. E.g. "Revenue MTD dropped 8% ($45K → $41K) driven by Nike brand decline".
 15. In quick_wins: name the specific SKUs to restock, customers to contact, or campaigns to adjust — with quantities and dollar amounts.
 16. In root_causes: cite the specific data evidence (revenue waterfall components, brand breakdowns, product tables, customer data) that supports each cause.
 17. Use the TOP PRODUCTS, RISKY PRODUCTS, TOP CUSTOMERS, BRAND PERFORMANCE, and DISCOUNT WATCHLIST data extensively to make recommendations concrete."""
@@ -1412,12 +1384,8 @@ CRITICAL — BE SPECIFIC, NOT VAGUE:
         raw = await ask_llm(system_prompt, user_prompt)
         result = parse_llm_json(raw, fallback={
             "executive_summary": None, "department_grades": [], "root_causes": [],
-            "causal_chains": [], "revenue_bridge": None,
-            "profit_loss_drivers": {"positive": [], "negative": []},
-            "prescription_report_card": [], "missed_opportunities": [],
-            "next_30_day_targets": [], "quick_wins": [],
-            "start_doing": [], "stop_doing": [], "keep_doing": [],
-            "anomalies": [], "trend_verdict": None,
+            "prescription_report_card": [], "quick_wins": [],
+            "action_items": [], "trend_verdict": None,
         })
 
         result["generated_at"] = datetime.now(timezone.utc).isoformat()
@@ -1435,12 +1403,8 @@ CRITICAL — BE SPECIFIC, NOT VAGUE:
         return _safe_json({
             "error": str(e),
             "executive_summary": None, "department_grades": [], "root_causes": [],
-            "causal_chains": [], "revenue_bridge": None,
-            "profit_loss_drivers": {"positive": [], "negative": []},
-            "prescription_report_card": [], "missed_opportunities": [],
-            "next_30_day_targets": [], "quick_wins": [],
-            "start_doing": [], "stop_doing": [], "keep_doing": [],
-            "anomalies": [], "trend_verdict": None,
+            "prescription_report_card": [], "quick_wins": [],
+            "action_items": [], "trend_verdict": None,
             "cached": False,
         })
 
@@ -1797,22 +1761,27 @@ def get_ai_analysis(run_id: Optional[str] = None):
         if len(context) > 12000:
             context = context[:12000] + "\n... (truncated)"
 
-        system_prompt = """You are a senior retail data analyst. Analyze the following business data and provide a comprehensive analysis.
+        system_prompt = """You are a retail business analyst. Be brief and direct.
 
 Your response MUST be valid JSON with this exact structure:
 {
-  "analysis": "A 2-3 sentence executive summary of the overall business health",
-  "key_findings": ["finding 1", "finding 2", "finding 3", "finding 4", "finding 5"],
-  "recommendations": ["recommendation 1", "recommendation 2", "recommendation 3", "recommendation 4", "recommendation 5"],
-  "risks": ["risk 1", "risk 2", "risk 3"]
+  "analysis": "2 sentences max. Sentence 1: biggest metric change with number. Sentence 2: one action to take now.",
+  "key_findings": ["finding 1", "finding 2", "finding 3"],
+  "recommendations": ["recommendation 1", "recommendation 2", "recommendation 3"],
+  "risks": ["risk 1", "risk 2"]
 }
 
-Guidelines:
-- Key findings should be specific, data-backed observations (mention actual numbers)
-- Recommendations should be actionable with specific SKUs, customer segments, or channels when possible
-- Risks should highlight urgent issues that need attention
-- Use plain business language, avoid technical jargon
-- Focus on what the retail store owner should DO next"""
+FORMAT RULES:
+- Each key finding: max 20 words. Start with the metric and number, then the so-what.
+  GOOD: "Revenue dropped 12% MoM — 3 SKUs lost stock coverage."
+  BAD:  "There appears to be a concerning trend in overall revenue performance."
+- Each recommendation: max 20 words. Start with an action verb + specific entity (SKU, segment, channel).
+  GOOD: "Restock SKU-4821 and SKU-1190 immediately — they drive 34% of weekly revenue."
+  BAD:  "Consider reviewing inventory levels across various product categories."
+- Each risk: max 15 words. State the threat and its dollar or percentage impact.
+- BANNED WORDS: consider, potential, might, could, may, possibly, explore, evaluate, audit, overall, comprehensive, various, significant, notable, appears, generally, typically.
+- Every item MUST contain at least one specific number from the data.
+- Use plain business language. No jargon."""
 
         llm = ChatOpenAI(model=os.getenv("RAG_LLM_MODEL", "gpt-4.1-mini"), temperature=0.3)
         response = llm.invoke([

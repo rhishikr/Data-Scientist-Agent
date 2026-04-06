@@ -102,17 +102,17 @@ class InsightsAgent(BaseAgent):
             ]
 
             narrative_prompt = (
-                "You are a retail doctor diagnosing a store's health. Write a 2 sentence "
-                "executive briefing:\n"
-                "Sentence 1: The single biggest problem with its dollar impact or count.\n"
+                "Write exactly 2 sentences, max 200 characters total.\n"
+                "Sentence 1: The single biggest problem — must include a $ amount or customer/SKU count from the data.\n"
                 "Sentence 2: The one action to take today, starting with an action verb (Restock, Email, Call, Cut, Launch).\n"
-                "BANNED WORDS: consider, potential, might, could, may, possibly, explore, evaluate, audit.\n\n"
+                "BANNED WORDS: consider, potential, might, could, may, possibly, explore, evaluate, audit, overall, various, significant.\n"
+                "Do NOT add any preamble or commentary — output only the 2 sentences.\n\n"
                 f"Insights:\n{json.dumps(insights_summary, indent=2)}\n\n"
                 f"Priority areas from analysis: {plan.get('priority_areas', [])}"
             )
             narrative = await ask_llm(
-                "You are a retail doctor — you diagnose business problems and prescribe specific actions. "
-                "Write for a store owner who needs to decide what to do today.",
+                "You are a retail doctor — diagnose and prescribe in the fewest words possible. "
+                "Every sentence must contain a specific number from the data.",
                 narrative_prompt,
             )
 
