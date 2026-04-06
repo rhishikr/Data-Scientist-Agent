@@ -13,6 +13,7 @@ import {
   SidebarInset,
 } from "./components/ui/sidebar";
 import {
+  Database,
   GitBranch,
   Users,
   MessageSquare,
@@ -31,12 +32,12 @@ import { DataExplorerScreen } from "./components/insightsScreen/DataExplorerScre
 
 const menuItems = [
   // { id: "home", label: "Home", icon: Home },
-  // { id: "data-sources", label: "Data Sources", icon: Database },
   { id: "pipelines", label: "Agent Pipeline", icon: GitBranch },
   { id: "customer-insights", label: "Insights and Predictions", icon: Users },
   { id: "data-explorer", label: "Data Explorer", icon: Table2 },
   // { id: "inventory-sales", label: "Inventory & Sales", icon: Package },
   { id: "llm-assistant", label: "Assistant", icon: MessageSquare },
+  { id: "data-sources", label: "Data Sources", icon: Database },
   // { id: "reports", label: "Reports", icon: FileText },
   { id: "settings", label: "Settings", icon: Settings },
 ];
