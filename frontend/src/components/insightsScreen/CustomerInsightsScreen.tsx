@@ -493,6 +493,7 @@ export function CustomerInsightsScreen() {
                 chartNarrative={chartNarratives?.narratives?.churn_distribution}
                 segmentRecommendations={actionPlan?.segment_recommendations}
                 snapshot={snapshot}
+                forecastSnapshot={forecastSnapshot}
               />
             </TabsContent>
 
