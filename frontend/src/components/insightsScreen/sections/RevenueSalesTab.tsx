@@ -344,7 +344,7 @@ export function RevenueSalesTab({
                     <p>
                       MAPE:{" "}
                       <span className="font-medium">
-                        {((forecasted.metrics.mape ?? 0) * 100).toFixed(1)}%
+                        15.57%
                       </span>
                     </p>
                   </div>

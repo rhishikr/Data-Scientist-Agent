@@ -14,8 +14,10 @@ from .features import build_daily_revenue, add_time_features, add_lag_features, 
 def _mape(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     y_true = np.asarray(y_true, dtype=float)
     y_pred = np.asarray(y_pred, dtype=float)
-    denom = np.maximum(1e-9, np.abs(y_true))
-    return float(np.mean(np.abs(y_true - y_pred) / denom))
+    mask = y_true != 0
+    if not mask.any():
+        return 0.0
+    return float(np.mean(np.abs(y_true[mask] - y_pred[mask]) / np.abs(y_true[mask])))
 
 
 def train_revenue_model(
