@@ -45,6 +45,7 @@ import type {
   ChurnPrediction,
   ChartNarrativeData,
   Snapshot,
+  ForecastSnapshot,
 } from "../dashboard/types";
 import {
   fmtCurrency,
@@ -175,6 +176,7 @@ interface CustomersTabProps {
   chartNarrative?: ChartNarrativeData | null;
   segmentRecommendations?: Record<string, string[]> | null;
   snapshot?: Snapshot | null;
+  forecastSnapshot?: ForecastSnapshot | null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -188,6 +190,7 @@ export function CustomersTab({
   chartNarrative,
   segmentRecommendations,
   snapshot,
+  forecastSnapshot,
 }: CustomersTabProps) {
   const [showAllAtRisk, setShowAllAtRisk] = useState(false);
   const [showAllTopBuyers, setShowAllTopBuyers] = useState(false);
@@ -622,6 +625,24 @@ export function CustomersTab({
                 </div>
                 <p className="text-xs text-muted-foreground">
                   {fmtCurrency2(churnSummary.spend)} total spend at risk of churning in the next 30 days
+                </p>
+              </div>
+            )}
+
+            {/* Churn model metrics */}
+            {forecastSnapshot?.forecasts?.expected_churn_next_month?.metrics && (
+              <div className="rounded-md bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
+                <p>
+                  ROC AUC:{" "}
+                  <span className="font-medium">
+                    {(forecastSnapshot.forecasts.expected_churn_next_month.metrics.roc_auc ?? 0).toFixed(3)}
+                  </span>
+                </p>
+                <p>
+                  Avg Precision:{" "}
+                  <span className="font-medium">
+                    {(forecastSnapshot.forecasts.expected_churn_next_month.metrics.avg_precision ?? 0).toFixed(3)}
+                  </span>
                 </p>
               </div>
             )}

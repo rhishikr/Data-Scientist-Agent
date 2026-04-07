@@ -37,7 +37,7 @@ const menuItems = [
   { id: "data-explorer", label: "Data Explorer", icon: Table2 },
   // { id: "inventory-sales", label: "Inventory & Sales", icon: Package },
   { id: "llm-assistant", label: "Assistant", icon: MessageSquare },
-  { id: "data-sources", label: "Data Sources", icon: Database },
+  // { id: "data-sources", label: "Data Sources", icon: Database },
   // { id: "reports", label: "Reports", icon: FileText },
   { id: "settings", label: "Settings", icon: Settings },
 ];
@@ -54,8 +54,8 @@ export default function App() {
     switch (activeSection) {
       // case "home":
       //   return <HomeScreen />;
-      case "data-sources":
-        return <DataSourcesScreen />;
+      // case "data-sources":
+      //   return <DataSourcesScreen />;
       case "pipelines":
         return <PipelineScreen onNavigate={setActiveSection} />;
       case "customer-insights":
